@@ -14,6 +14,7 @@ add_library(odscclient
 
 # add tests executable
 add_executable(tests test/main.cpp)
+target_include_directories(tests PRIVATE src/)
 target_link_libraries(tests PRIVATE odscclient)
 
 install(TARGETS tests DESTINATION bin)
