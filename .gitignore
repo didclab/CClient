@@ -33,3 +33,7 @@
 
 # IDE files
 *.code-workspace
+
+# Temporary Project Directories
+bin/
+build/
