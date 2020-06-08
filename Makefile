@@ -13,3 +13,11 @@ clean:
 
 run:
 	bin/tests
+
+dbuild: init-build
+		cd build; cmake ../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../; make install
+
+drun:
+		gdb -ex run bin/tests
+
+debug: clean dbuild drun
