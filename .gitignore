@@ -37,3 +37,6 @@
 # Temporary Project Directories
 bin/
 build/
+
+# Configuration files
+token.txt
