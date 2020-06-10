@@ -9,7 +9,7 @@
 #include <curl/curl.h>
 #include "curl_wrapper.hpp"
 
-namespace onedatashare {
+namespace ods {
     namespace curl {
         namespace {
             /**

@@ -34,7 +34,7 @@ int main() {
         "Authorization:Bearer " + token,
         "Content-Type:application/json"
     };
-    std::cout << onedatashare::curl::get(url+"/api/stork/cred", headers) << std::endl;
+    std::cout << ods::curl::get(url+"/api/stork/cred", headers) << std::endl;
 
     return 0;
 }

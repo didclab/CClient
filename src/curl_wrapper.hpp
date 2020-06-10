@@ -9,7 +9,7 @@
 
 #include <string>
 
-namespace onedatashare {
+namespace ods {
     namespace curl {
         /**
          * Performs a GET request to the specified url with the specified headers.
