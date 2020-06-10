@@ -61,9 +61,9 @@ namespace ods {
             curl_easy_setopt(handle, CURLOPT_HTTPGET, 1L); // indicate a GET request
             CURLcode result = curl_easy_perform(handle);
 
-			// free resources
+            // free resources
             curl_easy_cleanup(handle);
-			curl_slist_free_all(headers_slist);
+            curl_slist_free_all(headers_slist);
 
             return response;
         }
