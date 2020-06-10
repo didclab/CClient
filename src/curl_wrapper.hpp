@@ -10,7 +10,22 @@
 #include <string>
 
 namespace ods {
+    /**
+     * Namespace containing functions wrapping the libcurl library.
+     */
     namespace curl {
+        /**
+         * Initializes global data for the libcurl library. Must be called before any other functions in the curl
+         * namespace. Is not thread safe.
+         */
+        void init();
+
+        /**
+         * Cleans up global data for the libcurl library. Must be the last function called from the curl namespacde. Is
+         * not thread safe.
+         */
+        void cleanup();
+
         /**
          * Performs a GET request to the specified url with the specified headers.
          * 

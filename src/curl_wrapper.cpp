@@ -26,6 +26,14 @@ namespace ods {
             }
         }
 
+        void init() {
+            curl_global_init(CURL_GLOBAL_ALL);
+        }
+
+        void cleanup() {
+            curl_global_cleanup();
+        }
+
         /**
          * Uses libcurl to perform a GET request to the specified url with the specified headers.
          * 

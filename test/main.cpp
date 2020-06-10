@@ -29,12 +29,16 @@ int main() {
 
     file.close();
 
+    ods::curl::init();
+
     // use and print onedatashare::get with the ods /api/stork/cred api call
     const std::vector<std::string> headers = {
         "Authorization:Bearer " + token,
         "Content-Type:application/json"
     };
     std::cout << ods::curl::get(url+"/api/stork/cred", headers) << std::endl;
+
+    ods::curl::cleanup();
 
     return 0;
 }
