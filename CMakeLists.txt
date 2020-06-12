@@ -9,13 +9,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_path(LCURL_DIR curl)
 find_library(LCURL_LIB curl)
 
+# add simdjson library
+add_library(simd
+    simdjson/simdjson.h
+    simdjson/simdjson.cpp
+)
+
 # add ods client library
 add_library(odscclient
     src/curl_wrapper.hpp
     src/curl_wrapper.cpp
 )
-target_include_directories(odscclient PRIVATE "${LCURL_DIR}")
-target_link_libraries(odscclient PRIVATE "${LCURL_LIB}")
+target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/)
+target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
+#target_include_directories(odscclient PRIVATE simdjson/)
+#target_link_libraries(odscclient PRIVATE simd)
 
 # add tests executable
 add_executable(tests test/main.cpp)
