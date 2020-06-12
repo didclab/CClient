@@ -11,6 +11,10 @@
 
 int main() {
 
+    /*
+    Read token.txt
+    */
+
     // open file containing url, token
     std::ifstream file("token.txt");    
     if (!file.is_open()) {
@@ -29,14 +33,32 @@ int main() {
 
     file.close();
 
+    /*
+    Test code
+    */
+
     ods::curl::init();
 
     // use and print onedatashare::get with the ods /api/stork/cred api call
+
     const std::vector<std::string> headers = {
         "Authorization:Bearer " + token,
         "Content-Type:application/json"
     };
-    std::cout << ods::curl::get(url+"/api/stork/cred", headers) << std::endl;
+
+    ods::curl::Response r = ods::curl::get(url+"/api/stork/cred", headers);
+
+    for (std::pair<std::string, std::string> h : r.headers()) {
+		std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
+	}
+
+	for (auto [key, val] : r.body()) {
+		std::cout << key << " : " << val << std::endl;
+	}
+
+    std::cout << r.body()["6a0db95f-cbc6-43b9-8045-460286bfd0da"]["type"] << std::endl;
+
+	std::cout << r.status() << std::endl;
 
     ods::curl::cleanup();
 
