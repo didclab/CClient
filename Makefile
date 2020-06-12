@@ -1,5 +1,5 @@
-# Default target. Creates a clean build and runs tests. Requires token.txt to be created. See README.md for more information.
-all: clean build run
+# Default target. Builds project and runs tests. Requires token.txt to be created. See README.md for more information.
+all: build run
 
 # Uses CMake to build the project.
 build: init-build
