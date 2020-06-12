@@ -12,7 +12,7 @@
 #include "curl_wrapper.hpp"
 
 namespace ods {
-    namespace curl {
+    namespace rest {
         namespace {
             /**
              * Sequence of newline characters.
@@ -121,10 +121,16 @@ namespace ods {
             return _status;
         }
 
+        /**
+         * Initializes global data for libcurl.
+         */
         void init() {
             curl_global_init(CURL_GLOBAL_ALL);
         }
 
+        /**
+         * Cleans global data for libcurl.
+         */
         void cleanup() {
             curl_global_cleanup();
         }

@@ -13,9 +13,9 @@
 
 namespace ods {
     /**
-     * Namespace containing functions wrapping the libcurl library.
+     * Provides functions for REST API calls that send and recieve JSON data.
      */
-    namespace curl {
+    namespace rest {
         /**
          * Object holding the response from a request made via the get or post functions.
          */
@@ -74,14 +74,12 @@ namespace ods {
         };
 
         /**
-         * Initializes global data for the libcurl library. Must be called before any other functions in the curl
-         * namespace. Is not thread safe.
+         * Initializes global data. Must be the first function called from the rest namespace. Is not thread safe.
          */
         void init();
 
         /**
-         * Cleans up global data for the libcurl library. Must be the last function called from the curl namespacde. Is
-         * not thread safe.
+         * Cleans up global data. Must be the last function called from the rest namespace. Is not thread safe.
          */
         void cleanup();
 

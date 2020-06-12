@@ -37,7 +37,7 @@ int main() {
     Test code
     */
 
-    ods::curl::init();
+    ods::rest::init();
 
     // use and print onedatashare::get with the ods /api/stork/cred api call
 
@@ -46,7 +46,7 @@ int main() {
         "Content-Type:application/json"
     };
 
-    ods::curl::Response r = ods::curl::get(url+"/api/stork/cred", headers);
+    ods::rest::Response r = ods::rest::get(url+"/api/stork/cred", headers);
 
     for (std::pair<std::string, std::string> h : r.headers()) {
 		std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
@@ -60,7 +60,7 @@ int main() {
 
 	std::cout << r.status() << std::endl;
 
-    ods::curl::cleanup();
+    ods::rest::cleanup();
 
     return 0;
 }
