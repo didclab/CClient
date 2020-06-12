@@ -7,8 +7,9 @@
 #ifndef CURL_WRAPPER_HPP_INCLUDED
 #define CURL_WRAPPER_HPP_INCLUDED
 
-#include <unordered_map>
+#include <optional>
 #include <string>
+#include <unordered_map>
 #include "../simdjson/simdjson.h"
 
 namespace ods {
@@ -21,8 +22,6 @@ namespace ods {
          */
         class Response {
             public:
-                // TODO: decide how to handle body not being json
-
                 /**
                  * Creates a new Response object.
                  * 
@@ -33,19 +32,19 @@ namespace ods {
                 Response(const std::vector<std::string> headers, const std::string body, const double status);
 
                 /**
-                 * Gets the response headers.
+                 * Gets the response headers. The reference is only valid for as long as this object is in scope.
                  * 
                  * @return the response headers stored as (key, value) pairs in an unordered multi-map
                  */
                 const std::unordered_multimap<std::string, std::string>& headers() const;
                 /**
-                 * Gets the response body.
+                 * Gets the response body. The reference is only valid for as long as this object is in scope.
                  * 
-                 * @return a simdjson object which maps each field in the json string to its value
+                 * @return an optional containing a simdjson object if the response body was valid json, no value otherwise.
                  */
-                const simdjson::dom::object& body() const;
+                const std::optional<simdjson::dom::object>& body() const;
                 /**
-                 * Gets the http response status.
+                 * Gets the http response status. The reference is only valid for as long as this object is in scope.
                  * 
                  * @return the http response status
                  */
@@ -66,7 +65,7 @@ namespace ods {
                 /**
                  * Stores the json response body.
                  */
-                const simdjson::dom::object _body;
+                const std::optional<simdjson::dom::object> _body;
                 /**
                  * The http response status code.
                  */

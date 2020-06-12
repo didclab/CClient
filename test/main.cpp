@@ -52,11 +52,11 @@ int main() {
 		std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
 	}
 
-	for (auto [key, val] : r.body()) {
-		std::cout << key << " : " << val << std::endl;
-	}
-
-    std::cout << r.body()["6a0db95f-cbc6-43b9-8045-460286bfd0da"]["type"] << std::endl;
+    if (r.body().has_value()) {
+        for (auto [key, val] : r.body().value()) {
+            std::cout << key << " : " << val << std::endl;
+        }
+    }
 
 	std::cout << r.status() << std::endl;
 

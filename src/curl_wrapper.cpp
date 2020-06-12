@@ -4,6 +4,7 @@
  * 6/5/20
  */
 
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -85,11 +86,16 @@ namespace ods {
          * @param json string to be converted into a simdjson object
          * @param parser parser used to parse the json string
          * 
-         * @return a simdjson object containing the data extracted from the json string
+         * @return an optional containing simdjson object with the data extracted from the json string if the string was
+         * valid json, no value otherwise.
          */
-        const simdjson::dom::object parse_json(const std::string& json, simdjson::dom::parser& parser) {
+        const std::optional<simdjson::dom::object> parse_json(const std::string& json, simdjson::dom::parser& parser) {
             auto [simd_obj, simd_err] = parser.parse(json).get<simdjson::dom::object>();
-            return simd_obj;
+            if (!simd_err) {
+                return simd_obj;
+            } else {
+                return {};
+            }
         }
 
         const std::string Response::HEADER_DELIM = ": ";
@@ -113,7 +119,7 @@ namespace ods {
             return _headers;
         }
 
-        const simdjson::dom::object& Response::body() const {
+        const std::optional<simdjson::dom::object>& Response::body() const {
             return _body;
         }
 
