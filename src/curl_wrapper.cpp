@@ -182,6 +182,6 @@ namespace ods {
         }
 
         // TODO: implement
-        Response post(const std::string& url, const std::vector<std::string>& headers, const std::string& data);
+        Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data);
     }
 }

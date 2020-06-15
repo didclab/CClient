@@ -92,7 +92,7 @@ namespace ods {
          * @return Response object containing the response headers, body, and http status
          */
         Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers);
-        Response post(const std::string& url, const std::vector<std::string>& headers, const std::string& data);
+        Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data);
     }
 }
 
