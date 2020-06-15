@@ -87,11 +87,11 @@ namespace ods {
          * Performs a GET request to the specified url with the specified headers. Is not thread safe.
          * 
          * @param url string containing url to make the GET request to. Should ideally contain the protocol
-         * @param headers vector of strings used as headers for the GET request
+         * @param headers multi-map containing the headers for the GET request
          * 
          * @return Response object containing the response headers, body, and http status
          */
-        Response get(const std::string& url, const std::vector<std::string>& headers);
+        Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers);
         Response post(const std::string& url, const std::vector<std::string>& headers, const std::string& data);
     }
 }

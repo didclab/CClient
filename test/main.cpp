@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <unordered_map>
 #include <vector>
 #include <curl_wrapper.hpp>
 
@@ -41,10 +42,11 @@ int main() {
 
     // use and print onedatashare::get with the ods /api/stork/cred api call
 
-    const std::vector<std::string> headers = {
-        "Authorization:Bearer " + token,
-        "Content-Type:application/json"
-    };
+    typedef std::pair<std::string, std::string> spair;
+    
+    std::unordered_multimap<std::string, std::string> headers;
+    headers.insert(spair("Authorization", "Bearer " + token));
+    headers.insert(spair("Content-Type","application/json"));
 
     ods::rest::Response r = ods::rest::get(url+"/api/stork/cred", headers);
 
