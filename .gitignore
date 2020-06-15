@@ -33,6 +33,7 @@
 
 # IDE files
 *.code-workspace
+.vscode/
 
 # Temporary Project Directories
 bin/
