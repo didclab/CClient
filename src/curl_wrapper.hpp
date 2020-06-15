@@ -14,46 +14,48 @@
 
 namespace ods {
     /**
-     * Provides functions for REST API calls that send and recieve JSON data.
+     * Provides functions for REST API calls that send and recieve JSON data. Is not thread safe.
      */
     namespace rest {
         /**
          * Object holding the response from a request made via the get or post functions.
+         * 
+         * This object should be used to extract the needed values and then discarded immediately. Fields of this object
+         * live only as long as the object itself. It is not safe to instantiate instances of this object in different
+         * threads.
          */
         class Response {
             public:
                 /**
                  * Creates a new Response object.
                  * 
-                 * @param headers vector of strings containing the response headers
+                 * It is not safe to use this constructor to create Response objects on separate threads.
+                 * 
+                 * @param headers multi-map containing the response headers
                  * @param body json string containing the response body
-                 * @param status double corresponding to the http response status
+                 * @param status integer corresponding to the http response status
                  */
-                Response(const std::vector<std::string> headers, const std::string body, const double status);
+                Response(const std::unordered_multimap<std::string, std::string> headers, const std::string body, const int status);
 
                 /**
-                 * Gets the response headers. The reference is only valid for as long as this object is in scope.
+                 * Gets the response headers. This reference lives only as long as this object.
                  * 
                  * @return the response headers stored as (key, value) pairs in an unordered multi-map
                  */
                 const std::unordered_multimap<std::string, std::string>& headers() const;
                 /**
-                 * Gets the response body. The reference is only valid for as long as this object is in scope.
+                 * Gets the response body. This reference lives only as long as this object.
                  * 
                  * @return an optional containing a simdjson object if the response body was valid json, no value otherwise.
                  */
                 const std::optional<simdjson::dom::object>& body() const;
                 /**
-                 * Gets the http response status. The reference is only valid for as long as this object is in scope.
+                 * Gets the http response status. This reference lives only as long as this object.
                  * 
                  * @return the http response status
                  */
                 const int& status() const;
             private:
-                /**
-                 * String separating keys from values when parsing headers.
-                 */
-                static const std::string HEADER_DELIM;
                 /**
                  * Parses json strings.
                  */
@@ -71,7 +73,6 @@ namespace ods {
                  */
                 const int _status;
         };
-
         /**
          * Initializes global data. Must be the first function called from the rest namespace. Is not thread safe.
          */
@@ -83,7 +84,7 @@ namespace ods {
         void cleanup();
 
         /**
-         * Performs a GET request to the specified url with the specified headers.
+         * Performs a GET request to the specified url with the specified headers. Is not thread safe.
          * 
          * @param url string containing url to make the GET request to. Should ideally contain the protocol
          * @param headers vector of strings used as headers for the GET request

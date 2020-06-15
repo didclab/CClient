@@ -21,6 +21,58 @@ namespace ods {
             const char* newline_chars("\n\r");
 
             /**
+             * String separating keys from values when parsing headers.
+             */
+            const std::string header_delim(": ");
+            
+            /**
+             * Converts the specified string into a (key, value) pair if the string contains the specified delimiter by
+             * splitting it at the delimiter.
+             * 
+             * @param header string to convert to a pair
+             * @param delim string determining which part of the header is the key and which part is the value
+             * 
+             * @return a pair if the string contains the specified delimiter, no value otherwise
+             */
+            const std::optional<std::pair<std::string, std::string>> parse_header(const std::string& header, const std::string& delim) {
+				int del_len = delim.length();
+				int del_start = header.find(delim);
+				if (del_start != std::string::npos) {
+					// find where the header ends (i.e. the last index before any newline characters)
+					int h_end = header.find_last_not_of(newline_chars);
+					if (h_end == std::string::npos) {
+						// no newline characters so the length is the length
+						h_end = header.length();
+					} else {
+						h_end += 1;
+					}
+					// use the left side of the delim as the key and the right side as the vlaue for the key, value pair
+					return std::pair<std::string, std::string>(header.substr(0, del_start), header.substr(del_start + del_len, h_end - del_start - del_len));
+				} else {
+					// if the header doesnt contain the delimiter return no value
+					return {};
+				}
+			}
+
+            /**
+			 * Uses the specified parser to convert the specified json string into a simdjson object.
+			 * 
+			 * @param json string to be converted into a simdjson object
+			 * @param parser parser used to parse the json string
+			 * 
+			 * @return an optional containing simdjson object with the data extracted from the json string if the string was
+			 * valid json, no value otherwise.
+			 */
+			const std::optional<simdjson::dom::object> parse_json(const std::string& json, simdjson::dom::parser& parser) {
+				auto [simd_obj, simd_err] = parser.parse(json).get<simdjson::dom::object>();
+				if (!simd_err) {
+					return simd_obj;
+				} else {
+					return {};
+				}
+			}
+
+            /**
              * Used by libcurl to assign the response body from a request to the specified string.
              * 
              * @param buffer non-null-terminated char* received after making the request
@@ -34,83 +86,27 @@ namespace ods {
             }
 
             /**
-             * Used by libcurl to add the response headers from a request to the specified string vector.
+             * Used by libcurl to add the response headers from a request to the specified multi-map.
              * 
              * @param buffer non-null-terminated char* header received after making the request
              * @param size number that is always 1
              * @param nmemb size of the char* recieved
-             * @param userp string vectors that the char* header is added to
+             * @param userp multi-map that the (key, value) pair extracted from the header is added to
              */
-            size_t header_callback(void* buffer, size_t size, size_t nmemb, std::vector<std::string>& userp) {
-                userp.push_back(std::string((char*) buffer, size * nmemb));
+            size_t header_callback(void* buffer, size_t size, size_t nmemb, std::unordered_multimap<std::string, std::string>& userp) {
+                auto header = parse_header(std::string((char*) buffer, size * nmemb), header_delim);
+                if (header) {
+                    // if the header containd the delimiter add the corresponding pair to the map
+                    userp.insert(header.value());
+                }
                 return size * nmemb;
             }
         }
 
-        /**
-         * Converts the given vector of strings to a multimap by splitting each string at the specified delimiter and
-         * skipping lines that don't contain the delimiter.
-         * 
-         * @param headers vector of strings to parse
-         * @param delim delimiter used to split each string into (key, value) pairs
-         * 
-         * @return a multi-map containing each header from the input vector that contains the specified delimiter
-         */
-        const std::unordered_multimap<std::string, std::string> parse_headers(const std::vector<std::string>& headers, const std::string& delim) {
-            std::unordered_multimap<std::string, std::string> map;
-            int delim_len = delim.length();
-
-            for (std::string h : headers) {
-                // use the left side of delim as the key and the right side as the value
-                int delim_start = h.find(delim);
-                // skip string if it doesn't contain the delimiter
-                if (delim_start != std::string::npos) {                    
-                    // find where the string ends before newline characters
-                    int h_end = h.find_last_not_of(newline_chars);
-                    if (h_end == std::string::npos) {
-                        h_end = h.length();
-                    } else {
-                        h_end += 1;
-                    }
-                    // insert the key,value pair
-                    map.insert(std::pair<std::string, std::string>(h.substr(0, delim_start), h.substr(delim_start + delim_len, h_end - delim_start - delim_len)));
-                }
-             }
-
-             return map;
-        }
-
-        /**
-         * Uses the specified parser to convert the specified json string into a simdjson object.
-         * 
-         * @param json string to be converted into a simdjson object
-         * @param parser parser used to parse the json string
-         * 
-         * @return an optional containing simdjson object with the data extracted from the json string if the string was
-         * valid json, no value otherwise.
-         */
-        const std::optional<simdjson::dom::object> parse_json(const std::string& json, simdjson::dom::parser& parser) {
-            auto [simd_obj, simd_err] = parser.parse(json).get<simdjson::dom::object>();
-            if (!simd_err) {
-                return simd_obj;
-            } else {
-                return {};
-            }
-        }
-
-        const std::string Response::HEADER_DELIM = ": ";
-
         simdjson::dom::parser Response::PARSER;
 
-        /**
-         * Create a new Response object by parsing the inputs and converting them into their respective types.
-         * 
-		 * @param headers converted to an unordered map
-		 * @param body converted to a simdjson object
-		 * @param status converted to an integer
-         */
-        Response::Response(const std::vector<std::string> headers, const std::string body, const double status) :
-            _headers(parse_headers(headers, HEADER_DELIM)),
+        Response::Response(const std::unordered_multimap<std::string, std::string> headers, const std::string body, const int status) :
+            _headers(headers),
             _body(parse_json(body, PARSER)),
             _status(status) {
         }
@@ -152,8 +148,8 @@ namespace ods {
         Response get(const std::string& url, const std::vector<std::string>& headers) {
             // string that curl will write the response body to
             std::string response_body;
-            // string vector that curl will write the request headers to
-            std::vector<std::string> response_headers;
+            // multi-map that curl will write the request headers to
+            std::unordered_multimap<std::string, std::string> response_headers;
             // long that the http response status will be written to
             long status;
 
