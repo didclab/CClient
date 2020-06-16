@@ -103,11 +103,9 @@ namespace ods {
             }
         }
 
-        simdjson::dom::parser Response::PARSER;
-
         Response::Response(const std::unordered_multimap<std::string, std::string> headers, const std::string body, const int status) :
             _headers(headers),
-            _body(parse_json(body, PARSER)),
+            _body(body),
             _status(status) {
         }
 
@@ -115,7 +113,7 @@ namespace ods {
             return _headers;
         }
 
-        const std::optional<simdjson::dom::object>& Response::body() const {
+        const std::string& Response::body() const {
             return _body;
         }
 
