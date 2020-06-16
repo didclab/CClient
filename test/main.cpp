@@ -9,12 +9,10 @@
 #include <unordered_map>
 #include <vector>
 #include <curl_wrapper.hpp>
+#include <../simdjson/simdjson.h>
 
 int main() {
-
-    /*
-    Read token.txt
-    */
+    // parse token.txt
 
     // open file containing url, token
     std::ifstream file("token.txt");    
@@ -34,33 +32,78 @@ int main() {
 
     file.close();
 
-    /*
-    Test code
-    */
+    // test code
 
     ods::rest::init();
 
     // use and print onedatashare::get with the ods /api/stork/cred api call
 
     typedef std::pair<std::string, std::string> spair;
-    
+
     std::unordered_multimap<std::string, std::string> headers;
     headers.insert(spair("Authorization", "Bearer " + token));
     headers.insert(spair("Content-Type","application/json"));
 
-    ods::rest::Response r = ods::rest::get(url+"/api/stork/cred", headers);
+	std::string data = R"({
+		"pageNo": 0,
+		"pageSize": 10,
+		"sortBy": "job_id",
+		"sortOrder": "desc"
+	})";
 
-    for (std::pair<std::string, std::string> h : r.headers()) {
-		std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
-	}
+    simdjson::dom::parser parser_1;
+    simdjson::dom::parser parser_2;
 
-    if (r.body().has_value()) {
-        for (auto [key, val] : r.body().value()) {
-            std::cout << key << " : " << val << std::endl;
-        }
+    // get request
+
+    ods::rest::Response get_r = ods::rest::get(url+"/api/stork/cred", headers);
+
+    std::cout << "[=== get request headers ===]" << std::endl;
+    for (auto h : get_r.headers()) {
+        std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
 
-	std::cout << r.status() << std::endl;
+    auto [get_elm, get_err] = parser_1.parse(get_r.body());
+
+    std::cout << "[=== get request body ===]" << std::endl;
+    if (!get_err) {
+        if (get_elm.is<simdjson::dom::object>()) {
+            for (auto [key, val] : get_elm.get<simdjson::dom::object>()) {
+                std::cout << "\"" << key << "\" : \"" << val << "\"" << std::endl;
+            }
+        } else {
+            std::cout << "Returned json not an object." << std::endl;
+        }
+    } else {
+        std::cout << "Error parsing json: " << get_err << std::endl;
+    }
+
+    std::cout << "[=== get request http status ===]"<< std::endl;
+    std::cout  << get_r.status() << std::endl;
+
+    // post request
+
+    ods::rest::Response post_r = ods::rest::post(url+"/api/stork/q/user-jobs", headers, data);
+
+    std::cout << "[=== post request headers ===]" << std::endl;
+    for (auto h : post_r.headers()) {
+        std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
+    }
+
+    auto [post_elm, post_err] = parser_2.parse(post_r.body());
+
+    std::cout << "[=== post request body ===]" << std::endl;
+    if (!post_err) {
+        if (post_elm.is<simdjson::dom::object>()) {
+            for (auto [key, val] : post_elm.get<simdjson::dom::object>()) {
+                std::cout << "\"" << key << "\" : \"" << val << "\"" << std::endl;
+            }
+        } else {
+            std::cout << "Returned json not an object." << std::endl;
+        }
+    } else {
+        std::cout << "Error parsing json: " << post_err << std::endl;
+    }
 
     ods::rest::cleanup();
 
