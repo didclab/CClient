@@ -60,6 +60,7 @@ namespace ods {
                  * Parses json strings.
                  */
                 static simdjson::dom::parser PARSER;
+
                 /**
                  * Stores headers as (key, value) pairs.
                  */
@@ -92,6 +93,16 @@ namespace ods {
          * @return Response object containing the response headers, body, and http status
          */
         Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers);
+
+        /**
+         * Performs a POST request to the specified url with the specified headers and data. Is not thread safe.
+         * 
+         * @param url string containing the url to make the POST request to. Should ideally contain the protocol
+         * @param headers multi-map containing the headers for the POST request
+         * @param data string containing the json data for the POST request
+         * 
+         * @return Response object containing the response headers, body, and http status
+         */
         Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data);
     }
 }
