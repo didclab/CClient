@@ -10,7 +10,6 @@
 #include <optional>
 #include <string>
 #include <unordered_map>
-#include "../simdjson/simdjson.h"
 
 namespace ods {
     /**

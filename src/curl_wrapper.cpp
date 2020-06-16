@@ -9,7 +9,6 @@
 #include <unordered_map>
 #include <vector>
 #include <curl/curl.h>
-#include "../simdjson/simdjson.h"
 #include "curl_wrapper.hpp"
 
 namespace ods {
@@ -53,6 +52,7 @@ namespace ods {
 					return {};
 				}
 			}
+
 
             /**
              * Used by libcurl to assign the response body from a request to the specified string.
