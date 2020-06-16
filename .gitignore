@@ -35,9 +35,13 @@
 *.code-workspace
 .vscode/
 
-# Temporary Project Directories
+# Temporary project directories
 bin/
 build/
 
 # Configuration files
 token.txt
+
+# Documentation
+docs/html/
+docs/latex/
