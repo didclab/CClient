@@ -55,24 +55,6 @@ namespace ods {
 			}
 
             /**
-			 * Uses the specified parser to convert the specified json string into a simdjson object.
-			 * 
-			 * @param json string to be converted into a simdjson object
-			 * @param parser parser used to parse the json string
-			 * 
-			 * @return an optional containing simdjson object with the data extracted from the json string if the string was
-			 * valid json, no value otherwise.
-			 */
-			const std::optional<simdjson::dom::object> parse_json(const std::string& json, simdjson::dom::parser& parser) {
-				auto [simd_obj, simd_err] = parser.parse(json).get<simdjson::dom::object>();
-				if (!simd_err) {
-					return simd_obj;
-				} else {
-					return {};
-				}
-			}
-
-            /**
              * Used by libcurl to assign the response body from a request to the specified string.
              * 
              * @param buffer non-null-terminated char* received after making the request
