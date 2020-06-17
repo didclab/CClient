@@ -76,5 +76,6 @@ endif()
 add_executable(tests
     tests/curl_wrapper_tests.cpp
 )
-target_link_libraries(tests gtest_main)
+target_include_directories(tests PRIVATE src/)
+target_link_libraries(tests PRIVATE gtest_main odscclient)
 install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})
