@@ -7,7 +7,6 @@
 #ifndef CURL_WRAPPER_HPP_INCLUDED
 #define CURL_WRAPPER_HPP_INCLUDED
 
-#include <optional>
 #include <string>
 #include <unordered_map>
 
