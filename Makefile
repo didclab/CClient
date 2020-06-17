@@ -1,35 +1,64 @@
-# Default target. Builds project and runs tests. Requires token.txt to be created. See README.md for more information.
-all: build run
+##################################################
+# Default target: builds project and runs tests. #
+##################################################
+all: build test
 
-# Uses CMake to build the project.
-build: init-build
-	cd build && \
-		cmake ../ -DCMAKE_INSTALL_PREFIX=../ && \
-		make install
+##################################################
+# Creates the build, bin, and debug directories. #
+################################################## 
+init:
+	mkdir -p build
+	mkdir -p bin
+	mkdir -p debug
 
-# Cleans the project by removing the bin and build directories.
+#########################################################################
+# Cleans the project by removing the bin, build, and debug directories. #
+#########################################################################
 clean:
 	rm -rf bin
 	rm -rf build
+	rm -rf debug
 
-# Runs the tests. Requires token.txt to be created. See README.md for more information.
+###################################
+# Builds the project using CMake. #
+###################################
+build: init
+	cd build && \
+		cmake ../ -DCMAKE_INSTALL_PREFIX=../bin && \
+		make install
+
+#########################################################################
+# Runs the example main.												#
+#																		#
+# Requires token.txt to be created. See README.md for more information. #
+#########################################################################
 run:
+	bin/main
+
+####################
+# Runs unit tests. #
+####################
+test:
 	bin/tests
 
-# Builds the project in debug mode, allowing the executable to be run with gdb.
-dbuild: init-build
+#################################################################################
+# Builds the project in debug mode, allowing the executable to be run with gdb. #
+#################################################################################
+debug-build: init
 	cd build && \
-		cmake ../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../ && \
+		cmake ../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../debug && \
 		make install
-	
-# Runs the tests in debug mode using gdb. Requires token.txt to be created. See README.md for more information.
-drun:
-	gdb bin/tests
 
-# Creates clean build in debug mode and runs tests in gdb. Requires token.txt to be created. See README.md for more information.
-debug: clean dbuild drun
+#########################################################################
+# Runs the example main in debug mode using gdb.						#
+#																		#
+# Requires token.txt to be created. See README.md for more information. #
+#########################################################################
+debug-run:
+	gdb debug/main
 
-# Creates the bin and build directories for storing executable and object files respectively.
-init-build:
-	mkdir -p bin
-	mkdir -p build
+############################################
+# Runs unit tests in debug mode using gdb. #
+############################################
+debug-test:
+	gdb debug/tests

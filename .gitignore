@@ -38,6 +38,7 @@
 # Temporary project directories
 bin/
 build/
+debug/
 
 # Configuration files
 token.txt
