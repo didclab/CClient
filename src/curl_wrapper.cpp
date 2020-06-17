@@ -85,7 +85,7 @@ namespace ods {
             }
         }
 
-        Response::Response(const std::unordered_multimap<std::string, std::string> headers, const std::string body, const int status) :
+        Response::Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status) :
             _headers(headers),
             _body(body),
             _status(status) {

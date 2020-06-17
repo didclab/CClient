@@ -29,7 +29,7 @@ namespace ods {
                  * @param body json string containing the response body
                  * @param status integer corresponding to the http response status
                  */
-                Response(const std::unordered_multimap<std::string, std::string> headers, const std::string body, const int status);
+                Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status);
 
                 /**
                  * Gets the response headers. This reference lives only as long as this object.
