@@ -103,17 +103,19 @@ namespace ods {
             return _status;
         }
 
+        Rest::~Rest() {}
+
         /**
-         * Initializes global data for libcurl.
+         * Initializes the global data needed for libcurl.
          */
-        void init() {
+        CurlRest::CurlRest() {
             curl_global_init(CURL_GLOBAL_ALL);
         }
 
         /**
-         * Cleans global data for libcurl.
+         * Cleans up the global data needed for libcurl.
          */
-        void cleanup() {
+        CurlRest::~CurlRest() {
             curl_global_cleanup();
         }
 
@@ -125,7 +127,7 @@ namespace ods {
          * 
          * @return Response object created by the write_data and header_callback functions
          */
-        Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) {
+        Response CurlRest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) {
             // string that curl will write the response body to
             std::string response_body;
             // multi-map that curl will write the request headers to
@@ -170,7 +172,7 @@ namespace ods {
          * 
          * @return Response object created by the write_data and header_callback functions
          */
-        Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) {
+        Response CurlRest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) {
             // string that curl will write the response body to
             std::string response_body;
             // multi-map that curl will write the request headers to

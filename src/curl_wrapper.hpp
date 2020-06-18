@@ -32,7 +32,7 @@ namespace ods {
                  */
                 Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status);
 
-                Response (const Response&) = delete;
+                Response(const Response&) = delete;
                 Response& operator=(const Response&) = delete;
 
                 /**
@@ -67,36 +67,46 @@ namespace ods {
                  */
                 const int _status;
         };
-        /**
-         * Initializes global data. Must be the first function called from the rest namespace. Is not thread safe.
-         */
-        void init();
 
         /**
-         * Cleans up global data. Must be the last function called from the rest namespace. Is not thread safe.
+         * Class used to perform REST requests.
          */
-        void cleanup();
+        class Rest {
+            public:
+				/**
+				 * Performs a GET request to the specified url with the specified headers.
+				 * 
+				 * @param url string containing url to make the GET request to. Should ideally contain the protocol
+				 * @param headers multi-map containing the headers for the GET request
+				 * 
+				 * @return Response object containing the response headers, body, and http status
+				 */
+				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) = 0;
+                /**
+				 * Performs a POST request to the specified url with the specified headers and data.
+				 * 
+				 * @param url string containing the url to make the POST request to. Should ideally contain the protocol
+				 * @param headers multi-map containing the headers for the POST request
+				 * @param data string containing the json data for the POST request
+				 * 
+				 * @return Response object containing the response headers, body, and http status
+				 */
+				virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) = 0;
+				virtual ~Rest() = 0;
+        };
 
         /**
-         * Performs a GET request to the specified url with the specified headers.
-         * 
-         * @param url string containing url to make the GET request to. Should ideally contain the protocol
-         * @param headers multi-map containing the headers for the GET request
-         * 
-         * @return Response object containing the response headers, body, and http status
+         * Class using libcurl to perform REST requests.
          */
-        Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers);
-
-        /**
-         * Performs a POST request to the specified url with the specified headers and data.
-         * 
-         * @param url string containing the url to make the POST request to. Should ideally contain the protocol
-         * @param headers multi-map containing the headers for the POST request
-         * @param data string containing the json data for the POST request
-         * 
-         * @return Response object containing the response headers, body, and http status
-         */
-        Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data);
+        class CurlRest : public Rest {
+            public:
+                CurlRest();
+                CurlRest(const Response&) = delete;
+                CurlRest& operator=(const Response&) = delete;
+                virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) override;
+                virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) override;
+                virtual ~CurlRest() override;
+        };
     }
 }
 

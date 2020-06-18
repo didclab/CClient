@@ -34,10 +34,6 @@ int main() {
 
     // test code
 
-    ods::rest::init();
-
-    // use and print onedatashare::get with the ods /api/stork/cred api call
-
     typedef std::pair<std::string, std::string> spair;
 
     std::unordered_multimap<std::string, std::string> headers;
@@ -54,9 +50,11 @@ int main() {
     simdjson::dom::parser parser_1;
     simdjson::dom::parser parser_2;
 
+    ods::rest::CurlRest rest;
+
     // get request
 
-    ods::rest::Response get_r = ods::rest::get(url+"/api/stork/cred", headers);
+    ods::rest::Response get_r = rest.get(url+"/api/stork/cred", headers);
 
     std::cout << "[=== get request headers ===]" << std::endl;
     for (auto h : get_r.headers()) {
@@ -84,14 +82,14 @@ int main() {
 }
     // post request
 
-    ods::rest::Response post_r = ods::rest::post(url+"/api/stork/q/user-jobs", headers, data);
+    ods::rest::Response post_r = rest.post(url+"/api/stork/q/user-jobs", headers, data);
 
     std::cout << "[=== post request headers ===]" << std::endl;
     for (auto h : post_r.headers()) {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
 
-    auto [post_elm, post_err] = parser_1.parse(post_r.body());
+    auto [post_elm, post_err] = parser_2.parse(post_r.body());
 
     std::cout << "[=== post request body ===]" << std::endl;
     if (!post_err) {
@@ -106,7 +104,8 @@ int main() {
         std::cout << "Error parsing json: " << post_err << std::endl;
     }
 
-    ods::rest::cleanup();
+    std::cout << "[=== post request http status ===]"<< std::endl;
+    std::cout  << post_r.status() << std::endl;
 
     return 0;
 }
