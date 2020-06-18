@@ -64,21 +64,4 @@ namespace {
         EXPECT_EQ(status, r.status());
         EXPECT_NE(&status, &r.status());
     }
-
-    /*
-     * Test that the (default) copy constructor performs a deep copy.
-     */
-    TEST(Response, DefaultCopyIsDeepCopy) {
-        std::unordered_multimap<std::string, std::string> map;
-        std::string body = "";
-        int status = 123;
-
-        ods::rest::Response r(map, body, status);
-        ods::rest::Response r_copy = r;
-
-        EXPECT_NE(&r, &r_copy);
-        EXPECT_NE(&r.body(), &r_copy.body());
-        EXPECT_NE(&r.headers(), &r_copy.headers());
-        EXPECT_NE(&r.status(), &r_copy.status());
-    }
 }

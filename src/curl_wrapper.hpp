@@ -15,6 +15,7 @@ namespace ods {
      * Provides functions for making REST API calls.
      */
     namespace rest {
+
         /**
          * Object holding the response from a request made via the get or post functions.
          * 
@@ -30,6 +31,9 @@ namespace ods {
                  * @param status integer corresponding to the http response status
                  */
                 Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status);
+
+                Response (const Response&) = delete;
+                Response& operator=(const Response&) = delete;
 
                 /**
                  * Gets the response headers. This reference lives only as long as this object.
