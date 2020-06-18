@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <vector>
 #include <curl/curl.h>
-#include "curl_wrapper.hpp"
+#include "rest.hpp"
 
 namespace ods {
     namespace rest {

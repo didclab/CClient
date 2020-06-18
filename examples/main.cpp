@@ -8,7 +8,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <vector>
-#include <curl_wrapper.hpp>
+#include <rest.hpp>
 #include <../simdjson/simdjson.h>
 
 int main() {

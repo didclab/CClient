@@ -17,8 +17,8 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    src/curl_wrapper.hpp
-    src/curl_wrapper.cpp
+    src/rest.hpp
+    src/rest.cpp
 )
 target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
@@ -74,7 +74,7 @@ endif()
 
 # add unit tests
 add_executable(tests
-    tests/curl_wrapper_tests.cpp
+    tests/rest_tests.cpp
 )
 target_include_directories(tests PRIVATE src/)
 target_link_libraries(tests PRIVATE gtest_main odscclient)
