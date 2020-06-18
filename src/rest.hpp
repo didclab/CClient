@@ -81,7 +81,7 @@ namespace ods {
 				 * 
 				 * @return Response object containing the response headers, body, and http status
 				 */
-				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) = 0;
+				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const = 0;
                 /**
 				 * Performs a POST request to the specified url with the specified headers and data.
 				 * 
@@ -91,7 +91,7 @@ namespace ods {
 				 * 
 				 * @return Response object containing the response headers, body, and http status
 				 */
-				virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) = 0;
+				virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const = 0;
 				virtual ~Rest() = 0;
         };
 
@@ -106,8 +106,8 @@ namespace ods {
                 CurlRest();
                 CurlRest(const Response&) = delete;
                 CurlRest& operator=(const Response&) = delete;
-                virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) override;
-                virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) override;
+                virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const override;
+                virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const override;
                 virtual ~CurlRest() override;
         };
     }

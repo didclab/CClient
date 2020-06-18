@@ -127,7 +127,7 @@ namespace ods {
          * 
          * @return Response object created by the write_data and header_callback functions
          */
-        Response CurlRest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) {
+        Response CurlRest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const {
             // string that curl will write the response body to
             std::string response_body;
             // multi-map that curl will write the request headers to
@@ -172,7 +172,7 @@ namespace ods {
          * 
          * @return Response object created by the write_data and header_callback functions
          */
-        Response CurlRest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) {
+        Response CurlRest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const {
             // string that curl will write the response body to
             std::string response_body;
             // multi-map that curl will write the request headers to
