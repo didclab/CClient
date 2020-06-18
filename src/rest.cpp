@@ -1,5 +1,5 @@
 /*
- * curl_wrapper.cpp
+ * rest.cpp
  * Andrew Mikalsen
  * 6/5/20
  */

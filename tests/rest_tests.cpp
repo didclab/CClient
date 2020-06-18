@@ -1,6 +1,6 @@
 /*
- * curl_wrapper_test.cpp
- * Andrew Mikalsen
+ * rest_tests.cpp
+ * Andrew Mikalasen
  * 6/17/20
  */
 

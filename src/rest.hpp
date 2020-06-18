@@ -1,5 +1,5 @@
 /*
- * curl_wrapper.hpp
+ * rest.hpp
  * Andrew Mikalsen
  * 6/5/20
  */
@@ -73,7 +73,7 @@ namespace ods {
          */
         class Rest {
             public:
-				/**
+			    /**
 				 * Performs a GET request to the specified url with the specified headers.
 				 * 
 				 * @param url string containing url to make the GET request to. Should ideally contain the protocol
@@ -100,6 +100,9 @@ namespace ods {
          */
         class CurlRest : public Rest {
             public:
+                /**
+                 * Creates a new CurlRest object capable of making REST requests via libcurl.
+                 */
                 CurlRest();
                 CurlRest(const Response&) = delete;
                 CurlRest& operator=(const Response&) = delete;
