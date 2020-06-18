@@ -5,9 +5,9 @@ C++ Client for One Data Share.
 
 Dependencies:
 -------------
-- g++ 9.3.0
-- cmake 3.10.0
-- libcurl 7.47.0
+- g++ 9.3.0 - find at https://gcc.gnu.org/gcc-9/
+- cmake 3.10.0 - find at https://cmake.org/files/v3.10/
+- libcurl 7.47.0 - install with `sudo apt-get install libcurl4-openssl-dev`
 
 Build:
 ------
