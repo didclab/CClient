@@ -132,30 +132,51 @@ namespace ods {
     };
 
     class TransferStatus {
+        //TODO: define members
         public:
+            TransferStatus(const TransferStatus&) = delete;
+            TransferStatus& operator=(const TransferStatus&) = delete;
         private:
+            TransferStatus();
     };
 
     class Item {
         public:
+            Item(const Item&) = delete;
+            Item& operator=(const Item&) = delete;
         private:
+            Item();
     };
 
     class AccountEndpointCredential {
         public:
+            AccountEndpointCredential();
+            AccountEndpointCredential(const AccountEndpointCredential&) = delete;
+            AccountEndpointCredential& operator=(const AccountEndpointCredential&) = delete;
         private:
     };
 
     class Source {
-
+        public:
+            Source();
+            Source(const Source&) = delete;
+            Source& operator=(Source&) = delete;
+        private:
     };
 
     class Destination {
-
+        public:
+            Destination();
+            Destination(const Destination&) = delete;
+            Destination& operator=(const Destination&) = delete;
+        private:
     };
 
     class TransferOptions {
-
+        public:
+            TransferOptions();
+            TransferOptions(const TransferOptions&) = delete;
+            TransferOptions& operator=(const TransferOptions&) = delete;
     };
 }
 
