@@ -73,6 +73,9 @@ namespace ods {
          */
         class Rest {
             public:
+                Rest() = default;
+                Rest(const Rest&) = delete;
+                Rest& operator=(const Rest&) = delete;
 			    /**
 				 * Performs a GET request to the specified url with the specified headers.
 				 * 
@@ -104,8 +107,6 @@ namespace ods {
                  * Creates a new CurlRest object capable of making REST requests via libcurl.
                  */
                 CurlRest();
-                CurlRest(const Response&) = delete;
-                CurlRest& operator=(const Response&) = delete;
                 virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const override;
                 virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const override;
                 virtual ~CurlRest() override;
