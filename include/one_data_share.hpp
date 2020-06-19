@@ -221,10 +221,16 @@ namespace ods {
     // TODO: define members
     class ItemInfo {
         public:
-            ItemInfo();
             ItemInfo(const ItemInfo&) = delete;
             ItemInfo& operator=(const ItemInfo&) = delete;
+            std::string id();
+            std::string path();
+            long size();
         private:
+            ItemInfo(const std::string id, const std::string path, const std::string size);
+            const std::string _id;
+            const std::string _path;
+            const long _size;
     };
     
     enum class FileType {
