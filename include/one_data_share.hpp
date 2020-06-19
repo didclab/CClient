@@ -8,12 +8,13 @@
 #define ONE_DATA_SHARE_INCLUDED
 
 #include <string>
+#include <rest.hpp>
 
 namespace ods {
     class OneDataShare {
         public:
             /**
-             * Create a new object with the specified authentication token.
+             * Creates a new object with the specified authentication token.
              * 
              * @param ods_auth_token authentication token used to make requests to One Data Share
              */
@@ -30,45 +31,106 @@ namespace ods {
 
     class Transfer: public OneDataShare {
         public:
-        private:
+            /**
+             * Performs the specified transfer request.
+             * 
+             * @param request the transfer request to perform
+             * 
+             * @return string corresponding to the id of the request
+             */
+            std::string transfer(TransferRequest request);
+            /**
+             * Retrieves the status of the transfer with the specified id.
+             * 
+             * @return a <code>TransferStatus<code> object with the status of the specified transfer
+             */
+            TransferStatus get_transfer_status(std::string id);
+            virtual ~Transfer() override;
     };
 
     class Endpoint: public OneDataShare {
         public:
-        private:
+            /**
+             * Returns an <code>Item</code> corresponding to the item found at the root of the endpoint.
+             */
+            virtual Item resolve() = 0;
+            /**
+             * Returns an <code>Item</code> corresponding to the item found at the specified path.
+             */
+            virtual Item resolve(std::string path) = 0;
     };
 
     class Dropbox: public Endpoint {
         public:
-        private:
+            void add();
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~Dropbox() override;
     };
 
     class Box: public Endpoint {
         public:
-        private:
+            void add();
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~Box() override;
     };
 
     class GoogleDrive: public Endpoint {
         public:
-        private:
+            void add(AccountEndpointCredential cred);
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~GoogleDrive() override;
     };
 
     class GridFTP: public Endpoint {
         public:
-        private:
+            void add();
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~GridFTP() override;
     };
 
     class FTP: public Endpoint {
         public:
-        private:
+            void add(AccountEndpointCredential cred);
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~FTP() override;
     };
 
     class SFTP: public Endpoint {
         public:
-        private:
+            void add(AccountEndpointCredential cred);
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~SFTP() override;
     };
 
     class HTTP: public Endpoint {
+        public:
+            virtual Item resolve() override;
+            virtual Item resolve(std::string path) override;
+            virtual ~HTTP() override;
+    };
+
+    class TransferRequest {
+        public:
+        private:
+    };
+
+    class TransferStatus {
+        public:
+        private:
+    };
+
+    class Item {
+        public:
+        private:
+    };
+
+    class AccountEndpointCredential {
         public:
         private:
     };
