@@ -46,7 +46,7 @@ namespace ods {
              * @return a <code>TransferStatus<code> object with the status of the specified transfer
              */
             TransferStatus get_transfer_status(const std::string id) const;
-            virtual ~Transfer() override;
+            virtual ~Transfer() override = default;
     };
 
     class Endpoint: public OneDataShare {
@@ -66,7 +66,7 @@ namespace ods {
             void add() const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~Dropbox() override;
+            virtual ~Dropbox() override = default;
     };
 
     class Box: public Endpoint {
@@ -74,7 +74,7 @@ namespace ods {
             void add() const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~Box() override;
+            virtual ~Box() override = default;
     };
 
     class GoogleDrive: public Endpoint {
@@ -82,7 +82,7 @@ namespace ods {
             void add(const AccountEndpointCredential cred) const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~GoogleDrive() override;
+            virtual ~GoogleDrive() override = default;
     };
 
     class GridFTP: public Endpoint {
@@ -90,7 +90,7 @@ namespace ods {
             void add() const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~GridFTP() override;
+            virtual ~GridFTP() override = default;
     };
 
     class FTP: public Endpoint {
@@ -98,7 +98,7 @@ namespace ods {
             void add(const AccountEndpointCredential cred) const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~FTP() override;
+            virtual ~FTP() override = default;
     };
 
     class SFTP: public Endpoint {
@@ -106,14 +106,14 @@ namespace ods {
             void add(const AccountEndpointCredential cred) const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~SFTP() override;
+            virtual ~SFTP() override = default;
     };
 
     class HTTP: public Endpoint {
         public:
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
-            virtual ~HTTP() override;
+            virtual ~HTTP() override = default;
     };
 
     class TransferRequest {
