@@ -8,6 +8,7 @@
 #define ONE_DATA_SHARE_INCLUDED
 
 #include <string>
+#include <unordered_set>
 #include <vector>
 #include <rest.hpp>
 
@@ -132,8 +133,8 @@ namespace ods {
             const int _priority;
     };
 
+    //TODO: define members
     class TransferStatus {
-        //TODO: define members
         public:
             TransferStatus(const TransferStatus&) = delete;
             TransferStatus& operator=(const TransferStatus&) = delete;
@@ -178,12 +179,22 @@ namespace ods {
 
     class Source {
         public:
-            Source();
+            Source(const EndpointType type, const std::string cred_id, const std::vector<Item> items);
+            Source(const EndpointType type, const std::string cred_id, const Item item);
             Source(const Source&) = delete;
-            Source& operator=(Source&) = delete;
+            Source& operator=(const Source&) = delete;
+            EndpointType type();
+            std::string cred_id();
+            ItemInfo info();
+            std::unordered_set<ItemInfo> info_list();
         private:
+            const EndpointType _type;
+            const std::string _cred_id;
+            const ItemInfo _info;
+            const std::unordered_set<ItemInfo> _info_list;
     };
 
+    // TODO: define members
     class Destination {
         public:
             Destination();
@@ -192,15 +203,30 @@ namespace ods {
         private:
     };
 
+    // TODO: define members
     class TransferOptions {
         public:
             TransferOptions();
             TransferOptions(const TransferOptions&) = delete;
             TransferOptions& operator=(const TransferOptions&) = delete;
+        private:
+    };
+
+    // TODO: define members
+    class ItemInfo {
+        public:
+            ItemInfo();
+            ItemInfo(const ItemInfo&) = delete;
+            ItemInfo& operator=(const ItemInfo&) = delete;
+        private:
     };
     
     enum class FileType {
         LINK, FILE, DIRECTORY
+    };
+
+    enum class EndpointType {
+        DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, GFTP, HTTP
     };
 }
 
