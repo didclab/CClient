@@ -151,6 +151,7 @@ namespace ods {
             void download() const;
             bool mkdir(const std::string directory_name);
         private:
+            // TODO: write constructor
             Item();
             const std::string _item;
             const std::string _name;
@@ -194,13 +195,18 @@ namespace ods {
             const std::unordered_set<ItemInfo> _info_list;
     };
 
-    // TODO: define members
     class Destination {
         public:
-            Destination();
+            Destination(const EndpointType type, const std::string cred_id, const Item item);
             Destination(const Destination&) = delete;
             Destination& operator=(const Destination&) = delete;
+            EndpointType type();
+            std::string cred_id();
+            ItemInfo info();
         private:
+            const EndpointType _type;
+            const std::string _cred_id;
+            const ItemInfo _info;
     };
 
     // TODO: define members
