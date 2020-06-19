@@ -162,10 +162,18 @@ namespace ods {
 
     class AccountEndpointCredential {
         public:
-            AccountEndpointCredential();
+            AccountEndpointCredential(const std::string account_id, const std::string uri, const std::string username, const std::string secret);
             AccountEndpointCredential(const AccountEndpointCredential&) = delete;
             AccountEndpointCredential& operator=(const AccountEndpointCredential&) = delete;
+            std::string account_id();
+            std::string uri();
+            std::string username();
+            std::string secret();
         private:
+            const std::string _account_id;
+            const std::string _uri;
+            const std::string _username;
+            const std::string _secret;
     };
 
     class Source {
