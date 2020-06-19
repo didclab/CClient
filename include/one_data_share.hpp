@@ -7,6 +7,7 @@
 #ifndef ONE_DATA_SHARE_INCLUDED
 #define ONE_DATA_SHARE_INCLUDED
 
+#include <optional>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -28,7 +29,7 @@ namespace ods {
             Item list() const;
             bool remove() const;
             void download() const;
-            bool mkdir(const std::string directory_name);
+            bool mkdir(const std::string directory_name) const;
         private:
             // TODO: write constructor
             Item();
