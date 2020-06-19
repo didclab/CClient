@@ -8,6 +8,7 @@
 #define ONE_DATA_SHARE_INCLUDED
 
 #include <string>
+#include <vector>
 #include <rest.hpp>
 
 namespace ods {
@@ -144,8 +145,19 @@ namespace ods {
         public:
             Item(const Item&) = delete;
             Item& operator=(const Item&) = delete;
+            Item list() const;
+            bool remove() const;
+            void download() const;
+            bool mkdir(const std::string directory_name);
         private:
             Item();
+            const std::string _item;
+            const std::string _name;
+            const long _size;
+            FileType _type;
+            std::string _link;
+            std::string _permissions;
+            std::vector<Item> _files_list;
     };
 
     class AccountEndpointCredential {
@@ -177,6 +189,10 @@ namespace ods {
             TransferOptions();
             TransferOptions(const TransferOptions&) = delete;
             TransferOptions& operator=(const TransferOptions&) = delete;
+    };
+    
+    enum class FileType {
+        LINK, FILE, DIRECTORY
     };
 }
 
