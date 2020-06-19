@@ -17,6 +17,7 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
+    include/one_data_share.hpp
     src/rest.hpp
     src/rest.cpp
 )
@@ -25,7 +26,7 @@ target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
 
 # add main executable
 add_executable(main examples/main.cpp)
-target_include_directories(main PRIVATE src/)
+target_include_directories(main PRIVATE src/ include/)
 target_link_libraries(main PRIVATE odscclient)
 
 install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
@@ -76,6 +77,6 @@ endif()
 add_executable(tests
     tests/rest_tests.cpp
 )
-target_include_directories(tests PRIVATE src/)
+target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main odscclient)
 install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})

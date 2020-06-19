@@ -13,6 +13,129 @@
 #include <rest.hpp>
 
 namespace ods {
+    enum class FileType {
+        LINK, FILE, DIRECTORY
+    };
+
+    enum class EndpointType {
+        DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, GFTP, HTTP
+    };
+
+    class Item {
+        public:
+            Item(const Item&) = delete;
+            Item& operator=(const Item&) = delete;
+            Item list() const;
+            bool remove() const;
+            void download() const;
+            bool mkdir(const std::string directory_name);
+        private:
+            // TODO: write constructor
+            Item();
+            const std::string _item;
+            const std::string _name;
+            const long _size;
+            const FileType _type;
+            const std::string _link;
+            const std::string _permissions;
+            const std::vector<Item> _files_list;
+    };
+
+    class ItemInfo {
+        public:
+            ItemInfo(const ItemInfo&) = delete;
+            ItemInfo& operator=(const ItemInfo&) = delete;
+            std::string id();
+            std::string path();
+            long size();
+        private:
+            ItemInfo(const std::string id, const std::string path, const std::string size);
+            const std::string _id;
+            const std::string _path;
+            const long _size;
+    };
+
+    class Source {
+        public:
+            Source(const EndpointType type, const std::string cred_id, const std::vector<Item> items);
+            Source(const EndpointType type, const std::string cred_id, const Item item);
+            Source(const Source&) = delete;
+            Source& operator=(const Source&) = delete;
+            EndpointType type();
+            std::string cred_id();
+            ItemInfo info();
+            std::unordered_set<ItemInfo> info_list();
+        private:
+            const EndpointType _type;
+            const std::string _cred_id;
+            const ItemInfo _info;
+            const std::unordered_set<ItemInfo> _info_list;
+    };
+
+    class Destination {
+        public:
+            Destination(const EndpointType type, const std::string cred_id, const Item item);
+            Destination(const Destination&) = delete;
+            Destination& operator=(const Destination&) = delete;
+            EndpointType type();
+            std::string cred_id();
+            ItemInfo info();
+        private:
+            const EndpointType _type;
+            const std::string _cred_id;
+            const ItemInfo _info;
+    };
+
+    // TODO: define members
+    class TransferOptions {
+        public:
+            TransferOptions();
+            TransferOptions(const TransferOptions&) = delete;
+            TransferOptions& operator=(const TransferOptions&) = delete;
+        private:
+    };
+
+    class TransferRequest {
+        public:
+            TransferRequest(const Source source, const Destination destination, const TransferOptions transfer_options, const int priority);
+            TransferRequest(const TransferRequest&) = delete;
+            TransferRequest& operator=(const TransferRequest&) = delete;
+            Source source() const;
+            Destination destination() const;
+            TransferOptions options() const;
+            int priority() const;
+        private:
+            const Source _source;
+            const Destination _destination;
+            const TransferOptions _options;
+            const int _priority;
+    };
+
+    //TODO: define members
+    class TransferStatus {
+        public:
+            TransferStatus(const TransferStatus&) = delete;
+            TransferStatus& operator=(const TransferStatus&) = delete;
+        private:
+            TransferStatus();
+    };
+
+    class AccountEndpointCredential {
+        public:
+            AccountEndpointCredential(const std::string account_id, const std::string uri, const std::string username, const std::string secret);
+            AccountEndpointCredential(const AccountEndpointCredential&) = delete;
+            AccountEndpointCredential& operator=(const AccountEndpointCredential&) = delete;
+            std::string account_id();
+            std::string uri();
+            std::string username();
+            std::string secret();
+        private:
+            const std::string _account_id;
+            const std::string _uri;
+            const std::string _username;
+            const std::string _secret;
+    };
+
     class OneDataShare {
         public:
             /**
@@ -115,130 +238,6 @@ namespace ods {
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
             virtual ~HTTP() override = default;
-    };
-
-    class TransferRequest {
-        public:
-            TransferRequest(const Source source, const Destination destination, const TransferOptions transfer_options, const int priority);
-            TransferRequest(const TransferRequest&) = delete;
-            TransferRequest& operator=(const TransferRequest&) = delete;
-            Source source() const;
-            Destination destination() const;
-            TransferOptions options() const;
-            int priority() const;
-        private:
-            const Source _source;
-            const Destination _destination;
-            const TransferOptions _options;
-            const int _priority;
-    };
-
-    //TODO: define members
-    class TransferStatus {
-        public:
-            TransferStatus(const TransferStatus&) = delete;
-            TransferStatus& operator=(const TransferStatus&) = delete;
-        private:
-            TransferStatus();
-    };
-
-    class Item {
-        public:
-            Item(const Item&) = delete;
-            Item& operator=(const Item&) = delete;
-            Item list() const;
-            bool remove() const;
-            void download() const;
-            bool mkdir(const std::string directory_name);
-        private:
-            // TODO: write constructor
-            Item();
-            const std::string _item;
-            const std::string _name;
-            const long _size;
-            const FileType _type;
-            const std::string _link;
-            const std::string _permissions;
-            const std::vector<Item> _files_list;
-    };
-
-    class AccountEndpointCredential {
-        public:
-            AccountEndpointCredential(const std::string account_id, const std::string uri, const std::string username, const std::string secret);
-            AccountEndpointCredential(const AccountEndpointCredential&) = delete;
-            AccountEndpointCredential& operator=(const AccountEndpointCredential&) = delete;
-            std::string account_id();
-            std::string uri();
-            std::string username();
-            std::string secret();
-        private:
-            const std::string _account_id;
-            const std::string _uri;
-            const std::string _username;
-            const std::string _secret;
-    };
-
-    class Source {
-        public:
-            Source(const EndpointType type, const std::string cred_id, const std::vector<Item> items);
-            Source(const EndpointType type, const std::string cred_id, const Item item);
-            Source(const Source&) = delete;
-            Source& operator=(const Source&) = delete;
-            EndpointType type();
-            std::string cred_id();
-            ItemInfo info();
-            std::unordered_set<ItemInfo> info_list();
-        private:
-            const EndpointType _type;
-            const std::string _cred_id;
-            const ItemInfo _info;
-            const std::unordered_set<ItemInfo> _info_list;
-    };
-
-    class Destination {
-        public:
-            Destination(const EndpointType type, const std::string cred_id, const Item item);
-            Destination(const Destination&) = delete;
-            Destination& operator=(const Destination&) = delete;
-            EndpointType type();
-            std::string cred_id();
-            ItemInfo info();
-        private:
-            const EndpointType _type;
-            const std::string _cred_id;
-            const ItemInfo _info;
-    };
-
-    // TODO: define members
-    class TransferOptions {
-        public:
-            TransferOptions();
-            TransferOptions(const TransferOptions&) = delete;
-            TransferOptions& operator=(const TransferOptions&) = delete;
-        private:
-    };
-
-    // TODO: define members
-    class ItemInfo {
-        public:
-            ItemInfo(const ItemInfo&) = delete;
-            ItemInfo& operator=(const ItemInfo&) = delete;
-            std::string id();
-            std::string path();
-            long size();
-        private:
-            ItemInfo(const std::string id, const std::string path, const std::string size);
-            const std::string _id;
-            const std::string _path;
-            const long _size;
-    };
-    
-    enum class FileType {
-        LINK, FILE, DIRECTORY
-    };
-
-    enum class EndpointType {
-        DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, GFTP, HTTP
     };
 }
 
