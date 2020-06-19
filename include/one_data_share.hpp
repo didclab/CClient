@@ -7,10 +7,25 @@
 #ifndef ONE_DATA_SHARE_INCLUDED
 #define ONE_DATA_SHARE_INCLUDED
 
+#include <string>
+
 namespace ods {
     class OneDataShare {
         public:
+            /**
+             * Create a new object with the specified authentication token.
+             * 
+             * @param ods_auth_token authentication token used to make requests to One Data Share
+             */
+            OneDataShare(std::string ods_auth_token);
+            OneDataShare(const OneDataShare&) = delete;
+            OneDataShare& operator=(const OneDataShare&) = delete;
+            virtual ~OneDataShare() = 0;
         private:
+            /**
+             * Authentication token used to make requests to One Data Share.
+             */
+            std::string ods_auth_token;
     };
 
     class Transfer: public OneDataShare {
