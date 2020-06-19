@@ -117,18 +117,18 @@ namespace ods {
 
     class TransferRequest {
         public:
-            TransferRequest(Source source, Destination destination, TransferOptions transfer_options, int priority);
+            TransferRequest(const Source source, const Destination destination, const TransferOptions transfer_options, const int priority);
             TransferRequest(const TransferRequest&) = delete;
             TransferRequest& operator=(const TransferRequest&) = delete;
-            Source source();
-            Destination destination();
-            TransferOptions options();
-            int priority();
+            Source source() const;
+            Destination destination() const;
+            TransferOptions options() const;
+            int priority() const;
         private:
-            Source _source;
-            Destination _destination;
-            TransferOptions _options;
-            int _priority;
+            const Source _source;
+            const Destination _destination;
+            const TransferOptions _options;
+            const int _priority;
     };
 
     class TransferStatus {
