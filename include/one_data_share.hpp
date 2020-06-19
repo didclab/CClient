@@ -53,65 +53,65 @@ namespace ods {
             /**
              * Returns an <code>Item</code> corresponding to the item found at the root of the endpoint.
              */
-            virtual Item resolve() = 0;
+            virtual Item resolve() const = 0;
             /**
              * Returns an <code>Item</code> corresponding to the item found at the specified path.
              */
-            virtual Item resolve(std::string path) = 0;
+            virtual Item resolve(const std::string path) const = 0;
     };
 
     class Dropbox: public Endpoint {
         public:
-            void add();
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            void add() const;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~Dropbox() override;
     };
 
     class Box: public Endpoint {
         public:
-            void add();
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            void add() const;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~Box() override;
     };
 
     class GoogleDrive: public Endpoint {
         public:
-            void add(AccountEndpointCredential cred);
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            void add(const AccountEndpointCredential cred) const;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~GoogleDrive() override;
     };
 
     class GridFTP: public Endpoint {
         public:
-            void add();
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            void add() const;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~GridFTP() override;
     };
 
     class FTP: public Endpoint {
         public:
-            void add(AccountEndpointCredential cred);
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            void add(const AccountEndpointCredential cred) const;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~FTP() override;
     };
 
     class SFTP: public Endpoint {
         public:
-            void add(AccountEndpointCredential cred);
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            void add(const AccountEndpointCredential cred) const;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~SFTP() override;
     };
 
     class HTTP: public Endpoint {
         public:
-            virtual Item resolve() override;
-            virtual Item resolve(std::string path) override;
+            virtual Item resolve() const override;
+            virtual Item resolve(const std::string path) const override;
             virtual ~HTTP() override;
     };
 
