@@ -148,7 +148,7 @@ namespace ods {
             OneDataShare(const OneDataShare&) = delete;
             OneDataShare& operator=(const OneDataShare&) = delete;
             virtual ~OneDataShare() = 0;
-        private:
+        protected:
             /**
              * Authentication token used to make requests to One Data Share.
              */
