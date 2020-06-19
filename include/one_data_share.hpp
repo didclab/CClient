@@ -30,7 +30,7 @@ namespace ods {
             bool remove() const;
             void download() const;
             bool mkdir(const std::string directory_name) const;
-        private:
+        protected:
             // TODO: write constructor
             Item();
             const std::string _item;
