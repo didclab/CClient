@@ -18,7 +18,7 @@ namespace ods {
              * 
              * @param ods_auth_token authentication token used to make requests to One Data Share
              */
-            OneDataShare(std::string ods_auth_token);
+            OneDataShare(const std::string ods_auth_token);
             OneDataShare(const OneDataShare&) = delete;
             OneDataShare& operator=(const OneDataShare&) = delete;
             virtual ~OneDataShare() = 0;
@@ -26,7 +26,7 @@ namespace ods {
             /**
              * Authentication token used to make requests to One Data Share.
              */
-            std::string ods_auth_token;
+            const std::string _ods_auth_token;
     };
 
     class Transfer: public OneDataShare {
