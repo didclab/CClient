@@ -38,13 +38,13 @@ namespace ods {
              * 
              * @return string corresponding to the id of the request
              */
-            std::string transfer(TransferRequest request);
+            std::string transfer(const TransferRequest request) const;
             /**
              * Retrieves the status of the transfer with the specified id.
              * 
              * @return a <code>TransferStatus<code> object with the status of the specified transfer
              */
-            TransferStatus get_transfer_status(std::string id);
+            TransferStatus get_transfer_status(const std::string id) const;
             virtual ~Transfer() override;
     };
 
