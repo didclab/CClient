@@ -117,7 +117,18 @@ namespace ods {
 
     class TransferRequest {
         public:
+            TransferRequest(Source source, Destination destination, TransferOptions transfer_options, int priority);
+            TransferRequest(const TransferRequest&) = delete;
+            TransferRequest& operator=(const TransferRequest&) = delete;
+            Source source();
+            Destination destination();
+            TransferOptions options();
+            int priority();
         private:
+            Source _source;
+            Destination _destination;
+            TransferOptions _options;
+            int _priority;
     };
 
     class TransferStatus {
@@ -133,6 +144,18 @@ namespace ods {
     class AccountEndpointCredential {
         public:
         private:
+    };
+
+    class Source {
+
+    };
+
+    class Destination {
+
+    };
+
+    class TransferOptions {
+
     };
 }
 
