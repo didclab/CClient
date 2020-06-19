@@ -156,6 +156,7 @@ namespace ods {
 
     class Transfer: public OneDataShare {
         public:
+            Transfer(const std::string ods_auth_token);
             /**
              * Performs the specified transfer request.
              * 
@@ -175,6 +176,7 @@ namespace ods {
 
     class Endpoint: public OneDataShare {
         public:
+            Endpoint(const std::string ods_auth_token);
             /**
              * Returns an <code>Item</code> corresponding to the item found at the root of the endpoint.
              */
@@ -187,6 +189,7 @@ namespace ods {
 
     class Dropbox: public Endpoint {
         public:
+            Dropbox(const std::string ods_auth_token);
             void add() const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
@@ -195,6 +198,7 @@ namespace ods {
 
     class Box: public Endpoint {
         public:
+            Box(const std::string ods_auth_token);
             void add() const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
@@ -203,6 +207,7 @@ namespace ods {
 
     class GoogleDrive: public Endpoint {
         public:
+            GoogleDrive(const std::string ods_auth_token);
             void add(const AccountEndpointCredential cred) const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
@@ -211,6 +216,7 @@ namespace ods {
 
     class GridFTP: public Endpoint {
         public:
+            GridFTP(const std::string ods_auth_token);
             void add() const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
@@ -219,6 +225,7 @@ namespace ods {
 
     class FTP: public Endpoint {
         public:
+            FTP(const std::string ods_auth_token);
             void add(const AccountEndpointCredential cred) const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
@@ -227,6 +234,7 @@ namespace ods {
 
     class SFTP: public Endpoint {
         public:
+            SFTP(const std::string ods_auth_token);
             void add(const AccountEndpointCredential cred) const;
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
@@ -235,6 +243,7 @@ namespace ods {
 
     class HTTP: public Endpoint {
         public:
+            HTTP(const std::string ods_auth_token);
             virtual Item resolve() const override;
             virtual Item resolve(const std::string path) const override;
             virtual ~HTTP() override = default;
