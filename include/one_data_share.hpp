@@ -154,10 +154,10 @@ namespace ods {
             const std::string _item;
             const std::string _name;
             const long _size;
-            FileType _type;
-            std::string _link;
-            std::string _permissions;
-            std::vector<Item> _files_list;
+            const FileType _type;
+            const std::string _link;
+            const std::string _permissions;
+            const std::vector<Item> _files_list;
     };
 
     class AccountEndpointCredential {
