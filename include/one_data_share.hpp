@@ -59,6 +59,72 @@ namespace ods {
             DropboxItem();
     };
 
+    class BoxItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~BoxItem() override;
+        private:
+            BoxItem();
+    };
+
+    class GoogleDriveItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~GoogleDriveItem() override;
+        private:
+            GoogleDriveItem();
+    };
+
+    class GridFTPItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~GridFTPItem() override;
+        private:
+            GridFTPItem();
+    };
+
+    class FTPItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~FTPItem() override;
+        private:
+            FTPItem();
+    };
+
+    class SFTPItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~SFTPItem() override;
+        private:
+            SFTPItem();
+    };
+
+    class HTTPItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~HTTPItem() override;
+        private:
+            HTTPItem();
+    };
+
     class ItemInfo {
         public:
             ItemInfo(const ItemInfo&) = delete;
