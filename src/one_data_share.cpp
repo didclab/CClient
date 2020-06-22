@@ -3,7 +3,7 @@
  * Andrew Mikalsen
  * 6/22/20
  * 
- * Contains implementatins from one_data_share.hpp that aren't significant enough to warrant their own file.
+ * Contains implementations from one_data_share.hpp that aren't significant enough to warrant their own file.
  */
 
 #include <string>
