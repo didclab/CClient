@@ -153,8 +153,6 @@ namespace ods {
         public:
             Source(const EndpointType type, const std::string cred_id, const std::vector<std::reference_wrapper<Item>> items);
             Source(const EndpointType type, const std::string cred_id, const Item& item);
-            Source(const Source&) = delete;
-            Source& operator=(const Source&) = delete;
             EndpointType type();
             std::string cred_id();
             ItemInfo info();
@@ -169,8 +167,6 @@ namespace ods {
     class Destination {
         public:
             Destination(const EndpointType type, const std::string cred_id, const Item& item);
-            Destination(const Destination&) = delete;
-            Destination& operator=(const Destination&) = delete;
             EndpointType type();
             std::string cred_id();
             ItemInfo info();
