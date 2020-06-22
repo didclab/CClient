@@ -18,10 +18,11 @@ add_library(simd
 # add ods client library
 add_library(odscclient
     include/one_data_share.hpp
+    src/one_data_share.cpp
     src/rest.hpp
     src/rest.cpp
 )
-target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/)
+target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
 
 # add main executable

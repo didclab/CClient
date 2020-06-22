@@ -16,14 +16,24 @@
 #include <rest.hpp>
 
 namespace ods {
+
+    /**
+     * Types that an <code>Item</code> can be.
+     */
     enum class FileType {
         LINK, FILE, DIRECTORY
     };
 
+    /**
+     * Types that an <code>Endpoint</code> can be.
+     */
     enum class EndpointType {
         DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, GFTP, HTTP
     };
 
+    /**
+     * Abstract base class for handles to files, links and directories found in various endpoints.
+     */
     class Item {
         public:
             Item(const Item&) = delete;
