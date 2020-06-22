@@ -7,6 +7,8 @@
 #ifndef ONE_DATA_SHARE_INCLUDED
 #define ONE_DATA_SHARE_INCLUDED
 
+#include <functional>
+#include <memory>
 #include <optional>
 #include <string>
 #include <unordered_set>
@@ -26,10 +28,14 @@ namespace ods {
         public:
             Item(const Item&) = delete;
             Item& operator=(const Item&) = delete;
-            Item list() const;
-            bool remove() const;
-            void download() const;
-            bool mkdir(const std::string directory_name) const;
+            virtual std::unique_ptr<Item> list() const = 0;
+            virtual bool remove() const = 0;
+            virtual void download() const = 0;
+            virtual bool mkdir(const std::string directory_name) const = 0;
+            /**
+             * Frees dynamically allocated memory.
+             */
+            ~Item();
         protected:
             // TODO: write constructor
             Item();
@@ -39,7 +45,7 @@ namespace ods {
             const FileType _type;
             const std::string _link;
             const std::string _permissions;
-            const std::vector<Item> _files_list;
+            const std::vector<std::reference_wrapper<Item>> _files_list;
     };
 
     class ItemInfo {
@@ -58,8 +64,8 @@ namespace ods {
 
     class Source {
         public:
-            Source(const EndpointType type, const std::string cred_id, const std::vector<Item> items);
-            Source(const EndpointType type, const std::string cred_id, const Item item);
+            Source(const EndpointType type, const std::string cred_id, const std::vector<std::reference_wrapper<Item>> items);
+            Source(const EndpointType type, const std::string cred_id, const Item& item);
             Source(const Source&) = delete;
             Source& operator=(const Source&) = delete;
             EndpointType type();
@@ -75,7 +81,7 @@ namespace ods {
 
     class Destination {
         public:
-            Destination(const EndpointType type, const std::string cred_id, const Item item);
+            Destination(const EndpointType type, const std::string cred_id, const Item& item);
             Destination(const Destination&) = delete;
             Destination& operator=(const Destination&) = delete;
             EndpointType type();
@@ -181,19 +187,19 @@ namespace ods {
             /**
              * Returns an <code>Item</code> corresponding to the item found at the root of the endpoint.
              */
-            virtual Item resolve() const = 0;
+            virtual std::unique_ptr<Item> resolve() const = 0;
             /**
              * Returns an <code>Item</code> corresponding to the item found at the specified path.
              */
-            virtual Item resolve(const std::string path) const = 0;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const = 0;
     };
 
     class Dropbox: public Endpoint {
         public:
             Dropbox(const std::string ods_auth_token);
             void add() const;
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~Dropbox() override = default;
     };
 
@@ -201,8 +207,8 @@ namespace ods {
         public:
             Box(const std::string ods_auth_token);
             void add() const;
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~Box() override = default;
     };
 
@@ -210,8 +216,8 @@ namespace ods {
         public:
             GoogleDrive(const std::string ods_auth_token);
             void add(const AccountEndpointCredential cred) const;
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~GoogleDrive() override = default;
     };
 
@@ -219,8 +225,8 @@ namespace ods {
         public:
             GridFTP(const std::string ods_auth_token);
             void add() const;
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~GridFTP() override = default;
     };
 
@@ -228,8 +234,8 @@ namespace ods {
         public:
             FTP(const std::string ods_auth_token);
             void add(const AccountEndpointCredential cred) const;
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~FTP() override = default;
     };
 
@@ -237,16 +243,16 @@ namespace ods {
         public:
             SFTP(const std::string ods_auth_token);
             void add(const AccountEndpointCredential cred) const;
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~SFTP() override = default;
     };
 
     class HTTP: public Endpoint {
         public:
             HTTP(const std::string ods_auth_token);
-            virtual Item resolve() const override;
-            virtual Item resolve(const std::string path) const override;
+            virtual std::unique_ptr<Item> resolve() const override;
+            virtual std::unique_ptr<Item> resolve(const std::string path) const override;
             virtual ~HTTP() override = default;
     };
 }
