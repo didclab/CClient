@@ -19,6 +19,7 @@ add_library(simd
 add_library(odscclient
     include/one_data_share.hpp
     src/one_data_share.cpp
+    src/transfer.cpp
     src/rest.hpp
     src/rest.cpp
 )
