@@ -180,8 +180,6 @@ namespace ods {
     class TransferOptions {
         public:
             TransferOptions();
-            TransferOptions(const TransferOptions&) = delete;
-            TransferOptions& operator=(const TransferOptions&) = delete;
         private:
     };
 
