@@ -35,7 +35,7 @@ namespace ods {
             /**
              * Frees dynamically allocated memory.
              */
-            ~Item();
+            virtual ~Item() = 0;
         protected:
             // TODO: write constructor
             Item();
@@ -46,6 +46,17 @@ namespace ods {
             const std::string _link;
             const std::string _permissions;
             const std::vector<std::reference_wrapper<Item>> _files_list;
+    };
+
+    class DropboxItem: public Item {
+        public:
+            virtual std::unique_ptr<Item> list() const override;
+            virtual bool remove() const override;
+            virtual void download() const override;
+            virtual bool mkdir(const std::string directory_name) const override;
+            virtual ~DropboxItem() override;
+        private:
+            DropboxItem();
     };
 
     class ItemInfo {
