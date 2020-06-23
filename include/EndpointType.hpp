@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef ENDPOINT_TYPE_INCLUDED
-#define ENDPOINT_TYPE_INCLUDED
+#ifndef ENDPOINT_TYPE_HPP_INCLUDED
+#define ENDPOINT_TYPE_HPP_INCLUDED
 
 namespace ods {
     enum class EndpointType {
@@ -13,4 +13,4 @@ namespace ods {
     };
 }
 
-#endif // ENDPOINT_TYPE_INCLUDED
+#endif // ENDPOINT_HPP_TYPE_INCLUDED

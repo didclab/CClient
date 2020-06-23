@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef ITEM_INCLUDED
-#define ITEM_INCLUDED
+#ifndef ITEM_HPP_INCLUDED
+#define ITEM_HPP_INCLUDED
 
 #include <EndpointType.hpp>
 
@@ -21,4 +21,4 @@ namespace ods {
     };
 }
 
-#endif // ITEM_INCLUDED
+#endif // ITEM_HPP_INCLUDED

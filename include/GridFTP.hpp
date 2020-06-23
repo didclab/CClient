@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef GRID_FTP_INCLUDED
-#define GRID_FTP_INCLUDED
+#ifndef GRID_FTP_HPP_INCLUDED
+#define GRID_FTP_HPP_INCLUDED
 
 #include <Endpoint.hpp>
 
@@ -20,4 +20,4 @@ namespace ods {
     };
 }
 
-#endif // GRID_FTP_INCLUDED
+#endif // GRID_FTP_HPP_INCLUDED

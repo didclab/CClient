@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef SOURCE_INCLUDED
-#define SOURCE_INCLUDED
+#ifndef SOURCE_HPP_INCLUDED
+#define SOURCE_HPP_INCLUDED
 
 #include <string>
 #include <unordered_set>
@@ -31,4 +31,4 @@ namespace ods {
     };
 }
 
-#endif SOURCE_INCLUDED
+#endif // SOURCE_HPP_INCLUDED

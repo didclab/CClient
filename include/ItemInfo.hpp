@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef ITEM_INFO_INCLUDED
-#define ITEM_INFO_INCLUDED
+#ifndef ITEM_INFO_HPP_INCLUDED
+#define ITEM_INFO_HPP_INCLUDED
 
 #include <string>
 
@@ -23,4 +23,4 @@ namespace ods {
     };
 }
 
-#endif // ITEM_INFO_INCLUDED
+#endif // ITEM_INFO_HPP_INCLUDED

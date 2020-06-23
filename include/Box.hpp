@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef BOX_INCLUDED
-#define BOX_INCLUDED
+#ifndef BOX_HPP_INCLUDED
+#define BOX_HPP_INCLUDED
 
 #include <Endpoint.hpp>
 
@@ -20,4 +20,4 @@ namespace ods {
     };
 }
 
-#endif // BOX_INCLUDED
+#endif // BOX_HPP_INCLUDED

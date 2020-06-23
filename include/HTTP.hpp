@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef HTTP_INCLUDED
-#define HTTP_INCLUDED
+#ifndef HTTP_HPP_INCLUDED
+#define HTTP_HPP_INCLUDED
 
 #include <Endpoint.hpp>
 
@@ -19,4 +19,4 @@ namespace ods {
     };
 }
 
-#endif // HTTP_INCLUDED
+#endif // HTTP_HPP_INCLUDED

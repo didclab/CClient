@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef SFTP_INCLUDED
-#define SFTP_INCLUDED
+#ifndef SFTP_HPP_INCLUDED
+#define SFTP_HPP_INCLUDED
 
 #include <AccountEndpointCredential.hpp>
 #include <Endpoint.hpp>
@@ -21,4 +21,4 @@ namespace ods {
     };
 }
 
-#endif // SFTP_INCLUDED
+#endif // SFTP_HPP_INCLUDED

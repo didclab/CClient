@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef TRANSFER_REQUEST_INCLUDED
-#define TRANSFER_REQUEST_INCLUDED
+#ifndef TRANSFER_REQUEST_HPP_INCLUDED
+#define TRANSFER_REQUEST_HPP_INCLUDED
 
 #include <Source.hpp>
 #include <Destination.hpp>
@@ -29,4 +29,4 @@ namespace ods {
     };
 }
 
-#endif // TRANSFER_REQUEST_INCLUDED
+#endif // TRANSFER_REQUEST_HPP_INCLUDED

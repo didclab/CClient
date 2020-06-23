@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef ONE_DATA_SHARE_INCLUDED
-#define ONE_DATA_SHARE_INCLUDED
+#ifndef ONE_DATA_SHARE_HPP_INCLUDED
+#define ONE_DATA_SHARE_HPP_INCLUDED
 
 #include <string>
 
@@ -21,4 +21,4 @@ namespace ods {
     };
 }
 
-#endif // ONE_DATA_SHARE_INCLUDED
+#endif // ONE_DATA_SHARE_HPP_INCLUDED

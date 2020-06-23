@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef TRANSFER_INCLUDED
-#define TRANSFER_INCLUDED
+#ifndef TRANSFER_HPP_INCLUDED
+#define TRANSFER_HPP_INCLUDED
 
 #include <OneDataShare.hpp>
 #include <TransferStatus.hpp>
@@ -21,4 +21,4 @@ namespace ods {
     };
 }
 
-#endif // TRANSFER_INCLUDED
+#endif // TRANSFER_HPP_INCLUDED

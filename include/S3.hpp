@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef S3_INCLUDED
-#define S3_INCLUDED
+#ifndef S3_HPP_INCLUDED
+#define S3_HPP_INCLUDED
 
 #include <AccountEndpointCredential.hpp>
 #include <Endpoint.hpp>
@@ -21,4 +21,4 @@ namespace ods {
     };
 }
 
-#endif // S3_INCLUDED
+#endif // S3_HPP_INCLUDED

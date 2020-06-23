@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef FTP_INCLUDED
-#define FTP_INCLUDED
+#ifndef FTP_HPP_INCLUDED
+#define FTP_HPP_INCLUDED
 
 #include <AccountEndpointCredential.hpp>
 #include <Endpoint.hpp>
@@ -21,4 +21,4 @@ namespace ods {
     };
 }
 
-#endif // FTP_INCLUDED
+#endif // FTP_HPP_INCLUDED

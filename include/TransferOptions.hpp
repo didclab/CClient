@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef TRANSFER_OPTIONS_INCLUDED
-#define TRANSFER_OPTIONS_INCLUDED
+#ifndef TRANSFER_OPTIONS_HPP_INCLUDED
+#define TRANSFER_OPTIONS_HPP_INCLUDED
 
 namespace ods {
     // TODO: define
@@ -17,4 +17,4 @@ namespace ods {
     };
 }
 
-#endif // TRANSFER_OPTIONS_INCLUDED
+#endif // TRANSFER_OPTIONS_HPP_INCLUDED

@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef DROPBOX_INCLUDED
-#define DROPBOX_INCLUDED
+#ifndef DROPBOX_HPP_INCLUDED
+#define DROPBOX_HPP_INCLUDED
 
 #include <Endpoint.hpp>
 
@@ -20,4 +20,4 @@ namespace ods {
     };
 }
 
-#endif // DROPBOX_INCLUDED
+#endif // DROPBOX_HPP_INCLUDED

@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef GOOGLE_DRIVE_INCLUDED
-#define GOOGLE_DRIVE_INCLUDED
+#ifndef GOOGLE_DRIVE_HPP_INCLUDED
+#define GOOGLE_DRIVE_HPP_INCLUDED
 
 #include <Endpoint.hpp>
 
@@ -20,4 +20,4 @@ namespace ods {
     };
 }
 
-#endif // GOOGLE_DRIVE_INCLUDED
+#endif // GOOGLE_DRIVE_HPP_INCLUDED

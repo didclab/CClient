@@ -4,8 +4,8 @@
  * 6/23/30
  */
 
-#ifndef ENDPOINT_INCLUDED
-#define ENDPOINT_INCLUDED
+#ifndef ENDPOINT_HPP_INCLUDED
+#define ENDPOINT_HPP_INCLUDED
 
 #include <string>
 #include <Item.hpp>
@@ -20,4 +20,4 @@ namespace ods {
     };
 }
 
-#endif // ENDPOINT_INCLUDED
+#endif // ENDPOINT_HPP_INCLUDED

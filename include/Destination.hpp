@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#ifndef DESTINATION_INCLUDED
-#define DESTINATION_INCLUDED
+#ifndef DESTINATION_HPP_INCLUDED
+#define DESTINATION_HPP_INCLUDED
 
 #include <string>
 #include <EndpointType.hpp>
@@ -26,4 +26,4 @@ namespace ods {
     };
 }
 
-#endif // DESTINATION_INCLUDED
+#endif // DESTINATION_HPP_INCLUDED
