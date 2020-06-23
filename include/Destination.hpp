@@ -15,7 +15,7 @@
 namespace ods {
     class Destination {
         public:
-            Destination(const EndpointType type, const std::string cred_id, const Item& item);
+            Destination(const EndpointType type, const std::string cred_id, const Item item);
             EndpointType type() const;
             std::string cred_id() const;
             ItemInfo info() const;

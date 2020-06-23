@@ -17,8 +17,8 @@
 namespace ods {
     class Source {
         public:
-            Source(const EndpointType type, const std::string cred_id, const std::vector<std::reference_wrapper<Item>> items);
-            Source(const EndpointType type, const std::string cred_id, const Item& item);
+            Source(const EndpointType type, const std::string cred_id, const std::vector<Item> items);
+            Source(const EndpointType type, const std::string cred_id, const Item item);
             EndpointType type() const;
             std::string cred_id() const;
             ItemInfo info() const;
