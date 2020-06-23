@@ -137,8 +137,6 @@ namespace ods {
 
     class ItemInfo {
         public:
-            ItemInfo(const ItemInfo&) = delete;
-            ItemInfo& operator=(const ItemInfo&) = delete;
             std::string id();
             std::string path();
             long size();
@@ -153,10 +151,10 @@ namespace ods {
         public:
             Source(const EndpointType type, const std::string cred_id, const std::vector<std::reference_wrapper<Item>> items);
             Source(const EndpointType type, const std::string cred_id, const Item& item);
-            EndpointType type();
-            std::string cred_id();
-            ItemInfo info();
-            std::unordered_set<ItemInfo> info_list();
+            EndpointType type() const;
+            std::string cred_id() const;
+            ItemInfo info() const;
+            std::unordered_set<ItemInfo> info_list() const;
         private:
             const EndpointType _type;
             const std::string _cred_id;
@@ -167,9 +165,9 @@ namespace ods {
     class Destination {
         public:
             Destination(const EndpointType type, const std::string cred_id, const Item& item);
-            EndpointType type();
-            std::string cred_id();
-            ItemInfo info();
+            EndpointType type() const;
+            std::string cred_id() const;
+            ItemInfo info() const;
         private:
             const EndpointType _type;
             const std::string _cred_id;
@@ -185,7 +183,17 @@ namespace ods {
 
     class TransferRequest {
         public:
-            TransferRequest(const Source source, const Destination destination, const TransferOptions transfer_options, const int priority);
+            /**
+             * Creates a new TransferRequest object between the specified Source and Destination.
+             * 
+             * The Source and Destination objects must outlive this TransferRequest object.
+             * 
+             * @param source source of the request which must outlive the returned TransferRequest
+             * @param destination destination of the request which must outlive the returned TransferRequest
+             * @param transfer_options configurations for the transfer
+             * @param priority indicates the weight to give the request during scheduling
+             */
+            TransferRequest(const Source& source, const Destination& destination, const TransferOptions transfer_options, const int priority);
             TransferRequest(const TransferRequest&) = delete;
             TransferRequest& operator=(const TransferRequest&) = delete;
             Source source() const;
@@ -193,8 +201,8 @@ namespace ods {
             TransferOptions options() const;
             int priority() const;
         private:
-            const Source _source;
-            const Destination _destination;
+            const Source& _source;
+            const Destination& _destination;
             const TransferOptions _options;
             const int _priority;
     };
