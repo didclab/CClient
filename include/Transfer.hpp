@@ -15,8 +15,8 @@ namespace ods {
     class Transfer: public OneDataShare {
         public:
             Transfer(const std::string ods_auth_token);
-            std::string transfer(const TransferRequest request) const;
-            TransferStatus get_transfer_status(const std::string id) const;
+            std::string transfer(const TransferRequest& request) const;
+            TransferStatus get_transfer_status(const std::string& id) const;
             virtual ~Transfer() override = default;
     };
 }
