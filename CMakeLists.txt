@@ -17,7 +17,6 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    include/one_data_share.hpp
     include/AccountEndpointCredential.hpp
     include/Box.hpp
     include/Destination.hpp
@@ -38,8 +37,6 @@ add_library(odscclient
     include/TransferOptions.hpp
     include/TransferRequest.hpp
     include/TransferStatus.hpp
-    src/one_data_share.cpp
-    src/transfer.cpp
     src/rest.hpp
     src/rest.cpp
 )
