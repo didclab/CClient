@@ -1,5 +1,5 @@
 /*
- * rest.cpp
+ * Rest.cpp
  * Andrew Mikalsen
  * 6/5/20
  */
@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <vector>
 #include <curl/curl.h>
-#include "rest.hpp"
+#include "Rest.hpp"
 
 namespace ods {
     namespace rest {

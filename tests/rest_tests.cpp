@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 #include <string>
 #include <unordered_map>
-#include <rest.hpp>
+#include <rest/Rest.hpp>
 
 namespace {
     /*

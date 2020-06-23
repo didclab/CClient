@@ -8,8 +8,8 @@
 #include <fstream>
 #include <unordered_map>
 #include <vector>
-#include <rest.hpp>
 #include <../simdjson/simdjson.h>
+#include <rest/Rest.hpp>
 
 int main() {
     // parse token.txt

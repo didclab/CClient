@@ -1,11 +1,11 @@
 /*
- * rest.hpp
+ * Rest.hpp
  * Andrew Mikalsen
  * 6/5/20
  */
 
-#ifndef CURL_WRAPPER_HPP_INCLUDED
-#define CURL_WRAPPER_HPP_INCLUDED
+#ifndef REST_HPP_INCLUDED
+#define REST_HPP_INCLUDED
 
 #include <string>
 #include <unordered_map>
@@ -114,4 +114,4 @@ namespace ods {
     }
 }
 
-#endif // CURL_WRAPPER_HPP_INCLUDED
+#endif // REST_HPP_INCLUDED
