@@ -37,8 +37,12 @@ add_library(odscclient
     include/TransferOptions.hpp
     include/TransferRequest.hpp
     include/TransferStatus.hpp
-    src/rest/Rest.hpp
+    src/rest/CurlRest.cpp
+    src/rest/CurlRest.hpp
+    src/rest/Response.cpp
+    src/rest/Response.hpp
     src/rest/Rest.cpp
+    src/rest/Rest.hpp
 )
 target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)

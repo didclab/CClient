@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <vector>
 #include <../simdjson/simdjson.h>
-#include <rest/Rest.hpp>
+#include <rest/CurlRest.hpp>
 
 int main() {
     // parse token.txt
