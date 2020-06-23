@@ -18,6 +18,26 @@ add_library(simd
 # add ods client library
 add_library(odscclient
     include/one_data_share.hpp
+    include/AccountEndpointCredential.hpp
+    include/Box.hpp
+    include/Destination.hpp
+    include/Dropbox.hpp
+    include/Endpoint.hpp
+    include/EndpointType.hpp
+    include/FTP.hpp
+    include/GoogleDrive.hpp
+    include/GridFTP.hpp
+    include/HTTP.hpp
+    include/Item.hpp
+    include/ItemInfo.hpp
+    include/OneDataShare.hpp
+    include/S3.hpp
+    include/SFTP.hpp
+    include/Source.hpp
+    include/Transfer.hpp
+    include/TransferOptions.hpp
+    include/TransferRequest.hpp
+    include/TransferStatus.hpp
     src/one_data_share.cpp
     src/transfer.cpp
     src/rest.hpp
