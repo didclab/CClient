@@ -98,7 +98,7 @@ endif()
 
 # add unit tests
 add_executable(tests
-    tests/rest_tests.cpp
+    tests/ResponseTests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main odscclient)
