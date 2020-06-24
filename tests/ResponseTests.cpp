@@ -1,12 +1,12 @@
 /*
- * rest_tests.cpp
+ * ResponseTests.cpp
  * Andrew Mikalasen
  * 6/17/20
  */
 
-#include <gtest/gtest.h>
 #include <string>
 #include <unordered_map>
+#include <gtest/gtest.h>
 #include <rest/Response.hpp>
 
 namespace {
