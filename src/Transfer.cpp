@@ -14,7 +14,7 @@ namespace ods {
         // TODO: implement
     }
 
-    TransferStatus get_transfer_status(const std::string& id) const {
+    TransferStatus Transfer::get_transfer_status(const std::string& id) const {
         // TODO: implement
     }
 }
