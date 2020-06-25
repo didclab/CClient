@@ -38,6 +38,8 @@ add_library(odscclient
     include/TransferRequest.hpp
     include/TransferStatus.hpp
     src/Destination.cpp
+    src/Item.cpp
+    src/ItemInfo.cpp
     src/OneDataShare.cpp
     src/Source.cpp
     src/Transfer.cpp
