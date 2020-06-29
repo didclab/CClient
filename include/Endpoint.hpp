@@ -5,6 +5,9 @@
  */
 
 namespace ods {
+    /**
+     * Connection to a One Data Share endpoint.
+     */
     class Endpoint {
         Endpoint();
         Endpoint(const Endpoint&) = delete;
