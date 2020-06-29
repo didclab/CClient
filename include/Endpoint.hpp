@@ -12,10 +12,12 @@ namespace ods {
      * Connection to a One Data Share endpoint.
      */
     class Endpoint {
-        Endpoint() = default;
-        Endpoint(const Endpoint&) = delete;
-        Endpoint& operator=(const Endpoint&) = delete;
-        virtual ~Endpoint() = 0;
+        public:
+            Endpoint(const Endpoint&) = delete;
+            Endpoint& operator=(const Endpoint&) = delete;
+            virtual ~Endpoint() = 0;
+        protected:
+            Endpoint() = default;
     };
 }
 

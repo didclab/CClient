@@ -9,13 +9,15 @@
 
 namespace ods {
     /**
-     * Lazily-evaluated handle to an item found at an endpoint.
+     * Lazily-evaluated handle to a directory, file, or link found at an endpoint.
      */
     class Item {
-        Item() = default;
-        Item(const Item&) = delete;
-        Item& operator=(const Item&) = delete;
-        virtual ~Item() = 0;
+        public:
+            Item(const Item&) = delete;
+            Item& operator=(const Item&) = delete;
+            virtual ~Item() = 0;
+        protected:
+            Item() = default;
     };
 }
 
