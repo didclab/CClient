@@ -11,10 +11,6 @@ namespace ods {
 
     // TODO: define
     class TransferOptions {
-        public:
-            virtual ~TransferOptions() = 0;
-        protected:
-            TransferOptions() = default;
     };
 }
 
