@@ -12,6 +12,7 @@
 #include <Destination.hpp>
 #include <Source.hpp>
 #include <TransferOptions.hpp>
+#include <TransferStatus.hpp>
 
 namespace ods {
     class TransferService{
@@ -19,6 +20,8 @@ namespace ods {
             static std::unique_ptr<TransferService> create(std::string ods_auth_token);
 
             virtual std::string transfer(Source source, Destination destination, TransferOptions options) = 0;
+
+            virtual TransferStatus status(std::string id) = 0;
 
             virtual ~TransferService() = 0;
         protected:
