@@ -30,7 +30,7 @@ namespace ods {
              * 
              * @return a unique pointer to a new TransferService object
              */
-            static std::unique_ptr<TransferService> create(std::string ods_auth_token);
+            static std::unique_ptr<TransferService> create(const std::string ods_auth_token);
 
             /**
              * Starts a new transfer job from the specified source to the
@@ -44,7 +44,7 @@ namespace ods {
              * 
              * @return the id of the new transfer job
              */
-            virtual std::string transfer(Source* source, Destination* destination, TransferOptions* options) const = 0;
+            virtual std::string transfer(const Source* source, const Destination* destination, const TransferOptions* options) const = 0;
 
             /**
              * Checks the status of the specified transfer job by creatinh a new
@@ -54,7 +54,7 @@ namespace ods {
              * 
              * @return unique pointer to the status of the transfer job
              */
-            virtual std::unique_ptr<TransferStatus> status(std::string id) const = 0;
+            virtual std::unique_ptr<TransferStatus> status(const std::string id) const = 0;
 
             TransferService(const TransferService&) = delete;
             TransferService& operator=(const TransferService&) = delete;
