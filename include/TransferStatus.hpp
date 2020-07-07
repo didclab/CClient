@@ -11,6 +11,8 @@ namespace ods {
 
     // TODO: define
     class TransferStatus {
+        public:
+            virtual ~TransferStatus() = 0;
     };
 }
 
