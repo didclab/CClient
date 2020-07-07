@@ -1,4 +1,4 @@
-/**
+/*
  * Source.hpp
  * Andrew Mikalsen
  * 7/7/20
@@ -35,7 +35,7 @@ namespace ods {
              * @return a unique pointer to a new Source object
              */
             static std::unique_ptr<Source> create(EndpointType type, std::string cred_id, std::string directory_identifier, std::vector<std::string> resource_identifiers);
-            
+
             virtual ~Source() = 0;
         protected:
             Source() = default;

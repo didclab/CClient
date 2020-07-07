@@ -1,4 +1,4 @@
-/**
+/*
  * Resource.hpp
  * Andrew Mikalsen
  * 6/29/20
