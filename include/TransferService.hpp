@@ -9,11 +9,16 @@
 
 #include <memory>
 #include <string>
+#include <Destination.hpp>
+#include <Source.hpp>
+#include <TransferOptions.hpp>
 
 namespace ods {
     class TransferService{
         public:
             static std::unique_ptr<TransferService> create(std::string ods_auth_token);
+
+            virtual std::string transfer(Source source, Destination destination, TransferOptions options) = 0;
 
             virtual ~TransferService() = 0;
         protected:
