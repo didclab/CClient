@@ -21,16 +21,17 @@ namespace ods {
              * Creates a new Destination object with the specified endpoint and
              * directory.
              * 
-             * @param type the endpoint type to transfer to
-             * @param cred_id the credential identifier of the endpoint to
-             * transfer to
-             * @param directory_identifier the path or id, depending on the
-             * endpoint type, that is needed in order to locate the directory
-             * in which the transfered resources should be placed
+             * @param type borrowed reference to the endpoint type to transfer
+             * to
+             * @param cred_id borrowed reference to the credential identifier of
+             * the endpoint to transfer to
+             * @param directory_identifier borrowed reference to the path or id,
+             * depending on the endpoint type, that is needed in order to locate
+             * the directory in which the transfered resources should be placed
              * 
              * @return a unique pointer to the Destination object
              */
-            static std::unique_ptr<Destination> create(EndpointType type, std::string cred_id, std::string directory_identifier);
+            static std::unique_ptr<Destination> create(const EndpointType& type, const std::string& cred_id, const std::string& directory_identifier);
 
             virtual ~Destination() = 0;
         protected:
