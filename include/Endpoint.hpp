@@ -10,10 +10,12 @@
 #include <memory>
 #include <string>
 #include <EndpointType.hpp>
+#include <Resource.hpp>
 
 namespace ods {
     /**
-     * Service providing access to an endpoint of a specific type and credential id.
+     * Service providing access to an endpoint of a specific type and credential id. Endpoint objects cannot be copied
+     * via their copy constructor nor their copy assignment operator.
      */
     class Endpoint {
         public:
@@ -29,9 +31,24 @@ namespace ods {
              */
             static std::unique_ptr<Endpoint> create(EndpointType type, std::string cred_id, std::string ods_auth_token);
 
+            /**
+             * Gets the Resource found using the specified identifier. The
+             * specifics of the identifier are dependent on the endpoint type.
+             * For endpoints that look up resources by paths, the identifier
+             * will be the path from the root of the endpoint to the resource.
+             * For endpoints that look up resoruces by id, the identifier will
+             * be the id of the resource to look up. Endpoint types that use
+             * paths are Dropbox, SFTP, FTP, S3, GFTP, and GTTP. Endpoint types
+             * that use ids are Google Drive and Box.
+             * 
+             * @param identifier string used to tell the endpoint how to find
+             * the resource
+             */
+            virtual Resource list(std::string identifier) = 0;
+
             Endpoint(const Endpoint&) = delete;
             Endpoint& operator=(const Endpoint&) = delete;
-            
+
             virtual ~Endpoint() = 0;
         protected:
             Endpoint() = default;
