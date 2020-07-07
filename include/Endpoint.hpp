@@ -78,7 +78,7 @@ namespace ods {
              * @return a unique pointer to the created Resource or a null
              * pointer if no resource was found
              */
-            virtual std::unique_ptr<Resource> list(std::string identifier) = 0;
+            virtual std::unique_ptr<Resource> list(std::string identifier) const = 0;
 
             /**
              * Removes the specified resource from the endpoint if the resource
@@ -94,7 +94,7 @@ namespace ods {
              * @return true if and only if this operation successfully removed
              * the specified resource from the endpoint
              */
-            virtual bool remove(std::string identifier, std::string to_delete) = 0;
+            virtual bool remove(std::string identifier, std::string to_delete) const = 0;
 
             /**
              * Creates a new directory with the specified name under the
@@ -109,7 +109,7 @@ namespace ods {
              * @return true if and only if this operation successfully created
              * the the new directory under the specified directory
              */
-            virtual bool mkdir(std::string identifier, std::string folder_to_create) = 0;
+            virtual bool mkdir(std::string identifier, std::string folder_to_create) const = 0;
 
             /**
              * Downloads the specified resource if the resource was found.
@@ -124,7 +124,7 @@ namespace ods {
              * @return true if and only if this operation successfully
              * downloaded the specified resource from the endpoint
              */
-            virtual bool download(std::string identifier, std::string file_to_download) = 0;
+            virtual bool download(std::string identifier, std::string file_to_download) const = 0;
 
             Endpoint(const Endpoint&) = delete;
             Endpoint& operator=(const Endpoint&) = delete;
