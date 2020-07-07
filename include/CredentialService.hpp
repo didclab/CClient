@@ -7,6 +7,7 @@
 #ifndef CREDENTIAL_SERVICE_HPP_INCLUDED
 #define CREDENTIAL_SERVICE_HPP_INCLUDED
 
+#include <memory>
 #include <string>
 #include <vector>
 #include <EndpointType.hpp>
@@ -36,6 +37,8 @@ namespace ods {
      */
     class CredentialService {
         public:
+            static std::unique_ptr<CredentialService> create(std::string ods_auth_token);
+
             virtual std::string oauth_link(OAuthEndpointType type) const = 0;
 
             virtual bool register_credential(CredentialEndpointType type, std::string cred_id, std::string uri, std::string username, std::string secret) const = 0;
