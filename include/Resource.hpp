@@ -21,11 +21,10 @@ namespace ods {
             /**
              * Gets the id of the Resource if the Resource has an id. The
              * Resource will have an id if and only if the endpoint used
-             * supports ids. These endpoints include Box and Google Drive. The
-             * caller is expected to check for a null pointer if they are not
-             * certain that the Resource has an id. The returned pointer is
-             * reference counted, so the pointer is safe to use even after the
-             * Resource is deallocated.
+             * supports ids. The caller is expected to check for a null pointer
+             * if they are not certain that the Resource has an id. The returned
+             * pointer is reference counted, so the pointer is safe to use even
+             * after the Resource is deallocated.
              * 
              * @return a shared pointer to the id of the Resource or a null
              * pointer if the Resource doesn't have an id
