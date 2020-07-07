@@ -12,12 +12,21 @@
 
 namespace ods {
 
+    /**
+     * Contains the endpoint types that can be registered with One Data Share by
+     * providing One Data Share with the credentials needed to log into the
+     * endpoint.
+     */
     enum class CredentialEndpointType {
-
+        SFTP, FTP, S3, HTTP
     };
 
+    /**
+     * Contains the endpoint types that can be registered with One Data Share
+     * by using OAuth to give One Data Share permission to use the endpoint.
+     */
     enum class OAuthEndpointType {
-
+        DROPBOX, GOOGLE_DRIVE, BOX, GFTP
     };
 
     /**
