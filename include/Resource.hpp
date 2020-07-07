@@ -108,7 +108,7 @@ namespace ods {
             Resource& operator=(const Resource&) = delete;
 
             virtual ~Resource() = 0;
-        private:
+        protected:
             Resource() = default;
     };
 }
