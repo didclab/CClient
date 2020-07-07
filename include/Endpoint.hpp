@@ -32,19 +32,25 @@ namespace ods {
             static std::unique_ptr<Endpoint> create(EndpointType type, std::string cred_id, std::string ods_auth_token);
 
             /**
-             * Gets the Resource found using the specified identifier. The
-             * specifics of the identifier are dependent on the endpoint type.
-             * For endpoints that look up resources by paths, the identifier
-             * will be the path from the root of the endpoint to the resource.
-             * For endpoints that look up resoruces by id, the identifier will
-             * be the id of the resource to look up. Endpoint types that use
-             * paths are Dropbox, SFTP, FTP, S3, GFTP, and GTTP. Endpoint types
-             * that use ids are Google Drive and Box.
+             * Gets the Resource found using the specified identifier if a
+             * Resource was found. The specifics of the identifier are dependent
+             * on the endpoint type. For endpoints that look up resources by
+             * paths, the identifier will be the path from the root of the
+             * endpoint to the resource. For endpoints that look up resoruces by
+             * id, the identifier will be the id of the resource to look up.
+             * Endpoint types that use paths are Dropbox, SFTP, FTP, S3, GFTP,
+             * and GTTP. Endpoint types that use ids are Google Drive and Box.
+             * The user is expected to check for a null pointer unless they are
+             * absolutely certain that the Resource was found. The caller is
+             * responsible for memory management of the returned Resource.
              * 
              * @param identifier string used to tell the endpoint how to find
              * the resource
+             * 
+             * @return unqique pointer to the Resource found or a null pointer
+             * if no Resource was found
              */
-            virtual Resource list(std::string identifier) = 0;
+            virtual std::unique_ptr<Resource> list(std::string identifier) = 0;
 
             Endpoint(const Endpoint&) = delete;
             Endpoint& operator=(const Endpoint&) = delete;
