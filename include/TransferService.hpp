@@ -44,7 +44,7 @@ namespace ods {
              * 
              * @return the id of the new transfer job
              */
-            virtual std::string transfer(Source source, Destination destination, TransferOptions options) = 0;
+            virtual std::string transfer(Source source, Destination destination, TransferOptions options) const = 0;
 
             /**
              * Checks the status of the specified transfer job
@@ -53,7 +53,7 @@ namespace ods {
              * 
              * @return the status of the transfer job
              */
-            virtual TransferStatus status(std::string id) = 0;
+            virtual TransferStatus status(std::string id) const = 0;
 
             virtual ~TransferService() = 0;
         protected:
