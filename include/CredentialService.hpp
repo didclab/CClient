@@ -91,7 +91,7 @@ namespace ods {
             CredentialService& operator=(const CredentialService&) = delete;
 
             virtual ~CredentialService() = 0;
-        private:
+        protected:
             CredentialService() = default;
     };
 }
