@@ -50,11 +50,12 @@ namespace ods {
              * Checks the status of the specified transfer job by creatinh a new
              * TransferStatus object whose ownership is passed to the caller.
              * 
-             * @param id the id of the transfer job to check
+             * @param id borrowed reference to the id of the transfer job to
+             * check
              * 
              * @return unique pointer to the status of the transfer job
              */
-            virtual std::unique_ptr<TransferStatus> status(const std::string id) const = 0;
+            virtual std::unique_ptr<TransferStatus> status(const std::string& id) const = 0;
 
             TransferService(const TransferService&) = delete;
             TransferService& operator=(const TransferService&) = delete;
