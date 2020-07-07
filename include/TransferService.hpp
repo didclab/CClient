@@ -55,6 +55,9 @@ namespace ods {
              */
             virtual TransferStatus status(std::string id) const = 0;
 
+            TransferService(const TransferService&) = delete;
+            TransferService& operator=(const TransferService&) = delete;
+
             virtual ~TransferService() = 0;
         protected:
             TransferService() = default;
