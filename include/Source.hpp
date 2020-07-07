@@ -10,7 +10,9 @@
 namespace ods {
     class Source {
         public:
+            virtual ~Source() = 0;
         protected:
+            Source() = default
     };
 }
 
