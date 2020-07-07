@@ -19,7 +19,7 @@ namespace ods {
      * their copy assignment operator.
      * 
      * <p>
-     * Differnet endpoint types may have slightly different behavior
+     * Different endpoint types may have slightly different behavior
      * and functionality. These differences are described as follows.
      * </p>
      * 
