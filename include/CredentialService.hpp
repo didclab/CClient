@@ -8,6 +8,7 @@
 #define CREDENTIAL_SERVICE_HPP_INCLUDED
 
 #include <string>
+#include <vector>
 #include <EndpointType.hpp>
 
 namespace ods {
@@ -35,7 +36,11 @@ namespace ods {
      */
     class CredentialService {
         public:
-            virtual std::string oauth_link(OAuthEndpointType type) = 0;
+            virtual std::string oauth_link(OAuthEndpointType type) const = 0;
+
+            virtual bool register_credential(CredentialEndpointType type, std::string cred_id, std::string uri, std::string username, std::string secret) const = 0;
+
+            virtual std::vector<std::string> credential_id_list(EndpointType type) const = 0;
 
             CredentialService(const CredentialService&) = delete;
             CredentialService& operator=(const CredentialService&) = delete;
