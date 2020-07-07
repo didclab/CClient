@@ -10,7 +10,9 @@
 namespace ods {
     class TransferService{
         public:
+            virtual ~TransferService() = 0;
         protected:
+            TransferService() = default;
     };
 }
 
