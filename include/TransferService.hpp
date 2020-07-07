@@ -47,13 +47,14 @@ namespace ods {
             virtual std::string transfer(Source* source, Destination* destination, TransferOptions* options) const = 0;
 
             /**
-             * Checks the status of the specified transfer job
+             * Checks the status of the specified transfer job by creatinh a new
+             * TransferStatus object whose ownership is passed to the caller.
              * 
              * @param id the id of the transfer job to check
              * 
-             * @return the status of the transfer job
+             * @return unique pointer to the status of the transfer job
              */
-            virtual TransferStatus status(std::string id) const = 0;
+            virtual std::unique_ptr<TransferStatus> status(std::string id) const = 0;
 
             TransferService(const TransferService&) = delete;
             TransferService& operator=(const TransferService&) = delete;
