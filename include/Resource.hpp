@@ -30,14 +30,14 @@ namespace ods {
              * @return a shared pointer to the id of the Resource or a null
              * pointer if the Resource doesn't have an id
              */
-            const std::shared_ptr<std::string> id();
+            virtual const std::shared_ptr<std::string> id() = 0;
 
             /**
              * Gets the name of the Resource.
              * 
              * @return a copy of the name of the Resource
              */
-            std::string name();
+            virtual std::string name() = 0;
 
             /**
              * Gets the size of the Resource. If size is called on a Resource
@@ -45,28 +45,28 @@ namespace ods {
              * 
              * @return a copy of the size of the Resource
              */
-            long size();
+            virtual long size() = 0;
 
             /**
              * Gets the time of the Resource.
              * 
              * @return a copy of the time of the Resource
              */
-            long time();
+            virtual long time() = 0;
 
             /**
              * Determines whether or not the Resource is a directory.
              * 
              * @return true if and only if the Resource is a directory.
              */
-            bool is_directory();
+            virtual bool is_directory() = 0;
 
             /**
              * Determines whether or not the Resource is a file.
              * 
              * @return true if and only if the Resource is a file.
              */
-            bool is_file();
+            virtual bool is_file() = 0;
 
             /**
              * Gets the link of the Resource if and only if the Resource is a
@@ -78,7 +78,7 @@ namespace ods {
              * @return a shared pointer to the link of the Resource or a null
              * pointer if the Resource isn't a link
              */
-            const std::shared_ptr<std::string> link();
+            virtual const std::shared_ptr<std::string> link() = 0;
 
             /**
              * Gets the permissions of the Resource if the resource has
@@ -90,7 +90,7 @@ namespace ods {
              * @return a shared pointer to the permissions of the Resource or a
              * null pointer if the Resource isn't a link
              */
-            const std::shared_ptr<std::string> permissions();
+            virtual const std::shared_ptr<std::string> permissions() = 0;
 
             /**
              * Gets the Resource objects contained in this Resource if and only
@@ -103,7 +103,7 @@ namespace ods {
              * @return a shared pointer to the Resource objects contained in
              * this Resource or null if the Resource isn't a directory
              */
-            const std::shared_ptr<std::string> contained_resources();
+            virtual const std::shared_ptr<std::string> contained_resources() = 0;
 
             Resource(const Resource&) = delete;
             Resource& operator=(const Resource&) = delete;
