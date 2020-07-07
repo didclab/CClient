@@ -10,7 +10,10 @@
 namespace ods {
     class Destination {
         public:
+
+            virtual ~Destination() = 0;
         protected:
+            Destination() = default;
     };
 }
 
