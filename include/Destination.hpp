@@ -13,7 +13,7 @@
 
 namespace ods {
     /**
-     * indicates the destination endpoint of a transfer.
+     * Indicates the destination endpoint of a transfer.
      */
     class Destination {
         public:
