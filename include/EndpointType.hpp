@@ -9,7 +9,7 @@
 
 namespace ods {
     /**
-     * Contains the possible types of an Endpoint.
+     * Contains the possible types of an endpoint.
      */
     enum class EndpointType {
         DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, S3, GFTP, HTTP
