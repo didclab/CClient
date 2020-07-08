@@ -59,7 +59,7 @@ namespace ods {
              * 
              * @return a string containing the OAuth url
              */
-            virtual std::string oauth_link(const OAuthEndpointType& type) const = 0;
+            virtual std::string oauth_url(const OAuthEndpointType& type) const = 0;
 
             /**
              * Registers the specified endpoint with One Data Share using the
