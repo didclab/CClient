@@ -17,8 +17,7 @@ namespace ods {
     /**
      * Contains the endpoint types that can be registered with One Data Share by
      * providing One Data Share with the credentials needed to log into the
-     * endpoint. CredentialService objects cannot be copied via their copy 
-     * constructor nor their copy assignment operator.
+     * endpoint.
      */
     enum class CredentialEndpointType {
         SFTP, FTP, S3, HTTP
@@ -34,7 +33,8 @@ namespace ods {
 
     /**
      * Service providing all functionality related to registering credentials
-     * with One Data Share.
+     * with One Data Share. CredentialService objects cannot be copied via their copy 
+     * constructor nor their copy assignment operator.
      */
     class CredentialService {
         public:
