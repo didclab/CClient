@@ -99,10 +99,11 @@ namespace ods {
              * The returned pointer is reference counted, so the pointer is safe
              * to use even after the Resource is deallocated.
              * 
-             * @return a shared pointer to the Resource objects contained in
-             * this Resource or null if the Resource isn't a directory
+             * @return a shared pointer to a vector holding the Resource objects
+             * contained in this Resource or null if the Resource isn't a
+             * directory
              */
-            virtual const std::shared_ptr<std::string> contained_resources() const = 0;
+            virtual const std::shared_ptr<std::vector<std::unique_ptr<Resource>>> contained_resources() const = 0;
 
             Resource(const Resource&) = delete;
             Resource& operator=(const Resource&) = delete;
