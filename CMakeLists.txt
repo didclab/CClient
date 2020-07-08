@@ -17,8 +17,15 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
+    include/CredentialService.hpp
+    include/Destination.hpp
     include/Endpoint.hpp
-    include/Item.hpp
+    include/EndpointType.hpp
+    include/Resource.hpp
+    include/Source.hpp
+    include/TransferOptions.hpp
+    include/TransferService.hpp
+    include/TransferStatus.hpp
     src/rest/CurlRest.cpp
     src/rest/CurlRest.hpp
     src/rest/Response.cpp
