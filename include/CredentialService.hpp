@@ -48,7 +48,7 @@ namespace ods {
              * 
              * @return a unique pointer to a new CredentialService object
              */
-            static std::unique_ptr<CredentialService> create(const std::string ods_auth_token);
+            static std::unique_ptr<CredentialService> create(std::string ods_auth_token);
 
             /**
              * Gets the url that can be used to register an endpoint of the
@@ -58,7 +58,7 @@ namespace ods {
              * 
              * @return a string containing the OAuth url
              */
-            virtual std::string oauth_url(const OAuthEndpointType type) const = 0;
+            virtual std::string oauth_url(OAuthEndpointType type) const = 0;
 
             /**
              * Registers the specified endpoint with One Data Share using the
@@ -77,7 +77,7 @@ namespace ods {
              * @return true if and only if this operation successfully
              * registered the endpoint with the specified credentials
              */
-            virtual bool register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
+            virtual bool register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
 
             /**
              * Lists the credential identifiers of the specified endpoint type
@@ -89,7 +89,7 @@ namespace ods {
              * @return a vector of the registered credential identifiers for the
              * sepcified endpoint
              */
-            virtual std::vector<std::string> credential_id_list(const EndpointType type) const = 0;
+            virtual std::vector<std::string> credential_id_list(EndpointType type) const = 0;
 
             CredentialService(const CredentialService&) = delete;
             CredentialService& operator=(const CredentialService&) = delete;

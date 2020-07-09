@@ -63,7 +63,7 @@ namespace ods {
              * 
              * @return a unique pointer to a new Endpoint object
              */
-            static std::unique_ptr<Endpoint> create(const EndpointType type, const std::string cred_id, const std::string ods_auth_token);
+            static std::unique_ptr<Endpoint> create(EndpointType type, std::string cred_id, std::string ods_auth_token);
 
             /**
              * Creates a Resource object corresponding to the resource found at

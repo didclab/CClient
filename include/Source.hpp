@@ -34,7 +34,7 @@ namespace ods {
              * 
              * @return a unique pointer to a new Source object
              */
-            static std::unique_ptr<Source> create(const EndpointType type, const std::string cred_id, const std::string directory_identifier, const std::vector<std::string> resource_identifiers);
+            static std::unique_ptr<Source> create(EndpointType type, std::string cred_id, std::string directory_identifier, std::vector<std::string> resource_identifiers);
 
             virtual ~Source() = 0;
         protected:

@@ -30,7 +30,7 @@ namespace ods {
              * 
              * @return a unique pointer to the Destination object
              */
-            static std::unique_ptr<Destination> create(const EndpointType type, const std::string cred_id, const std::string directory_identifier);
+            static std::unique_ptr<Destination> create(EndpointType type, std::string cred_id, std::string directory_identifier);
 
             virtual ~Destination() = 0;
         protected:

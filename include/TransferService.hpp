@@ -30,7 +30,7 @@ namespace ods {
              * 
              * @return a unique pointer to a new TransferService object
              */
-            static std::unique_ptr<TransferService> create(const std::string ods_auth_token);
+            static std::unique_ptr<TransferService> create(std::string ods_auth_token);
 
             /**
              * Starts a new transfer job from the specified source to the
