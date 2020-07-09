@@ -26,6 +26,11 @@ add_library(odscclient
     include/TransferOptions.hpp
     include/TransferService.hpp
     include/TransferStatus.hpp
+    src/CredentialService.cpp
+    src/Destination.cpp
+    src/Endpoint.cpp
+    src/Source.cpp
+    src/TransferService.cpp
     src/rest/CurlRest.cpp
     src/rest/CurlRest.hpp
     src/rest/Response.cpp
@@ -47,6 +52,8 @@ install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
 # uncomment to test that example_1 compiles
 #add_executable(example_1 examples/example_1.cpp)
 #target_include_directories(example_1 PRIVATE include/)
+#target_link_libraries(example_1 PRIVATE odscclient)
+
 
 # download google test
 
