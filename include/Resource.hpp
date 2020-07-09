@@ -103,7 +103,7 @@ namespace ods {
              * contained in this Resource or null if the Resource isn't a
              * directory
              */
-            virtual std::shared_ptr<const std::vector<const std::shared_ptr<const Resource>>> contained_resources() const = 0;
+            virtual std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> contained_resources() const = 0;
 
             Resource(const Resource&) = delete;
             Resource& operator=(const Resource&) = delete;
