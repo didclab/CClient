@@ -36,15 +36,15 @@ namespace ods {
              * Starts a new transfer job from the specified source to the
              * specified destination with the specified options.
              * 
-             * @param source borrowed pointer to the source of the transfer
-             * @param destination borrowed pointer to the destination of the
+             * @param source borrowed reference to the source of the transfer
+             * @param destination borrowed reference to the destination of the
              * transfer
-             * @param options borrowed pointer to the the options to use for
+             * @param options borrowed reference to the the options to use for
              * this transfer request
              * 
              * @return the id of the new transfer job
              */
-            virtual std::string transfer(const Source* source, const Destination* destination, const TransferOptions* options) const = 0;
+            virtual std::string transfer(const Source& source, const Destination& destination, const TransferOptions& options) const = 0;
 
             /**
              * Checks the status of the specified transfer job by creatinh a new
