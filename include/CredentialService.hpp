@@ -10,7 +10,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <EndpointType.hpp>
+#include "EndpointType.hpp"
 
 namespace ods {
 

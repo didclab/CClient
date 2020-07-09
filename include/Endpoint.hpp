@@ -9,8 +9,8 @@
 
 #include <memory>
 #include <string>
-#include <EndpointType.hpp>
-#include <Resource.hpp>
+#include "EndpointType.hpp"
+#include "Resource.hpp"
 
 namespace ods {
     /**

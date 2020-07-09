@@ -9,7 +9,7 @@
 
 #include <memory>
 #include <string>
-#include <EndpointType.hpp>
+#include "EndpointType.hpp"
 
 namespace ods {
     /**

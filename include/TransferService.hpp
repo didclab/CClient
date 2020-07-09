@@ -9,10 +9,10 @@
 
 #include <memory>
 #include <string>
-#include <Destination.hpp>
-#include <Source.hpp>
-#include <TransferOptions.hpp>
-#include <TransferStatus.hpp>
+#include "Destination.hpp"
+#include "Source.hpp"
+#include "TransferOptions.hpp"
+#include "TransferStatus.hpp"
 
 namespace ods {
     /**
