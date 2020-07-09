@@ -44,8 +44,9 @@ target_link_libraries(main PRIVATE odscclient)
 install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # add example 1 executable
-add_executable(example_1 examples/example_1.cpp)
-target_include_directories(example_1 PRIVATE include/)
+# uncomment to test that example_1 compiles
+#add_executable(example_1 examples/example_1.cpp)
+#target_include_directories(example_1 PRIVATE include/)
 
 # download google test
 
