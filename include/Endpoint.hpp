@@ -56,15 +56,14 @@ namespace ods {
              * specifed credential id and authentication token, passing
              * ownership of the Endpoint object to the caller.
              * 
-             * @param type borrowed reference to the type of endpoint to return
-             * @param cred_id borrowed reference to the credential id of the
-             * endpoint to use
-             * @param ods_auth_token borrowed reference to the One Data Share
-             * authentication token to use
+             * @param type the type of endpoint to return
+             * @param cred_id the credential id of the endpoint to use
+             * @param ods_auth_token the One Data Share authentication token to
+             * use
              * 
              * @return a unique pointer to a new Endpoint object
              */
-            static std::unique_ptr<Endpoint> create(const EndpointType& type, const std::string& cred_id, const std::string& ods_auth_token);
+            static std::unique_ptr<Endpoint> create(const EndpointType type, const std::string cred_id, const std::string ods_auth_token);
 
             /**
              * Creates a Resource object corresponding to the resource found at
