@@ -54,18 +54,17 @@ namespace ods {
              * Gets the url that can be used to register an endpoint of the
              * specified endpoint type with One Data Share via OAuth.
              * 
-             * @param type borrowed reference to the endpoint type to get the
-             * OAuth url for
+             * @param type the endpoint type to get the OAuth url for
              * 
              * @return a string containing the OAuth url
              */
-            virtual std::string oauth_url(const OAuthEndpointType& type) const = 0;
+            virtual std::string oauth_url(const OAuthEndpointType type) const = 0;
 
             /**
              * Registers the specified endpoint with One Data Share using the
              * specified credentials.
              * 
-             * @param type borrowed reference to the endpoint type to register
+             * @param type the endpoint type to register
              * @param cred_id borrowed reference to the credential identifier
              * to associate with the registered endpoint
              * @param uri borrowed reference to the uri of the endpoint to
@@ -78,19 +77,19 @@ namespace ods {
              * @return true if and only if this operation successfully
              * registered the endpoint with the specified credentials
              */
-            virtual bool register_credential(const CredentialEndpointType& type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
+            virtual bool register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
 
             /**
              * Lists the credential identifiers of the specified endpoint type
              * that are registered with One Data Share.
              * 
-             * @param type borrowed reference to the endpoint type to list the
-             * registered credential identifiers of
+             * @param type the endpoint type to list the registered credential
+             * identifiers of
              * 
              * @return a vector of the registered credential identifiers for the
              * sepcified endpoint
              */
-            virtual std::vector<std::string> credential_id_list(const EndpointType& type) const = 0;
+            virtual std::vector<std::string> credential_id_list(const EndpointType type) const = 0;
 
             CredentialService(const CredentialService&) = delete;
             CredentialService& operator=(const CredentialService&) = delete;
