@@ -25,12 +25,12 @@ namespace ods {
              * authentication token, passing ownership of the TransferService
              * object to the caller.
              * 
-             * @param ods_auth_token borrowed reference to the One Data Share
-             * authentication token to use
+             * @param ods_auth_token the One Data Share authentication token to
+             * use
              * 
              * @return a unique pointer to a new TransferService object
              */
-            static std::unique_ptr<TransferService> create(const std::string& ods_auth_token);
+            static std::unique_ptr<TransferService> create(const std::string ods_auth_token);
 
             /**
              * Starts a new transfer job from the specified source to the
