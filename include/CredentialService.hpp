@@ -43,12 +43,12 @@ namespace ods {
              * authentication token, passing ownership of the CredentialService
              * object to the caller.
              * 
-             * @param ods_auth_token borrowed reference to the One Data Share
-             * authentication token to use
+             * @param ods_auth_token the One Data Share authentication token to
+             * use
              * 
              * @return a unique pointer to a new CredentialService object
              */
-            static std::unique_ptr<CredentialService> create(const std::string& ods_auth_token);
+            static std::unique_ptr<CredentialService> create(const std::string ods_auth_token);
 
             /**
              * Gets the url that can be used to register an endpoint of the
