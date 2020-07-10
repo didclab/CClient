@@ -53,7 +53,6 @@ namespace ods {
 				}
 			}
 
-
             /**
              * Used by libcurl to assign the response body from a request to the
              * specified string.
