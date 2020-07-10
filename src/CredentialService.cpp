@@ -8,4 +8,5 @@
 
 namespace ods {
     CredentialService::CredentialService() = default;
+    CredentialService::~CredentialService() = default;
 }
