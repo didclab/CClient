@@ -47,8 +47,7 @@ int main() {
 		"sortOrder": "desc"
 	})";
 
-    simdjson::dom::parser parser_1;
-    simdjson::dom::parser parser_2;
+    simdjson::dom::parser parser;
 
     ods::rest::CurlRest rest;
 
@@ -61,8 +60,8 @@ int main() {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
     
-{
-    auto [get_elm, get_err] = parser_1.parse(get_r.body());
+
+    auto [get_elm, get_err] = parser.parse(get_r.body());
 
     std::cout << "[=== get request body ===]" << std::endl;
     if (!get_err) {
@@ -79,7 +78,7 @@ int main() {
 
     std::cout << "[=== get request http status ===]"<< std::endl;
     std::cout  << get_r.status() << std::endl;
-}
+
     // post request
 
     ods::rest::Response post_r = rest.post(url+"/api/stork/q/user-jobs", headers, data);
@@ -89,7 +88,7 @@ int main() {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
 
-    auto [post_elm, post_err] = parser_2.parse(post_r.body());
+    auto [post_elm, post_err] = parser.parse(post_r.body());
 
     std::cout << "[=== post request body ===]" << std::endl;
     if (!post_err) {
