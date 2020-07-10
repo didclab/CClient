@@ -8,7 +8,7 @@
 
 namespace ods {
     namespace rest {
-        Response::Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status) :
+        Response::Response(std::unordered_multimap<std::string, std::string> headers, std::string body, int status) :
             _headers(headers),
             _body(body),
             _status(status) {

@@ -13,28 +13,32 @@ namespace ods {
             /**
              * Sequence of newline characters.
              */
-            const char* newline_chars("\n\r");
+            const char* NEWLINE_CHARS("\n\r");
 
             /**
              * String separating keys from values when parsing headers.
              */
-            const std::string header_delim(": ");
+            const std::string HEADER_DELIM(": ");
             
             /**
-             * Converts the specified string into a (key, value) pair if the string contains the specified delimiter by
-             * splitting it at the delimiter.
+             * Converts the specified string into a (key, value) pair if the
+             * string contains the specified delimiter by splitting it at the
+             * delimiter.
              * 
-             * @param header string to convert to a pair
-             * @param delim string determining which part of the header is the key and which part is the value
+             * @param header borrowed reference to the string to convert to a
+             * pair
+             * @param delim borrowed reference to the string determining which
+             * part of the header is the key and which part is the value
              * 
-             * @return a pair if the string contains the specified delimiter, no value otherwise
+             * @return a pair if the string contains the specified delimiter,
+             * no value otherwise
              */
             const std::optional<std::pair<std::string, std::string>> parse_header(const std::string& header, const std::string& delim) {
 				int del_len = delim.length();
 				int del_start = header.find(delim);
 				if (del_start != std::string::npos) {
 					// find where the header ends (i.e. the last index before any newline characters)
-					int h_end = header.find_last_not_of(newline_chars);
+					int h_end = header.find_last_not_of(NEWLINE_CHARS);
 					if (h_end == std::string::npos) {
 						// no newline characters so the length is the length
 						h_end = header.length();
@@ -49,11 +53,12 @@ namespace ods {
 				}
 			}
 
-
             /**
-             * Used by libcurl to assign the response body from a request to the specified string.
+             * Used by libcurl to assign the response body from a request to the
+             * specified string.
              * 
-             * @param buffer non-null-terminated char* received after making the request
+             * @param buffer non-null-terminated char* received after making the
+             * request
              * @param size number that is always 1
              * @param nmemb size of the char* received
              * @param userp string that the char* buffer is written to
@@ -64,15 +69,18 @@ namespace ods {
             }
 
             /**
-             * Used by libcurl to add the response headers from a request to the specified multi-map.
+             * Used by libcurl to add the response headers from a request to the
+             *  specified multi-map.
              * 
-             * @param buffer non-null-terminated char* header received after making the request
+             * @param buffer non-null-terminated char* header received after
+             * making the request
              * @param size number that is always 1
              * @param nmemb size of the char* recieved
-             * @param userp multi-map that the (key, value) pair extracted from the header is added to
+             * @param userp multi-map that the (key, value) pair extracted from
+             * the header is added to
              */
             size_t header_callback(void* buffer, size_t size, size_t nmemb, std::unordered_multimap<std::string, std::string>& userp) {
-                auto header = parse_header(std::string((char*) buffer, size * nmemb), header_delim);
+                auto header = parse_header(std::string((char*) buffer, size * nmemb), HEADER_DELIM);
                 if (header) {
                     // if the header containd the delimiter add the corresponding pair to the map
                     userp.insert(header.value());
@@ -96,12 +104,15 @@ namespace ods {
         }
 
         /**
-         * Uses libcurl to perform a GET request to the specified url with the specified headers.
+         * Uses libcurl to perform a GET request to the specified url with the
+         * specified headers.
          * 
-         * @param url string set as the url
-         * @param headers multi-map used to construct a curl string linked-list to set request headers
+         * @param url borrowed refrence to the string set as the url
+         * @param headers borrowed refrence to the multi-map used to construct
+         * a curl string linked-list to set request headers
          * 
-         * @return Response object created by the write_data and header_callback functions
+         * @return the Response object created by the write_data and
+         * header_callback functions
          */
         Response CurlRest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const {
             // string that curl will write the response body to
@@ -114,7 +125,7 @@ namespace ods {
             // initialize headers_slist, a linked-list of strings, which is used to specify the headers for the request
             curl_slist* headers_slist = nullptr;
             for (const std::pair<std::string, std::string>& h : headers) {
-                headers_slist = curl_slist_append(headers_slist, (h.first + header_delim + h.second).c_str());
+                headers_slist = curl_slist_append(headers_slist, (h.first + HEADER_DELIM + h.second).c_str());
             }
 
             // execute the request
@@ -140,13 +151,17 @@ namespace ods {
         }
 
         /**
-         * Uses libcurl to perform a POST request to the specified url with the specified headers and data.
+         * Uses libcurl to perform a POST request to the specified url with the
+         * specified headers and data.
          * 
-         * @param url string set as the url
-         * @param headers multi-map used to construct a curl string linked-list to set request headers
-         * @param data json string passed in to libcurl to send as the POST data for the request
+         * @param url borrowed reference to the string set as the url
+         * @param headers borrowed reference to the multi-map used to construct
+         * a curl string linked-list to set request headers
+         * @param data borrowed reference to the json string passed in to
+         * libcurl to send as the POST data for the request
          * 
-         * @return Response object created by the write_data and header_callback functions
+         * @return the Response object created by the write_data and
+         * header_callback functions
          */
         Response CurlRest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const {
             // string that curl will write the response body to
@@ -159,7 +174,7 @@ namespace ods {
             // initialize headers_slist, a linked-list of strings, which is used to specify the headers for the request
             curl_slist* headers_slist = nullptr;
             for (const std::pair<std::string, std::string>& h : headers) {
-                headers_slist = curl_slist_append(headers_slist, (h.first + header_delim + h.second).c_str());
+                headers_slist = curl_slist_append(headers_slist, (h.first + HEADER_DELIM + h.second).c_str());
             }
 
             // execute the request

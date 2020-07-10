@@ -17,7 +17,8 @@ namespace ods {
         class CurlRest : public Rest {
             public:
                 /**
-                 * Creates a new CurlRest object capable of making REST requests via libcurl.
+                 * Creates a new CurlRest object capable of making REST requests
+                 * via libcurl.
                  */
                 CurlRest();
                 virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const override;
