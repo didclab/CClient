@@ -7,7 +7,7 @@
 #include <CredentialService.hpp>
 
 namespace ods {
-    namespace impl {
+    namespace internal {
         /**
          * Service that makes REST API calls to One Data Share related to
          * registering credentials.
