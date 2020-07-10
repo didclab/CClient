@@ -31,6 +31,8 @@ add_library(odscclient
     src/Endpoint.cpp
     src/Source.cpp
     src/TransferService.cpp
+    src/internal/CredentialServiceImpl.cpp
+    src/internal/CredentialServiceImpl.hpp
     src/rest/CurlRest.cpp
     src/rest/CurlRest.hpp
     src/rest/Response.cpp
