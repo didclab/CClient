@@ -52,7 +52,7 @@ namespace ods {
 
 				virtual ~Rest() = 0;
 			protected:
-                Rest() = default;
+                Rest();
         };
     }
 }
