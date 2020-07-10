@@ -7,5 +7,5 @@
 #include <CredentialService.hpp>
 
 namespace ods {
-
+    CredentialService::CredentialService() = default;
 }

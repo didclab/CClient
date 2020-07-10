@@ -96,7 +96,7 @@ namespace ods {
 
             virtual ~CredentialService() = 0;
         protected:
-            CredentialService() = default;
+            CredentialService();
     };
 }
 
