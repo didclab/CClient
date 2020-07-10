@@ -17,33 +17,20 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    include/AccountEndpointCredential.hpp
-    include/Box.hpp
+    include/CredentialService.hpp
     include/Destination.hpp
-    include/Dropbox.hpp
     include/Endpoint.hpp
     include/EndpointType.hpp
-    include/FTP.hpp
-    include/GoogleDrive.hpp
-    include/GridFTP.hpp
-    include/HTTP.hpp
-    include/Item.hpp
-    include/ItemInfo.hpp
-    include/OneDataShare.hpp
-    include/S3.hpp
-    include/SFTP.hpp
+    include/Resource.hpp
     include/Source.hpp
-    include/Transfer.hpp
     include/TransferOptions.hpp
-    include/TransferRequest.hpp
+    include/TransferService.hpp
     include/TransferStatus.hpp
+    src/CredentialService.cpp
     src/Destination.cpp
-    src/Item.cpp
-    src/ItemInfo.cpp
-    src/OneDataShare.cpp
+    src/Endpoint.cpp
     src/Source.cpp
-    src/Transfer.cpp
-    src/TransferRequest.cpp
+    src/TransferService.cpp
     src/rest/CurlRest.cpp
     src/rest/CurlRest.hpp
     src/rest/Response.cpp
@@ -60,6 +47,13 @@ target_include_directories(main PRIVATE src/ include/)
 target_link_libraries(main PRIVATE odscclient)
 
 install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
+
+# add example 1 executable
+# uncomment to test that example_1 compiles
+#add_executable(example_1 examples/example_1.cpp)
+#target_include_directories(example_1 PRIVATE include/)
+#target_link_libraries(example_1 PRIVATE odscclient)
+
 
 # download google test
 

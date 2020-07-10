@@ -8,9 +8,12 @@
 #define ENDPOINT_TYPE_HPP_INCLUDED
 
 namespace ods {
+    /**
+     * Contains the possible types of an endpoint.
+     */
     enum class EndpointType {
-        DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, GFTP, HTTP
+        DROPBOX, GOOGLE_DRIVE, SFTP, FTP, BOX, S3, GFTP, HTTP
     };
 }
 
-#endif // ENDPOINT_HPP_TYPE_INCLUDED
+#endif // ENDPOINT_TYPE_HPP_INCLUDED

@@ -1,20 +1,18 @@
 /*
  * TransferStatus.hpp
  * Andrew Mikalsen
- * 6/23/20
+ * 7/7/20
  */
 
 #ifndef TRANSFER_STATUS_HPP_INCLUDED
 #define TRANSFER_STATUS_HPP_INCLUDED
 
 namespace ods {
-    //TODO: define
+
+    // TODO: define
     class TransferStatus {
         public:
-            TransferStatus(const TransferStatus&) = delete;
-            TransferStatus& operator=(const TransferStatus&) = delete;
-        private:
-            TransferStatus();
+            virtual ~TransferStatus() = 0;
     };
 }
 
