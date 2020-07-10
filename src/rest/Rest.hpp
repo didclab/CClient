@@ -16,8 +16,6 @@ namespace ods {
          */
         class Rest {
             public:
-                Rest() = default;
-
 			    /**
 				 * Performs a GET request to the specified url with the
 				 * specified headers.
@@ -31,6 +29,7 @@ namespace ods {
 				 * body, and http status
 				 */
 				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const = 0;
+
                 /**
 				 * Performs a POST request to the specified url with the
 				 * specified headers and data.
@@ -52,6 +51,8 @@ namespace ods {
                 Rest& operator=(const Rest&) = delete;
 
 				virtual ~Rest() = 0;
+			protected:
+                Rest() = default;
         };
     }
 }
