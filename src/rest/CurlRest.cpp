@@ -13,12 +13,12 @@ namespace ods {
             /**
              * Sequence of newline characters.
              */
-            const char* newline_chars("\n\r");
+            const char* NEWLINE_CHARS("\n\r");
 
             /**
              * String separating keys from values when parsing headers.
              */
-            const std::string header_delim(": ");
+            const std::string HEADER_DELIM(": ");
             
             /**
              * Converts the specified string into a (key, value) pair if the string contains the specified delimiter by
@@ -34,7 +34,7 @@ namespace ods {
 				int del_start = header.find(delim);
 				if (del_start != std::string::npos) {
 					// find where the header ends (i.e. the last index before any newline characters)
-					int h_end = header.find_last_not_of(newline_chars);
+					int h_end = header.find_last_not_of(NEWLINE_CHARS);
 					if (h_end == std::string::npos) {
 						// no newline characters so the length is the length
 						h_end = header.length();
@@ -72,7 +72,7 @@ namespace ods {
              * @param userp multi-map that the (key, value) pair extracted from the header is added to
              */
             size_t header_callback(void* buffer, size_t size, size_t nmemb, std::unordered_multimap<std::string, std::string>& userp) {
-                auto header = parse_header(std::string((char*) buffer, size * nmemb), header_delim);
+                auto header = parse_header(std::string((char*) buffer, size * nmemb), HEADER_DELIM);
                 if (header) {
                     // if the header containd the delimiter add the corresponding pair to the map
                     userp.insert(header.value());
@@ -114,7 +114,7 @@ namespace ods {
             // initialize headers_slist, a linked-list of strings, which is used to specify the headers for the request
             curl_slist* headers_slist = nullptr;
             for (const std::pair<std::string, std::string>& h : headers) {
-                headers_slist = curl_slist_append(headers_slist, (h.first + header_delim + h.second).c_str());
+                headers_slist = curl_slist_append(headers_slist, (h.first + HEADER_DELIM + h.second).c_str());
             }
 
             // execute the request
@@ -159,7 +159,7 @@ namespace ods {
             // initialize headers_slist, a linked-list of strings, which is used to specify the headers for the request
             curl_slist* headers_slist = nullptr;
             for (const std::pair<std::string, std::string>& h : headers) {
-                headers_slist = curl_slist_append(headers_slist, (h.first + header_delim + h.second).c_str());
+                headers_slist = curl_slist_append(headers_slist, (h.first + HEADER_DELIM + h.second).c_str());
             }
 
             // execute the request
