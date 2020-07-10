@@ -8,6 +8,6 @@
 
 namespace ods {
     namespace rest {
-        Rest::~Rest() {}
+        Rest::~Rest() = default;
     }
 }
