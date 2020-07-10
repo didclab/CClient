@@ -1,21 +1,17 @@
 /*
- * rest.hpp
+ * Response.hpp
  * Andrew Mikalsen
- * 6/5/20
+ * 6/23/20
  */
 
-#ifndef CURL_WRAPPER_HPP_INCLUDED
-#define CURL_WRAPPER_HPP_INCLUDED
+#ifndef RESPONSE_HPP_INCLUDED
+#define RESPONSE_HPP_INCLUDED
 
 #include <string>
 #include <unordered_map>
 
 namespace ods {
-    /**
-     * Provides functions for making REST API calls.
-     */
     namespace rest {
-
         /**
          * Object holding the response from a request made via the get or post functions.
          * 
@@ -67,50 +63,7 @@ namespace ods {
                  */
                 const int _status;
         };
-
-        /**
-         * Class used to perform REST requests.
-         */
-        class Rest {
-            public:
-			    /**
-				 * Performs a GET request to the specified url with the specified headers.
-				 * 
-				 * @param url string containing url to make the GET request to. Should ideally contain the protocol
-				 * @param headers multi-map containing the headers for the GET request
-				 * 
-				 * @return Response object containing the response headers, body, and http status
-				 */
-				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const = 0;
-                /**
-				 * Performs a POST request to the specified url with the specified headers and data.
-				 * 
-				 * @param url string containing the url to make the POST request to. Should ideally contain the protocol
-				 * @param headers multi-map containing the headers for the POST request
-				 * @param data string containing the json data for the POST request
-				 * 
-				 * @return Response object containing the response headers, body, and http status
-				 */
-				virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const = 0;
-				virtual ~Rest() = 0;
-        };
-
-        /**
-         * Class using libcurl to perform REST requests.
-         */
-        class CurlRest : public Rest {
-            public:
-                /**
-                 * Creates a new CurlRest object capable of making REST requests via libcurl.
-                 */
-                CurlRest();
-                CurlRest(const Response&) = delete;
-                CurlRest& operator=(const Response&) = delete;
-                virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const override;
-                virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const override;
-                virtual ~CurlRest() override;
-        };
     }
 }
 
-#endif // CURL_WRAPPER_HPP_INCLUDED
+#endif // RESPONSE_HPP_INCLUDED

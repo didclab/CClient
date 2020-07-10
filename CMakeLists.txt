@@ -17,18 +17,43 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    src/rest.hpp
-    src/rest.cpp
+    include/CredentialService.hpp
+    include/Destination.hpp
+    include/Endpoint.hpp
+    include/EndpointType.hpp
+    include/Resource.hpp
+    include/Source.hpp
+    include/TransferOptions.hpp
+    include/TransferService.hpp
+    include/TransferStatus.hpp
+    src/CredentialService.cpp
+    src/Destination.cpp
+    src/Endpoint.cpp
+    src/Source.cpp
+    src/TransferService.cpp
+    src/rest/CurlRest.cpp
+    src/rest/CurlRest.hpp
+    src/rest/Response.cpp
+    src/rest/Response.hpp
+    src/rest/Rest.cpp
+    src/rest/Rest.hpp
 )
-target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/)
+target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
 
 # add main executable
 add_executable(main examples/main.cpp)
-target_include_directories(main PRIVATE src/)
+target_include_directories(main PRIVATE src/ include/)
 target_link_libraries(main PRIVATE odscclient)
 
 install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
+
+# add example 1 executable
+# uncomment to test that example_1 compiles
+#add_executable(example_1 examples/example_1.cpp)
+#target_include_directories(example_1 PRIVATE include/)
+#target_link_libraries(example_1 PRIVATE odscclient)
+
 
 # download google test
 
@@ -74,8 +99,8 @@ endif()
 
 # add unit tests
 add_executable(tests
-    tests/rest_tests.cpp
+    tests/ResponseTests.cpp
 )
-target_include_directories(tests PRIVATE src/)
+target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main odscclient)
 install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})

@@ -1,15 +1,11 @@
 /*
- * rest.cpp
+ * CurlRest.cpp
  * Andrew Mikalsen
- * 6/5/20
+ * 6/23/20
  */
 
-#include <optional>
-#include <string>
-#include <unordered_map>
-#include <vector>
 #include <curl/curl.h>
-#include "rest.hpp"
+#include "CurlRest.hpp"
 
 namespace ods {
     namespace rest {
@@ -84,26 +80,6 @@ namespace ods {
                 return size * nmemb;
             }
         }
-
-        Response::Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status) :
-            _headers(headers),
-            _body(body),
-            _status(status) {
-        }
-
-        const std::unordered_multimap<std::string, std::string>& Response::headers() const {
-            return _headers;
-        }
-
-        const std::string& Response::body() const {
-            return _body;
-        }
-
-        const int& Response::status() const {
-            return _status;
-        }
-
-        Rest::~Rest() {}
 
         /**
          * Initializes the global data needed for libcurl.
