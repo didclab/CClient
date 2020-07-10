@@ -27,7 +27,7 @@ namespace ods {
                  * @param status integer corresponding to the http response
                  * status
                  */
-                Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, const int& status);
+                Response(std::unordered_multimap<std::string, std::string> headers, std::string body, int status);
 
                 /**
                  * Gets a reference to the response headers. The returned
