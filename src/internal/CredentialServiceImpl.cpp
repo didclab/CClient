@@ -8,6 +8,6 @@
 
 namespace ods {
     namespace internal {
-        
+        CredentialServiceImpl::~CredentialServiceImpl() = default;
     }
 }
