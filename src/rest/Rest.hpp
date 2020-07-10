@@ -25,7 +25,7 @@ namespace ods {
 				 * @param headers borrowed reference to the multi-map containing
 				 * the headers for the GET request
 				 * 
-				 * @return Response object containing the response headers,
+				 * @return the Response object containing the response headers,
 				 * body, and http status
 				 */
 				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const = 0;
