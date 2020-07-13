@@ -53,7 +53,9 @@ int main() {
 
     // get request
 
-    ods::rest::Response get_r = rest.get(url+"/api/stork/cred", headers);
+    //ods::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
+    ods::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
+
 
     std::cout << "[=== get request headers ===]" << std::endl;
     for (auto h : get_r.headers()) {
