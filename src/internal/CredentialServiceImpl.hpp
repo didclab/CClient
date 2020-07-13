@@ -24,7 +24,8 @@ namespace ods {
                  * for REST API calls
                  * @param ods_url borrowed reference to the url to make REST API
                  * calls to
-                 * @param rest_caller object to use for making REST API calls
+                 * @param rest_caller moved pointer to object to use for making
+                 * REST API calls
                  */
                 CredentialServiceImpl(const std::string& ods_auth_token, const std::string& ods_url, std::unique_ptr<rest::Rest> rest_caller);
                 virtual std::string oauth_url(OAuthEndpointType type) const override;
