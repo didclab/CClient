@@ -57,6 +57,8 @@ namespace ods {
                  * Pointer to the object used to make REST API calls.
                  */
                 const std::unique_ptr<rest::Rest> _rest_caller;
+
+                const std::unordered_multimap<std::string, std::string> _headers;
         };
     }
 }
