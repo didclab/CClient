@@ -6,7 +6,7 @@
 
 #include <memory>
 #include <CredentialService.hpp>
-#include <Rest.hpp>
+#include "../rest/Rest.hpp"
 
 namespace ods {
     namespace internal {
