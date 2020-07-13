@@ -56,6 +56,12 @@ install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
 #target_include_directories(example_1 PRIVATE include/)
 #target_link_libraries(example_1 PRIVATE odscclient)
 
+# add example 2 executable
+add_executable(example_2 examples/example_2.cpp)
+target_include_directories(example_2 PRIVATE include/)
+target_link_libraries(example_2 PRIVATE odscclient)
+
+install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # download google test
 
