@@ -54,9 +54,6 @@ namespace ods {
                  * @return a temporary reference to the http response status
                  */
                 const int& status() const;
-                
-                Response(const Response&) = delete;
-                Response& operator=(const Response&) = delete;
             private:
                 /**
                  * Multi-map storing headers as (key, value) pairs.
