@@ -29,9 +29,6 @@ namespace ods {
             const std::string HEADER_BEARER("Bearer ");
             const std::string HEADER_LOCATION("Location");
 
-            const std::string URL_QUERY("?");
-            const std::string PARAM_TYPE("type=");
-
             /**
              * Creates the required header map using the specified token.
              * 
@@ -85,7 +82,7 @@ namespace ods {
         }
 
         std::string CredentialServiceImpl::oauth_url(OAuthEndpointType type) const {
-            const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+URL_QUERY+PARAM_TYPE+endpoint_to_string(type), _headers));
+            const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_to_string(type), _headers));
             if (response.status() != 303) {
                 // TODO: handle error (expected status code 303)
                 return "error: expected status 303";
