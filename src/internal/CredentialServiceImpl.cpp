@@ -52,7 +52,7 @@ namespace ods {
              * 
              * @return endpoint type as a string understood by the REST API
              */
-            std::string endpoint_as_string(CredentialEndpointType type) {
+            std::string endpoint_as_string(const CredentialEndpointType type) {
                 switch (type) {
                     case CredentialEndpointType::FTP:
                         return "ftp";
@@ -76,7 +76,7 @@ namespace ods {
              * 
              * @return endpoint type as a string understood by the REST API
              */
-            std::string endpoint_as_string(OAuthEndpointType type) {
+            std::string endpoint_as_string(const OAuthEndpointType type) {
                 switch (type) {
                     case OAuthEndpointType::BOX:
                         return "box";
@@ -100,7 +100,7 @@ namespace ods {
              * 
              * @return endpoint type as a string understood by the REST API
              */
-            std::string endpoint_as_string(EndpointType type) {
+            std::string endpoint_as_string(const EndpointType type) {
                 switch (type) {
                     case EndpointType::BOX:
                         return "box";
@@ -182,7 +182,7 @@ namespace ods {
             _headers(create_headers(_ods_auth_token)) {
         }
 
-        std::string CredentialServiceImpl::oauth_url(OAuthEndpointType type) const {
+        std::string CredentialServiceImpl::oauth_url(const OAuthEndpointType type) const {
             const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_as_string(type), _headers));
             if (response.status() != 303) {
                 // TODO: handle error (expected status code 303)
@@ -198,14 +198,14 @@ namespace ods {
             return iter->second;
         }
 
-        bool CredentialServiceImpl::register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
+        bool CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
             if (_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)).status() == 200) {
                 return true;
             }
             return false;
         }
 
-        std::vector<std::string> CredentialServiceImpl::credential_id_list(EndpointType type) const {
+        std::vector<std::string> CredentialServiceImpl::credential_id_list(const EndpointType type) const {
             // TODO: implement
             return std::vector<std::string>();
         }
