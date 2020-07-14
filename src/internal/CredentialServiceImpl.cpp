@@ -16,12 +16,12 @@ namespace ods {
             /**
              * Path of the REST API call for oauth.
             */
-            const std::string API_PATH_OAUTH;
+            const std::string API_PATH_OAUTH("/api/oauth");
 
             /**
              * Path of the REST API call for credentials.
              */
-            const std::string API_PATH_CRED;
+            const std::string API_PATH_CRED("/api/cred");
 
             const std::string HEADER_CONTENT_TYPE("Content-Type");
             const std::string HEADER_JSON("application/json");
