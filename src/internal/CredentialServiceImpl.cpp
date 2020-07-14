@@ -12,6 +12,17 @@ namespace ods {
     namespace internal {
 
         namespace {
+
+            /**
+             * Path of the REST API call for oauth.
+            */
+            const std::string API_PATH_OAUTH;
+
+            /**
+             * Path of the REST API call for credentials.
+             */
+            const std::string API_PATH_CRED;
+
             const std::string HEADER_CONTENT_TYPE("Content-Type");
             const std::string HEADER_JSON("application/json");
             const std::string HEADER_AUTHORIZATION("Authorization");
@@ -59,11 +70,12 @@ namespace ods {
                         return "gdrive";
                 }
             }
+
+            std::string create_account_endpoint_credential() {
+                // TODO: implement
+                return "";
+            }
         }
-
-        const std::string CredentialServiceImpl::API_PATH_OAUTH("/api/oauth");
-        const std::string CredentialServiceImpl::API_PATH_CRED("/api/cred");
-
 
         CredentialServiceImpl::CredentialServiceImpl(const std::string& ods_auth_token, const std::string& ods_url, std::unique_ptr<rest::Rest> rest_caller) :
             _ods_auth_token(ods_auth_token),

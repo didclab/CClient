@@ -34,16 +34,6 @@ namespace ods {
                 virtual ~CredentialServiceImpl() override;
             private:
                 /**
-                 * Path of the REST API call for oauth.
-                 */
-                static const std::string API_PATH_OAUTH;
-
-                /**
-                 * Path of the REST API call for credentials.
-                 */
-                static const std::string API_PATH_CRED;
-
-                /**
                  * One Data Share authentication token used in REST API calls.
                  */
                 const std::string _ods_auth_token;
