@@ -105,10 +105,13 @@ endif()
 # End From https://github.com/google/googletest/blob/master/googletest/README.md #
 ##################################################################################
 
+
+
 # add unit tests
 add_executable(tests
-    tests/ResponseTests.cpp
+    tests/internal/CredentialServiceImplTests.cpp
+    tests/rest/ResponseTests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
-target_link_libraries(tests PRIVATE gtest_main odscclient)
+target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)
 install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})
