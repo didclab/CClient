@@ -29,6 +29,16 @@ namespace ods {
             ODSConnectionException(const char* what_arg);
             virtual ~ODSConnectionException();
     };
+
+    /**
+     * Exception thrown when an unexpected internal server error is received
+     * from One Data Share.
+     */
+    class ODSInternalServerException : public ODSException {
+            ODSInternalServerException(const std::string& what_arg);
+            ODSInternalServerException(const char* what_arg);
+            virtual ~ODSInternalServerException();
+    };
 }
 
 #endif // ODS_EXCEPTION_HPP_INCLUDED
