@@ -35,6 +35,7 @@ namespace ods {
      * from One Data Share.
      */
     class ODSInternalServerException : public ODSException {
+        public:
             ODSInternalServerException(const std::string& what_arg);
             ODSInternalServerException(const char* what_arg);
             virtual ~ODSInternalServerException();
@@ -45,6 +46,7 @@ namespace ods {
      * Share.
      */
     class ODSUnexpectedResponseException : public ODSException {
+        public:
             ODSUnexpectedResponseException(const std::string& what_arg);
             ODSUnexpectedResponseException(const char* what_arg);
             virtual ~ODSUnexpectedResponseException();
