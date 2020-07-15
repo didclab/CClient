@@ -4,6 +4,7 @@
  * 6/23/20
  */
 
+#include <stdexcept>
 #include <curl/curl.h>
 #include "CurlRest.hpp"
 
@@ -113,6 +114,9 @@ namespace ods {
          * 
          * @return the Response object created by the write_data and
          * header_callback functions
+         * 
+         * @exception throws a runtime_error if unable to connect to the
+         * specified url
          */
         Response CurlRest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const {
             // string that curl will write the response body to
@@ -147,6 +151,10 @@ namespace ods {
             curl_easy_cleanup(handle);
             curl_slist_free_all(headers_slist);
 
+            if (result != CURLE_OK) {
+                throw std::runtime_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
+            }
+
             return Response(response_headers, response_body, status);
         }
 
@@ -162,6 +170,9 @@ namespace ods {
          * 
          * @return the Response object created by the write_data and
          * header_callback functions
+         * 
+         * @exception throws a runtime_error if unable to connect to the
+         * specified url
          */
         Response CurlRest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const {
             // string that curl will write the response body to
@@ -196,6 +207,10 @@ namespace ods {
             // free resources
             curl_easy_cleanup(handle);
             curl_slist_free_all(headers_slist);
+
+            if (result != CURLE_OK) {
+                throw std::runtime_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
+            }
 
             return Response(response_headers, response_body, status);
         }

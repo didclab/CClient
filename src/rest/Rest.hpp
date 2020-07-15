@@ -27,6 +27,9 @@ namespace ods {
 				 * 
 				 * @return the Response object containing the response headers,
 				 * body, and http status
+				 * 
+				 * @exception throws a runtime_error if unable to connect to the
+				 * specified url
 				 */
 				virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const = 0;
 
@@ -44,6 +47,9 @@ namespace ods {
 				 * 
 				 * @return the Response object containing the response headers,
 				 * body, and http status
+				 * 
+				 * @exception throws a runtime_error if unable to connect to the
+				 * specified url
 				 */
 				virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const = 0;
 
