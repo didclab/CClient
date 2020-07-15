@@ -4,10 +4,12 @@
  * 7/10/20
  */
 
+#include <stdexcept>
 #include <iomanip>
 #include <sstream>
 #include <utility>
 #include "CredentialServiceImpl.hpp"
+#include <ODSException.hpp>
 
 namespace ods {
     namespace internal {
@@ -183,26 +185,34 @@ namespace ods {
         }
 
         std::string CredentialServiceImpl::oauth_url(const OAuthEndpointType type) const {
-            const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_as_string(type), _headers));
-            if (response.status() != 303) {
-                // TODO: handle error (expected status code 303)
-                return "error: expected status 303";
+            try {
+                const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_as_string(type), _headers));
+                if (response.status() != 303) {
+                    // TODO: handle error (expected status code 303)
+                    return "error: expected status 303";
+                }
+                // find url in a single location header, as there should only be one
+                const std::unordered_multimap<std::string, std::string>::const_iterator iter(response.headers().find(HEADER_LOCATION));
+                if (iter == response.headers().end()) {
+                    // TODO: handle error (expected a header)
+                    return "error: expected a header";
+                }
+                
+                return iter->second;
+            } catch (std::runtime_error e) {
+                throw ODSConnectionException(std::string(e.what()));
             }
-            // find url in a single location header, as there should only be one
-            const std::unordered_multimap<std::string, std::string>::const_iterator iter(response.headers().find(HEADER_LOCATION));
-            if (iter == response.headers().end()) {
-                // TODO: handle error (expected a header)
-                return "error: expected a header";
-            }
-            
-            return iter->second;
         }
 
         bool CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
-            if (_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)).status() == 200) {
-                return true;
+            try {
+                if (_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)).status() == 200) {
+                    return true;
+                }
+                return false;
+            } catch (std::runtime_error e) {
+                throw ODSConnectionException(std::string(e.what()));
             }
-            return false;
         }
 
         std::vector<std::string> CredentialServiceImpl::credential_id_list(const EndpointType type) const {

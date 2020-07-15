@@ -57,6 +57,9 @@ namespace ods {
              * @param type the endpoint type to get the OAuth url for
              * 
              * @return a string containing the OAuth url
+             * 
+             * @exception throws a ODSConnectionException if unable to connect
+             * to One Data Share
              */
             virtual std::string oauth_url(OAuthEndpointType type) const = 0;
 
@@ -76,6 +79,9 @@ namespace ods {
              * 
              * @return true if and only if this operation successfully
              * registered the endpoint with the specified credentials
+             * 
+             * @exception throws a ODSConnectionException if unable to connect
+             * to One Data Share
              */
             virtual bool register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
 
