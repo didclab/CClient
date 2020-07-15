@@ -148,7 +148,23 @@ namespace {
         const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
 
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_EQ(cred.register_credential(type, "", "", "", ""), true);
+            EXPECT_TRUE(cred.register_credential(type, "", "", "", ""));
+        }
+    }
+
+    /**
+     * Tests that register_credential returns false when a 400 response code
+     * is returned.
+     */
+    TEST_F(CredentialServiceImplTest, RegsiterCredentialReturnsFalse) {
+        // set up mock returning status 400
+        auto caller(std::make_unique<MockRest>());
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), "", 400)));
+
+        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+
+        for (auto type : CREDENTIAL_TYPES) {
+            EXPECT_FALSE(cred.register_credential(type, "", "", "", ""));
         }
     }
 }
