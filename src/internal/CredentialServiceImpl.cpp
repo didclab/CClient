@@ -188,17 +188,18 @@ namespace ods {
             try {
                 const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_as_string(type), _headers));
                 if (response.status() != 303) {
-                    // TODO: handle error (expected status code 303)
-                    return "error: expected status 303";
+                    // may be invalid token
+                    throw ODSUnexpectedResponseException("Expected a status 303 response code when requesting oauth url.", response.body(), response.status());
                 }
                 // find url in a single location header, as there should only be one
                 const std::unordered_multimap<std::string, std::string>::const_iterator iter(response.headers().find(HEADER_LOCATION));
                 if (iter == response.headers().end()) {
-                    // TODO: handle error (expected a header)
-                    return "error: expected a header";
+                    // did not contain location header
+                    throw ODSUnexpectedResponseException("Expected a \""+std::string(HEADER_LOCATION)+"\" header in the response.", response.body(), response.status());
                 }
-                
                 return iter->second;
+            } catch (ODSUnexpectedResponseException e) {
+                throw e;
             } catch (std::runtime_error e) {
                 throw ODSConnectionException(std::string(e.what()));
             }
@@ -206,10 +207,15 @@ namespace ods {
 
         bool CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
             try {
-                if (_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)).status() == 200) {
+                const rest::Response response(_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)));
+                if (response.status() == 200) {
                     return true;
+                } else if (response.status() == 500) {
+                    throw ODSUnexpectedResponseException("Internal server error when registering credential.", response.body(), response.status());
                 }
                 return false;
+            } catch (ODSUnexpectedResponseException e) {
+                throw e;
             } catch (std::runtime_error e) {
                 throw ODSConnectionException(std::string(e.what()));
             }
