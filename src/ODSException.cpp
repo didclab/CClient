@@ -25,9 +25,25 @@ namespace ods {
     }
     ODSInternalServerException::~ODSInternalServerException() = default;
 
-    ODSUnexpectedResponseException::ODSUnexpectedResponseException(const std::string& what_arg) : ODSException(what_arg) {
+    ODSUnexpectedResponseException::ODSUnexpectedResponseException(const std::string& what_arg, const std::string& body, int status) : 
+        ODSException(what_arg),
+        _body(body),
+        _status(status) {
     }
-    ODSUnexpectedResponseException::ODSUnexpectedResponseException(const char* what_arg) : ODSException(what_arg) {
+    
+    ODSUnexpectedResponseException::ODSUnexpectedResponseException(const char* what_arg, const std::string& body, int status) :
+        ODSException(what_arg),
+        _body(body),
+        _status(status) {
     }
+
+    const std::string& ODSUnexpectedResponseException::body() const {
+        return _body;
+    }
+
+    int ODSUnexpectedResponseException::status() const {
+        return _status;
+    }
+
     ODSUnexpectedResponseException::~ODSUnexpectedResponseException() = default;
 }

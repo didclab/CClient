@@ -47,9 +47,28 @@ namespace ods {
      */
     class ODSUnexpectedResponseException : public ODSException {
         public:
-            ODSUnexpectedResponseException(const std::string& what_arg);
-            ODSUnexpectedResponseException(const char* what_arg);
+            ODSUnexpectedResponseException(const std::string& what_arg, const std::string& body, int status);
+            ODSUnexpectedResponseException(const char* what_arg, const std::string& body, int status);
+
+            /**
+             * Gets a reference to the body of the unexpected response. The 
+             * returned reference lives only as long as the object itself.
+             * 
+             * @return a temporary reference to the unexpected response's body
+             */
+            const std::string& body() const;
+
+            /**
+             * Gets the status of the unexpected response.
+             * 
+             * @return the unexpected response's status code
+             */
+            int status() const;
+
             virtual ~ODSUnexpectedResponseException();
+        private:
+            const std::string _body;
+            const int _status;
     };
 }
 
