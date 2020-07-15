@@ -14,12 +14,12 @@ namespace ods {
             /**
              * Sequence of newline characters.
              */
-            const char* NEWLINE_CHARS("\n\r");
+            constexpr auto NEWLINE_CHARS = "\n\r";
 
             /**
              * String separating keys from values when parsing headers.
              */
-            const std::string HEADER_DELIM(": ");
+            constexpr auto HEADER_DELIM = ": ";
             
             /**
              * Converts the specified string into a (key, value) pair if the

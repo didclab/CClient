@@ -18,18 +18,18 @@ namespace ods {
             /**
              * Path of the REST API call for oauth.
             */
-            const std::string API_PATH_OAUTH("/api/oauth");
+            constexpr auto API_PATH_OAUTH = "/api/oauth";
 
             /**
              * Path of the REST API call for credentials.
              */
-            const std::string API_PATH_CRED("/api/cred");
+            constexpr auto API_PATH_CRED = "/api/cred";
 
-            const std::string HEADER_CONTENT_TYPE("Content-Type");
-            const std::string HEADER_JSON("application/json");
-            const std::string HEADER_AUTHORIZATION("Authorization");
-            const std::string HEADER_BEARER("Bearer ");
-            const std::string HEADER_LOCATION("Location");
+            constexpr auto HEADER_CONTENT_TYPE = "Content-Type";
+            constexpr auto HEADER_JSON = "application/json";
+            constexpr auto HEADER_AUTHORIZATION = "Authorization";
+            constexpr auto HEADER_BEARER = "Bearer ";
+            constexpr auto HEADER_LOCATION = "Location";
 
             /**
              * Creates the required header map using the specified token.
