@@ -21,6 +21,7 @@ add_library(odscclient
     include/Destination.hpp
     include/Endpoint.hpp
     include/EndpointType.hpp
+    include/ODSException.hpp
     include/Resource.hpp
     include/Source.hpp
     include/TransferOptions.hpp
@@ -29,6 +30,7 @@ add_library(odscclient
     src/CredentialService.cpp
     src/Destination.cpp
     src/Endpoint.cpp
+    src/ODSException.cpp
     src/Source.cpp
     src/TransferService.cpp
     src/internal/CredentialServiceImpl.cpp
