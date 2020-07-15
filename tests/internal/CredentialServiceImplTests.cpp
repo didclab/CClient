@@ -39,11 +39,11 @@ namespace {
         ods::CredentialEndpointType::SFTP
     };
 
-    class CredentialServiceImplTest: public ::testing::Test {
+    class CredentialServiceImplTest : public ::testing::Test {
         protected:
     };
 
-    class MockRest: public ods::rest::Rest {
+    class MockRest : public ods::rest::Rest {
         using HeaderMap = std::unordered_multimap<std::string, std::string>;
         public:
             MOCK_METHOD(ods::rest::Response, get, (const std::string& url, const HeaderMap& headers), (const, override));

@@ -14,7 +14,7 @@ namespace ods {
          * Service that makes REST API calls to One Data Share related to
          * registering credentials.
          */
-        class CredentialServiceImpl: public CredentialService {
+        class CredentialServiceImpl : public CredentialService {
             public:
                 /**
                  * Creates a new CredentialServiceImpl object with the specified
