@@ -91,7 +91,7 @@ namespace {
     TEST_F(CredentialServiceImplTest, RegisterCredentialWithoutConnectionThrowsException) {
         // set up mock throwing exception for every post
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(std::exception()));
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(std::runtime_error(CONNECTION_ERROR_MSG)));
 
         const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
 
