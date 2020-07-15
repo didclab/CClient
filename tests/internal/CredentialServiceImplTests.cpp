@@ -80,7 +80,7 @@ namespace {
         
         // check that every oauth endpoint type throws the correct exception
         for (auto type : OAUTH_TYPES) {
-            EXPECT_THROW(cred.oauth_url(type), ods::ODSInternalServerException);
+            EXPECT_THROW(cred.oauth_url(type), ods::ODSUnexpectedResponseException);
         }
     }
 
@@ -114,7 +114,41 @@ namespace {
 
         // check that every credential endpoint type throws the correct exception
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::ODSInternalServerException);
+            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::ODSUnexpectedResponseException);
+        }
+    }
+
+    /**
+     * Tests that oauth_url properly extracts the url from the response header.
+     */
+    TEST_F(CredentialServiceImplTest, CanGetOAuthLink) {
+        std::string fake_oauth_url("This is an oauth url");
+        std::unordered_multimap headers{std::pair(std::string("Location"), std::string(fake_oauth_url))};
+
+        // set up mock returning response redirecting to oauth url
+        auto caller(std::make_unique<MockRest>());
+        EXPECT_CALL(*caller, get).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(headers, "", 303)));
+
+        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+
+        // check every oauth endpoint correctly returns the oauth url
+        for (auto type : OAUTH_TYPES) {
+            EXPECT_EQ(cred.oauth_url(type), fake_oauth_url);
+        }
+    }
+
+    /**
+     * Tests that regsiter_credential returns true if the response code is 200.
+     */
+    TEST_F(CredentialServiceImplTest, RegisterCredentialReturnsTrue) {
+        // set up mock returning status 200
+        auto caller(std::make_unique<MockRest>());
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), "", 200)));
+
+        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+
+        for (auto type : CREDENTIAL_TYPES) {
+            EXPECT_EQ(cred.register_credential(type, "", "", "", ""), true);
         }
     }
 }
