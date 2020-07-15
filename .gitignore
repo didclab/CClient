@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+# IDE files
+*.code-workspace
+.vscode/
+
+# Temporary project directories
+bin/
+build/
+debug/
+
+# Configuration files
+token.txt
+
+# Documentation
+docs/html/
+docs/latex/
