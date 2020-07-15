@@ -39,6 +39,16 @@ namespace ods {
             ODSInternalServerException(const char* what_arg);
             virtual ~ODSInternalServerException();
     };
+
+    /**
+     * Exception thrown then an unexpected response is received from One Data
+     * Share.
+     */
+    class ODSUnexpectedResponseException : public ODSException {
+            ODSUnexpectedResponseException(const std::string& what_arg);
+            ODSUnexpectedResponseException(const char* what_arg);
+            virtual ~ODSUnexpectedResponseException();
+    };
 }
 
 #endif // ODS_EXCEPTION_HPP_INCLUDED
