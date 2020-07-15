@@ -205,15 +205,13 @@ namespace ods {
             }
         }
 
-        bool CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
+        void CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
             try {
                 const rest::Response response(_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)));
                 if (response.status() == 200) {
-                    return true;
                 } else if (response.status() == 500) {
                     throw ODSUnexpectedResponseException("Internal server error when registering credential.", response.body(), response.status());
                 }
-                return false;
             } catch (ODSUnexpectedResponseException e) {
                 throw e;
             } catch (std::runtime_error e) {

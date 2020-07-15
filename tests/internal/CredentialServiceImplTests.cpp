@@ -138,7 +138,7 @@ namespace {
     }
 
     /**
-     * Tests that regsiter_credential returns true if the response code is 200.
+     * Tests that regsiter_credential throws no exception when the response code is 200.
      */
     TEST_F(CredentialServiceImplTest, RegisterCredentialReturnsTrue) {
         // set up mock returning status 200
@@ -148,12 +148,12 @@ namespace {
         const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
 
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_TRUE(cred.register_credential(type, "", "", "", ""));
+            EXPECT_NO_THROW(cred.register_credential(type, "", "", "", ""));
         }
     }
 
     /**
-     * Tests that register_credential returns false when a 400 response code
+     * Tests that register_credential throws no exception when a 400 response code
      * is returned.
      */
     TEST_F(CredentialServiceImplTest, RegsiterCredentialReturnsFalse) {
@@ -164,7 +164,7 @@ namespace {
         const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
 
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_FALSE(cred.register_credential(type, "", "", "", ""));
+            EXPECT_NO_THROW(cred.register_credential(type, "", "", "", ""));
         }
     }
 }

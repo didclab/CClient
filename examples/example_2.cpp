@@ -30,5 +30,10 @@ int main() {
     auto cred(std::make_unique<ods::internal::CredentialServiceImpl>(token, url, std::move(caller)));
 
     std::cout << cred->oauth_url(ods::OAuthEndpointType::GOOGLE_DRIVE) << std::endl;
-    std::cout << cred->register_credential(ods::CredentialEndpointType::FTP, "this is a test", "this is a test", "this is a test", "this is a test") << std::endl;
+    cred->register_credential(ods::CredentialEndpointType::FTP, "this is a test", "this is a test", "this is a test", "this is a test");
+
+    std::cout << cred->oauth_url(ods::OAuthEndpointType::GOOGLE_DRIVE) << std::endl;
+    std::cout << cred->oauth_url(ods::OAuthEndpointType::BOX) << std::endl;
+    std::cout << cred->oauth_url(ods::OAuthEndpointType::DROPBOX) << std::endl;
+    std::cout << cred->oauth_url(ods::OAuthEndpointType::GFTP) << std::endl;
 }

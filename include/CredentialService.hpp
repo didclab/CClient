@@ -77,13 +77,10 @@ namespace ods {
              * @param secret borrowed reference to the password needed to log in
              * to the endpoint
              * 
-             * @return true if and only if this operation successfully
-             * registered the endpoint with the specified credentials
-             * 
              * @exception throws a ODSConnectionException if unable to connect
              * to One Data Share
              */
-            virtual bool register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
+            virtual void register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
 
             /**
              * Lists the credential identifiers of the specified endpoint type

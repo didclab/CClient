@@ -29,7 +29,7 @@ namespace ods {
                  */
                 CredentialServiceImpl(const std::string& ods_auth_token, const std::string& ods_url, std::unique_ptr<rest::Rest> rest_caller);
                 virtual std::string oauth_url(OAuthEndpointType type) const override;
-                virtual bool register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const override;
+                virtual void register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const override;
                 virtual std::vector<std::string> credential_id_list(EndpointType type) const override;
                 virtual ~CredentialServiceImpl() override;
             private:
