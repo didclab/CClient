@@ -12,6 +12,7 @@
 #include <internal/CredentialServiceImpl.hpp>
 #include <rest/Rest.hpp>
 #include <ODSException.hpp>
+#include <IOException.hpp>
 
 namespace {
 
@@ -57,7 +58,7 @@ namespace {
     TEST_F(CredentialServiceImplTest, OauthUrlWithoutConnectionThrowsException) {
         // set up mock throwing an exception for every get
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Throw(std::runtime_error(CONNECTION_ERROR_MSG)));
+        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Throw(ods::IOException(CONNECTION_ERROR_MSG)));
 
         const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
 
@@ -91,7 +92,7 @@ namespace {
     TEST_F(CredentialServiceImplTest, RegisterCredentialWithoutConnectionThrowsException) {
         // set up mock throwing exception for every post
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(std::runtime_error(CONNECTION_ERROR_MSG)));
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(ods::IOException(CONNECTION_ERROR_MSG)));
 
         const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
 
