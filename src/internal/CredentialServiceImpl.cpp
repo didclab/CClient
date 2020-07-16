@@ -10,6 +10,7 @@
 #include <utility>
 #include "CredentialServiceImpl.hpp"
 #include <ODSException.hpp>
+#include <UnexpectedResponseException.hpp>
 
 namespace ods {
     namespace internal {
@@ -29,7 +30,10 @@ namespace ods {
             constexpr auto HEADER_JSON = "application/json";
             constexpr auto HEADER_AUTHORIZATION = "Authorization";
             constexpr auto HEADER_BEARER = "Bearer ";
-            constexpr auto HEADER_LOCATION = "Location";
+
+            constexpr auto OAUTH_URL_WRONG_RESPONSE_MSG = "Expected a status 303 response code when requesting oauth url.";
+
+            constexpr auto OAUTH_URL_MISSING_LOCATION_MSG = "Response headers missing the expected \"Location\" header when reqesting oauth url.";
 
             /**
              * Creates the required header map using the specified token.
@@ -185,24 +189,22 @@ namespace ods {
         }
 
         std::string CredentialServiceImpl::oauth_url(const OAuthEndpointType type) const {
-            try {
-                const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_as_string(type), _headers));
-                if (response.status() != 303) {
-                    // may be invalid token
-                    throw ODSUnexpectedResponseException("Expected a status 303 response code when requesting oauth url.", response.body(), response.status());
-                }
-                // find url in a single location header, as there should only be one
-                const std::unordered_multimap<std::string, std::string>::const_iterator iter(response.headers().find(HEADER_LOCATION));
-                if (iter == response.headers().end()) {
-                    // did not contain location header
-                    throw ODSUnexpectedResponseException("Expected a \""+std::string(HEADER_LOCATION)+"\" header in the response.", response.body(), response.status());
-                }
-                return iter->second;
-            } catch (ODSUnexpectedResponseException e) {
-                throw e;
-            } catch (std::runtime_error e) {
-                throw ODSConnectionException(std::string(e.what()));
+            // if get throws an exception, propagate it up
+            const rest::Response response(_rest_caller->get(_ods_url+API_PATH_OAUTH+"?type="+endpoint_as_string(type), _headers));
+
+            if (response.status() != 303) {
+                // unexpected response
+                throw UnexpectedResponseException(OAUTH_URL_WRONG_RESPONSE_MSG, response.status());
             }
+
+            // find url in a single location header, as there should only be one
+            const std::unordered_multimap<std::string, std::string>::const_iterator iter(response.headers().find("Location"));
+            if (iter == response.headers().end()) {
+                // did not contain Location header
+                throw UnexpectedResponseException(OAUTH_URL_MISSING_LOCATION_MSG, response.status());
+            }
+
+            return iter->second;
         }
 
         void CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
