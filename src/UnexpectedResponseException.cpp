@@ -8,12 +8,12 @@
 
 namespace ods {
     UnexpectedResponseException::UnexpectedResponseException(const std::string& what_arg, int status) : 
-        runtime_error(what_arg),
+        OneDataShareException(what_arg),
         _status(status) {
     }
 
     UnexpectedResponseException::UnexpectedResponseException(const char* what_arg, int status) : 
-        runtime_error(what_arg),
+        OneDataShareException(what_arg),
         _status(status) {
 
     }
