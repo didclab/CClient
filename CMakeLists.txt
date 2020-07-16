@@ -37,6 +37,8 @@ add_library(odscclient
     src/Source.cpp
     src/TransferService.cpp
     src/UnexpectedResponseException.cpp
+    src/util.cpp
+    src/util.hpp
     src/internal/CredentialServiceImpl.cpp
     src/internal/CredentialServiceImpl.hpp
     src/rest/CurlRest.cpp
@@ -58,9 +60,11 @@ install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # add example 1 executable
 # uncomment to test that example_1 compiles
-#add_executable(example_1 examples/example_1.cpp)
-#target_include_directories(example_1 PRIVATE include/)
-#target_link_libraries(example_1 PRIVATE odscclient)
+add_executable(example_1 examples/example_1.cpp)
+target_include_directories(example_1 PRIVATE include/)
+target_link_libraries(example_1 PRIVATE odscclient)
+
+install(TARGETS example_1 DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # add example 2 executable
 add_executable(example_2 examples/example_2.cpp)
