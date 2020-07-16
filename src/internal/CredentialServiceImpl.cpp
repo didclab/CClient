@@ -35,6 +35,8 @@ namespace ods {
 
             constexpr auto OAUTH_URL_MISSING_LOCATION_MSG = "Response headers missing the expected \"Location\" header when reqesting oauth url.";
 
+            constexpr auto REGISTER_CRED_WRONG_RESPONSE_MSG = "Expected a 200 response code when registering credentials.";
+
             /**
              * Creates the required header map using the specified token.
              * 
@@ -208,16 +210,12 @@ namespace ods {
         }
 
         void CredentialServiceImpl::register_credential(const CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const {
-            try {
-                const rest::Response response(_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)));
-                if (response.status() == 200) {
-                } else if (response.status() == 500) {
-                    throw ODSUnexpectedResponseException("Internal server error when registering credential.", response.body(), response.status());
-                }
-            } catch (ODSUnexpectedResponseException e) {
-                throw e;
-            } catch (std::runtime_error e) {
-                throw ODSConnectionException(std::string(e.what()));
+            // if post throws an exception, propogate it up
+            const rest::Response response(_rest_caller->post(_ods_url+API_PATH_CRED+"/"+endpoint_as_string(type), _headers, create_account_endpoint_credential(cred_id, uri, username, secret)));
+            
+            if (response.status() != 200) {
+                // expected status 200
+                throw UnexpectedResponseException(REGISTER_CRED_WRONG_RESPONSE_MSG, response.status());
             }
         }
 
