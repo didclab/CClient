@@ -10,7 +10,7 @@ namespace ods {
     /**
      * Exception thrown when an unexpected response is received.
      */
-    class UnexpectedResponseException : std::runtime_error {
+    class UnexpectedResponseException : public std::runtime_error {
         public:
             UnexpectedResponseException(const std::string& what_arg, int status);
             UnexpectedResponseException(const char* what_arg, int status);

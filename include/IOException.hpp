@@ -13,7 +13,7 @@ namespace ods {
     /**
      * Exception thrown when an I/O operation fails.
      */
-    class IOException : std::runtime_error {
+    class IOException : public std::runtime_error {
         public:
             IOException(const std::string& what_arg);
             IOException(const char* what_arg);
