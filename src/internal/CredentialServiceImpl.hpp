@@ -8,6 +8,9 @@
 #include <CredentialService.hpp>
 #include "../rest/Rest.hpp"
 
+#ifndef CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
+#define CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
+
 namespace ods {
     namespace internal {
         /**
@@ -52,3 +55,5 @@ namespace ods {
         };
     }
 }
+
+#endif // CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
