@@ -198,7 +198,7 @@ namespace ods {
             }
 
             // find url in a single location header, as there should only be one
-            const std::unordered_multimap<std::string, std::string>::const_iterator iter(response.headers().find("Location"));
+            const auto iter(response.headers().find("Location"));
             if (iter == response.headers().end()) {
                 // did not contain Location header
                 throw UnexpectedResponseException(OAUTH_URL_MISSING_LOCATION_MSG, response.status());
