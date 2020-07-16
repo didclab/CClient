@@ -41,10 +41,11 @@ namespace ods {
             /**
              * Creates a new CredentialService object with the specified
              * authentication token, passing ownership of the CredentialService
-             * object to the caller.
+             * object to the caller. It is expected that the specified
+             * authentication token is valid.
              * 
-             * @param ods_auth_token borrowed reference to the One Data Share
-             * authentication token to use
+             * @param ods_auth_token borrowed reference to the valid One Data
+             * Share authentication token to use
              * 
              * @return a unique pointer to a new CredentialService object
              */
@@ -52,14 +53,20 @@ namespace ods {
 
             /**
              * Gets the url that can be used to register an endpoint of the
-             * specified endpoint type with One Data Share via OAuth.
+             * specified endpoint type with One Data Share via OAuth. It is
+             * expected that the authentication token used to create this
+             * CredentialService object is valid and that a connection can be
+             * made to One Data Share. If these preconditions are not met,
+             * exceptions may be thrown.
              * 
              * @param type the endpoint type to get the OAuth url for
              * 
              * @return a string containing the OAuth url
              * 
-             * @exception throws a ODSConnectionException if unable to connect
-             * to One Data Share
+             * @exception IOException if unable to connect to One Data
+             * Share
+             * @exception UnexpectedResponseException if an unexpected response
+             * is received from One Data Share
              */
             virtual std::string oauth_url(OAuthEndpointType type) const = 0;
 
