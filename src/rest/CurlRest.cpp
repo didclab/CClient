@@ -4,8 +4,8 @@
  * 6/23/20
  */
 
-#include <stdexcept>
 #include <curl/curl.h>
+#include <IOException.hpp>
 #include "CurlRest.hpp"
 
 namespace ods {
@@ -152,7 +152,7 @@ namespace ods {
             curl_slist_free_all(headers_slist);
 
             if (result != CURLE_OK) {
-                throw std::runtime_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
+                throw IOException("Unable to connect to " + url + ": " + curl_easy_strerror(result));
             }
 
             return Response(response_headers, response_body, status);
@@ -209,7 +209,7 @@ namespace ods {
             curl_slist_free_all(headers_slist);
 
             if (result != CURLE_OK) {
-                throw std::runtime_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
+                throw IOException("Unable to connect to " + url + ": " + curl_easy_strerror(result));
             }
 
             return Response(response_headers, response_body, status);
