@@ -21,18 +21,22 @@ add_library(odscclient
     include/Destination.hpp
     include/Endpoint.hpp
     include/EndpointType.hpp
+    include/IOException.hpp
     include/ODSException.hpp
     include/Resource.hpp
     include/Source.hpp
     include/TransferOptions.hpp
     include/TransferService.hpp
     include/TransferStatus.hpp
+    include/UnexpectedResponseException.hpp
     src/CredentialService.cpp
     src/Destination.cpp
     src/Endpoint.cpp
+    src/IOException.cpp
     src/ODSException.cpp
     src/Source.cpp
     src/TransferService.cpp
+    src/UnexpectedResponseException.cpp
     src/internal/CredentialServiceImpl.cpp
     src/internal/CredentialServiceImpl.hpp
     src/rest/CurlRest.cpp
