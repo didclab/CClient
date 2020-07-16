@@ -4,12 +4,12 @@
  * 7/9/20
  */
 
+#ifndef CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
+#define CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
+
 #include <memory>
 #include <CredentialService.hpp>
 #include "../rest/Rest.hpp"
-
-#ifndef CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
-#define CREDENTIAL_SERVICE_IMPL_HPP_INCLUDED
 
 namespace ods {
     namespace internal {
