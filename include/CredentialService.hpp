@@ -63,8 +63,7 @@ namespace ods {
              * 
              * @return a string containing the OAuth url
              * 
-             * @exception IOException if unable to connect to One Data
-             * Share
+             * @exception IOException if unable to connect to One Data Share
              * @exception UnexpectedResponseException if an unexpected response
              * is received from One Data Share
              */
@@ -72,7 +71,10 @@ namespace ods {
 
             /**
              * Registers the specified endpoint with One Data Share using the
-             * specified credentials.
+             * specified credentials. It is expected that the authentication
+             * token used to create this CredentialService object is valid and
+             * that a connection can be made to One Data Share. If these
+             * preconditions are not met, exceptions may be thrown.
              * 
              * @param type the endpoint type to register
              * @param cred_id borrowed reference to the credential identifier
@@ -84,8 +86,9 @@ namespace ods {
              * @param secret borrowed reference to the password needed to log in
              * to the endpoint
              * 
-             * @exception throws a ODSConnectionException if unable to connect
-             * to One Data Share
+             * @exception IOException if unable to connect to One Data Share
+             * @exception UnexpectedResponseException if an unexpected response
+             * is recieved from One Data Share
              */
             virtual void register_credential(CredentialEndpointType type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
 
