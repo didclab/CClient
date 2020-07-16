@@ -80,6 +80,25 @@ namespace {
     }
 
     /**
+     * Tests that oauth_url properly extracts the url from the response header.
+     */
+    TEST_F(CredentialServiceImplTest, OauthUrlGetsUrl) {
+        std::string mock_oauth_url("This is an oauth url");
+        std::unordered_multimap headers{std::pair(std::string("Location"), std::string(mock_oauth_url))};
+
+        // set up mock returning response redirecting to oauth url
+        auto caller(std::make_unique<MockRest>());
+        EXPECT_CALL(*caller, get).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(headers, "", 303)));
+
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
+
+        // check every oauth endpoint correctly returns the oauth url
+        for (auto type : OAUTH_TYPES) {
+            EXPECT_EQ(cred.oauth_url(type), mock_oauth_url);
+        }
+    }
+
+    /**
      * Tests that register_credential throws an IOException when it recieves an
      * IOException while trying to make a post request.
      */
@@ -110,25 +129,6 @@ namespace {
         // check that every credential endpoint type throws the correct exception
         for (auto type : CREDENTIAL_TYPES) {
             EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::UnexpectedResponseException);
-        }
-    }
-
-    /**
-     * Tests that oauth_url properly extracts the url from the response header.
-     */
-    TEST_F(CredentialServiceImplTest, OauthUrlGetsUrl) {
-        std::string mock_oauth_url("This is an oauth url");
-        std::unordered_multimap headers{std::pair(std::string("Location"), std::string(mock_oauth_url))};
-
-        // set up mock returning response redirecting to oauth url
-        auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, get).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(headers, "", 303)));
-
-        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
-
-        // check every oauth endpoint correctly returns the oauth url
-        for (auto type : OAUTH_TYPES) {
-            EXPECT_EQ(cred.oauth_url(type), mock_oauth_url);
         }
     }
 
