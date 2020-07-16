@@ -22,7 +22,6 @@ add_library(odscclient
     include/Endpoint.hpp
     include/EndpointType.hpp
     include/IOException.hpp
-    include/ODSException.hpp
     include/OneDataShareException.hpp
     include/Resource.hpp
     include/Source.hpp
@@ -34,7 +33,6 @@ add_library(odscclient
     src/Destination.cpp
     src/Endpoint.cpp
     src/IOException.cpp
-    src/ODSException.cpp
     src/OneDataShareException.cpp
     src/Source.cpp
     src/TransferService.cpp

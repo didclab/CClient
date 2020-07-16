@@ -7,13 +7,14 @@
 #include <array>
 #include <memory>
 #include <stdexcept>
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <internal/CredentialServiceImpl.hpp>
 #include <rest/Rest.hpp>
-#include <ODSException.hpp>
+
 #include <IOException.hpp>
 #include <UnexpectedResponseException.hpp>
+#include <internal/CredentialServiceImpl.hpp>
 
 namespace {
 

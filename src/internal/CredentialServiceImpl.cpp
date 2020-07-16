@@ -8,9 +8,9 @@
 #include <iomanip>
 #include <sstream>
 #include <utility>
-#include "CredentialServiceImpl.hpp"
-#include <ODSException.hpp>
 #include <UnexpectedResponseException.hpp>
+#include "CredentialServiceImpl.hpp"
+
 
 namespace ods {
     namespace internal {
