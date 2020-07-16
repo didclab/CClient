@@ -115,14 +115,15 @@ namespace ods {
          * @return the Response object created by the write_data and
          * header_callback functions
          * 
-         * @exception throws a runtime_error if unable to connect to the
-         * specified url
+         * @exception IOException if unable to connect to the sepcified url
          */
         Response CurlRest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const {
             // string that curl will write the response body to
             std::string response_body;
+
             // multi-map that curl will write the request headers to
             std::unordered_multimap<std::string, std::string> response_headers;
+            
             // long that the http response status will be written to
             long status;
 
@@ -134,18 +135,18 @@ namespace ods {
 
             // execute the request
             CURL* handle = curl_easy_init();
-            curl_easy_setopt(handle, CURLOPT_HTTPGET, 1L); // indicate a GET request
-            curl_easy_setopt(handle, CURLOPT_URL, url.c_str()); // set url
-            curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_slist); // set headers
+            curl_easy_setopt(handle, CURLOPT_HTTPGET, 1L);
+            curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_slist);
 
-            curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data); // let body be written to a string
-            curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body); // indicate the string to be written to
-            curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback); // let headers be added to map
-            curl_easy_setopt(handle, CURLOPT_HEADERDATA, &response_headers); // indicate the map
+            curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
+            curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body);
+            curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback);
+            curl_easy_setopt(handle, CURLOPT_HEADERDATA, &response_headers);
 
             const CURLcode result = curl_easy_perform(handle);
 
-            curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status); // set http status code to status
+            curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status);
 
             // free resources
             curl_easy_cleanup(handle);
@@ -171,14 +172,15 @@ namespace ods {
          * @return the Response object created by the write_data and
          * header_callback functions
          * 
-         * @exception throws a runtime_error if unable to connect to the
-         * specified url
+         * @exception IOException if unable to connect to the sepcified url
          */
         Response CurlRest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const {
             // string that curl will write the response body to
             std::string response_body;
+
             // multi-map that curl will write the request headers to
             std::unordered_multimap<std::string, std::string> response_headers;
+
             // long that the http response status will be written to
             long status;
 
@@ -190,19 +192,19 @@ namespace ods {
 
             // execute the request
             CURL* handle = curl_easy_init();
-            curl_easy_setopt(handle, CURLOPT_URL, url.c_str()); // set url
-            curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_slist); // set headers
+            curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_slist);
 
-            curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data.c_str()); // set post data
+            curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data.c_str());
 
-            curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data); // let body be written to a string
-            curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body); // indicate the string to be written to
-            curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback); // let headers be added to map
-            curl_easy_setopt(handle, CURLOPT_HEADERDATA, &response_headers); // indicate the map
+            curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
+            curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body);
+            curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback);
+            curl_easy_setopt(handle, CURLOPT_HEADERDATA, &response_headers);
 
             const CURLcode result = curl_easy_perform(handle);
 
-            curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status); // set http status code to status
+            curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status);
 
             // free resources
             curl_easy_cleanup(handle);
