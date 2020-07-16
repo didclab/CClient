@@ -13,18 +13,12 @@
 #include <rest/Rest.hpp>
 #include <ODSException.hpp>
 #include <IOException.hpp>
+#include <UnexpectedResponseException.hpp>
 
 namespace {
 
     using ::testing::Return;
     using ::testing::Throw;
-
-    constexpr auto URL = "THIS IS A URL";
-    constexpr auto TOKEN = "THIS IS A TOKEN";
-
-    constexpr auto CONNECTION_ERROR_MSG = "Unable to connect";
-
-    constexpr auto STATUS_500_ERROR_JSON = R"({"error":"Internal Server Error","message":"AN ERROR OCCURED"})";
 
     constexpr std::array OAUTH_TYPES {
         ods::OAuthEndpointType::BOX,
@@ -52,117 +46,101 @@ namespace {
     };
 
     /**
-     * Tests that trying to get an oauth url while unable to connect to One Data
-     * Share throws an exception.
+     * Tests that oauth_url throws an IOException when it recieves
+     * an IOException while trying to make a get request.
      */
-    TEST_F(CredentialServiceImplTest, OauthUrlWithoutConnectionThrowsException) {
-        // set up mock throwing an exception for every get
+    TEST_F(CredentialServiceImplTest, OauthUrlThrowsIOException) {
+        // set up mock throwing exception for every get
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Throw(ods::IOException(CONNECTION_ERROR_MSG)));
+        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Throw(ods::IOException("")));
 
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
 
         // check that every oauth endpoint type throws the correct exception
         for (auto type : OAUTH_TYPES) {
-            EXPECT_THROW(cred.oauth_url(type), ods::ODSConnectionException);
+            EXPECT_THROW(cred.oauth_url(type), ods::IOException);
         }
     }
 
     /**
-     * Tests that trying to get an oauth url using an invalid One Data Share 
-     * token throws an exception.
+     * Tests that oauth_url throws an UnexpectedResponseException when it
+     * recieves a status 500 from a get request.
      */
-    TEST_F(CredentialServiceImplTest, OauthUrlUsingInvalidTokenThrowsException) {
+    TEST_F(CredentialServiceImplTest, OauthUrlThrowsUnexpectedResponseException) {
         // set up mock returning status 500 for every get
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), STATUS_500_ERROR_JSON, 500)));
+        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), "", 500)));
 
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
         
         // check that every oauth endpoint type throws the correct exception
         for (auto type : OAUTH_TYPES) {
-            EXPECT_THROW(cred.oauth_url(type), ods::ODSUnexpectedResponseException);
+            EXPECT_THROW(cred.oauth_url(type), ods::UnexpectedResponseException);
         }
     }
 
     /**
-     * Tests that trying to register a credential while unable to connect to One
-     * Data Share throws an exception
+     * Tests that register_credential throws an IOException when it recieves an
+     * IOException while trying to make a post request.
      */
-    TEST_F(CredentialServiceImplTest, RegisterCredentialWithoutConnectionThrowsException) {
+    TEST_F(CredentialServiceImplTest, RegisterCredentialThrowsIOException) {
         // set up mock throwing exception for every post
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(ods::IOException(CONNECTION_ERROR_MSG)));
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(ods::IOException("")));
 
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
 
         // check that every credential endpoint type throws the correct exception
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::ODSConnectionException);
+            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::IOException);
         }
     }
 
     /**
-     * Tests that trying to register a credential while using an invalid One
-     * Data Share token throws an exception.
+     * Tests that register_credential throws an UnexpectedResponseException when
+     * it recieves a status 500 from a post request.
      */
-    TEST_F(CredentialServiceImplTest, RegisterCredentialUsingInvalidTokenThrowsException) {
+    TEST_F(CredentialServiceImplTest, RegisterCredentialThrowsUnexpectedResponseException) {
         // set up mock returning status 500 for every post
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), STATUS_500_ERROR_JSON, 500)));
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), "", 500)));
 
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
 
         // check that every credential endpoint type throws the correct exception
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::ODSUnexpectedResponseException);
+            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), ods::UnexpectedResponseException);
         }
     }
 
     /**
      * Tests that oauth_url properly extracts the url from the response header.
      */
-    TEST_F(CredentialServiceImplTest, CanGetOAuthLink) {
-        std::string fake_oauth_url("This is an oauth url");
-        std::unordered_multimap headers{std::pair(std::string("Location"), std::string(fake_oauth_url))};
+    TEST_F(CredentialServiceImplTest, OauthUrlGetsUrl) {
+        std::string mock_oauth_url("This is an oauth url");
+        std::unordered_multimap headers{std::pair(std::string("Location"), std::string(mock_oauth_url))};
 
         // set up mock returning response redirecting to oauth url
         auto caller(std::make_unique<MockRest>());
         EXPECT_CALL(*caller, get).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(headers, "", 303)));
 
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
 
         // check every oauth endpoint correctly returns the oauth url
         for (auto type : OAUTH_TYPES) {
-            EXPECT_EQ(cred.oauth_url(type), fake_oauth_url);
+            EXPECT_EQ(cred.oauth_url(type), mock_oauth_url);
         }
     }
 
     /**
      * Tests that regsiter_credential throws no exception when the response code is 200.
      */
-    TEST_F(CredentialServiceImplTest, RegisterCredentialReturnsTrue) {
+    TEST_F(CredentialServiceImplTest, RegisterCredentialSucceeds) {
         // set up mock returning status 200
         auto caller(std::make_unique<MockRest>());
         EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), "", 200)));
 
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
-
-        for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_NO_THROW(cred.register_credential(type, "", "", "", ""));
-        }
-    }
-
-    /**
-     * Tests that register_credential throws no exception when a 400 response code
-     * is returned.
-     */
-    TEST_F(CredentialServiceImplTest, RegsiterCredentialReturnsFalse) {
-        // set up mock returning status 400
-        auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Return(ods::rest::Response(std::unordered_multimap<std::string, std::string>(), "", 400)));
-
-        const ods::internal::CredentialServiceImpl cred(TOKEN, URL, std::move(caller));
+        const ods::internal::CredentialServiceImpl cred("", "", std::move(caller));
 
         for (auto type : CREDENTIAL_TYPES) {
             EXPECT_NO_THROW(cred.register_credential(type, "", "", "", ""));
