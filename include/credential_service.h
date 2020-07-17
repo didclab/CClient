@@ -65,8 +65,8 @@ namespace One_data_share {
          * 
          * @return a string containing the OAuth url
          * 
-         * @exception IOException if unable to connect to One Data Share
-         * @exception UnexpectedResponseException if an unexpected response
+         * @exception IO_error if unable to connect to One Data Share
+         * @exception Unexpected_response_error if an unexpected response
          * is received from One Data Share
          */
         virtual std::string oauth_url(Oauth_endpoint_type type) const = 0;
@@ -88,8 +88,8 @@ namespace One_data_share {
          * @param secret borrowed reference to the password needed to log in
          * to the endpoint
          * 
-         * @exception IOException if unable to connect to One Data Share
-         * @exception UnexpectedResponseException if an unexpected response
+         * @exception IO_error if unable to connect to One Data Share
+         * @exception Unexpected_response_error if an unexpected response
          * is recieved from One Data Share
          */
         virtual void register_credential(Credential_endpoint_type type, const std::string& cred_id, const std::string& uri, const std::string& username, const std::string& secret) const = 0;
