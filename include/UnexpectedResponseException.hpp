@@ -9,7 +9,7 @@
 
 #include "OneDataShareException.hpp"
 
-namespace ods {
+namespace One_data_share {
     /**
      * Exception thrown when an unexpected response is received.
      */
