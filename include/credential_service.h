@@ -38,6 +38,8 @@ namespace One_data_share {
      */
     class Credential_service {
     public:
+        virtual ~Credential_service() = 0;
+
         /**
          * Creates a new Credential_service object with the specified
          * authentication token, passing ownership of the Credential_service
@@ -107,7 +109,6 @@ namespace One_data_share {
         Credential_service(const Credential_service&) = delete;
         Credential_service& operator=(const Credential_service&) = delete;
 
-        virtual ~Credential_service() = 0;
     protected:
         Credential_service();
     };
