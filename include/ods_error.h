@@ -1,5 +1,5 @@
 /*
- * ods_exception.h
+ * ods_error.h
  * Andrew Mikalsen
  * 7/16/20
  */
