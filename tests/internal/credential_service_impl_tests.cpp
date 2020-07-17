@@ -13,7 +13,7 @@
 
 #include <ods_error.h>
 
-#include <internal/credential_service_impl.h>
+#include <credential_service_impl.h>
 
 // #include <rest/Rest.hpp>
 

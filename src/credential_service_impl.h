@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <credential_service.h>
 #include <endpoint_type.h>
-#include "../rest.h"
+#include "rest.h"
 
 namespace One_data_share {
     /**
