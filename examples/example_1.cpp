@@ -7,9 +7,14 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <CredentialService.hpp>
-#include <Endpoint.hpp>
-#include <EndpointType.hpp>
+
+// #include <CredentialService.hpp>
+// #include <Endpoint.hpp>
+// #include <EndpointType.hpp>
+
+#include <credential_service.h>
+#include <endpoint.h>
+#include <endpoint_type.h>
 
 /**
  * Loads the token and url from a token.txt file.
@@ -48,14 +53,14 @@ int main() {
     const std::string my_cred_id("my_endpoint");
 
     // register new endpoint
-    const auto cred_service(ods::CredentialService::create(token));
-    cred_service->register_credential(ods::CredentialEndpointType::FTP, my_cred_id, "ftp://speedtest.tele2.net", "", "");
+    const auto cred_service(One_data_share::Credential_service::create(token));
+    cred_service->register_credential(One_data_share::Credential_endpoint_type::ftp, my_cred_id, "ftp://speedtest.tele2.net", "", "");
 
     // print oauth url for dropbox
-    std::cout << cred_service->oauth_url(ods::OAuthEndpointType::DROPBOX) << std::endl;
+    std::cout << cred_service->oauth_url(One_data_share::Oauth_endpoint_type::dropbox) << std::endl;
 
     // // print root of new endpoint
-    // const auto my_endpoint(ods::Endpoint::create(ods::EndpointType::FTP, my_cred_id, token));
+    // const auto my_endpoint(One_data_share::Endpoint::create(One_data_share::EndpointType::FTP, my_cred_id, token));
     // const auto root(my_endpoint->list("/"));
     // if (root->is_directory()) {
     //     for (auto r : *root->contained_resources()) {

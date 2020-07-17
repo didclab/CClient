@@ -6,8 +6,9 @@
 
 #include <fstream>
 #include <iostream>
-#include "../src/rest/CurlRest.hpp"
-#include "../src/internal/CredentialServiceImpl.hpp"
+
+#include "../src/rest/curl_rest.h"
+#include "../src/internal/credential_service_impl.h"
 
 int main() {
     std::string url;
@@ -25,15 +26,10 @@ int main() {
 
     file.close();
 
-    std::unique_ptr<ods::rest::Rest> caller(std::make_unique<ods::rest::CurlRest>());
+    std::unique_ptr<One_data_share::Rest> caller(std::make_unique<One_data_share::Curl_rest>());
 
-    auto cred(std::make_unique<ods::internal::CredentialServiceImpl>(token, url, std::move(caller)));
+    auto cred(std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller)));
 
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::GOOGLE_DRIVE) << std::endl;
-    cred->register_credential(ods::CredentialEndpointType::FTP, "this is a test", "this is a test", "this is a test", "this is a test");
-
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::GOOGLE_DRIVE) << std::endl;
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::BOX) << std::endl;
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::DROPBOX) << std::endl;
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::GFTP) << std::endl;
+    std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::googledrive) << std::endl;
+    cred->register_credential(One_data_share::Credential_endpoint_type::ftp, "this is a test", "this is a test", "this is a test", "this is a test");
 }

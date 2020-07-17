@@ -9,7 +9,9 @@
 #include <unordered_map>
 #include <vector>
 #include <../simdjson/simdjson.h>
-#include <rest/CurlRest.hpp>
+
+// #include <rest/CurlRest.hpp>
+#include <rest/curl_rest.h>
 
 int main() {
     // parse token.txt
@@ -49,12 +51,12 @@ int main() {
 
     simdjson::dom::parser parser;
 
-    ods::rest::CurlRest rest;
+    One_data_share::Curl_rest rest;
 
     // get request
 
-    //ods::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
-    ods::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
+    //One_data_share::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
+    One_data_share::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
 
 
     std::cout << "[=== get request headers ===]" << std::endl;
@@ -83,7 +85,7 @@ int main() {
 
     // post request
 
-    ods::rest::Response post_r = rest.post(url+"/api/stork/q/user-jobs", headers, data);
+    One_data_share::Response post_r = rest.post(url+"/api/stork/q/user-jobs", headers, data);
 
     std::cout << "[=== post request headers ===]" << std::endl;
     for (auto h : post_r.headers()) {
