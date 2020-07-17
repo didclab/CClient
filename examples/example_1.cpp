@@ -40,25 +40,28 @@ bool load_from_file(std::string* token, std::string* url) {
  */
 int main() {
     std::string token;
-    std::string url;
-    if (!load_from_file(&token, &url)) {
+    std::string _;
+    if (!load_from_file(&token, &_)) {
         return -1;
     }
 
     const std::string my_cred_id("my_endpoint");
 
     // register new endpoint
-    const auto cred_service = ods::CredentialService::create(token);
+    const auto cred_service(ods::CredentialService::create(token));
     cred_service->register_credential(ods::CredentialEndpointType::FTP, my_cred_id, "ftp://speedtest.tele2.net", "", "");
 
-    // print root of new endpoint
-    const auto my_endpoint = ods::Endpoint::create(ods::EndpointType::FTP, my_cred_id, token);
-    const auto root = my_endpoint->list("/");
-    if (root->is_directory()) {
-        for (auto r : *root->contained_resources()) {
-            std::cout << r->name() << std::endl;
-        }
-    }
+    // print oauth url for dropbox
+    std::cout << cred_service->oauth_url(ods::OAuthEndpointType::DROPBOX) << std::endl;
+
+    // // print root of new endpoint
+    // const auto my_endpoint(ods::Endpoint::create(ods::EndpointType::FTP, my_cred_id, token));
+    // const auto root(my_endpoint->list("/"));
+    // if (root->is_directory()) {
+    //     for (auto r : *root->contained_resources()) {
+    //         std::cout << r->name() << std::endl;
+    //     }
+    // }
 
     return 0;
 }

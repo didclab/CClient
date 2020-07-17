@@ -21,16 +21,26 @@ add_library(odscclient
     include/Destination.hpp
     include/Endpoint.hpp
     include/EndpointType.hpp
+    include/IOException.hpp
+    include/ODSException.hpp
     include/Resource.hpp
     include/Source.hpp
     include/TransferOptions.hpp
     include/TransferService.hpp
     include/TransferStatus.hpp
+    include/UnexpectedResponseException.hpp
     src/CredentialService.cpp
     src/Destination.cpp
     src/Endpoint.cpp
+    src/IOException.cpp
+    src/ODSException.cpp
     src/Source.cpp
     src/TransferService.cpp
+    src/UnexpectedResponseException.cpp
+    src/util.cpp
+    src/util.hpp
+    src/internal/CredentialServiceImpl.cpp
+    src/internal/CredentialServiceImpl.hpp
     src/rest/CurlRest.cpp
     src/rest/CurlRest.hpp
     src/rest/Response.cpp
@@ -50,10 +60,18 @@ install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # add example 1 executable
 # uncomment to test that example_1 compiles
-#add_executable(example_1 examples/example_1.cpp)
-#target_include_directories(example_1 PRIVATE include/)
-#target_link_libraries(example_1 PRIVATE odscclient)
+add_executable(example_1 examples/example_1.cpp)
+target_include_directories(example_1 PRIVATE include/)
+target_link_libraries(example_1 PRIVATE odscclient)
 
+install(TARGETS example_1 DESTINATION  ${CMAKE_INSTALL_PREFIX})
+
+# add example 2 executable
+add_executable(example_2 examples/example_2.cpp)
+target_include_directories(example_2 PRIVATE include/)
+target_link_libraries(example_2 PRIVATE odscclient)
+
+install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # download google test
 
@@ -97,10 +115,13 @@ endif()
 # End From https://github.com/google/googletest/blob/master/googletest/README.md #
 ##################################################################################
 
+
+
 # add unit tests
 add_executable(tests
-    tests/ResponseTests.cpp
+    tests/internal/CredentialServiceImplTests.cpp
+    tests/rest/ResponseTests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
-target_link_libraries(tests PRIVATE gtest_main odscclient)
+target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)
 install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})
