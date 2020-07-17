@@ -6,9 +6,8 @@
 
 #include <fstream>
 #include <iostream>
-
-#include "../src/curl_rest.h"
-#include "../src/credential_service_impl.h"
+#include <curl_rest.h>
+#include <credential_service_impl.h>
 
 int main() {
     std::string url;

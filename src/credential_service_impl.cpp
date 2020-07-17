@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <sstream>
 #include <utility>
-#include <ods_error.h>
+#include <onedatashare/ods_error.h>
 #include "credential_service_impl.h"
 
 namespace {

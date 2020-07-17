@@ -17,11 +17,11 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    include/credential_service.h
-    include/endpoint.h
-    include/endpoint_type.h
-    include/ods_error.h
-    include/transfer_service.h
+    include/onedatashare/credential_service.h
+    include/onedatashare/endpoint.h
+    include/onedatashare/endpoint_type.h
+    include/onedatashare/ods_error.h
+    include/onedatashare/transfer_service.h
     src/credential_service.cpp
     src/credential_service_impl.cpp
     src/credential_service_impl.h
@@ -51,7 +51,7 @@ install(TARGETS example_1 DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # add example 2 executable
 add_executable(example_2 examples/example_2.cpp)
-target_include_directories(example_2 PRIVATE include/)
+target_include_directories(example_2 PRIVATE include/ src/)
 target_link_libraries(example_2 PRIVATE odscclient)
 
 install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})

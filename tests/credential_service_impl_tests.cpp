@@ -7,19 +7,11 @@
 #include <array>
 #include <memory>
 #include <stdexcept>
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include <ods_error.h>
-
+#include <onedatashare/ods_error.h>
 #include <credential_service_impl.h>
 
-// #include <rest/Rest.hpp>
-
-// #include <IOException.hpp>
-// #include <UnexpectedResponseException.hpp>
-// #include <internal/CredentialServiceImpl.hpp>
 
 namespace {
 
@@ -52,19 +44,19 @@ namespace {
 };
 
     /**
-     * Tests that oauth_url throws an IO_error when it recieves
-     * an IO_error while trying to make a get request.
+     * Tests that oauth_url throws an Connection_error when it recieves
+     * an Connection_error while trying to make a get request.
      */
     TEST_F(CredentialServiceImplTest, OauthUrlThrowsIO) {
         // set up mock throwing exception for every get
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Throw(One_data_share::IO_error("")));
+        EXPECT_CALL(*caller, get).Times(OAUTH_TYPES.size()).WillRepeatedly(Throw(One_data_share::Connection_error("")));
 
         const One_data_share::Credential_service_impl cred("", "", std::move(caller));
 
         // check that every oauth endpoint type throws the correct exception
         for (auto type : OAUTH_TYPES) {
-            EXPECT_THROW(cred.oauth_url(type), One_data_share::IO_error);
+            EXPECT_THROW(cred.oauth_url(type), One_data_share::Connection_error);
         }
     }
 
@@ -105,19 +97,19 @@ namespace {
     }
 
     /**
-     * Tests that register_credential throws an IO_error when it recieves an
-     * IO_error while trying to make a post request.
+     * Tests that register_credential throws an Connection_error when it recieves an
+     * Connection_error while trying to make a post request.
      */
     TEST_F(CredentialServiceImplTest, RegisterCredentialThrowsIO) {
         // set up mock throwing exception for every post
         auto caller(std::make_unique<MockRest>());
-        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(One_data_share::IO_error("")));
+        EXPECT_CALL(*caller, post).Times(CREDENTIAL_TYPES.size()).WillRepeatedly(Throw(One_data_share::Connection_error("")));
 
         const One_data_share::Credential_service_impl cred("", "", std::move(caller));
 
         // check that every credential endpoint type throws the correct exception
         for (auto type : CREDENTIAL_TYPES) {
-            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), One_data_share::IO_error);
+            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), One_data_share::Connection_error);
         }
     }
 

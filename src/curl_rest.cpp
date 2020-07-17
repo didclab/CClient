@@ -7,7 +7,7 @@
 #include <optional>
 #include <utility>
 #include <curl/curl.h>
-#include <ods_error.h>
+#include <onedatashare/ods_error.h>
 #include "curl_rest.h"
 
 namespace {
@@ -121,7 +121,7 @@ namespace One_data_share {
      * @return the Response object created by the write_data and
      * header_callback functions
      * 
-     * @exception IO_error if unable to connect to the sepcified url
+     * @exception Connection_error if unable to connect to the sepcified url
      */
     Response Curl_rest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const
     {
@@ -160,7 +160,7 @@ namespace One_data_share {
         curl_slist_free_all(headers_slist);
 
         if (result != CURLE_OK) {
-            throw IO_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
+            throw Connection_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
         }
 
         return Response(response_headers, response_body, status);
@@ -179,7 +179,7 @@ namespace One_data_share {
      * @return the Response object created by the write_data and
      * header_callback functions
      * 
-     * @exception IO_error if unable to connect to the sepcified url
+     * @exception Connection_error if unable to connect to the sepcified url
      */
     Response Curl_rest::post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const
     {
@@ -219,7 +219,7 @@ namespace One_data_share {
         curl_slist_free_all(headers_slist);
 
         if (result != CURLE_OK) {
-            throw IO_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
+            throw Connection_error("Unable to connect to " + url + ": " + curl_easy_strerror(result));
         }
 
         return Response(response_headers, response_body, status);

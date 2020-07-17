@@ -8,13 +8,9 @@
 #include <iostream>
 #include <memory>
 
-// #include <CredentialService.hpp>
-// #include <Endpoint.hpp>
-// #include <EndpointType.hpp>
-
-#include <credential_service.h>
-#include <endpoint.h>
-#include <endpoint_type.h>
+#include <onedatashare/credential_service.h>
+#include <onedatashare/endpoint.h>
+#include <onedatashare/endpoint_type.h>
 
 /**
  * Loads the token and url from a token.txt file.

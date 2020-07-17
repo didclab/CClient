@@ -9,8 +9,6 @@
 #include <unordered_map>
 #include <vector>
 #include <../simdjson/simdjson.h>
-
-// #include <rest/CurlRest.hpp>
 #include <curl_rest.h>
 
 int main() {

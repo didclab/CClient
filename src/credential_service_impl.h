@@ -10,8 +10,8 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include <credential_service.h>
-#include <endpoint_type.h>
+#include <onedatashare/credential_service.h>
+#include <onedatashare/endpoint_type.h>
 #include "rest.h"
 
 namespace One_data_share {

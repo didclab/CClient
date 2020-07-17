@@ -5,7 +5,7 @@
  */
 
 #include <fstream>
-#include <credential_service.h>
+#include <onedatashare/credential_service.h>
 #include "curl_rest.h"
 #include "credential_service_impl.h"
 

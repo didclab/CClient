@@ -23,11 +23,11 @@ namespace One_data_share {
     /**
      * Exception thrown when an I/O operation fails.
      */
-    class IO_error : public Ods_error {
+    class Connection_error : public Ods_error {
     public:
-        IO_error(const std::string& what_arg);
-        IO_error(const char* what_arg);
-        virtual ~IO_error();
+        Connection_error(const std::string& what_arg);
+        Connection_error(const char* what_arg);
+        virtual ~Connection_error();
     };
 
     /**
