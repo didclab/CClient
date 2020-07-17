@@ -17,7 +17,6 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    #[[
     include/credential_service.h
     include/endpoint.h
     include/endpoint_type.h
@@ -29,8 +28,6 @@ add_library(odscclient
     src/internal/credential_service_impl.h
     src/rest/curl_rest.cpp
     src/rest/curl_rest.h
-    src/rest/response.cpp
-    src/rest/response.h
     src/rest/rest.cpp
     src/rest/rest.h
 )

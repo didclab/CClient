@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_map>
 #include <gtest/gtest.h>
-#include <rest/response.h>
+#include <rest/rest.h>
 
 // #include <rest/Response.hpp>
 
