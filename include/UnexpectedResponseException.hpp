@@ -4,13 +4,16 @@
  * 7/15/20
  */
 
-#include <stdexcept>
+#ifndef UNEXPECTED_RESPONSE_EXCEPTION_HPP_INCLUDED
+#define UNEXPECTED_RESPONSE_EXCEPTION_HPP_INCLUDED
+
+#include "OneDataShareException.hpp"
 
 namespace ods {
     /**
      * Exception thrown when an unexpected response is received.
      */
-    class UnexpectedResponseException : public std::runtime_error {
+    class UnexpectedResponseException : public OneDataShareException {
         public:
             UnexpectedResponseException(const std::string& what_arg, int status);
             UnexpectedResponseException(const char* what_arg, int status);
@@ -27,3 +30,5 @@ namespace ods {
             int _status;
     };
 }
+
+#endif // UNEXPECTED_RESPONSE_EXCEPTION_HPP_INCLUDED

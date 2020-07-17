@@ -7,13 +7,13 @@
 #ifndef IO_EXCEPTION_HPP_INCLUDED
 #define IO_EXCEPTION_HPP_INCLUDED
 
-#include <stdexcept>
+#include "OneDataShareException.hpp"
 
 namespace ods {
     /**
      * Exception thrown when an I/O operation fails.
      */
-    class IOException : public std::runtime_error {
+    class IOException : public OneDataShareException {
         public:
             IOException(const std::string& what_arg);
             IOException(const char* what_arg);
