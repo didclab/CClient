@@ -23,13 +23,13 @@ add_library(odscclient
     include/ods_error.h
     include/transfer_service.h
     src/credential_service.cpp
+    src/curl_rest.cpp
+    src/curl_rest.h
     src/ods_error.cpp
+    src/rest.cpp
+    src/rest.h
     src/internal/credential_service_impl.cpp
     src/internal/credential_service_impl.h
-    src/rest/curl_rest.cpp
-    src/rest/curl_rest.h
-    src/rest/rest.cpp
-    src/rest/rest.h
 )
 target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)

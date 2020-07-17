@@ -7,7 +7,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../src/rest/curl_rest.h"
+#include "../src/curl_rest.h"
 #include "../src/internal/credential_service_impl.h"
 
 int main() {

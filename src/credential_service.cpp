@@ -6,7 +6,7 @@
 
 #include <fstream>
 #include <credential_service.h>
-#include "rest/curl_rest.h"
+#include "curl_rest.h"
 #include "internal/credential_service_impl.h"
 
 namespace {

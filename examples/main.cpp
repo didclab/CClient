@@ -11,7 +11,7 @@
 #include <../simdjson/simdjson.h>
 
 // #include <rest/CurlRest.hpp>
-#include <rest/curl_rest.h>
+#include <curl_rest.h>
 
 int main() {
     // parse token.txt
