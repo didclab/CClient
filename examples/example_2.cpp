@@ -27,6 +27,8 @@ int main()
 
     file.close();
 
+    namespace Ods = One_data_share;
+
     std::unique_ptr<One_data_share::Rest> caller(std::make_unique<One_data_share::Curl_rest>());
 
     auto cred(std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller)));

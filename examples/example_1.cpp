@@ -46,24 +46,25 @@ int main()
         return -1;
     }
 
+    namespace Ods = One_data_share;
+
     const std::string my_cred_id("my_endpoint");
 
     // register new endpoint
-    const auto cred_service(One_data_share::Credential_service::create(token));
-    cred_service->register_credential(One_data_share::Credential_endpoint_type::ftp,
+    const auto cred_service(Ods::Credential_service::create(token));
+    cred_service->register_credential(Ods::Credential_endpoint_type::ftp,
                                       my_cred_id,
                                       "ftp://speedtest.tele2.net",
                                       "",
                                       "");
 
     // print oauth url for dropbox
-    std::cout << cred_service->oauth_url(One_data_share::Oauth_endpoint_type::dropbox) << std::endl;
+    std::cout << cred_service->oauth_url(Ods::Oauth_endpoint_type::dropbox) << std::endl;
 
     // // print root of new endpoint
-    // const auto
-    // my_endpoint(One_data_share::Endpoint::create(One_data_share::EndpointType::FTP,
-    // my_cred_id, token)); const auto root(my_endpoint->list("/")); if
-    // (root->is_directory()) {
+    // const auto my_endpoint(Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token));
+    // const auto root(my_endpoint->list("/"));
+    // if (root->is_directory()) {
     //     for (auto r : *root->contained_resources()) {
     //         std::cout << r->name() << std::endl;
     //     }
