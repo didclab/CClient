@@ -8,14 +8,16 @@ AlignConsecutiveDeclarations: false
 AlignEscapedNewlinesLeft: false
 AlignOperands:   true
 AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: false
+AllowAllConstructorInitializersOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 # AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
-# AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
@@ -36,11 +38,11 @@ BraceWrapping:
   SplitEmptyFunction: false
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Custom
-BreakBeforeTernaryOperators: true
+BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: false
-ColumnLimit:     80
+ColumnLimit:     120
 CommentPragmas:  '^ IWYU pragma:'
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
@@ -59,7 +61,7 @@ IncludeCategories:
     Priority:        1
 IndentCaseLabels: false
 IndentWidth:     4
-IndentWrappedFunctionNames: true
+IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: false
 MacroBlockBegin: ''
 MacroBlockEnd:   ''
