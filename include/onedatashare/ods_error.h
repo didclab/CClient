@@ -10,14 +10,17 @@
 #include <stdexcept>
 
 namespace One_data_share {
+
     /**
      * General exception thrown by One Data Share.
      */
     class Ods_error : public std::runtime_error {
     public:
         Ods_error(const std::string& what_arg);
+
         Ods_error(const char* what_arg);
-        virtual ~Ods_error();
+
+        virtual ~Ods_error() = default;
     };
 
     /**
@@ -26,8 +29,10 @@ namespace One_data_share {
     class Connection_error : public Ods_error {
     public:
         Connection_error(const std::string& what_arg);
+
         Connection_error(const char* what_arg);
-        virtual ~Connection_error();
+
+        virtual ~Connection_error() = default;
     };
 
     /**
@@ -36,9 +41,10 @@ namespace One_data_share {
     class Unexpected_response_error : public Ods_error {
     public:
         Unexpected_response_error(const std::string& what_arg, int status);
+
         Unexpected_response_error(const char* what_arg, int status);
 
-        virtual ~Unexpected_response_error();
+        virtual ~Unexpected_response_error() = default;
 
         /**
          * The status code of the unexpected response.

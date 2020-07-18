@@ -6,16 +6,17 @@
 
 #include <string>
 #include <unordered_map>
-#include <gtest/gtest.h>
-#include <rest.h>
 
-// #include <rest/Response.hpp>
+#include <gtest/gtest.h>
+
+#include <rest.h>
 
 namespace {
     /*
      * Test that the headers get copied properly when creating a new Response.
      */
-    TEST(Response, ConstructorCopiesHeaders) {
+    TEST(Response, ConstructorCopiesHeaders)
+    {
         typedef std::pair<std::string, std::string> spair;
 
         // key, value pairs
@@ -24,7 +25,7 @@ namespace {
         spair pair_3("bar_key", "bar_val");
         spair pair_4("baz_key", "baz_val");
         spair pair_5("qux_key", "qux_val");
-        
+
         // initialize map
         std::unordered_multimap<std::string, std::string> map;
         map.insert(pair_1);
@@ -46,7 +47,8 @@ namespace {
     /*
      * Test that body gets copied properly when creating a new Response.
      */
-    TEST(Response, ConstructorCopiesBody) {
+    TEST(Response, ConstructorCopiesBody)
+    {
         std::string body = "This is the body.";
 
         One_data_share::Response r(std::unordered_multimap<std::string, std::string>(), body, -1);
@@ -58,12 +60,12 @@ namespace {
     /*
      * Test that status gets copied properly when creating a new Response.
      */
-    TEST(Response, ConstructorCopiesStatus) {
+    TEST(Response, ConstructorCopiesStatus)
+    {
         int status = 123;
 
         One_data_share::Response r(std::unordered_multimap<std::string, std::string>(), "", status);
 
         EXPECT_EQ(status, r.status());
-        //EXPECT_NE(&status, &r.status());
     }
 }

@@ -6,18 +6,20 @@
 
 #include <fstream>
 #include <iostream>
-#include <curl_rest.h>
-#include <credential_service_impl.h>
 
-int main() {
+#include <credential_service_impl.h>
+#include <curl_rest.h>
+
+int main()
+{
     std::string url;
     std::string token;
 
-    std::ifstream file("token.txt");    
+    std::ifstream file("token.txt");
     if (!file.is_open()) {
         std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
-                << "See README.md for more information."
-                << std::endl;
+                     "See README.md for more information."
+                  << std::endl;
         return false;
     }
     std::getline(file, url);
@@ -30,5 +32,10 @@ int main() {
     auto cred(std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller)));
 
     std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::googledrive) << std::endl;
-    cred->register_credential(One_data_share::Credential_endpoint_type::ftp, "this is a test", "this is a test", "this is a test", "this is a test");
+
+    cred->register_credential(One_data_share::Credential_endpoint_type::ftp,
+                              "this is a test",
+                              "this is a test",
+                              "this is a test",
+                              "this is a test");
 }

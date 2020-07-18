@@ -9,6 +9,7 @@
 
 #include <string>
 #include <unordered_map>
+
 #include "rest.h"
 
 namespace One_data_share {
@@ -22,9 +23,15 @@ namespace One_data_share {
          * via libcurl.
          */
         Curl_rest();
-        virtual Response get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const override;
-        virtual Response post(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers, const std::string& data) const override;
+
         virtual ~Curl_rest() override;
+
+        virtual Response get(const std::string& url,
+                             const std::unordered_multimap<std::string, std::string>& headers) const override;
+
+        virtual Response post(const std::string& url,
+                              const std::unordered_multimap<std::string, std::string>& headers,
+                              const std::string& data) const override;
     };
 }
 
