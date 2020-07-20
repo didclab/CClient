@@ -13,12 +13,21 @@ Build:
 ------
 This project is built and tested using `make`. See `Makefile` for more information on targets.
 
-To run tests, a `token.txt` file must be created in the project root. This file should contain your One Data Share url
-on the first line and your One Data Share authentication token on the second line as shown below:
+To run examples, a `token.txt` file and `url.txt` must be created in the project root containing your One Data Share
+authentication token and your One Data Share url respectively as shown below.
+
+`token.txt`:
+```
+YOURAUTHENTICATIONTOKENGOESHERE
+
+```
+
+`url.txt`:
 ```
 http://localhost:8080
-YOURAUTHENTICATIONTOKENGOESHERE
+
 ```
-Do **not** check this file into version control.
+
+Do **not** check these files into version control.
 
 A more sophisticated method of defining these fields will be introduced at a later time.

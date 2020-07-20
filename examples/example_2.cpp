@@ -17,21 +17,29 @@ int main()
     std::string url {};
     std::string token {};
 
-    // open file containing url, token
-    std::ifstream file {"token.txt"};
-    if (!file.is_open()) {
+    // read token from file
+    std::ifstream token_file {"token.txt"};
+    if (!token_file.is_open()) {
         // print error message and exit
         std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
                      "See README.md for more information."
                   << std::endl;
         return -1;
     }
+    std::getline(token_file, token);
+    token_file.close();
 
-    // read url, token from file
-    std::getline(file, url);   // read first line
-    std::getline(file, token); // read second line
-
-    file.close();
+    // read url from file
+    std::ifstream url_file {"url.txt"};
+    if (!url_file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
+    }
+    std::getline(url_file, url);
+    url_file.close();
 
     std::unique_ptr<One_data_share::Rest> caller {std::make_unique<One_data_share::Curl_rest>()};
 

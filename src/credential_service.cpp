@@ -12,7 +12,7 @@
 #include "curl_rest.h"
 
 namespace {
-    constexpr auto config_file_location {"token.txt"};
+    constexpr auto url_config_file_location {"url.txt"};
     constexpr auto deployed_ods_url {"https://onedatashare.org"};
 
     /**
@@ -24,7 +24,7 @@ namespace {
      */
     bool load_url_from_config(std::string& url)
     {
-        std::ifstream file {config_file_location};
+        std::ifstream file {url_config_file_location};
         if (!file.is_open()) {
             return false;
         }
