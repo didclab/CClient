@@ -103,7 +103,7 @@ namespace One_data_share {
     public:
         /**
          * Creates a new Transfer_service object with the specified authentication token, passing ownership of the
-         * Transfer_service object to the caller.
+         * Transfer_service object to the caller. It is expected that the specified authentication token is valid.
          *
          * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
          *
@@ -123,12 +123,21 @@ namespace One_data_share {
 
         /**
          * Starts a new transfer job from the specified source to the specified destination with the specified options.
+         * It is expected that the authentication token used to create this Transfer_service object is valid, that a
+         * connection can be made to One Data Share, that a connection can be made to the source endpoint, that a
+         * connection can be made to the second endpoint, that the resources on the source endpoint can be found at the
+         * specified endpoint at the specified locatoin, that the directory on the destination endpoint can be found at
+         * the specified location, and that One Data Share is able to write under the specified destination directory.
+         * If these preconditions are not met, exceptions may be thrown.
          *
          * @param source borrowed reference to the source of the transfer
          * @param destination borrowed reference to the destination of the transfer
          * @param options borrowed reference to the the options to use for this transfer request
          *
          * @return the id of the new transfer job
+         *
+         * @exception Connection_error if unable to connect to One Data Share
+         * @exception Unexpected_response_error if an unexpected response is received from One Data Share
          */
         virtual std::string transfer(const Source& source,
                                      const Destination& destination,
@@ -136,7 +145,9 @@ namespace One_data_share {
 
         /**
          * Checks the status of the specified transfer job by creating a new Transfer_status object whose ownership is
-         * passed to the caller.
+         * passed to the caller. It is expected that the authentication token used to create this Transfer_service
+         * object is valid, that a connection can be made to One Data Share, and that the specified id is a valid job
+         * id. If these preconditions are not met, exceptions may be thrown.
          *
          * @param id borrowed reference to the id of the transfer job to check
          *
