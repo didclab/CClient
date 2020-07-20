@@ -103,7 +103,6 @@ endif()
 # add unit tests
 add_executable(tests
     tests/credential_service_impl_tests.cpp
-    tests/response_tests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)

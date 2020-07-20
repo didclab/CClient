@@ -16,32 +16,31 @@
 
 namespace {
 
+    namespace Ods = One_data_share;
+
     using ::testing::Return;
     using ::testing::Throw;
 
-    constexpr std::array oauth_types {One_data_share::Oauth_endpoint_type::box,
-                                      One_data_share::Oauth_endpoint_type::dropbox,
-                                      One_data_share::Oauth_endpoint_type::gftp,
-                                      One_data_share::Oauth_endpoint_type::googledrive};
+    constexpr std::array oauth_types {Ods::Oauth_endpoint_type::box,
+                                      Ods::Oauth_endpoint_type::dropbox,
+                                      Ods::Oauth_endpoint_type::gftp,
+                                      Ods::Oauth_endpoint_type::googledrive};
 
-    constexpr std::array cred_types {One_data_share::Credential_endpoint_type::ftp,
-                                     One_data_share::Credential_endpoint_type::http,
-                                     One_data_share::Credential_endpoint_type::s3,
-                                     One_data_share::Credential_endpoint_type::sftp};
+    constexpr std::array cred_types {Ods::Credential_endpoint_type::ftp,
+                                     Ods::Credential_endpoint_type::http,
+                                     Ods::Credential_endpoint_type::s3,
+                                     Ods::Credential_endpoint_type::sftp};
 
     class Credential_service_impl_test : public ::testing::Test {
     protected:
     };
 
-    class Mock_rest : public One_data_share::Rest {
+    class Mock_rest : public Ods::Rest {
         using Header_map = std::unordered_multimap<std::string, std::string>;
 
     public:
-        MOCK_METHOD(One_data_share::Response,
-                    get,
-                    (const std::string& url, const Header_map& headers),
-                    (const, override));
-        MOCK_METHOD(One_data_share::Response,
+        MOCK_METHOD(Ods::Response, get, (const std::string& url, const Header_map& headers), (const, override));
+        MOCK_METHOD(Ods::Response,
                     post,
                     (const std::string& url, const Header_map& headers, const std::string& data),
                     (const, override));
@@ -55,15 +54,13 @@ namespace {
     {
         // set up mock throwing exception for every get
         auto caller {std::make_unique<Mock_rest>()};
-        EXPECT_CALL(*caller, get)
-            .Times(oauth_types.size())
-            .WillRepeatedly(Throw(One_data_share::Connection_error {""}));
+        EXPECT_CALL(*caller, get).Times(oauth_types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
-        const One_data_share::Credential_service_impl cred {"", "", std::move(caller)};
+        const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
         // check that every oauth endpoint type throws the correct exception
         for (auto type : oauth_types) {
-            EXPECT_THROW(cred.oauth_url(type), One_data_share::Connection_error);
+            EXPECT_THROW(cred.oauth_url(type), Ods::Connection_error);
         }
     }
 
@@ -76,14 +73,13 @@ namespace {
         auto caller {std::make_unique<Mock_rest>()};
         EXPECT_CALL(*caller, get)
             .Times(oauth_types.size())
-            .WillRepeatedly(
-                Return(One_data_share::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
+            .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
 
-        const One_data_share::Credential_service_impl cred {"", "", std::move(caller)};
+        const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
         // check that every oauth endpoint type throws the correct exception
         for (auto type : oauth_types) {
-            EXPECT_THROW(cred.oauth_url(type), One_data_share::Unexpected_response_error);
+            EXPECT_THROW(cred.oauth_url(type), Ods::Unexpected_response_error);
         }
     }
 
@@ -97,11 +93,9 @@ namespace {
 
         // set up mock returning response redirecting to oauth url
         auto caller {std::make_unique<Mock_rest>()};
-        EXPECT_CALL(*caller, get)
-            .Times(cred_types.size())
-            .WillRepeatedly(Return(One_data_share::Response {headers, "", 303}));
+        EXPECT_CALL(*caller, get).Times(cred_types.size()).WillRepeatedly(Return(Ods::Response {headers, "", 303}));
 
-        const One_data_share::Credential_service_impl cred {"", "", std::move(caller)};
+        const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
         // check every oauth endpoint correctly returns the oauth url
         for (auto type : oauth_types) {
@@ -117,15 +111,13 @@ namespace {
     {
         // set up mock throwing exception for every post
         auto caller {std::make_unique<Mock_rest>()};
-        EXPECT_CALL(*caller, post)
-            .Times(cred_types.size())
-            .WillRepeatedly(Throw(One_data_share::Connection_error {""}));
+        EXPECT_CALL(*caller, post).Times(cred_types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
-        const One_data_share::Credential_service_impl cred {"", "", std::move(caller)};
+        const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
         // check that every credential endpoint type throws the correct exception
         for (auto type : cred_types) {
-            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), One_data_share::Connection_error);
+            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), Ods::Connection_error);
         }
     }
 
@@ -139,14 +131,13 @@ namespace {
         auto caller {std::make_unique<Mock_rest>()};
         EXPECT_CALL(*caller, post)
             .Times(cred_types.size())
-            .WillRepeatedly(
-                Return(One_data_share::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
+            .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
 
-        const One_data_share::Credential_service_impl cred {"", "", std::move(caller)};
+        const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
         // check that every credential endpoint type throws the correct exception
         for (auto type : cred_types) {
-            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), One_data_share::Unexpected_response_error);
+            EXPECT_THROW(cred.register_credential(type, "", "", "", ""), Ods::Unexpected_response_error);
         }
     }
 
@@ -159,10 +150,9 @@ namespace {
         auto caller {std::make_unique<Mock_rest>()};
         EXPECT_CALL(*caller, post)
             .Times(cred_types.size())
-            .WillRepeatedly(
-                Return(One_data_share::Response(std::unordered_multimap<std::string, std::string> {}, "", 200)));
+            .WillRepeatedly(Return(Ods::Response(std::unordered_multimap<std::string, std::string> {}, "", 200)));
 
-        const One_data_share::Credential_service_impl cred {"", "", std::move(caller)};
+        const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
         for (auto type : cred_types) {
             EXPECT_NO_THROW(cred.register_credential(type, "", "", "", ""));
