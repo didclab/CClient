@@ -16,7 +16,7 @@
 int main()
 {
     // open file containing url, token
-    std::ifstream file("token.txt");
+    std::ifstream file {"token.txt"};
     if (!file.is_open()) {
         // print error message and exit
         std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
@@ -26,8 +26,8 @@ int main()
     }
 
     // read url, token from file
-    std::string url;
-    std::string token;
+    std::string url {};
+    std::string token {};
     std::getline(file, url);   // read first line
     std::getline(file, token); // read second line
 
@@ -35,33 +35,33 @@ int main()
 
     typedef std::pair<std::string, std::string> spair;
 
-    std::unordered_multimap<std::string, std::string> headers;
-    headers.insert(spair("Authorization", "Bearer " + token));
-    headers.insert(spair("Content-Type", "application/json"));
+    std::unordered_multimap<std::string, std::string> headers {};
+    headers.insert(spair {"Authorization", "Bearer " + token});
+    headers.insert(spair {"Content-Type", "application/json"});
 
-    std::string data = R"({
+    std::string data {R"({
 		"pageNo": 0,
 		"pageSize": 10,
 		"sortBy": "job_id",
 		"sortOrder": "desc"
-	})";
+	})"};
 
-    simdjson::dom::parser parser;
+    simdjson::dom::parser parser {};
 
-    One_data_share::Curl_rest rest;
+    One_data_share::Curl_rest rest {};
 
     /*
      * Get Request
      */
 
-    One_data_share::Response get_r = rest.get(url + "/api/oauth?type=box", headers);
+    One_data_share::Response get_r {rest.get(url + "/api/oauth?type=box", headers)};
 
     std::cout << "[=== get request headers ===]" << std::endl;
     for (auto h : get_r.headers()) {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
 
-    auto [get_elm, get_err] = parser.parse(get_r.body());
+    auto [get_elm, get_err] {parser.parse(get_r.body())};
 
     std::cout << "[=== get request body ===]" << std::endl;
     if (!get_err) {
@@ -83,14 +83,14 @@ int main()
      * Post Request
      */
 
-    One_data_share::Response post_r = rest.post(url + "/api/stork/q/user-jobs", headers, data);
+    One_data_share::Response post_r {rest.post(url + "/api/stork/q/user-jobs", headers, data)};
 
     std::cout << "[=== post request headers ===]" << std::endl;
     for (auto h : post_r.headers()) {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
 
-    auto [post_elm, post_err] = parser.parse(post_r.body());
+    auto [post_elm, post_err] {parser.parse(post_r.body())};
 
     std::cout << "[=== post request body ===]" << std::endl;
     if (!post_err) {

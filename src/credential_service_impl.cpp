@@ -19,24 +19,24 @@ namespace {
     /**
      * Path of the REST API call for oauth.
      */
-    constexpr auto api_path_oauth = "/api/oauth";
+    constexpr auto api_path_oauth {"/api/oauth"};
 
     /**
      * Path of the REST API call for credentials.
      */
-    constexpr auto api_path_cred = "/api/cred";
+    constexpr auto api_path_cred {"/api/cred"};
 
-    constexpr auto header_content_type = "Content-Type";
-    constexpr auto header_json = "application/json";
-    constexpr auto header_authorization = "Authorization";
-    constexpr auto header_bearer = "Bearer ";
+    constexpr auto header_content_type {"Content-Type"};
+    constexpr auto header_json {"application/json"};
+    constexpr auto header_authorization {"Authorization"};
+    constexpr auto header_bearer {"Bearer "};
 
-    constexpr auto oauth_url_wrong_response_msg = "Expected a status 303 response code when requesting oauth url.";
+    constexpr auto oauth_url_wrong_response_msg {"Expected a status 303 response code when requesting oauth url."};
 
-    constexpr auto oauth_url_missing_location_msg = "Response headers missing the expected \"Location\" header when "
-                                                    "reqesting oauth url.";
+    constexpr auto oauth_url_missing_location_msg {
+        "Response headers missing the expected \"Location\" header when reqesting oauth url."};
 
-    constexpr auto register_cred_wrong_response_msg = "Expected a 200 response code when registering credentials.";
+    constexpr auto register_cred_wrong_response_msg {"Expected a 200 response code when registering credentials."};
 
     /**
      * Creates the required header map using the specified token.
@@ -47,11 +47,13 @@ namespace {
      */
     std::unordered_multimap<std::string, std::string> create_headers(const std::string& ods_auth_token)
     {
-        std::unordered_multimap<std::string, std::string> headers;
-        headers.insert(std::pair<std::string, std::string>(header_content_type, header_json));
-        headers.insert(std::pair<std::string, std::string>(header_authorization, header_bearer + ods_auth_token));
+        // std::unordered_multimap<std::string, std::string> headers {};
+        // headers.insert(std::pair<std::string, std::string>(header_content_type, header_json));
+        // headers.insert(std::pair<std::string, std::string>(header_authorization, header_bearer + ods_auth_token));
 
-        return headers;
+        return std::unordered_multimap<std::string, std::string> {
+            std::pair<std::string, std::string> {header_content_type, header_json},
+            std::pair<std::string, std::string> {header_authorization, header_bearer + ods_auth_token}};
     }
 
     /**
@@ -145,7 +147,7 @@ namespace {
     {
         // see also:
         // https://stackoverflow.com/questions/7724448/simple-json-string-escape-for-c/33799784#33799784
-        std::ostringstream stream;
+        std::ostringstream stream {};
         for (auto c : json) {
             switch (c) {
             case '"':
@@ -185,7 +187,7 @@ namespace {
                                                    const std::string& username,
                                                    const std::string& secret)
     {
-        std::ostringstream stream;
+        std::ostringstream stream {};
         stream << "{"
                << "\"accountId\":\"" << escape_json(account_id) << "\",\"uri\":\"" << escape_json(uri)
                << "\",\"username\":\"" << escape_json(username) << "\",\"secret\":\"" << escape_json(secret) << "\"}";
@@ -197,28 +199,28 @@ namespace One_data_share {
     Credential_service_impl::Credential_service_impl(const std::string& ods_auth_token,
                                                      const std::string& ods_url,
                                                      std::unique_ptr<Rest> rest_caller)
-        : ods_auth_token_(ods_auth_token),
-          ods_url_(ods_url),
-          rest_caller_(std::move(rest_caller)),
-          headers_(create_headers(ods_auth_token_))
+        : ods_auth_token_ {ods_auth_token},
+          ods_url_ {ods_url},
+          rest_caller_ {std::move(rest_caller)},
+          headers_ {create_headers(ods_auth_token_)}
     {}
 
     std::string Credential_service_impl::oauth_url(const Oauth_endpoint_type type) const
     {
         // if get throws an exception, propagate it up
-        const Response response(
-            rest_caller_->get(ods_url_ + api_path_oauth + "?type=" + endpoint_as_string(type), headers_));
+        const Response response {
+            rest_caller_->get(ods_url_ + api_path_oauth + "?type=" + endpoint_as_string(type), headers_)};
 
         if (response.status() != 303) {
             // unexpected response
-            throw Unexpected_response_error(oauth_url_wrong_response_msg, response.status());
+            throw Unexpected_response_error {oauth_url_wrong_response_msg, response.status()};
         }
 
         // find url in a single location header, as there should only be one
-        const auto iter(response.headers().find("Location"));
+        const auto iter {response.headers().find("Location")};
         if (iter == response.headers().end()) {
             // did not contain Location header
-            throw Unexpected_response_error(oauth_url_missing_location_msg, response.status());
+            throw Unexpected_response_error {oauth_url_missing_location_msg, response.status()};
         }
 
         return iter->second;
@@ -231,13 +233,14 @@ namespace One_data_share {
                                                       const std::string& secret) const
     {
         // if post throws an exception, propogate it up
-        const Response response(rest_caller_->post(ods_url_ + api_path_cred + "/" + endpoint_as_string(type),
-                                                   headers_,
-                                                   create_account_endpoint_credential(cred_id, uri, username, secret)));
+        const Response response {
+            rest_caller_->post(ods_url_ + api_path_cred + "/" + endpoint_as_string(type),
+                               headers_,
+                               create_account_endpoint_credential(cred_id, uri, username, secret))};
 
         if (response.status() != 200) {
             // expected status 200
-            throw Unexpected_response_error(register_cred_wrong_response_msg, response.status());
+            throw Unexpected_response_error {register_cred_wrong_response_msg, response.status()};
         }
     }
 

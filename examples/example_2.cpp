@@ -12,26 +12,30 @@
 
 int main()
 {
-    std::string url;
-    std::string token;
+    namespace Ods = One_data_share;
 
-    std::ifstream file("token.txt");
+    std::string url {};
+    std::string token {};
+
+    // open file containing url, token
+    std::ifstream file {"token.txt"};
     if (!file.is_open()) {
+        // print error message and exit
         std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
                      "See README.md for more information."
                   << std::endl;
-        return false;
+        return -1;
     }
-    std::getline(file, url);
-    std::getline(file, token);
+
+    // read url, token from file
+    std::getline(file, url);   // read first line
+    std::getline(file, token); // read second line
 
     file.close();
 
-    namespace Ods = One_data_share;
+    std::unique_ptr<One_data_share::Rest> caller {std::make_unique<One_data_share::Curl_rest>()};
 
-    std::unique_ptr<One_data_share::Rest> caller(std::make_unique<One_data_share::Curl_rest>());
-
-    auto cred(std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller)));
+    auto cred {std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller))};
 
     std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::googledrive) << std::endl;
 

@@ -13,45 +13,35 @@
 #include <onedatashare/endpoint_type.h>
 
 /**
- * Loads the token and url from a token.txt file.
- *
- * @param token mutably borrowed pointer to the token which is set to the token read from the file
- * @param url mutably borrowed pointer to the url which is set to the url read from the file
- */
-bool load_from_file(std::string* token, std::string* url)
-{
-    std::ifstream file("token.txt");
-    if (!file.is_open()) {
-        std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
-                     "See README.md for more information."
-                  << std::endl;
-        return false;
-    }
-    std::getline(file, *url);
-    std::getline(file, *token);
-
-    file.close();
-
-    return true;
-}
-
-/**
  * Registers a new FTP endpoint and lists the contents of its root directory.
  */
 int main()
 {
-    std::string token;
-    std::string _;
-    if (!load_from_file(&token, &_)) {
+    namespace Ods = One_data_share;
+
+    std::string url {};
+    std::string token {};
+
+    // open file containing url, token
+    std::ifstream file {"token.txt"};
+    if (!file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
         return -1;
     }
 
-    namespace Ods = One_data_share;
+    // read url, token from file
+    std::getline(file, url);   // read first line
+    std::getline(file, token); // read second line
 
-    const std::string my_cred_id("my_endpoint");
+    file.close();
+
+    const std::string my_cred_id {"my_endpoint"};
 
     // register new endpoint
-    const auto cred_service(Ods::Credential_service::create(token));
+    const auto cred_service {Ods::Credential_service::create(token)};
     cred_service->register_credential(Ods::Credential_endpoint_type::ftp,
                                       my_cred_id,
                                       "ftp://speedtest.tele2.net",

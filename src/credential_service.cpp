@@ -12,8 +12,8 @@
 #include "curl_rest.h"
 
 namespace {
-    constexpr auto config_file_location = "token.txt";
-    constexpr auto deployed_ods_url = "https://onedatashare.org";
+    constexpr auto config_file_location {"token.txt"};
+    constexpr auto deployed_ods_url {"https://onedatashare.org"};
 
     /**
      * Sets the url in the config file to the specified string.
@@ -24,7 +24,7 @@ namespace {
      */
     bool load_url_from_config(std::string& url)
     {
-        std::ifstream file(config_file_location);
+        std::ifstream file {config_file_location};
         if (!file.is_open()) {
             return false;
         }
@@ -39,9 +39,9 @@ namespace One_data_share {
 
     std::unique_ptr<Credential_service> Credential_service::create(const std::string& ods_auth_token)
     {
-        bool use_configured_ods_url = true;
+        auto use_configured_ods_url = true;
 
-        std::string ods_url;
+        std::string ods_url {};
         if (use_configured_ods_url) {
             load_url_from_config(ods_url);
         } else {
