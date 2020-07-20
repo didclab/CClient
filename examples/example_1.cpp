@@ -46,14 +46,14 @@ int main()
     // print oauth url for dropbox
     std::cout << cred_service->oauth_url(Ods::Oauth_endpoint_type::dropbox) << std::endl;
 
-    // // print root of new endpoint
-    // const auto my_endpoint(Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token));
-    // const auto root(my_endpoint->list("/"));
-    // if (root->is_directory()) {
-    //     for (auto r : *root->contained_resources()) {
-    //         std::cout << r->name() << std::endl;
-    //     }
-    // }
+    // print root of new endpoint
+    const auto my_endpoint {Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token)};
+    const auto root {my_endpoint->list("/")};
+    if (root->is_directory()) {
+        for (auto r : *root->contained_resources()) {
+            std::cout << r->name() << std::endl;
+        }
+    }
 
     return 0;
 }
