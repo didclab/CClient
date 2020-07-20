@@ -189,8 +189,9 @@ namespace One_data_share {
         /**
          * Removes the specified resource from the endpoint. It is expected that the authentication token used to create
          * this Endpoint object is valid, that a connection can be made to One Data Share, that a connection can be made
-         * from One Data Share to the endpoint specified by the credential id, and that the specified resource exists at
-         * the specified location. If these preconditions are not met, exceptions may be thrown.
+         * from One Data Share to the endpoint specified by the credential id, that the specified resource exists at
+         * the specified location, and that One Data Share is able to remove the specified resource. If these
+         * preconditions are not met, exceptions may be thrown.
          *
          * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
          * needs in order to locate the directory containing the resource to remove
@@ -205,8 +206,9 @@ namespace One_data_share {
         /**
          * Creates a new directory with the specified name under the specified directory. It is expected that the
          * authentication token used to create this Endpoint object is valid, that a conenction can be made to One Data
-         * Share, that a connection can be made from One Data Share to the endpoint specified by the credential id, and
-         * that the specified resource exists at the specidied location. If these preconditions are not met, exceptinos
+         * Share, that a connection can be made from One Data Share to the endpoint specified by the credential id,
+         * that the specified resource both is a directory and exists at the specified location, and that One Data Share
+         * is able to create a directory under the specified directory. If these preconditions are not met, exceptions
          * may be thrown.
          *
          * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
