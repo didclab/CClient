@@ -27,6 +27,9 @@ add_library(odscclient
     src/credential_service_impl.h
     src/curl_rest.cpp
     src/curl_rest.h
+    src/endpoint.cpp
+    src/endpoint_impl.cpp
+    src/endpoint_impl.h
     src/ods_error.cpp
     src/rest.cpp
     src/rest.h
@@ -103,6 +106,7 @@ endif()
 # add unit tests
 add_executable(tests
     tests/credential_service_impl_tests.cpp
+    tests/endpoint_impl_tests.cpp
     tests/mocks.h
 )
 target_include_directories(tests PRIVATE src/ include/)
