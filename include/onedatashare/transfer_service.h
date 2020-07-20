@@ -49,19 +49,18 @@ namespace One_data_share {
          * Creates a new Source object with the specified endpoint and resources.
          *
          * @param type the endpoint type to transfer from
-         * @param cred_id the credential identifier of the endpoint to
-         * transfer from
-         * @param directory_identifier the path or id, depending on the endpoint type, that is needed in order to locate
-         * the directory containing the resources to transfer
-         * @param resource_identifiers the names or ids, depending on the endpoint type, that are needed in order to
-         * locate the resources to transfer from within the specified directory
+         * @param cred_id borrowed reference to the credential identifier of the endpoint to transfer from
+         * @param directory_identifier borrowed reference to the path or id, depending on the endpoint type, that is
+         * needed in order to locate the directory containing the resources to transfer
+         * @param resource_identifiers borrowed reference to the names or ids, depending on the endpoint type, that are
+         * needed in order to locate the resources to transfer from within the specified directory
          *
          * @return a unique pointer to a new Source object
          */
         static std::unique_ptr<Source> create(Endpoint_type type,
-                                              std::string cred_id,
-                                              std::string directory_identifier,
-                                              std::vector<std::string> resource_identifiers);
+                                              const std::string& cred_id,
+                                              const std::string& directory_identifier,
+                                              const std::vector<std::string>& resource_identifiers);
 
         virtual ~Source() = 0;
 
@@ -90,11 +89,11 @@ namespace One_data_share {
          * Creates a new Transfer_service object with the specified authentication token, passing ownership of the
          * Transfer_service object to the caller.
          *
-         * @param ods_auth_token the One Data Share authentication token to use
+         * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
          *
          * @return a unique pointer to a new Transfer_service object
          */
-        static std::unique_ptr<Transfer_service> create(std::string ods_auth_token);
+        static std::unique_ptr<Transfer_service> create(const std::string& ods_auth_token);
 
         virtual ~Transfer_service() = 0;
 

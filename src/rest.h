@@ -21,11 +21,11 @@ namespace One_data_share {
         /**
          * Creates a new Response object.
          *
-         * @param headers multi-map containing the response headers
-         * @param body json string containing the response body
+         * @param headers borrowed reference to the multi-map containing the response headers
+         * @param body borrowed reference to the json string containing the response body
          * @param status integer corresponding to the http response status
          */
-        Response(std::unordered_multimap<std::string, std::string> headers, std::string body, int status);
+        Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, int status);
 
         /**
          * Gets a reference to the response headers. The returned reference lives only as long as the object itself.
@@ -79,8 +79,8 @@ namespace One_data_share {
         /**
          * Performs a GET request to the specified url with the specified headers.
          *
-         * @param url borrowed reference to the string containing url to make the GET request to. Should ideally contain
-         * the protocol
+         * @param url borrowed reference to the string containing url to make the GET request to, ideally containing the
+         * protocol
          * @param headers borrowed reference to the multi-map containing the headers for the GET request
          *
          * @return the Response object containing the response headers, body, and http status

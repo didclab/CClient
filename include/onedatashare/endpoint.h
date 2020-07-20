@@ -145,12 +145,14 @@ namespace One_data_share {
          * passing ownership of the Endpoint object to the caller.
          *
          * @param type the type of endpoint to return
-         * @param cred_id the credential id of the endpoint to use
-         * @param ods_auth_token the One Data Share authentication token to use
+         * @param cred_id borrowed reference to the credential id of the endpoint to use
+         * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
          *
          * @return a unique pointer to a new Endpoint object
          */
-        static std::unique_ptr<Endpoint> create(Endpoint_type type, std::string cred_id, std::string ods_auth_token);
+        static std::unique_ptr<Endpoint> create(Endpoint_type type,
+                                                const std::string& cred_id,
+                                                const std::string& ods_auth_token);
 
         virtual ~Endpoint() = 0;
 
