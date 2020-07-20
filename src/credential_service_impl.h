@@ -34,6 +34,8 @@ namespace One_data_share {
                                 const std::string& ods_url,
                                 std::unique_ptr<Rest> rest_caller);
 
+        virtual ~Credential_service_impl() override = default;
+
         Credential_service_impl(const Credential_service_impl&) = delete;
 
         Credential_service_impl& operator=(const Credential_service_impl&) = delete;
@@ -41,8 +43,6 @@ namespace One_data_share {
         Credential_service_impl(Credential_service_impl&&) = default;
 
         Credential_service_impl& operator=(Credential_service_impl&&) = default;
-
-        virtual ~Credential_service_impl() override = default;
 
         virtual std::string oauth_url(Oauth_endpoint_type type) const override;
 
