@@ -31,6 +31,8 @@ add_library(odscclient
     src/endpoint_impl.cpp
     src/endpoint_impl.h
     src/ods_error.cpp
+    src/resource_impl.cpp
+    src/resource_impl.h
     src/rest.cpp
     src/rest.h
 )
