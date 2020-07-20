@@ -26,6 +26,10 @@ namespace One_data_share {
 
         Resource& operator=(const Resource&) = delete;
 
+        Resource(Resource&&) = default;
+
+        Resource& operator=(Resource&&) = default;
+
         /**
          * Gets the id of the Resource if the Resource has an id. The Resource will have an id if and only if the
          * endpoint used supports ids. The caller is expected to check for a null pointer if they are not certain that
@@ -159,6 +163,10 @@ namespace One_data_share {
         Endpoint(const Endpoint&) = delete;
 
         Endpoint& operator=(const Endpoint&) = delete;
+
+        Endpoint(Endpoint&&) = default;
+
+        Endpoint& operator=(Endpoint&&) = default;
 
         /**
          * Creates a Resource object corresponding to the resource found at the specified location if the endpoint could

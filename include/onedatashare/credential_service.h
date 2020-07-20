@@ -48,6 +48,10 @@ namespace One_data_share {
 
         Credential_service& operator=(const Credential_service&) = delete;
 
+        Credential_service(Credential_service&&) = default;
+
+        Credential_service& operator=(Credential_service&&) = default;
+
         /**
          * Gets the url that can be used to register an endpoint of the specified endpoint type with One Data Share via
          * OAuth. It is expected that the authentication token used to create this Credential_service object is valid

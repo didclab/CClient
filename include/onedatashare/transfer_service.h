@@ -36,6 +36,14 @@ namespace One_data_share {
 
         virtual ~Destination() = 0;
 
+        Destination(const Destination&) = default;
+
+        Destination& operator=(const Destination&) = default;
+
+        Destination(Destination&&) = default;
+
+        Destination& operator=(Destination&&) = default;
+
     protected:
         Destination();
     };
@@ -63,6 +71,14 @@ namespace One_data_share {
                                               const std::vector<std::string>& resource_identifiers);
 
         virtual ~Source() = 0;
+
+        Source(const Source&) = default;
+
+        Source& operator=(const Source&) = default;
+
+        Source(Source&&) = default;
+
+        Source& operator=(Source&&) = default;
 
     protected:
         Source();
@@ -100,6 +116,10 @@ namespace One_data_share {
         Transfer_service(const Transfer_service&) = delete;
 
         Transfer_service& operator=(const Transfer_service&) = delete;
+
+        Transfer_service(Transfer_service&&) = default;
+
+        Transfer_service& operator=(Transfer_service&&) = default;
 
         /**
          * Starts a new transfer job from the specified source to the specified destination with the specified options.
