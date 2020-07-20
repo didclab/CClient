@@ -4,6 +4,9 @@
  * 7/20/20
  */
 
+#ifndef ONEDATASHARE_MOCKS_H
+#define ONEDATASHARE_MOCKS_H
+
 #include <gmock/gmock.h>
 
 #include <rest.h>
@@ -22,3 +25,5 @@ namespace One_data_share_mocks {
                     (const, override));
     };
 }
+
+#endif // ONEDATASHARE_MOCKS_H
