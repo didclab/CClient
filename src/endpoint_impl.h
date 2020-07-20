@@ -28,13 +28,13 @@ namespace One_data_share {
 
         virtual ~Endpoint_impl() = default;
 
-        Endpoint(const Endpoint&) = delete;
+        Endpoint_impl(const Endpoint_impl&) = delete;
 
-        Endpoint& operator=(const Endpoint&) = delete;
+        Endpoint_impl& operator=(const Endpoint_impl&) = delete;
 
-        Endpoint(Endpoint&&) = default;
+        Endpoint_impl(Endpoint_impl&&) = default;
 
-        Endpoint& operator=(Endpoint&&) = default;
+        Endpoint_impl& operator=(Endpoint_impl&&) = default;
 
         virtual std::unique_ptr<Resource> list(const std::string& identifier) const;
 
