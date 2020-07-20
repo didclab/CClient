@@ -27,6 +27,14 @@ namespace One_data_share {
          */
         Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, int status);
 
+        Response(const Response&) = default;
+
+        Response& operator=(const Response&) = default;
+
+        Response(Response&&) = default;
+
+        Response& operator=(Response&&) = default;
+
         /**
          * Gets a reference to the response headers. The returned reference lives only as long as the object itself.
          *
@@ -75,6 +83,10 @@ namespace One_data_share {
         Rest(const Rest&) = delete;
 
         Rest& operator=(const Rest&) = delete;
+
+        Rest(Rest&&) = default;
+
+        Rest& operator=(Rest&&) = default;
 
         /**
          * Performs a GET request to the specified url with the specified headers.
