@@ -24,7 +24,7 @@ namespace One_data_share {
     };
 
     /**
-     * Exception thrown when an I/O operation fails.
+     * Exception thrown when unable to connection-related error occurs.
      */
     class Connection_error : public Ods_error {
     public:

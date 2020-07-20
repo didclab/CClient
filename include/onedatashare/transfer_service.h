@@ -116,7 +116,7 @@ namespace One_data_share {
                                      const Transfer_options& options) const = 0;
 
         /**
-         * Checks the status of the specified transfer job by creatinh a new Transfer_status object whose ownership is
+         * Checks the status of the specified transfer job by creating a new Transfer_status object whose ownership is
          * passed to the caller.
          *
          * @param id borrowed reference to the id of the transfer job to check

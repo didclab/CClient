@@ -4,11 +4,14 @@
  * 6/23/20
  */
 
-#include "curl_rest.h"
-#include <curl/curl.h>
-#include <onedatashare/ods_error.h>
 #include <optional>
 #include <utility>
+
+#include <curl/curl.h>
+
+#include <onedatashare/ods_error.h>
+
+#include "curl_rest.h"
 
 namespace {
     /**

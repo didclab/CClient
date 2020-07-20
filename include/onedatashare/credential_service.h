@@ -28,8 +28,7 @@ namespace One_data_share {
     enum class Oauth_endpoint_type { dropbox, googledrive, box, gftp };
 
     /**
-     * Service providing all functionality related to registering credentials with One Data Share. Credential_service
-     * objects cannot be copied via their copy constructor nor their copy assignment operator.
+     * Service providing all functionality related to registering credentials with One Data Share.
      */
     class Credential_service {
     public:

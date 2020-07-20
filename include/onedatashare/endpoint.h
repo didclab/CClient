@@ -14,9 +14,9 @@
 #include "endpoint_type.h"
 
 namespace One_data_share {
-    
+
     /**
-     * Resource from an endpoint's file system containing a directory, file, or link.
+     * Represents a resource from an endpoint's file system containing a directory, file, or link.
      */
     class Resource {
     public:
@@ -108,7 +108,7 @@ namespace One_data_share {
      * Service providing access to an endpoint of a specific type and credential id.
      *
      * <p>
-     * Different endpoint types may have slightly different behavior and functionality. These differences are described
+     * Different endpoint types may differ slightly in behavior and functionality. These differences are described
      * as follows.
      * </p>
      *
@@ -146,8 +146,7 @@ namespace One_data_share {
          *
          * @param type the type of endpoint to return
          * @param cred_id the credential id of the endpoint to use
-         * @param ods_auth_token the One Data Share authentication token to
-         * use
+         * @param ods_auth_token the One Data Share authentication token to use
          *
          * @return a unique pointer to a new Endpoint object
          */

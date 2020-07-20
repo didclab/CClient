@@ -100,8 +100,7 @@ namespace One_data_share {
          *
          * @return the Response object containing the response headers, body, and http status
          *
-         * @exception Connection_error if unable to connect to the sepcified
-         * url
+         * @exception Connection_error if unable to connect to the sepcified url
          */
         virtual Response post(const std::string& url,
                               const std::unordered_multimap<std::string, std::string>& headers,
