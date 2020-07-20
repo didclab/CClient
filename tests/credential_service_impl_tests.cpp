@@ -14,9 +14,13 @@
 #include <credential_service_impl.h>
 #include <onedatashare/ods_error.h>
 
+#include "mocks.h"
+
 namespace {
 
     namespace Ods = One_data_share;
+
+    using One_data_share_mocks::Rest_mock;
 
     using ::testing::Return;
     using ::testing::Throw;
@@ -35,17 +39,6 @@ namespace {
     protected:
     };
 
-    class Mock_rest : public Ods::Rest {
-        using Header_map = std::unordered_multimap<std::string, std::string>;
-
-    public:
-        MOCK_METHOD(Ods::Response, get, (const std::string& url, const Header_map& headers), (const, override));
-        MOCK_METHOD(Ods::Response,
-                    post,
-                    (const std::string& url, const Header_map& headers, const std::string& data),
-                    (const, override));
-    };
-
     /**
      * Tests that oauth_url throws an Connection_error when it recieves an Connection_error while trying to make a get
      * request.
@@ -53,7 +46,7 @@ namespace {
     TEST_F(Credential_service_impl_test, OauthUrlThrowsIO)
     {
         // set up mock throwing exception for every get
-        auto caller {std::make_unique<Mock_rest>()};
+        auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).Times(oauth_types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
         const Ods::Credential_service_impl cred {"", "", std::move(caller)};
@@ -70,7 +63,7 @@ namespace {
     TEST_F(Credential_service_impl_test, OauthUrlThrowsUnexpectedResponse)
     {
         // set up mock returning status 500 for every get
-        auto caller {std::make_unique<Mock_rest>()};
+        auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get)
             .Times(oauth_types.size())
             .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
@@ -92,7 +85,7 @@ namespace {
         std::unordered_multimap headers {std::pair {std::string {"Location"}, mock_oauth_url}};
 
         // set up mock returning response redirecting to oauth url
-        auto caller {std::make_unique<Mock_rest>()};
+        auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).Times(cred_types.size()).WillRepeatedly(Return(Ods::Response {headers, "", 303}));
 
         const Ods::Credential_service_impl cred {"", "", std::move(caller)};
@@ -110,7 +103,7 @@ namespace {
     TEST_F(Credential_service_impl_test, RegisterCredentialThrowsIO)
     {
         // set up mock throwing exception for every post
-        auto caller {std::make_unique<Mock_rest>()};
+        auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, post).Times(cred_types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
         const Ods::Credential_service_impl cred {"", "", std::move(caller)};
@@ -128,7 +121,7 @@ namespace {
     TEST_F(Credential_service_impl_test, RegisterCredentialThrowsUnexpectedResponse)
     {
         // set up mock returning status 500 for every post
-        auto caller {std::make_unique<Mock_rest>()};
+        auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, post)
             .Times(cred_types.size())
             .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
@@ -147,7 +140,7 @@ namespace {
     TEST_F(Credential_service_impl_test, RegisterCredentialSucceeds)
     {
         // set up mock returning status 200
-        auto caller {std::make_unique<Mock_rest>()};
+        auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, post)
             .Times(cred_types.size())
             .WillRepeatedly(Return(Ods::Response(std::unordered_multimap<std::string, std::string> {}, "", 200)));
