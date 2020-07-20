@@ -42,6 +42,7 @@ debug/
 
 # Configuration files
 token.txt
+url.txt
 
 # Documentation
 docs/html/

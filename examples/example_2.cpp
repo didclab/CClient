@@ -6,34 +6,50 @@
 
 #include <fstream>
 #include <iostream>
-#include "../src/rest/CurlRest.hpp"
-#include "../src/internal/CredentialServiceImpl.hpp"
 
-int main() {
-    std::string url;
-    std::string token;
+#include <credential_service_impl.h>
+#include <curl_rest.h>
 
-    std::ifstream file("token.txt");    
-    if (!file.is_open()) {
+int main()
+{
+    namespace Ods = One_data_share;
+
+    std::string url {};
+    std::string token {};
+
+    // read token from file
+    std::ifstream token_file {"token.txt"};
+    if (!token_file.is_open()) {
+        // print error message and exit
         std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
-                << "See README.md for more information."
-                << std::endl;
-        return false;
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
     }
-    std::getline(file, url);
-    std::getline(file, token);
+    std::getline(token_file, token);
+    token_file.close();
 
-    file.close();
+    // read url from file
+    std::ifstream url_file {"url.txt"};
+    if (!url_file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
+    }
+    std::getline(url_file, url);
+    url_file.close();
 
-    std::unique_ptr<ods::rest::Rest> caller(std::make_unique<ods::rest::CurlRest>());
+    std::unique_ptr<One_data_share::Rest> caller {std::make_unique<One_data_share::Curl_rest>()};
 
-    auto cred(std::make_unique<ods::internal::CredentialServiceImpl>(token, url, std::move(caller)));
+    auto cred {std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller))};
 
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::GOOGLE_DRIVE) << std::endl;
-    cred->register_credential(ods::CredentialEndpointType::FTP, "this is a test", "this is a test", "this is a test", "this is a test");
+    std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::googledrive) << std::endl;
 
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::GOOGLE_DRIVE) << std::endl;
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::BOX) << std::endl;
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::DROPBOX) << std::endl;
-    std::cout << cred->oauth_url(ods::OAuthEndpointType::GFTP) << std::endl;
+    cred->register_credential(One_data_share::Credential_endpoint_type::ftp,
+                              "this is a test",
+                              "this is a test",
+                              "this is a test",
+                              "this is a test");
 }

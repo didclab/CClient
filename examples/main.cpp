@@ -4,66 +4,73 @@
  * 6/5/20
  */
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <unordered_map>
 #include <vector>
+
 #include <../simdjson/simdjson.h>
-#include <rest/CurlRest.hpp>
 
-int main() {
-    // parse token.txt
+#include <curl_rest.h>
 
-    // open file containing url, token
-    std::ifstream file("token.txt");    
-    if (!file.is_open()) {
+int main()
+{
+    std::string url {};
+    std::string token {};
+
+    // read token from file
+    std::ifstream token_file {"token.txt"};
+    if (!token_file.is_open()) {
         // print error message and exit
         std::cout << "Unable to open file \"token.txt\". Be sure to create a \"token.txt\" file in the project root. "
-                << "See README.md for more information."
-                << std::endl;
+                     "See README.md for more information."
+                  << std::endl;
         return -1;
     }
+    std::getline(token_file, token);
+    token_file.close();
 
-    // read url, token from file
-    std::string url;
-    std::string token;
-    std::getline(file, url); // read first line
-    std::getline(file, token); // read second line
-
-    file.close();
-
-    // test code
+    // read url from file
+    std::ifstream url_file {"url.txt"};
+    if (!url_file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
+    }
+    std::getline(url_file, url);
+    url_file.close();
 
     typedef std::pair<std::string, std::string> spair;
 
-    std::unordered_multimap<std::string, std::string> headers;
-    headers.insert(spair("Authorization", "Bearer " + token));
-    headers.insert(spair("Content-Type","application/json"));
+    std::unordered_multimap<std::string, std::string> headers {};
+    headers.insert(spair {"Authorization", "Bearer " + token});
+    headers.insert(spair {"Content-Type", "application/json"});
 
-	std::string data = R"({
+    std::string data {R"({
 		"pageNo": 0,
 		"pageSize": 10,
 		"sortBy": "job_id",
 		"sortOrder": "desc"
-	})";
+	})"};
 
-    simdjson::dom::parser parser;
+    simdjson::dom::parser parser {};
 
-    ods::rest::CurlRest rest;
+    One_data_share::Curl_rest rest {};
 
-    // get request
+    /*
+     * Get Request
+     */
 
-    //ods::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
-    ods::rest::Response get_r = rest.get(url+"/api/oauth?type=box", headers);
-
+    One_data_share::Response get_r {rest.get(url + "/api/oauth?type=box", headers)};
 
     std::cout << "[=== get request headers ===]" << std::endl;
     for (auto h : get_r.headers()) {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
-    
 
-    auto [get_elm, get_err] = parser.parse(get_r.body());
+    auto [get_elm, get_err] {parser.parse(get_r.body())};
 
     std::cout << "[=== get request body ===]" << std::endl;
     if (!get_err) {
@@ -78,19 +85,21 @@ int main() {
         std::cout << "Error parsing json: " << get_err << std::endl;
     }
 
-    std::cout << "[=== get request http status ===]"<< std::endl;
-    std::cout  << get_r.status() << std::endl;
+    std::cout << "[=== get request http status ===]" << std::endl;
+    std::cout << get_r.status() << std::endl;
 
-    // post request
+    /*
+     * Post Request
+     */
 
-    ods::rest::Response post_r = rest.post(url+"/api/stork/q/user-jobs", headers, data);
+    One_data_share::Response post_r {rest.post(url + "/api/stork/q/user-jobs", headers, data)};
 
     std::cout << "[=== post request headers ===]" << std::endl;
     for (auto h : post_r.headers()) {
         std::cout << "\"" << h.first << "\" -> \"" << h.second << "\"" << std::endl;
     }
 
-    auto [post_elm, post_err] = parser.parse(post_r.body());
+    auto [post_elm, post_err] {parser.parse(post_r.body())};
 
     std::cout << "[=== post request body ===]" << std::endl;
     if (!post_err) {
@@ -105,8 +114,8 @@ int main() {
         std::cout << "Error parsing json: " << post_err << std::endl;
     }
 
-    std::cout << "[=== post request http status ===]"<< std::endl;
-    std::cout  << post_r.status() << std::endl;
+    std::cout << "[=== post request http status ===]" << std::endl;
+    std::cout << post_r.status() << std::endl;
 
     return 0;
 }

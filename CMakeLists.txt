@@ -17,36 +17,19 @@ add_library(simd
 
 # add ods client library
 add_library(odscclient
-    include/CredentialService.hpp
-    include/Destination.hpp
-    include/Endpoint.hpp
-    include/EndpointType.hpp
-    include/IOException.hpp
-    include/OneDataShareException.hpp
-    include/Resource.hpp
-    include/Source.hpp
-    include/TransferOptions.hpp
-    include/TransferService.hpp
-    include/TransferStatus.hpp
-    include/UnexpectedResponseException.hpp
-    src/CredentialService.cpp
-    src/Destination.cpp
-    src/Endpoint.cpp
-    src/IOException.cpp
-    src/OneDataShareException.cpp
-    src/Source.cpp
-    src/TransferService.cpp
-    src/UnexpectedResponseException.cpp
-    src/util.cpp
-    src/util.hpp
-    src/internal/CredentialServiceImpl.cpp
-    src/internal/CredentialServiceImpl.hpp
-    src/rest/CurlRest.cpp
-    src/rest/CurlRest.hpp
-    src/rest/Response.cpp
-    src/rest/Response.hpp
-    src/rest/Rest.cpp
-    src/rest/Rest.hpp
+    include/onedatashare/credential_service.h
+    include/onedatashare/endpoint.h
+    include/onedatashare/endpoint_type.h
+    include/onedatashare/ods_error.h
+    include/onedatashare/transfer_service.h
+    src/credential_service.cpp
+    src/credential_service_impl.cpp
+    src/credential_service_impl.h
+    src/curl_rest.cpp
+    src/curl_rest.h
+    src/ods_error.cpp
+    src/rest.cpp
+    src/rest.h
 )
 target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
@@ -68,7 +51,7 @@ install(TARGETS example_1 DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # add example 2 executable
 add_executable(example_2 examples/example_2.cpp)
-target_include_directories(example_2 PRIVATE include/)
+target_include_directories(example_2 PRIVATE include/ src/)
 target_link_libraries(example_2 PRIVATE odscclient)
 
 install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})
@@ -119,8 +102,7 @@ endif()
 
 # add unit tests
 add_executable(tests
-    tests/internal/CredentialServiceImplTests.cpp
-    tests/rest/ResponseTests.cpp
+    tests/credential_service_impl_tests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)
