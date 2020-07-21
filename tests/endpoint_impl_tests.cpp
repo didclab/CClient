@@ -147,4 +147,79 @@ TEST_F(Endpoint_impl_tests, ListResourceWithID)
     }
 }
 
+TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
+{
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "permissions": "string",
+        "files": [
+            null
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat without a link
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto resource {endpoint.list("")};
+
+        ASSERT_NE(resource, nullptr);
+        EXPECT_EQ(resource->link(), nullptr);
+    }
+}
+
+TEST_F(Endpoint_impl_tests, ListResourceWithLink)
+{
+    std::string link_value {R"("this is the link")"};
+
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "id": )" + link_value +
+                      R"(,
+        "permissions": "string",
+        "files": [
+            null
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat without an id
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto resource {endpoint.list("")};
+        ASSERT_NE(resource, nullptr);
+
+        auto link {resource->link()};
+
+        ASSERT_NE(link, nullptr);
+        EXPECT_EQ(*link, link_value);
+    }
+}
+
 } // namespace
