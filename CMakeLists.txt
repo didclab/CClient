@@ -35,6 +35,8 @@ add_library(odscclient
     src/resource_impl.h
     src/rest.cpp
     src/rest.h
+    src/utils.cpp
+    src/utils.h
 )
 target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
