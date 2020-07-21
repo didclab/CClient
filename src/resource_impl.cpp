@@ -30,56 +30,47 @@ Resource_impl::Resource_impl(std::shared_ptr<const std::string>&& id,
 
 std::shared_ptr<const std::string> Resource_impl::id() const
 {
-    // TODO: implement
-    return nullptr;
+    return id_;
 }
 
 std::string Resource_impl::name() const
 {
-    // TODO: implement
-    return nullptr;
+    return name_;
 }
 
 long Resource_impl::size() const
 {
-    // TODO: implement
-    return 0;
+    return size_;
 }
 
 long Resource_impl::time() const
 {
-    // TODO: implement
-    return 0;
+    return time_;
 }
 
 bool Resource_impl::is_directory() const
 {
-    // TODO: implement
-    return false;
+    return is_directory_;
 }
 
 bool Resource_impl::is_file() const
 {
-    // TODO: implement
-    return false;
+    return is_file_;
 }
 
 std::shared_ptr<const std::string> Resource_impl::link() const
 {
-    // TODO: implement
-    return nullptr;
+    return link_;
 }
 
 std::shared_ptr<const std::string> Resource_impl::permissions() const
 {
-    // TODO: implement
-    return nullptr;
+    return permissions_;
 }
 
 std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> Resource_impl::contained_resources() const
 {
-    // TODO: implement
-    return nullptr;
+    return contained_resources_;
 }
 
 } // namespace One_data_share
