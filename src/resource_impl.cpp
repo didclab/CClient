@@ -7,11 +7,6 @@
 #include "resource_impl.h"
 
 namespace One_data_share {
-    Resource_impl Resource_impl::from(const std::string& json)
-    {
-        // TODO: implement
-    }
-
     Resource_impl::Resource_impl(
         std::shared_ptr<const std::string>&& id,
         std::string&& name,
