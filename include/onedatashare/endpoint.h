@@ -94,10 +94,10 @@ public:
     virtual std::shared_ptr<const std::string> permissions() const = 0;
 
     /**
-     * Gets the Resource objects contained in this Resource if and only if this Resource is a directory. The caller
-     * is expected to check for a null pointer unless they are absolutely certain the Resource is a directory or
-     * they already checked via is_directory. The returned pointer is reference counted, so the pointer is safe to
-     * use even after the Resource is deallocated.
+     * Gets the Resource objects contained in this Resource if and only if this Resource is a directory and this
+     * resource was returned from the list method of an Endpoint object. The caller is expected to check for a null
+     * pointer unless they are absolutely certain the Resource has contained resources. The returned pointer is
+     * reference counted, so the pointer is safe to use even after the Resource is deallocated.
      *
      * @return a shared pointer to a vector holding the Resource objects contained in this Resource or null if the
      * Resource isn't a directory
