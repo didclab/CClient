@@ -59,12 +59,30 @@ TEST_F(Endpoint_impl_tests, ListThrowsConnectionErr)
     }
 }
 
-TEST_F(Endpoint_impl_tests, ListThrowsUnexpectedResponse)
+TEST_F(Endpoint_impl_tests, ListWithBadResponseCodeThrowsUnexpectedResponse)
 {
     for (auto type : types) {
         // set up mock returning status 500 for every get
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, "", 500}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        EXPECT_THROW(endpoint.list(""), Ods::Unexpected_response_error);
+    }
+}
+
+/**
+ * Tests that list throws an Unexpected_response_error when the response body is not a valid stat object.
+ */
+TEST_F(Endpoint_impl_tests, ListWithBadResponseBodyThrowsUnexpectedResponse)
+{
+    std::string stat {""};
+
+    for (auto type : types) {
+        // set up mock returning status 500 for every get
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
 
         const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
@@ -93,7 +111,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
     })"};
 
     for (auto type : types) {
-        // set up mock returning stat without an id
+        // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
 
@@ -131,7 +149,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithID)
     })"};
 
     for (auto type : types) {
-        // set up mock returning stat without an id
+        // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
 
@@ -168,7 +186,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
     })"};
 
     for (auto type : types) {
-        // set up mock returning stat without a link
+        // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
 
@@ -192,7 +210,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
         "time": 0,
         "dir": true,
         "file": true,
-        "id": )" + link_value +
+        "link": )" + link_value +
                       R"(,
         "permissions": "string",
         "files": [
@@ -206,7 +224,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
     })"};
 
     for (auto type : types) {
-        // set up mock returning stat without an id
+        // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
 
@@ -219,6 +237,151 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
 
         ASSERT_NE(link, nullptr);
         EXPECT_EQ(*link, link_value);
+    }
+}
+
+TEST_F(Endpoint_impl_tests, ListResourceWithoutPermissions)
+{
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "link": "string",
+        "files": [
+            null
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto resource {endpoint.list("")};
+
+        ASSERT_NE(resource, nullptr);
+        EXPECT_EQ(resource->permissions(), nullptr);
+    }
+}
+
+TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
+{
+    std::string permissions_value {R"("these are the permissions")"};
+
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "link": "string",
+        "permissions": )" +
+                      permissions_value +
+                      R"(,
+        "files": [
+            null
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto resource {endpoint.list("")};
+        ASSERT_NE(resource, nullptr);
+
+        auto permissions {resource->permissions()};
+
+        ASSERT_NE(permissions, nullptr);
+        EXPECT_EQ(*permissions, permissions_value);
+    }
+}
+
+TEST_F(Endpoint_impl_tests, ListResourceWithoutContainedResources)
+{
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "link": "string",
+        "permissions: "string",
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto resource {endpoint.list("")};
+
+        ASSERT_NE(resource, nullptr);
+        EXPECT_EQ(resource->contained_resources(), nullptr);
+    }
+}
+
+TEST_F(Endpoint_impl_tests, ListResourceWithContainedResources)
+{
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "link": "string",
+        "permissions": "string",
+        "files": [
+            null
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto resource {endpoint.list("")};
+        ASSERT_NE(resource, nullptr);
+
+        auto files {resource->contained_resources()};
+
+        ASSERT_NE(files, nullptr);
     }
 }
 
