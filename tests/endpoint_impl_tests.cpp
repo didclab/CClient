@@ -470,4 +470,55 @@ TEST_F(Endpoint_impl_tests, ListReturnsValues)
     }
 }
 
+/**
+ * Tests that list parses a stat object with all of the possible fields defined.
+ */
+TEST_F(Endpoint_impl_tests, ListParsesStat)
+{
+    std::string stat {R"({
+        "id": "string",
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "link": "string",
+        "permissions": "string",
+        "files": [
+            null
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : types) {
+        // set up mock returning stat
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        auto r {endpoint.list("")};
+        ASSERT_NE(r, nullptr);
+
+        auto id {r->id()};
+        auto name {r->name()};
+        auto size {r->size()};
+        auto time {r->time()};
+        auto dir {r->is_directory()};
+        auto file {r->is_file()};
+        auto link {r->link()};
+        auto perm {r->permissions()};
+        auto files {r->contained_resources()};
+
+        ASSERT_NE(id, nullptr);
+        ASSERT_NE(link, nullptr);
+        ASSERT_NE(perm, nullptr);
+        ASSERT_NE(files, nullptr);
+    }
+}
+
 } // namespace

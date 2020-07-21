@@ -5,10 +5,13 @@
  */
 
 #include <utility>
+#include <vector>
 
 #include <onedatashare/ods_error.h>
 
+#include "../simdjson/simdjson.h"
 #include "endpoint_impl.h"
+#include "resource_impl.h"
 #include "utils.h"
 
 namespace One_data_share {
@@ -30,6 +33,35 @@ constexpr auto api_path_http_list {"/api/http/ls"};
 constexpr auto api_path_s3_list {"/api/s3/ls"};
 
 constexpr auto api_path_sftp_list {"/api/sftp/ls"};
+
+constexpr auto stat_id {"id"};
+
+constexpr auto stat_name {"name"};
+
+constexpr auto stat_size {"size"};
+
+constexpr auto stat_time {"time"};
+
+constexpr auto stat_dir {"dir"};
+
+constexpr auto stat_file {"file"};
+
+constexpr auto stat_link {"link"};
+
+constexpr auto stat_permissions {"permissions"};
+
+constexpr auto stat_files {"files"};
+
+class Json_parse_error : public Ods_error {
+public:
+    Json_parse_error(const std::string& what_arg) : Ods_error(what_arg)
+    {}
+
+    Json_parse_error(const char* what_arg) : Ods_error(what_arg)
+    {}
+
+    virtual ~Json_parse_error() = default;
+};
 
 /**
  * Returns the path for the list API call based on the specified endpoint type.
@@ -63,6 +95,41 @@ std::string select_list_path(Endpoint_type type)
     }
 }
 
+std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
+{
+    auto id {obj[stat_id]};
+    auto name {obj[stat_name]};
+    auto size {obj[stat_size]};
+    auto time {obj[stat_time]};
+    auto dir {obj[stat_dir]};
+    auto file {obj[stat_file]};
+    auto link {obj[stat_link]};
+    auto permissions {obj[stat_permissions]};
+    auto files {obj[stat_files]};
+
+    std::vector<std::shared_ptr<const Resource>> contained {};
+    for (const auto& r : files) {
+        auto [r_obj, r_err] {r.get_object()};
+        if (r_err) {
+            // bad json element
+            throw Json_parse_error {std::string("Unexpected non-object json element while parsing Stat files: ") +
+                                    simdjson::error_message(r_err)};
+        }
+        contained.push_back(create_resource(r_obj));
+    }
+
+    return std::make_unique<Resource_impl>(
+        std::move(std::make_shared<const std::string>(id.get_c_str().value())),
+        std::move(name.get_c_str().value()),
+        size.get_int64().value(),
+        time.get_int64().value(),
+        dir.get_bool().value(),
+        file.get_bool().value(),
+        std::move(std::make_shared<const std::string>(link.get_c_str().value())),
+        std::move(std::make_shared<const std::string>(permissions.get_c_str().value())),
+        std::move(std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(contained)));
+}
+
 } // namespace
 
 Endpoint_impl::Endpoint_impl(Endpoint_type type,
@@ -90,9 +157,30 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
                                          response.status()};
     }
 
-    // TODO: implement
-    return nullptr;
-} // namespace One_data_share
+    simdjson::dom::parser parser {};
+    auto [obj, err] {parser.parse(response.body()).get_object()};
+
+    if (err) {
+        // bad response body
+        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
+                                             "\" on endpoint \"" + cred_id_ + "\": " + simdjson::error_message(err),
+                                         response.status()};
+    }
+
+    try {
+        return create_resource(obj);
+    } catch (Json_parse_error e) {
+        // bad response body
+        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
+                                             "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
+                                         response.status()};
+    } catch (simdjson::simdjson_error e) {
+        // bad response body
+        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
+                                             "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
+                                         response.status()};
+    }
+}
 
 void Endpoint_impl::remove(const std::string& identifier, const std::string& to_delete) const
 {
