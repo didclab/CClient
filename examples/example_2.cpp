@@ -45,7 +45,7 @@ int main()
 
     auto cred {std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller))};
 
-    std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::googledrive) << std::endl;
+    std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::google_drive) << std::endl;
 
     cred->register_credential(One_data_share::Credential_endpoint_type::ftp,
                               "this is a test",

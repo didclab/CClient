@@ -96,7 +96,7 @@ namespace {
             return "dropbox";
         case Oauth_endpoint_type::gftp:
             return "gftp";
-        case Oauth_endpoint_type::googledrive:
+        case Oauth_endpoint_type::google_drive:
             return "gdrive";
         default:
             // TODO: throw exception

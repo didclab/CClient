@@ -25,7 +25,7 @@ namespace One_data_share {
      * Contains the endpoint types that can be registered with One Data Share by using OAuth to give One Data Share
      * permission to use the endpoint.
      */
-    enum class Oauth_endpoint_type { dropbox, googledrive, box, gftp };
+    enum class Oauth_endpoint_type { dropbox, google_drive, box, gftp };
 
     /**
      * Service providing all functionality related to registering credentials with One Data Share.

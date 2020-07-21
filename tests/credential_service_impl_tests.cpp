@@ -6,7 +6,7 @@
 
 #include <array>
 #include <memory>
-#include <stdexcept>
+#include <string>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -28,7 +28,7 @@ namespace {
     constexpr std::array oauth_types {Ods::Oauth_endpoint_type::box,
                                       Ods::Oauth_endpoint_type::dropbox,
                                       Ods::Oauth_endpoint_type::gftp,
-                                      Ods::Oauth_endpoint_type::googledrive};
+                                      Ods::Oauth_endpoint_type::google_drive};
 
     constexpr std::array cred_types {Ods::Credential_endpoint_type::ftp,
                                      Ods::Credential_endpoint_type::http,
@@ -36,7 +36,6 @@ namespace {
                                      Ods::Credential_endpoint_type::sftp};
 
     class Credential_service_impl_test : public ::testing::Test {
-    protected:
     };
 
     /**
