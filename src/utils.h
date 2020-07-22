@@ -41,6 +41,20 @@ std::string endpoint_as_string(const Endpoint_type type);
  */
 std::string escape_json(const std::string& json);
 
+/**
+ * Gets the production url for One Data Share.
+ */
+std::string get_ods_production_url();
+
+/**
+ * Sets the url in the config file to the specified string.
+ *
+ * @param url mutably borrowed reference to the string to set the read url to
+ *
+ * @return true if and only if the config file was found and could be opened
+ */
+bool load_url_from_config(std::string& url);
+
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_UTILS_H

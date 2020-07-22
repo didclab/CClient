@@ -4,6 +4,7 @@
  * 7/21/20
  */
 
+#include <fstream>
 #include <iomanip>
 #include <sstream>
 #include <utility>
@@ -33,6 +34,16 @@ constexpr auto header_authorization {"Authorization"};
  * Part of the value of authorization header.
  */
 constexpr auto header_bearer {"Bearer "};
+
+/**
+ * Path from project root to file containing configured ods url.
+ */
+constexpr auto url_config_file_location {"url.txt"};
+
+/**
+ * Production url for One Data Share.
+ */
+constexpr auto ods_production_url {"https://onedatashare.org"};
 
 } // namespace
 
@@ -105,6 +116,23 @@ std::string escape_json(const std::string& json)
         }
     }
     return stream.str();
+}
+
+std::string get_ods_production_url()
+{
+    return ods_production_url;
+}
+
+bool load_url_from_config(std::string& url)
+{
+    std::ifstream file {url_config_file_location};
+    if (!file.is_open()) {
+        return false;
+    }
+    std::getline(file, url);
+
+    file.close();
+    return true;
 }
 
 } // namespace One_data_share
