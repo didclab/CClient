@@ -166,7 +166,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListThrowsConnectionErr)
 {
     // set up mock throwing exception
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post).Times(types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
+    EXPECT_CALL(*caller, get).Times(types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
     const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
@@ -179,7 +179,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListBadResponseCodeThrowsUnexpe
 {
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post)
+    EXPECT_CALL(*caller, get)
         .Times(types.size())
         .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
 
@@ -194,7 +194,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListBadResponseBodyThrowsConnec
 {
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post)
+    EXPECT_CALL(*caller, get)
         .Times(types.size())
         .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 200}));
 
@@ -215,7 +215,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
 
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post)
+    EXPECT_CALL(*caller, get)
         .Times(types.size())
         .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, json, 200}));
 
@@ -236,7 +236,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListReturnsEmptyList)
 
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post)
+    EXPECT_CALL(*caller, get)
         .Times(types.size())
         .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, json, 200}));
 
