@@ -192,8 +192,9 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
                                          response.status()};
     }
 
+    std::unique_ptr<Resource> resource {};
     try {
-        return create_resource(obj);
+        resource = create_resource(obj);
     } catch (Json_parse_error e) {
         // bad response body
         throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
@@ -205,6 +206,16 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
                                              "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
                                          response.status()};
     }
+
+    if (resource->contained_resources() == nullptr && resource->is_directory()) {
+        // bad response body
+        throw Unexpected_response_error {
+            "Parsed resource was a directory but didn't have contained resources when listing resource \"" +
+                identifier + "\" on endpoint \"" + cred_id_ + "\".",
+            response.status()};
+    }
+
+    return resource;
 }
 
 void Endpoint_impl::remove(const std::string& identifier, const std::string& to_delete) const

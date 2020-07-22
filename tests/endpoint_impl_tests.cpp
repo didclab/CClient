@@ -326,7 +326,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutContainedResources)
         "name": "string",
         "size": 0,
         "time": 0,
-        "dir": true,
+        "dir": false,
         "file": true,
         "link": "string",
         "permissions": "string",
@@ -423,7 +423,7 @@ TEST_F(Endpoint_impl_tests, ListDirectoryWithoutContainedResourcesThrowsUnexpect
 }
 
 /**
- * Tests that listing a resource always returns the correct name, size, and time.
+ * Tests that listing a resource returns the correct name, size, time, is_directory, and is_file.
  */
 TEST_F(Endpoint_impl_tests, ListReturnsValues)
 {
@@ -438,7 +438,7 @@ TEST_F(Endpoint_impl_tests, ListReturnsValues)
                       R"(,
         "time": )" + std::to_string(time_val) +
                       R"(,
-        "dir": true,
+        "dir": false,
         "file": true,
         "filesList": [
             null
@@ -460,6 +460,8 @@ TEST_F(Endpoint_impl_tests, ListReturnsValues)
         EXPECT_EQ(resource->name(), name_val);
         EXPECT_EQ(resource->size(), size_val);
         EXPECT_EQ(resource->time(), time_val);
+        EXPECT_FALSE(resource->is_directory());
+        EXPECT_TRUE(resource->is_file());
     }
 }
 
