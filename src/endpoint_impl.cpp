@@ -52,17 +52,6 @@ constexpr auto stat_permissions {"permissions"};
 
 constexpr auto stat_files {"files"};
 
-class Json_parse_error : public Ods_error {
-public:
-    Json_parse_error(const std::string& what_arg) : Ods_error(what_arg)
-    {}
-
-    Json_parse_error(const char* what_arg) : Ods_error(what_arg)
-    {}
-
-    virtual ~Json_parse_error() = default;
-};
-
 /**
  * Returns the path for the list API call based on the specified endpoint type.
  *
@@ -121,16 +110,12 @@ std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
     std::vector<std::shared_ptr<const Resource>> contained {};
     if (!files_err) {
         for (const auto& r : files_elm) {
-            auto [r_obj, r_err] {r.get_object()};
-            if (r_err) {
-                // bad json element
-                throw Json_parse_error {std::string("Unexpected non-object json element while parsing Stat files: ") +
-                                        simdjson::error_message(r_err)};
-            }
-            contained.push_back(create_resource(r_obj));
+            // propogate up simdjson_error if thrown
+            contained.push_back(create_resource(r.get_object().take_value()));
         }
     }
 
+    // propogate up simdjson_error exceptions if thrown
     auto id_val {id_err ? nullptr : std::make_shared<const std::string>(id_elm.get_c_str().take_value())};
     auto name_val {name.get_c_str().take_value()};
     auto size_val {size.get_int64().take_value()};
@@ -197,11 +182,6 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
     std::unique_ptr<Resource> resource {};
     try {
         resource = create_resource(obj);
-    } catch (Json_parse_error e) {
-        // bad response body
-        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
-                                         response.status()};
     } catch (simdjson::simdjson_error e) {
         // bad response body
         throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
