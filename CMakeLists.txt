@@ -27,9 +27,16 @@ add_library(odscclient
     src/credential_service_impl.h
     src/curl_rest.cpp
     src/curl_rest.h
+    src/endpoint.cpp
+    src/endpoint_impl.cpp
+    src/endpoint_impl.h
     src/ods_error.cpp
+    src/resource_impl.cpp
+    src/resource_impl.h
     src/rest.cpp
     src/rest.h
+    src/utils.cpp
+    src/utils.h
 )
 target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
 target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
@@ -103,6 +110,8 @@ endif()
 # add unit tests
 add_executable(tests
     tests/credential_service_impl_tests.cpp
+    tests/endpoint_impl_tests.cpp
+    tests/mocks.h
 )
 target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)

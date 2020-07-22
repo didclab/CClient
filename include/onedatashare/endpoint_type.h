@@ -9,10 +9,11 @@
 
 namespace One_data_share {
 
-    /**
-     * Contains the possible types of an endpoint.
-     */
-    enum class Endpoint_type { dropbox, google_drive, sftp, ftp, box, s3, gftp, http };
-}
+/**
+ * Contains the possible types of an endpoint.
+ */
+enum class Endpoint_type { dropbox, google_drive, sftp, ftp, box, s3, gftp, http };
+
+} // namespace One_data_share
 
 #endif // ONEDATASHARE_ENDPOINT_TYPE_H

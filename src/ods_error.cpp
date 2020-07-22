@@ -7,25 +7,27 @@
 #include <onedatashare/ods_error.h>
 
 namespace One_data_share {
-    Ods_error::Ods_error(const std::string& what_arg) : runtime_error {what_arg}
-    {}
 
-    Ods_error::Ods_error(const char* what_arg) : runtime_error {what_arg}
-    {}
+Ods_error::Ods_error(const std::string& what_arg) : runtime_error {what_arg}
+{}
 
-    Connection_error::Connection_error(const std::string& what_arg) : Ods_error {what_arg}
-    {}
+Ods_error::Ods_error(const char* what_arg) : runtime_error {what_arg}
+{}
 
-    Connection_error::Connection_error(const char* what_arg) : Ods_error {what_arg}
-    {}
+Connection_error::Connection_error(const std::string& what_arg) : Ods_error {what_arg}
+{}
 
-    Unexpected_response_error::Unexpected_response_error(const std::string& what_arg, int status)
-        : Ods_error {what_arg},
-          status {status}
-    {}
+Connection_error::Connection_error(const char* what_arg) : Ods_error {what_arg}
+{}
 
-    Unexpected_response_error::Unexpected_response_error(const char* what_arg, int status)
-        : Ods_error {what_arg},
-          status {status}
-    {}
-}
+Unexpected_response_error::Unexpected_response_error(const std::string& what_arg, int status)
+    : Ods_error {what_arg},
+      status {status}
+{}
+
+Unexpected_response_error::Unexpected_response_error(const char* what_arg, int status)
+    : Ods_error {what_arg},
+      status {status}
+{}
+
+} // namespace One_data_share

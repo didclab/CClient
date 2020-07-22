@@ -7,14 +7,16 @@
 #include <fstream>
 #include <iostream>
 
-#include <credential_service_impl.h>
-#include <curl_rest.h>
+#include <onedatashare/credential_service.h>
+#include <onedatashare/ods_error.h>
 
+/**
+ * Example giving the user a link to use for registering an OAuth endpoint.
+ */
 int main()
 {
     namespace Ods = One_data_share;
 
-    std::string url {};
     std::string token {};
 
     // read token from file
@@ -29,27 +31,28 @@ int main()
     std::getline(token_file, token);
     token_file.close();
 
-    // read url from file
-    std::ifstream url_file {"url.txt"};
-    if (!url_file.is_open()) {
-        // print error message and exit
-        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
-                     "See README.md for more information."
+    auto cred {Ods::Credential_service::create(token)};
+
+    try {
+        std::cout << "Register Box Endpoint:" << std::endl
+                  << cred->oauth_url(Ods::Oauth_endpoint_type::box) << "\n"
                   << std::endl;
-        return -1;
+
+        std::cout << "Register Dropbox Endpoint:" << std::endl
+                  << cred->oauth_url(Ods::Oauth_endpoint_type::dropbox) << "\n"
+                  << std::endl;
+
+        std::cout << "Register GFTP Endpoint:" << std::endl
+                  << cred->oauth_url(Ods::Oauth_endpoint_type::gftp) << "\n"
+                  << std::endl;
+
+        std::cout << "Register Google Drive Endpoint:" << std::endl
+                  << cred->oauth_url(Ods::Oauth_endpoint_type::google_drive) << std::endl;
+
+    } catch (Ods::Unexpected_response_error e) {
+        std::cout << "\nUnexpected response received from One Data Share.\n\nwhat(): " << e.what()
+                  << "\n\nstatus: " << e.status << std::endl;
+    } catch (Ods::Connection_error e) {
+        std::cout << "\nError connecting to One Data Share.\n\nwhat(): " << e.what() << std::endl;
     }
-    std::getline(url_file, url);
-    url_file.close();
-
-    std::unique_ptr<One_data_share::Rest> caller {std::make_unique<One_data_share::Curl_rest>()};
-
-    auto cred {std::make_unique<One_data_share::Credential_service_impl>(token, url, std::move(caller))};
-
-    std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::googledrive) << std::endl;
-
-    cred->register_credential(One_data_share::Credential_endpoint_type::ftp,
-                              "this is a test",
-                              "this is a test",
-                              "this is a test",
-                              "this is a test");
 }
