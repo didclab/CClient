@@ -515,14 +515,53 @@ TEST_F(Endpoint_impl_tests, ListParsesStat)
     }
 }
 
+/**
+ * Tests that remove throws a Connection_error when it receives a Connection_error.
+ */
 TEST_F(Endpoint_impl_tests, RemoveThrowsConnectionErr)
-{}
+{
+    // set up mock throwing exception
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, get).Times(types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
+    for (auto type : types) {
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        ASSERT_THROW(endpoint.remove("", ""), Ods::Connection_error);
+    }
+}
+
+/**
+ * Tests that remove throws an Unexpected_response_error when it receives a response with status 500.
+ */
 TEST_F(Endpoint_impl_tests, RemoveThrowsUnexpectedResponse)
-{}
+{
+    // set up mock returning response
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, get).Times(types.size()).WillRepeatedly(Return(Ods::Response {Header_map {}, "", 500}));
 
+    for (auto type : types) {
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        ASSERT_THROW(endpoint.remove("", ""), Ods::Unexpected_response_error);
+    }
+}
+
+/**
+ * Tests that remove returns when it receives a response with status 200.
+ */
 TEST_F(Endpoint_impl_tests, RemoveReturns)
-{}
+{
+    // set up mock returning response
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, get).Times(types.size()).WillRepeatedly(Return(Ods::Response {Header_map {}, "", 200}));
+
+    for (auto type : types) {
+        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        ASSERT_NO_THROW(endpoint.remove("", ""));
+    }
+}
 
 TEST_F(Endpoint_impl_tests, MkdirThrowsConnectionErr)
 {}
