@@ -95,6 +95,16 @@ std::string select_list_path(Endpoint_type type)
     }
 }
 
+/**
+ * Creates a unique pointer to a Resource object containing the data stored in the specified Stat json object. It is
+ * expected that the specified dom conforms to the Stat object specifications.
+ *
+ * @param obj borrowed reference to the dom containing the Stat json object to parse
+ *
+ * @return unique pointer to Resource created from parsing the specified dom
+ *
+ * @throw simdjson_error if simdjson encounters an error parsing the dom
+ */
 std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
 {
     auto [id_elm, id_err] {obj[stat_id]};
@@ -133,17 +143,6 @@ std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
     auto files_val {files_err ?
                         nullptr :
                         std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(std::move(contained))};
-
-    // return std::make_unique<Resource_impl>(
-    //     std::move(std::make_shared<const std::string>(id.get_c_str().value())),
-    //     std::move(name.get_c_str().value()),
-    //     size.get_int64().value(),
-    //     time.get_int64().value(),
-    //     dir.get_bool().value(),
-    //     file.get_bool().value(),
-    //     std::move(std::make_shared<const std::string>(link.get_c_str().value())),
-    //     std::move(std::make_shared<const std::string>(permissions.get_c_str().value())),
-    //     std::move(std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(contained)));
 
     return std::make_unique<Resource_impl>(std::move(id_val),
                                            std::move(name_val),
