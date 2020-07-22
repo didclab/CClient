@@ -228,6 +228,9 @@ std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
                                            std::move(files_val));
 }
 
+/**
+ * Creates a DeleteOperation json object with the specified fields.
+ */
 std::string create_delete_operation(const std::string& cred_id,
                                     const std::string& path,
                                     const std::string& id,
@@ -236,6 +239,36 @@ std::string create_delete_operation(const std::string& cred_id,
     std::ostringstream stream {};
     stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
            << escape_json(id) << "\",\"toDelete\":\"" << escape_json(to_delete) << "\"}";
+
+    return stream.str();
+}
+
+/**
+ * Creates a MkdirOperation json object with the specified fields.
+ */
+std::string create_mkdir_operation(const std::string& cred_id,
+                                   const std::string& path,
+                                   const std::string& id,
+                                   const std::string& folder_to_create)
+{
+    std::ostringstream stream {};
+    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
+           << escape_json(id) << "\",\"toDelete\":\"" << escape_json(folder_to_create) << "\"}";
+
+    return stream.str();
+}
+
+/**
+ * Creates a DownloadOperation json object with the specified fields.
+ */
+std::string create_download_operation(const std::string& cred_id,
+                                      const std::string& path,
+                                      const std::string& id,
+                                      const std::string& file_to_download)
+{
+    std::ostringstream stream {};
+    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
+           << escape_json(id) << "\",\"toDelete\":\"" << escape_json(file_to_download) << "\"}";
 
     return stream.str();
 }
@@ -309,18 +342,35 @@ void Endpoint_impl::remove(const std::string& identifier, const std::string& to_
 
     if (response.status() != 200) {
         // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response when removing resource.", response.status()};
+        throw Unexpected_response_error {"Expected a status 200 response after removing resource.", response.status()};
     }
 }
 
 void Endpoint_impl::mkdir(const std::string& identifier, const std::string& folder_to_create) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    auto response {rest_caller_->post(ods_url_ + select_mkdir_path(type_),
+                                      headers_,
+                                      create_delete_operation(cred_id_, identifier, identifier, folder_to_create))};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected a status 200 response after creating directory.", response.status()};
+    }
 }
 
 void Endpoint_impl::download(const std::string& identifier, const std::string& file_to_download) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    auto response {rest_caller_->post(ods_url_ + select_download_path(type_),
+                                      headers_,
+                                      create_delete_operation(cred_id_, identifier, identifier, file_to_download))};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected a status 200 response after downloading resource.",
+                                         response.status()};
+    }
 }
 
 } // namespace One_data_share
