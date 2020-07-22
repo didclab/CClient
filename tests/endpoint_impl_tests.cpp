@@ -515,4 +515,31 @@ TEST_F(Endpoint_impl_tests, ListParsesStat)
     }
 }
 
+TEST_F(Endpoint_impl_tests, RemoveThrowsConnectionErr)
+{}
+
+TEST_F(Endpoint_impl_tests, RemoveThrowsUnexpectedResponse)
+{}
+
+TEST_F(Endpoint_impl_tests, RemoveReturns)
+{}
+
+TEST_F(Endpoint_impl_tests, MkdirThrowsConnectionErr)
+{}
+
+TEST_F(Endpoint_impl_tests, MkdirThrowsUnexpectedResponse)
+{}
+
+TEST_F(Endpoint_impl_tests, MkdirReturns)
+{}
+
+TEST_F(Endpoint_impl_tests, DownloadThrowsConnectionErr)
+{}
+
+TEST_F(Endpoint_impl_tests, DownloadThrowsUnexpectedResponse)
+{}
+
+TEST_F(Endpoint_impl_tests, DownloadReturns)
+{}
+
 } // namespace
