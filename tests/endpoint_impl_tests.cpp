@@ -107,7 +107,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
         "link": "string",
         "permissions": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -148,7 +147,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithID)
         "link": "string",
         "permissions": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -185,7 +183,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
         "file": true,
         "permissions": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -223,7 +220,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
                       R"(,
         "permissions": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -260,7 +256,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutPermissions)
         "file": true,
         "link": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -299,7 +294,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
                       permissions_value +
                       R"(,
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -369,7 +363,6 @@ TEST_F(Endpoint_impl_tests, ListResourceWithContainedResources)
         "link": "string",
         "permissions": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
@@ -485,7 +478,6 @@ TEST_F(Endpoint_impl_tests, ListParsesStat)
         "link": "string",
         "permissions": "string",
         "files": [
-            null
         ],
         "filesList": [
             null
