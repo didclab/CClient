@@ -173,7 +173,9 @@ Endpoint_impl::Endpoint_impl(Endpoint_type type,
 std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) const
 {
     // if get throws an expcetion, propagate it up
-    auto response {rest_caller_->get(ods_url_ + select_list_path(type_), headers_)};
+    auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?credId=" + cred_id_ +
+                                         "&path=" + identifier + "&identifier=" + identifier,
+                                     headers_)};
 
     if (response.status() != 200) {
         // unexpected response
