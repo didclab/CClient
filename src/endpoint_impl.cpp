@@ -97,37 +97,63 @@ std::string select_list_path(Endpoint_type type)
 
 std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
 {
-    auto id {obj[stat_id]};
+    auto [id_elm, id_err] {obj[stat_id]};
     auto name {obj[stat_name]};
     auto size {obj[stat_size]};
     auto time {obj[stat_time]};
     auto dir {obj[stat_dir]};
     auto file {obj[stat_file]};
-    auto link {obj[stat_link]};
-    auto permissions {obj[stat_permissions]};
-    auto files {obj[stat_files]};
+    auto [link_elm, link_err] {obj[stat_link]};
+    auto [permissions_elm, permissions_err] {obj[stat_permissions]};
+    auto [files_elm, files_err] {obj[stat_files]};
 
+    // recursively add contained resoruces
     std::vector<std::shared_ptr<const Resource>> contained {};
-    for (const auto& r : files) {
-        auto [r_obj, r_err] {r.get_object()};
-        if (r_err) {
-            // bad json element
-            throw Json_parse_error {std::string("Unexpected non-object json element while parsing Stat files: ") +
-                                    simdjson::error_message(r_err)};
+    if (!files_err) {
+        for (const auto& r : files_elm) {
+            auto [r_obj, r_err] {r.get_object()};
+            if (r_err) {
+                // bad json element
+                throw Json_parse_error {std::string("Unexpected non-object json element while parsing Stat files: ") +
+                                        simdjson::error_message(r_err)};
+            }
+            contained.push_back(create_resource(r_obj));
         }
-        contained.push_back(create_resource(r_obj));
     }
 
-    return std::make_unique<Resource_impl>(
-        std::move(std::make_shared<const std::string>(id.get_c_str().value())),
-        std::move(name.get_c_str().value()),
-        size.get_int64().value(),
-        time.get_int64().value(),
-        dir.get_bool().value(),
-        file.get_bool().value(),
-        std::move(std::make_shared<const std::string>(link.get_c_str().value())),
-        std::move(std::make_shared<const std::string>(permissions.get_c_str().value())),
-        std::move(std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(contained)));
+    auto id_val {id_err ? nullptr : std::make_shared<const std::string>(id_elm.get_c_str().take_value())};
+    auto name_val {name.get_c_str().take_value()};
+    auto size_val {size.get_int64().take_value()};
+    auto time_val {time.get_int64().take_value()};
+    auto dir_val {dir.get_bool().take_value()};
+    auto file_val {file.get_bool().take_value()};
+    auto link_val {link_err ? nullptr : std::make_shared<const std::string>(link_elm.get_c_str().take_value())};
+    auto permissions_val {
+        permissions_err ? nullptr : std::make_shared<const std::string>(permissions_elm.get_c_str().take_value())};
+    auto files_val {files_err ?
+                        nullptr :
+                        std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(std::move(contained))};
+
+    // return std::make_unique<Resource_impl>(
+    //     std::move(std::make_shared<const std::string>(id.get_c_str().value())),
+    //     std::move(name.get_c_str().value()),
+    //     size.get_int64().value(),
+    //     time.get_int64().value(),
+    //     dir.get_bool().value(),
+    //     file.get_bool().value(),
+    //     std::move(std::make_shared<const std::string>(link.get_c_str().value())),
+    //     std::move(std::make_shared<const std::string>(permissions.get_c_str().value())),
+    //     std::move(std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(contained)));
+
+    return std::make_unique<Resource_impl>(std::move(id_val),
+                                           std::move(name_val),
+                                           size_val,
+                                           time_val,
+                                           dir_val,
+                                           file_val,
+                                           std::move(link_val),
+                                           std::move(permissions_val),
+                                           std::move(files_val));
 }
 
 } // namespace

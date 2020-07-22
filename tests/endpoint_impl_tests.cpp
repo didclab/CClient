@@ -134,11 +134,11 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
  */
 TEST_F(Endpoint_impl_tests, ListResourceWithID)
 {
-    std::string id_value {R"("this is the id")"};
+    std::string id_value {"this is the id"};
 
     std::string stat {R"({
-        "id": )" + id_value +
-                      R"(,
+        "id": ")" + id_value +
+                      R"(",
         "name": "string",
         "size": 0,
         "time": 0,
@@ -207,7 +207,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
 
 TEST_F(Endpoint_impl_tests, ListResourceWithLink)
 {
-    std::string link_value {R"("this is the link")"};
+    std::string link_value {"this is the link"};
 
     std::string stat {R"({
         "id": "string",
@@ -216,8 +216,8 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
         "time": 0,
         "dir": true,
         "file": true,
-        "link": )" + link_value +
-                      R"(,
+        "link": ")" + link_value +
+                      R"(",
         "permissions": "string",
         "files": [
         ],
@@ -280,7 +280,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutPermissions)
 
 TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
 {
-    std::string permissions_value {R"("these are the permissions")"};
+    std::string permissions_value {"these are the permissions"};
 
     std::string stat {R"({
         "id": "string",
@@ -290,9 +290,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
         "dir": true,
         "file": true,
         "link": "string",
-        "permissions": )" +
+        "permissions": ")" +
                       permissions_value +
-                      R"(,
+                      R"(",
         "files": [
         ],
         "filesList": [
@@ -329,7 +329,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutContainedResources)
         "dir": true,
         "file": true,
         "link": "string",
-        "permissions: "string",
+        "permissions": "string",
         "filesList": [
             null
         ],
@@ -403,7 +403,7 @@ TEST_F(Endpoint_impl_tests, ListDirectoryWithoutContainedResourcesThrowsUnexpect
         "dir": true,
         "file": false,
         "link": "string",
-        "permissions: "string",
+        "permissions": "string",
         "filesList": [
             null
         ],
@@ -427,13 +427,13 @@ TEST_F(Endpoint_impl_tests, ListDirectoryWithoutContainedResourcesThrowsUnexpect
  */
 TEST_F(Endpoint_impl_tests, ListReturnsValues)
 {
-    std::string name_val {R"("this is the name")"};
+    std::string name_val {"this is the name"};
     auto size_val = 139;
     auto time_val = 24576;
 
     std::string stat {R"({
-        "name": )" + name_val +
-                      R"(,
+        "name": ")" + name_val +
+                      R"(",
         "size": )" + std::to_string(size_val) +
                       R"(,
         "time": )" + std::to_string(time_val) +
