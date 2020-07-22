@@ -4,6 +4,7 @@
  * 7/20/20
  */
 
+#include <sstream>
 #include <utility>
 #include <vector>
 
@@ -19,37 +20,49 @@ namespace One_data_share {
 namespace {
 
 constexpr auto api_path_box_list {"api/box/ls"};
-
 constexpr auto api_path_dropbox_list {"/api/dropbox/ls"};
-
 constexpr auto api_path_ftp_list {"/api/ftp/ls"};
-
-constexpr auto api_path_google_drive_list {"/api/googledrive/list"};
-
+constexpr auto api_path_google_drive_list {"/api/googledrive/ls"};
 constexpr auto api_path_gftp_list {"/api/gsiftp/ls"};
-
 constexpr auto api_path_http_list {"/api/http/ls"};
-
 constexpr auto api_path_s3_list {"/api/s3/ls"};
-
 constexpr auto api_path_sftp_list {"/api/sftp/ls"};
 
+constexpr auto api_path_box_rm {"api/box/rm"};
+constexpr auto api_path_dropbox_rm {"/api/dropbox/rm"};
+constexpr auto api_path_ftp_rm {"/api/ftp/rm"};
+constexpr auto api_path_google_drive_rm {"/api/googledrive/rm"};
+constexpr auto api_path_gftp_rm {"/api/gsiftp/rm"};
+constexpr auto api_path_http_rm {"/api/http/rm"};
+constexpr auto api_path_s3_rm {"/api/s3/rm"};
+constexpr auto api_path_sftp_rm {"/api/sftp/rm"};
+
+constexpr auto api_path_box_mkdir {"api/box/mkdir"};
+constexpr auto api_path_dropbox_mkdir {"/api/dropbox/mkdir"};
+constexpr auto api_path_ftp_mkdir {"/api/ftp/mkdir"};
+constexpr auto api_path_google_drive_mkdir {"/api/googledrive/mkdir"};
+constexpr auto api_path_gftp_mkdir {"/api/gsiftp/mkdir"};
+constexpr auto api_path_http_mkdir {"/api/http/mkdir"};
+constexpr auto api_path_s3_mkdir {"/api/s3/mkdir"};
+constexpr auto api_path_sftp_mkdir {"/api/sftp/mkdir"};
+
+constexpr auto api_path_box_download {"api/box/download"};
+constexpr auto api_path_dropbox_download {"/api/dropbox/download"};
+constexpr auto api_path_ftp_download {"/api/ftp/download"};
+constexpr auto api_path_google_drive_download {"/api/googledrive/download"};
+constexpr auto api_path_gftp_download {"/api/gsiftp/download"};
+constexpr auto api_path_http_download {"/api/http/download"};
+constexpr auto api_path_s3_download {"/api/s3/download"};
+constexpr auto api_path_sftp_download {"/api/sftp/download"};
+
 constexpr auto stat_id {"id"};
-
 constexpr auto stat_name {"name"};
-
 constexpr auto stat_size {"size"};
-
 constexpr auto stat_time {"time"};
-
 constexpr auto stat_dir {"dir"};
-
 constexpr auto stat_file {"file"};
-
 constexpr auto stat_link {"link"};
-
 constexpr auto stat_permissions {"permissions"};
-
 constexpr auto stat_files {"files"};
 
 /**
@@ -78,6 +91,81 @@ std::string select_list_path(Endpoint_type type)
         return api_path_gftp_list;
     case Endpoint_type::http:
         return api_path_http_list;
+    default:
+        // TODO: throw exception
+        return "";
+    }
+}
+
+std::string select_rm_path(Endpoint_type type)
+{
+    switch (type) {
+    case Endpoint_type::dropbox:
+        return api_path_dropbox_rm;
+    case Endpoint_type::google_drive:
+        return api_path_google_drive_rm;
+    case Endpoint_type::sftp:
+        return api_path_sftp_rm;
+    case Endpoint_type::ftp:
+        return api_path_ftp_rm;
+    case Endpoint_type::box:
+        return api_path_box_rm;
+    case Endpoint_type::s3:
+        return api_path_s3_rm;
+    case Endpoint_type::gftp:
+        return api_path_gftp_rm;
+    case Endpoint_type::http:
+        return api_path_http_rm;
+    default:
+        // TODO: throw exception
+        return "";
+    }
+}
+
+std::string select_mkdir_path(Endpoint_type type)
+{
+    switch (type) {
+    case Endpoint_type::dropbox:
+        return api_path_dropbox_mkdir;
+    case Endpoint_type::google_drive:
+        return api_path_google_drive_mkdir;
+    case Endpoint_type::sftp:
+        return api_path_sftp_mkdir;
+    case Endpoint_type::ftp:
+        return api_path_ftp_mkdir;
+    case Endpoint_type::box:
+        return api_path_box_mkdir;
+    case Endpoint_type::s3:
+        return api_path_s3_mkdir;
+    case Endpoint_type::gftp:
+        return api_path_gftp_mkdir;
+    case Endpoint_type::http:
+        return api_path_http_mkdir;
+    default:
+        // TODO: throw exception
+        return "";
+    }
+}
+
+std::string select_download_path(Endpoint_type type)
+{
+    switch (type) {
+    case Endpoint_type::dropbox:
+        return api_path_dropbox_download;
+    case Endpoint_type::google_drive:
+        return api_path_google_drive_download;
+    case Endpoint_type::sftp:
+        return api_path_sftp_download;
+    case Endpoint_type::ftp:
+        return api_path_ftp_download;
+    case Endpoint_type::box:
+        return api_path_box_download;
+    case Endpoint_type::s3:
+        return api_path_s3_download;
+    case Endpoint_type::gftp:
+        return api_path_gftp_download;
+    case Endpoint_type::http:
+        return api_path_http_download;
     default:
         // TODO: throw exception
         return "";
@@ -138,6 +226,51 @@ std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
                                            std::move(link_val),
                                            std::move(permissions_val),
                                            std::move(files_val));
+}
+
+/**
+ * Creates a DeleteOperation json object with the specified fields.
+ */
+std::string create_delete_operation(const std::string& cred_id,
+                                    const std::string& path,
+                                    const std::string& id,
+                                    const std::string& to_delete)
+{
+    std::ostringstream stream {};
+    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
+           << escape_json(id) << "\",\"toDelete\":\"" << escape_json(to_delete) << "\"}";
+
+    return stream.str();
+}
+
+/**
+ * Creates a MkdirOperation json object with the specified fields.
+ */
+std::string create_mkdir_operation(const std::string& cred_id,
+                                   const std::string& path,
+                                   const std::string& id,
+                                   const std::string& folder_to_create)
+{
+    std::ostringstream stream {};
+    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
+           << escape_json(id) << "\",\"folderToCreate\":\"" << escape_json(folder_to_create) << "\"}";
+
+    return stream.str();
+}
+
+/**
+ * Creates a DownloadOperation json object with the specified fields.
+ */
+std::string create_download_operation(const std::string& cred_id,
+                                      const std::string& path,
+                                      const std::string& id,
+                                      const std::string& file_to_download)
+{
+    std::ostringstream stream {};
+    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
+           << escape_json(id) << "\",\"fileToDownload\":\"" << escape_json(file_to_download) << "\"}";
+
+    return stream.str();
 }
 
 } // namespace
@@ -202,17 +335,42 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
 
 void Endpoint_impl::remove(const std::string& identifier, const std::string& to_delete) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    auto response {rest_caller_->post(ods_url_ + select_rm_path(type_),
+                                      headers_,
+                                      create_delete_operation(cred_id_, identifier, identifier, to_delete))};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected a status 200 response after removing resource.", response.status()};
+    }
 }
 
 void Endpoint_impl::mkdir(const std::string& identifier, const std::string& folder_to_create) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    auto response {rest_caller_->post(ods_url_ + select_mkdir_path(type_),
+                                      headers_,
+                                      create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected a status 200 response after creating directory.", response.status()};
+    }
 }
 
 void Endpoint_impl::download(const std::string& identifier, const std::string& file_to_download) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    auto response {rest_caller_->post(ods_url_ + select_download_path(type_),
+                                      headers_,
+                                      create_download_operation(cred_id_, identifier, identifier, file_to_download))};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected a status 200 response after downloading resource.",
+                                         response.status()};
+    }
 }
 
 } // namespace One_data_share

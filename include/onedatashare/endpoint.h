@@ -221,15 +221,16 @@ public:
     virtual void mkdir(const std::string& identifier, const std::string& folder_to_create) const = 0;
 
     /**
-     * Downloads the specified resource. It is expected that the authentication token used to create this Endpoint
+     * Downloads the specified file. It is expected that the authentication token used to create this Endpoint
      * object is valid, that a conenction can be made to One Data Share, that a connection can be made from One Data
-     * Share to the endpoint specified by the credential id, and that the specified resource exists at the specidied
-     * location. If these preconditions are not met, exceptions may be thrown.
+     * Share to the endpoint specified by the credential id, that the specified resource exists at the specified
+     * location, and that the specified resource is a file. If these preconditions are not met, exceptions may be
+     * thrown.
      *
      * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
      * needs in order to locate the directory containing the resource to download
      * @param file_to_download borrowed reference to the name or id depending on the endpoint type, that the
-     * endpoint needs in order to locate the resource to download from within the specified directory
+     * endpoint needs in order to locate the file to download from within the specified directory
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is received from One Data Share
