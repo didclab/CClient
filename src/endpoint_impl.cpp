@@ -19,37 +19,49 @@ namespace One_data_share {
 namespace {
 
 constexpr auto api_path_box_list {"api/box/ls"};
-
 constexpr auto api_path_dropbox_list {"/api/dropbox/ls"};
-
 constexpr auto api_path_ftp_list {"/api/ftp/ls"};
-
-constexpr auto api_path_google_drive_list {"/api/googledrive/list"};
-
+constexpr auto api_path_google_drive_list {"/api/googledrive/ls"};
 constexpr auto api_path_gftp_list {"/api/gsiftp/ls"};
-
 constexpr auto api_path_http_list {"/api/http/ls"};
-
 constexpr auto api_path_s3_list {"/api/s3/ls"};
-
 constexpr auto api_path_sftp_list {"/api/sftp/ls"};
 
+constexpr auto api_path_box_rm {"api/box/rm"};
+constexpr auto api_path_dropbox_rm {"/api/dropbox/rm"};
+constexpr auto api_path_ftp_rm {"/api/ftp/rm"};
+constexpr auto api_path_google_drive_rm {"/api/googledrive/rm"};
+constexpr auto api_path_gftp_rm {"/api/gsiftp/rm"};
+constexpr auto api_path_http_rm {"/api/http/rm"};
+constexpr auto api_path_s3_rm {"/api/s3/rm"};
+constexpr auto api_path_sftp_rm {"/api/sftp/rm"};
+
+constexpr auto api_path_box_mkdir {"api/box/mkdir"};
+constexpr auto api_path_dropbox_mkdir {"/api/dropbox/mkdir"};
+constexpr auto api_path_ftp_mkdir {"/api/ftp/mkdir"};
+constexpr auto api_path_google_drive_mkdir {"/api/googledrive/mkdir"};
+constexpr auto api_path_gftp_mkdir {"/api/gsiftp/mkdir"};
+constexpr auto api_path_http_mkdir {"/api/http/mkdir"};
+constexpr auto api_path_s3_mkdir {"/api/s3/mkdir"};
+constexpr auto api_path_sftp_mkdir {"/api/sftp/mkdir"};
+
+constexpr auto api_path_box_download {"api/box/download"};
+constexpr auto api_path_dropbox_download {"/api/dropbox/download"};
+constexpr auto api_path_ftp_download {"/api/ftp/download"};
+constexpr auto api_path_google_drive_download {"/api/googledrive/download"};
+constexpr auto api_path_gftp_download {"/api/gsiftp/download"};
+constexpr auto api_path_http_download {"/api/http/download"};
+constexpr auto api_path_s3_download {"/api/s3/download"};
+constexpr auto api_path_sftp_download {"/api/sftp/download"};
+
 constexpr auto stat_id {"id"};
-
 constexpr auto stat_name {"name"};
-
 constexpr auto stat_size {"size"};
-
 constexpr auto stat_time {"time"};
-
 constexpr auto stat_dir {"dir"};
-
 constexpr auto stat_file {"file"};
-
 constexpr auto stat_link {"link"};
-
 constexpr auto stat_permissions {"permissions"};
-
 constexpr auto stat_files {"files"};
 
 /**
