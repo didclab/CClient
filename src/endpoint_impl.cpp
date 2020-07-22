@@ -253,7 +253,7 @@ std::string create_mkdir_operation(const std::string& cred_id,
 {
     std::ostringstream stream {};
     stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
-           << escape_json(id) << "\",\"toDelete\":\"" << escape_json(folder_to_create) << "\"}";
+           << escape_json(id) << "\",\"folderToCreate\":\"" << escape_json(folder_to_create) << "\"}";
 
     return stream.str();
 }
@@ -268,7 +268,7 @@ std::string create_download_operation(const std::string& cred_id,
 {
     std::ostringstream stream {};
     stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
-           << escape_json(id) << "\",\"toDelete\":\"" << escape_json(file_to_download) << "\"}";
+           << escape_json(id) << "\",\"fileToDownload\":\"" << escape_json(file_to_download) << "\"}";
 
     return stream.str();
 }
@@ -351,7 +351,7 @@ void Endpoint_impl::mkdir(const std::string& identifier, const std::string& fold
     // if post throws an expcetion, propagate it up
     auto response {rest_caller_->post(ods_url_ + select_mkdir_path(type_),
                                       headers_,
-                                      create_delete_operation(cred_id_, identifier, identifier, folder_to_create))};
+                                      create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
 
     if (response.status() != 200) {
         // expected status 200
@@ -364,7 +364,7 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
     // if post throws an expcetion, propagate it up
     auto response {rest_caller_->post(ods_url_ + select_download_path(type_),
                                       headers_,
-                                      create_delete_operation(cred_id_, identifier, identifier, file_to_download))};
+                                      create_download_operation(cred_id_, identifier, identifier, file_to_download))};
 
     if (response.status() != 200) {
         // expected status 200
