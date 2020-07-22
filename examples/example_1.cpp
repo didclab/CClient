@@ -40,8 +40,8 @@ int main()
     cred_service->register_credential(Ods::Credential_endpoint_type::ftp,
                                       my_cred_id,
                                       "ftp://speedtest.tele2.net",
-                                      "",
-                                      "");
+                                      nullptr,
+                                      nullptr);
 
     // print oauth url for dropbox
     std::cout << cred_service->oauth_url(Ods::Oauth_endpoint_type::dropbox) << std::endl;

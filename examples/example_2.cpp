@@ -47,9 +47,12 @@ int main()
 
     std::cout << cred->oauth_url(One_data_share::Oauth_endpoint_type::google_drive) << std::endl;
 
+    std::string username {"this is a test"};
+    std::string secret {"this is a test"};
+
     cred->register_credential(One_data_share::Credential_endpoint_type::ftp,
                               "this is a test",
                               "this is a test",
-                              "this is a test",
-                              "this is a test");
+                              &username,
+                              &secret);
 }

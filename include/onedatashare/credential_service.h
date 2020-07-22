@@ -75,8 +75,10 @@ public:
      * @param type the endpoint type to register
      * @param cred_id borrowed reference to the credential identifier to associate with the registered endpoint
      * @param uri borrowed reference to the uri of the endpoint to register
-     * @param username borrowed reference to the username needed to log in to the endpoint
-     * @param secret borrowed reference to the password needed to log in to the endpoint
+     * @param username borrowed pointer to the username needed to log in to the endpoint or nullptr to register an
+     * endpoint without a username
+     * @param secret borrowed pointer to the password needed to log in to the endpoint or nullptr to register an
+     * endpoint without a password
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is recieved from One Data Share
@@ -84,8 +86,8 @@ public:
     virtual void register_credential(Credential_endpoint_type type,
                                      const std::string& cred_id,
                                      const std::string& uri,
-                                     const std::string& username,
-                                     const std::string& secret) const = 0;
+                                     const std::string* username,
+                                     const std::string* secret) const = 0;
 
     /**
      * Lists the credential identifiers of the specified endpoint type that are registered with One Data Share.

@@ -84,13 +84,20 @@ std::string endpoint_as_string(const Oauth_endpoint_type type)
 
 std::string create_account_endpoint_credential(const std::string account_id,
                                                const std::string& uri,
-                                               const std::string& username,
-                                               const std::string& secret)
+                                               const std::string* username,
+                                               const std::string* secret)
 {
     std::ostringstream stream {};
     stream << "{"
-           << "\"accountId\":\"" << escape_json(account_id) << "\",\"uri\":\"" << escape_json(uri)
-           << "\",\"username\":\"" << escape_json(username) << "\",\"secret\":\"" << escape_json(secret) << "\"}";
+           << "\"accountId\":\"" << escape_json(account_id) << "\",\"uri\":\"" << escape_json(uri);
+    if (username != nullptr) {
+        stream << "\",\"username\":\"" << escape_json(*username);
+    }
+    if (secret != nullptr) {
+        stream << "\",\"secret\":\"" << escape_json(*secret);
+    }
+    stream << "\"}";
+
     return stream.str();
 }
 
@@ -129,8 +136,8 @@ std::string Credential_service_impl::oauth_url(const Oauth_endpoint_type type) c
 void Credential_service_impl::register_credential(const Credential_endpoint_type type,
                                                   const std::string& cred_id,
                                                   const std::string& uri,
-                                                  const std::string& username,
-                                                  const std::string& secret) const
+                                                  const std::string* username,
+                                                  const std::string* secret) const
 {
     // if post throws an exception, propogate it up
     const Response response {rest_caller_->post(ods_url_ + api_path_cred + "/" + endpoint_as_string(type),

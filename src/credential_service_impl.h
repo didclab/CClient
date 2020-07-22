@@ -49,8 +49,8 @@ public:
     virtual void register_credential(Credential_endpoint_type type,
                                      const std::string& cred_id,
                                      const std::string& uri,
-                                     const std::string& username,
-                                     const std::string& secret) const override;
+                                     const std::string* username,
+                                     const std::string* secret) const override;
 
     virtual std::vector<std::string> credential_id_list(Endpoint_type type) const override;
 

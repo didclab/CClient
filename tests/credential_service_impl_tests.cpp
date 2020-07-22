@@ -111,7 +111,7 @@ TEST_F(Credential_service_impl_test, RegisterCredentialThrowsConnectionErr)
 
     // check that every credential endpoint type throws the correct exception
     for (auto type : cred_types) {
-        EXPECT_THROW(cred.register_credential(type, "", "", "", ""), Ods::Connection_error);
+        EXPECT_THROW(cred.register_credential(type, "", "", nullptr, nullptr), Ods::Connection_error);
     }
 }
 
@@ -131,7 +131,7 @@ TEST_F(Credential_service_impl_test, RegisterCredentialThrowsUnexpectedResponse)
 
     // check that every credential endpoint type throws the correct exception
     for (auto type : cred_types) {
-        EXPECT_THROW(cred.register_credential(type, "", "", "", ""), Ods::Unexpected_response_error);
+        EXPECT_THROW(cred.register_credential(type, "", "", nullptr, nullptr), Ods::Unexpected_response_error);
     }
 }
 
@@ -149,7 +149,7 @@ TEST_F(Credential_service_impl_test, RegisterCredentialSucceeds)
     const Ods::Credential_service_impl cred {"", "", std::move(caller)};
 
     for (auto type : cred_types) {
-        EXPECT_NO_THROW(cred.register_credential(type, "", "", "", ""));
+        EXPECT_NO_THROW(cred.register_credential(type, "", "", nullptr, nullptr));
     }
 }
 
