@@ -223,7 +223,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
 
     for (auto type : types) {
         const auto list {cred.credential_id_list(type)};
-        EXPECT_EQ(list.size(), 3);
+        ASSERT_EQ(list.size(), 3);
         EXPECT_EQ(list[0], cred1);
         EXPECT_EQ(list[1], cred2);
         EXPECT_EQ(list[2], cred3);
