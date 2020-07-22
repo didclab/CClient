@@ -37,6 +37,15 @@ constexpr std::array cred_types {Ods::Credential_endpoint_type::ftp,
                                  Ods::Credential_endpoint_type::s3,
                                  Ods::Credential_endpoint_type::sftp};
 
+constexpr std::array types {Ods::Endpoint_type::box,
+                            Ods::Endpoint_type::dropbox,
+                            Ods::Endpoint_type::gftp,
+                            Ods::Endpoint_type::google_drive,
+                            Ods::Endpoint_type::ftp,
+                            Ods::Endpoint_type::http,
+                            Ods::Endpoint_type::s3,
+                            Ods::Endpoint_type::sftp};
+
 class Credential_service_impl_test : public ::testing::Test {
 };
 
@@ -150,6 +159,92 @@ TEST_F(Credential_service_impl_test, RegisterCredentialSucceeds)
 
     for (auto type : cred_types) {
         EXPECT_NO_THROW(cred.register_credential(type, "", "", nullptr, nullptr));
+    }
+}
+
+TEST_F(Credential_service_impl_test, CredentialIdListThrowsConnectionErr)
+{
+    // set up mock throwing exception
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post).Times(types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
+
+    const Ods::Credential_service_impl cred {"", "", std::move(caller)};
+
+    for (auto type : types) {
+        EXPECT_THROW(cred.credential_id_list(type), Ods::Connection_error);
+    }
+}
+
+TEST_F(Credential_service_impl_test, CredentialIdListBadResponseCodeThrowsUnexpectedResponse)
+{
+    // set up mock returning response
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post)
+        .Times(types.size())
+        .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 500}));
+
+    const Ods::Credential_service_impl cred {"", "", std::move(caller)};
+
+    for (auto type : types) {
+        EXPECT_THROW(cred.credential_id_list(type), Ods::Unexpected_response_error);
+    }
+}
+
+TEST_F(Credential_service_impl_test, CredentialIdListBadResponseBodyThrowsConnectionErr)
+{
+    // set up mock returning response
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post)
+        .Times(types.size())
+        .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, "", 200}));
+
+    const Ods::Credential_service_impl cred {"", "", std::move(caller)};
+
+    for (auto type : types) {
+        EXPECT_THROW(cred.credential_id_list(type), Ods::Unexpected_response_error);
+    }
+}
+
+TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
+{
+    const std::string cred1 {"my first credential"};
+    const std::string cred2 {"my second credential"};
+    const std::string cred3 {"my third credential"};
+
+    const std::string json {"[\"" + cred1 + "\",\"" + cred2 + "\",\"" + cred3 + "\"]"};
+
+    // set up mock returning response
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post)
+        .Times(types.size())
+        .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, json, 200}));
+
+    const Ods::Credential_service_impl cred {"", "", std::move(caller)};
+
+    for (auto type : types) {
+        const auto list {cred.credential_id_list(type)};
+        EXPECT_EQ(list.size(), 3);
+        EXPECT_EQ(list[0], cred1);
+        EXPECT_EQ(list[1], cred2);
+        EXPECT_EQ(list[2], cred3);
+    }
+}
+
+TEST_F(Credential_service_impl_test, CredentialIdListReturnsEmptyList)
+{
+    const std::string json {"[]"};
+
+    // set up mock returning response
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post)
+        .Times(types.size())
+        .WillRepeatedly(Return(Ods::Response {std::unordered_multimap<std::string, std::string> {}, json, 200}));
+
+    const Ods::Credential_service_impl cred {"", "", std::move(caller)};
+
+    for (auto type : types) {
+        const auto list {cred.credential_id_list(type)};
+        EXPECT_EQ(list.size(), 0);
     }
 }
 
