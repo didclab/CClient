@@ -49,6 +49,17 @@ public:
 private:
 };
 
+class Transfer_options_impl : public Transfer_options {
+public:
+    Transfer_options_impl() = default;
+    ~Transfer_options_impl() = default;
+};
+
+class Transfer_status_impl : public Transfer_status {
+    Transfer_status_impl() = default;
+    ~Transfer_status_impl() = default;
+};
+
 class Transfer_service_impl : public Transfer_service {
 public:
 private:
