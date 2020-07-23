@@ -88,12 +88,18 @@ protected:
 class Transfer_options {
 public:
     virtual ~Transfer_options() = 0;
+
+protected:
+    Transfer_options();
 };
 
 // TODO: define
 class Transfer_status {
 public:
     virtual ~Transfer_status() = 0;
+
+protected:
+    Transfer_status();
 };
 
 /**
