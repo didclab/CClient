@@ -31,8 +31,8 @@ public:
      * @return a unique pointer to the Destination object
      */
     static std::unique_ptr<Destination> create(Endpoint_type type,
-                                               std::string cred_id,
-                                               std::string directory_identifier);
+                                               const std::string& cred_id,
+                                               const std::string& directory_identifier);
 
     virtual ~Destination() = 0;
 
