@@ -35,6 +35,9 @@ add_library(odscclient
     src/resource_impl.h
     src/rest.cpp
     src/rest.h
+    src/transfer_service.cpp
+    src/transfer_service_impl.cpp
+    src/transfer_service_impl.h
     src/utils.cpp
     src/utils.h
 )
@@ -112,6 +115,7 @@ add_executable(tests
     tests/credential_service_impl_tests.cpp
     tests/endpoint_impl_tests.cpp
     tests/mocks.h
+    tests/transfer_service_impl_tests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)

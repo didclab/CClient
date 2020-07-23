@@ -13,8 +13,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <credential_service_impl.h>
 #include <onedatashare/ods_error.h>
+
+#include <credential_service_impl.h>
 
 #include "mocks.h"
 
