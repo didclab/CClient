@@ -8,9 +8,10 @@
 #include <utility>
 #include <vector>
 
+#include "../simdjson/simdjson.h"
+
 #include <onedatashare/ods_error.h>
 
-#include "../simdjson/simdjson.h"
 #include "endpoint_impl.h"
 #include "resource_impl.h"
 #include "utils.h"

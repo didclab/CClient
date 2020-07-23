@@ -190,7 +190,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListBadResponseCodeThrowsUnexpe
     }
 }
 
-TEST_F(Credential_service_impl_test, CredentialIdListBadResponseBodyThrowsConnectionErr)
+TEST_F(Credential_service_impl_test, CredentialIdListBadResponseBodyThrowsUnexpectedResponse)
 {
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
@@ -211,7 +211,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
     const std::string cred2 {"my second credential"};
     const std::string cred3 {"my third credential"};
 
-    const std::string json {"[\"" + cred1 + "\",\"" + cred2 + "\",\"" + cred3 + "\"]"};
+    const std::string json {"{\"credentialList\":[\"" + cred1 + "\",\"" + cred2 + "\",\"" + cred3 + "\"]}"};
 
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
@@ -232,7 +232,7 @@ TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
 
 TEST_F(Credential_service_impl_test, CredentialIdListReturnsEmptyList)
 {
-    const std::string json {"[]"};
+    const std::string json {"{\"credentialList\":[]}"};
 
     // set up mock returning response
     auto caller {std::make_unique<Rest_mock>()};
