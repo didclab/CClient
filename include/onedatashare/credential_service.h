@@ -81,7 +81,7 @@ public:
      * endpoint without a password
      *
      * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is recieved from One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
      */
     virtual void register_credential(Credential_endpoint_type type,
                                      const std::string& cred_id,
@@ -90,11 +90,16 @@ public:
                                      const std::string* secret) const = 0;
 
     /**
-     * Lists the credential identifiers of the specified endpoint type that are registered with One Data Share.
+     * Lists the credential identifiers of the specified endpoint type that are registered with One Data Share. It is
+     * expected that the authenitcation token used to create this Credential_service object is valid and that a
+     * connection can be made to One Data Share. If these preconditions are not met, exceptions may be thrown.
      *
      * @param type the endpoint type to list the registered credential identifiers of
      *
      * @return a vector of the registered credential identifiers for the sepcified endpoint
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
      */
     virtual std::vector<std::string> credential_id_list(Endpoint_type type) const = 0;
 
