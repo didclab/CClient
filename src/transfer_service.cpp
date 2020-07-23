@@ -9,8 +9,8 @@
 namespace One_data_share {
 
 std::unique_ptr<Destination> Destination::create(Endpoint_type type,
-                                                 std::string cred_id,
-                                                 std::string directory_identifier)
+                                                 const std::string& cred_id,
+                                                 const std::string& directory_identifier)
 {
     // TODO: implement
     return nullptr;
@@ -30,6 +30,12 @@ std::unique_ptr<Source> Source::create(Endpoint_type type,
 
 Source::Source() = default;
 Source::~Source() = default;
+
+Transfer_options::Transfer_options() = default;
+Transfer_options::~Transfer_options() = default;
+
+Transfer_status::Transfer_status() = default;
+Transfer_status::~Transfer_status() = default;
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
