@@ -8,6 +8,8 @@
 #include <sstream>
 #include <utility>
 
+#include "../simdjson/simdjson.h"
+
 #include <onedatashare/ods_error.h>
 
 #include "credential_service_impl.h"
@@ -82,6 +84,9 @@ std::string endpoint_as_string(const Oauth_endpoint_type type)
     }
 }
 
+/**
+ * Creates an AccountEndpointCredential json object with the specified fields.
+ */
 std::string create_account_endpoint_credential(const std::string account_id,
                                                const std::string& uri,
                                                const std::string* username,
@@ -152,8 +157,30 @@ void Credential_service_impl::register_credential(const Credential_endpoint_type
 
 std::vector<std::string> Credential_service_impl::credential_id_list(const Endpoint_type type) const
 {
-    // TODO: implement
-    return std::vector<std::string>();
+    // if get throws an exception, propogate it up
+    const auto response {rest_caller_->get(ods_url_ + api_path_cred + "/" + endpoint_as_string(type), headers_)};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected a status 200 response when fetching the credential id list.",
+                                         response.status()};
+    }
+
+    // parse string array in CredList from response body
+    simdjson::dom::parser parser {};
+    std::vector<std::string> cred_list {};
+    try {
+        for (auto e : parser.parse(response.body()).get_object().value()["credentialList"].get_array()) {
+            cred_list.push_back(e.get_c_str().take_value());
+        }
+    } catch (simdjson::simdjson_error e) {
+        // bad response body
+        throw Unexpected_response_error {
+            std::string("Failed to parse response body when fetching the credential id list: ") + e.what(),
+            response.status()};
+    }
+
+    return cred_list;
 }
 
 } // namespace One_data_share
