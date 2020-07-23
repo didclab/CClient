@@ -21,7 +21,7 @@ namespace One_data_share {
 
 class Destination_impl : public Destination {
 public:
-    Destination_impl(Endpoint_type type, std::string cred_id, std::string directory_identifier);
+    Destination_impl(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
 
     virtual ~Destination_impl() = default;
 
