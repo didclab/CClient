@@ -158,6 +158,9 @@ public:
      * @param id borrowed reference to the id of the transfer job to check
      *
      * @return unique pointer to the status of the transfer job
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
      */
     virtual std::unique_ptr<Transfer_status> status(const std::string& id) const = 0;
 
