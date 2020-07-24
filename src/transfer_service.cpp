@@ -6,6 +6,10 @@
 
 #include <onedatashare/transfer_service.h>
 
+#include "curl_rest.h"
+#include "transfer_service_impl.h"
+#include "utils.h"
+
 namespace One_data_share {
 
 Destination Destination::create(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
@@ -84,8 +88,17 @@ Transfer_status::~Transfer_status() = default;
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
-    // TODO: implement
-    return nullptr;
+    // TODO: make this false in production build
+    auto use_configured_ods_url = true;
+
+    std::string ods_url {};
+    if (use_configured_ods_url) {
+        load_url_from_config(ods_url);
+    } else {
+        ods_url = get_ods_production_url();
+    }
+
+    return std::make_unique<Transfer_service_impl>(ods_auth_token, ods_url, std::make_unique<Curl_rest>());
 }
 
 Transfer_service::Transfer_service() = default;
