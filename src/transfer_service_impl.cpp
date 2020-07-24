@@ -19,15 +19,13 @@ namespace {
  *
  * @param id borrowed reference to the id to use for the EntityInfo
  * @param path borrowed reference to the path to use for the EntityInfo
- * @param size the size to use for the EntityInfo
  *
  * @return json string generated
  */
-std::string create_entity_info(const std::string& id, const std::string& path, int size)
+std::string create_entity_info(const std::string& id, const std::string& path)
 {
     std::ostringstream stream {};
-    stream << "{\"id\":\"" << escape_json(id) << "\",\"path\":\"" << escape_json(path)
-           << "\",\"size\":" << std::to_string(size) << "}";
+    stream << "{\"id\":\"" << escape_json(id) << "\",\"path\":\"" << escape_json(path) << "\"}";
 
     return stream.str();
 }
@@ -42,9 +40,24 @@ std::string create_entity_info(const std::string& id, const std::string& path, i
 std::string create_source(const Source& source)
 {
     std::ostringstream stream {};
+    stream << "{\"type\":\"" << endpoint_as_string(source.type()) << "\",\"credId\":\"" << escape_json(source.cred_id())
+           << "\",\"info\":" << create_entity_info(source.directory_identifier(), source.directory_identifier())
+           << ",\"infoList\":[";
 
-    // TODO: implement
-    return "";
+    // create json array of EntityInfo json objects
+    bool first = true;
+    for (const auto& id : source.resource_identifiers()) {
+        // print comma prefix for each element other than the first
+        if (!first) {
+            stream << ",";
+        } else {
+            first = false;
+        }
+        stream << create_entity_info(id, id);
+    }
+    stream << "]}";
+
+    return stream.str();
 }
 
 /**
@@ -56,8 +69,12 @@ std::string create_source(const Source& source)
  */
 std::string create_destination(const Destination& destination)
 {
-    // TODO: implement
-    return "";
+    std::ostringstream stream {};
+    stream << "{\"type\":\"" << endpoint_as_string(destination.type()) << "\",\"credId\":\""
+           << escape_json(destination.cred_id()) << "\",\"info\":"
+           << create_entity_info(destination.directory_identifier(), destination.directory_identifier()) << "}";
+
+    return stream.str();
 }
 
 /**
