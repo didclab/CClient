@@ -20,4 +20,25 @@ namespace Ods = One_data_share;
 class Transfer_service_impl_tests : public ::testing::Test {
 };
 
+TEST_F(Transfer_service_impl_tests, TransferThrowsConnectionErr)
+{}
+
+TEST_F(Transfer_service_impl_tests, TransferThrowsUnexpectedResponse)
+{}
+
+TEST_F(Transfer_service_impl_tests, TransferReturnsJobId)
+{}
+
+TEST_F(Transfer_service_impl_tests, StatusThrowsConnectionErr)
+{}
+
+TEST_F(Transfer_service_impl_tests, StatusBadCodeThrowsUnexpectedResponse)
+{}
+
+TEST_F(Transfer_service_impl_tests, StatusBadBodyThrowsUnexpectedResponse)
+{}
+
+TEST_F(Transfer_service_impl_tests, StatusReturnsStatus)
+{}
+
 } // namespace
