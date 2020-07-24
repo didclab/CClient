@@ -7,12 +7,16 @@
 #include <sstream>
 #include <utility>
 
+#include <onedatashare/ods_error.h>
+
 #include "transfer_service_impl.h"
 #include "utils.h"
 
 namespace One_data_share {
 
 namespace {
+
+constexpr auto api_path_transfer_job {"/api/transfer-job"};
 
 /**
  * Creates an EntityInfo json object with the specified fields
@@ -124,8 +128,17 @@ std::string Transfer_service_impl::transfer(const Source& source,
                                             const Destination& destination,
                                             const Transfer_options& options) const
 {
-    // TODO: impl
-    return "";
+    // if post throws an exception, propogate it up
+    auto response {rest_caller_->post(ods_url_ + api_path_transfer_job,
+                                      headers_,
+                                      create_transfer_job_request(source, destination, options))};
+
+    if (response.status() != 200) {
+        // expected status 200
+        throw Unexpected_response_error {"Expected status 200 when making transfer request.", response.status()};
+    }
+
+    return response.body();
 }
 
 std::unique_ptr<Transfer_status> Transfer_service_impl::status(const std::string& id) const
