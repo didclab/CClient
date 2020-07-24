@@ -44,7 +44,7 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsConnectionErr)
 {
     // set up mock
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post).Times(2 * types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
+    EXPECT_CALL(*caller, post).Times(types.size() * types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
     Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
 
@@ -63,7 +63,9 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsUnexpectedResponse)
 {
     // set up mock
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post).Times(2 * types.size()).WillRepeatedly(Return(Ods::Response {Header_map {}, "", 500}));
+    EXPECT_CALL(*caller, post)
+        .Times(types.size() * types.size())
+        .WillRepeatedly(Return(Ods::Response {Header_map {}, "", 500}));
 
     Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
 
@@ -85,7 +87,7 @@ TEST_F(Transfer_service_impl_tests, TransferReturnsJobId)
     // set up mock
     auto caller {std::make_unique<Rest_mock>()};
     EXPECT_CALL(*caller, post)
-        .Times(2 * types.size())
+        .Times(types.size() * types.size())
         .WillRepeatedly(Return(Ods::Response {Header_map {}, job_id, 200}));
 
     Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
@@ -105,7 +107,7 @@ TEST_F(Transfer_service_impl_tests, StatusThrowsConnectionErr)
 {
     // set up mock
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post).Times(2 * types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
+    EXPECT_CALL(*caller, post).Times(types.size() * types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
     Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
 
@@ -124,7 +126,9 @@ TEST_F(Transfer_service_impl_tests, StatusBadCodeThrowsUnexpectedResponse)
 {
     // set up mock
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post).Times(2 * types.size()).WillRepeatedly(Return(Ods::Response {Header_map {}, "", 500}));
+    EXPECT_CALL(*caller, post)
+        .Times(types.size() * types.size())
+        .WillRepeatedly(Return(Ods::Response {Header_map {}, "", 500}));
 
     Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
 
@@ -143,7 +147,9 @@ TEST_F(Transfer_service_impl_tests, StatusBadBodyThrowsUnexpectedResponse)
 {
     // set up mock
     auto caller {std::make_unique<Rest_mock>()};
-    EXPECT_CALL(*caller, post).Times(2 * types.size()).WillRepeatedly(Return(Ods::Response {Header_map {}, "", 200}));
+    EXPECT_CALL(*caller, post)
+        .Times(types.size() * types.size())
+        .WillRepeatedly(Return(Ods::Response {Header_map {}, "", 200}));
 
     Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
 
