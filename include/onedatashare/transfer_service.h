@@ -28,13 +28,11 @@ public:
      * @param directory_identifier  the path or id, depending on the endpoint type, that is needed in order to
      * locate the directory in which the transfered resources should be placed
      *
-     * @return a unique pointer to the Destination object
+     * @return the created Destination object
      */
-    static std::unique_ptr<Destination> create(Endpoint_type type,
-                                               const std::string& cred_id,
-                                               const std::string& directory_identifier);
+    static Destination create(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
 
-    virtual ~Destination() = 0;
+    ~Destination() = default;
 
     Destination(const Destination&) = default;
 
@@ -44,8 +42,35 @@ public:
 
     Destination& operator=(Destination&&) = default;
 
-protected:
-    Destination();
+    /**
+     * Gets the type of the destination endpoint.
+     *
+     * @return a copy of the type of the destination endpoint
+     */
+    Endpoint_type type() const;
+
+    /**
+     * Gets a reference to the credential id of the destination endpoint. This reference lives only as long as
+     * this object itself.
+     *
+     * @return a temporary reference to the credential id of the destination endpoint
+     */
+    const std::string& cred_id() const;
+
+    /**
+     * Gets a reference the identifier of the destination directory. This reference lives only as long as this
+     * object itself.
+     *
+     * @return a temporary reference to the identifier of the destination directory
+     */
+    const std::string& directory_identifier() const;
+
+private:
+    Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
+
+    const Endpoint_type type_;
+    const std::string cred_id_;
+    const std::string directory_identifier_;
 };
 
 /**
@@ -63,14 +88,14 @@ public:
      * @param resource_identifiers borrowed reference to the names or ids, depending on the endpoint type, that are
      * needed in order to locate the resources to transfer from within the specified directory
      *
-     * @return a unique pointer to a new Source object
+     * @return the created Source object
      */
-    static std::unique_ptr<Source> create(Endpoint_type type,
-                                          const std::string& cred_id,
-                                          const std::string& directory_identifier,
-                                          const std::vector<std::string>& resource_identifiers);
+    static Source create(Endpoint_type type,
+                         const std::string& cred_id,
+                         const std::string& directory_identifier,
+                         const std::vector<std::string>& resource_identifiers);
 
-    virtual ~Source() = 0;
+    ~Source() = default;
 
     Source(const Source&) = default;
 
@@ -80,16 +105,56 @@ public:
 
     Source& operator=(Source&&) = default;
 
-protected:
-    Source();
+    /**
+     * Gets the type of the source endpoint.
+     *
+     * @return a copy of the type of the source endpoint
+     */
+    Endpoint_type type() const;
+
+    /**
+     * Gets a reference to the credential identifier of the source endpoint. This reference lives only as long as this
+     * object itself.
+     *
+     * @return a temporary reference to the credential identifier of the source endpoint.
+     */
+    const std::string& cred_id() const;
+
+    /**
+     * Gets a reference to the directory identifier of the source directory. This reference lives only as long as this
+     * object itself.
+     *
+     * @return a temporary reference to the directory identifier of the soruce directory.
+     */
+    const std::string& directory_identifier() const;
+
+    /**
+     * Gets a reference to the identifiers of resources to transfer from the source endpoint. This reference lives only
+     * as long as this object itself.
+     *
+     * @return a temporary reference to the identifiers of resources to transfer from the source endpoint.
+     */
+    const std::vector<std::string>& resource_identifiers() const;
+
+private:
+    Source(Endpoint_type type,
+           const std::string& cred_id,
+           const std::string& directory_identifier,
+           const std::vector<std::string>& resource_identifiers);
+
+    const Endpoint_type type_;
+    const std::string cred_id_;
+    const std::string directory_identifier_;
+    const std::vector<std::string> resource_identifiers_;
 };
 
 // TODO: define
 class Transfer_options {
 public:
-    virtual ~Transfer_options() = 0;
+    static Transfer_options create();
+    ~Transfer_options() = default;
 
-protected:
+private:
     Transfer_options();
 };
 

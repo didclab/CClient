@@ -11,36 +11,6 @@
 
 namespace One_data_share {
 
-Destination_impl::Destination_impl(Endpoint_type type,
-                                   const std::string& cred_id,
-                                   const std::string& directory_identifier)
-    : type_(type),
-      cred_id_(cred_id),
-      directory_identifier_(directory_identifier)
-{}
-
-std::string Destination_impl::as_json() const
-{
-    // TODO: implement
-    return "";
-}
-
-Source_impl::Source_impl(Endpoint_type type,
-                         const std::string& cred_id,
-                         const std::string& directory_identifier,
-                         const std::vector<std::string>& resource_identifiers)
-    : type_(type),
-      cred_id_(cred_id),
-      directory_identifier_(directory_identifier),
-      resource_identifiers_(resource_identifiers)
-{}
-
-std::string Source_impl::as_json() const
-{
-    // TODO: implement
-    return "";
-}
-
 Transfer_service_impl::Transfer_service_impl(const std::string& ods_auth_token,
                                              const std::string& ods_url,
                                              std::unique_ptr<Rest> rest_caller)
@@ -58,7 +28,7 @@ std::string Transfer_service_impl::transfer(const Source& source,
     return "";
 }
 
-std::unique_ptr<Transfer_status> Transfer_service::status(const std::string& id) const
+std::unique_ptr<Transfer_status> Transfer_service_impl::status(const std::string& id) const
 {
     // TODO: impl
     return nullptr;

@@ -8,31 +8,76 @@
 
 namespace One_data_share {
 
-std::unique_ptr<Destination> Destination::create(Endpoint_type type,
-                                                 const std::string& cred_id,
-                                                 const std::string& directory_identifier)
+Destination Destination::create(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
 {
-    // TODO: implement
-    return nullptr;
+    return Destination {type, cred_id, directory_identifier};
 }
 
-Destination::Destination() = default;
-Destination::~Destination() = default;
+Destination::Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
+    : type_(type),
+      cred_id_(cred_id),
+      directory_identifier_(directory_identifier)
+{}
 
-std::unique_ptr<Source> Source::create(Endpoint_type type,
-                                       const std::string& cred_id,
-                                       const std::string& directory_identifier,
-                                       const std::vector<std::string>& resource_identifiers)
+Endpoint_type Destination::type() const
 {
-    // TODO: implement
-    return nullptr;
+    return type_;
 }
 
-Source::Source() = default;
-Source::~Source() = default;
+const std::string& Destination::cred_id() const
+{
+    return cred_id_;
+}
+
+const std::string& Destination::directory_identifier() const
+{
+    return directory_identifier_;
+}
+
+Source Source::create(Endpoint_type type,
+                      const std::string& cred_id,
+                      const std::string& directory_identifier,
+                      const std::vector<std::string>& resource_identifiers)
+{
+    return Source(type, cred_id, directory_identifier, resource_identifiers);
+}
+
+Source::Source(Endpoint_type type,
+               const std::string& cred_id,
+               const std::string& directory_identifier,
+               const std::vector<std::string>& resource_identifiers)
+    : type_(type),
+      cred_id_(cred_id),
+      directory_identifier_(directory_identifier),
+      resource_identifiers_(resource_identifiers)
+{}
+
+Endpoint_type Source::type() const
+{
+    return type_;
+}
+
+const std::string& Source::cred_id() const
+{
+    return cred_id_;
+}
+
+const std::string& Source::directory_identifier() const
+{
+    return directory_identifier_;
+}
+
+const std::vector<std::string>& Source::resource_identifiers() const
+{
+    return resource_identifiers_;
+}
+
+Transfer_options Transfer_options::create()
+{
+    return Transfer_options {};
+}
 
 Transfer_options::Transfer_options() = default;
-Transfer_options::~Transfer_options() = default;
 
 Transfer_status::Transfer_status() = default;
 Transfer_status::~Transfer_status() = default;
