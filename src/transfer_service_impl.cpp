@@ -104,7 +104,7 @@ std::string create_transfer_job_request(const Source& source,
                                         const Transfer_options& options)
 {
     std::ostringstream stream;
-    stream << "\"source\":" << create_source(source) << ", \"destination\":" << create_destination(destination) << "}";
+    stream << "{\"source\":" << create_source(source) << ", \"destination\":" << create_destination(destination) << "}";
 
     return stream.str();
 }
