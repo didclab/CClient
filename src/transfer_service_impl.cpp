@@ -103,8 +103,10 @@ std::string create_transfer_job_request(const Source& source,
                                         const Destination& destination,
                                         const Transfer_options& options)
 {
-    // TODO: implement
-    return "";
+    std::ostringstream stream;
+    stream << "\"source\":" << create_source(source) << ", \"destination\":" << create_destination(destination) << "}";
+
+    return stream.str();
 }
 
 } // namespace
