@@ -25,8 +25,11 @@ namespace {
  */
 std::string create_entity_info(const std::string& id, const std::string& path, int size)
 {
-    // TODO: implement
-    return "";
+    std::ostringstream stream {};
+    stream << "{\"id\":\"" << escape_json(id) << "\",\"path\":\"" << escape_json(path)
+           << "\",\"size\":" << std::to_string(size) << "}";
+
+    return stream.str();
 }
 
 /**
