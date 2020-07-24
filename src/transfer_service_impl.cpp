@@ -19,6 +19,12 @@ Destination_impl::Destination_impl(Endpoint_type type,
       directory_identifier_(directory_identifier)
 {}
 
+std::string Destination_impl::as_json() const
+{
+    // TODO: implement
+    return "";
+}
+
 Source_impl::Source_impl(Endpoint_type type,
                          const std::string& cred_id,
                          const std::string& directory_identifier,
@@ -28,6 +34,12 @@ Source_impl::Source_impl(Endpoint_type type,
       directory_identifier_(directory_identifier),
       resource_identifiers_(resource_identifiers)
 {}
+
+std::string Source_impl::as_json() const
+{
+    // TODO: implement
+    return "";
+}
 
 Transfer_service_impl::Transfer_service_impl(const std::string& ods_auth_token,
                                              const std::string& ods_url,

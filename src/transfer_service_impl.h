@@ -30,6 +30,8 @@ public:
     Destination_impl(Destination_impl&&) = default;
     Destination_impl& operator=(Destination_impl&&) = default;
 
+    std::string as_json() const;
+
 private:
     const Endpoint_type type_;
     const std::string cred_id_;
@@ -49,6 +51,8 @@ public:
     Source_impl& operator=(const Source_impl&) = default;
     Source_impl(Source_impl&&) = default;
     Source_impl& operator=(Source_impl&&) = default;
+
+    std::string as_json() const;
 
 private:
     const Endpoint_type type_;
