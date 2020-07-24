@@ -61,13 +61,13 @@ int main()
 
         simdjson::dom::parser parser {};
 
-        One_data_share::Curl_rest rest {};
+        One_data_share::Internal::Curl_rest rest {};
 
         /*
          * Get Request
          */
 
-        One_data_share::Response get_r {rest.get(url + "/api/oauth?type=box", headers)};
+        One_data_share::Internal::Response get_r {rest.get(url + "/api/oauth?type=box", headers)};
 
         std::cout << "[=== get request headers ===]" << std::endl;
         for (auto h : get_r.headers()) {
@@ -96,7 +96,7 @@ int main()
          * Post Request
          */
 
-        One_data_share::Response post_r {rest.post(url + "/api/stork/q/user-jobs", headers, data)};
+        One_data_share::Internal::Response post_r {rest.post(url + "/api/stork/q/user-jobs", headers, data)};
 
         std::cout << "[=== post request headers ===]" << std::endl;
         for (auto h : post_r.headers()) {

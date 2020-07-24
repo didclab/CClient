@@ -93,12 +93,14 @@ std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& od
 
     std::string ods_url {};
     if (use_configured_ods_url) {
-        load_url_from_config(ods_url);
+        Internal::load_url_from_config(ods_url);
     } else {
-        ods_url = get_ods_production_url();
+        ods_url = Internal::get_ods_production_url();
     }
 
-    return std::make_unique<Transfer_service_impl>(ods_auth_token, ods_url, std::make_unique<Curl_rest>());
+    return std::make_unique<Internal::Transfer_service_impl>(ods_auth_token,
+                                                             ods_url,
+                                                             std::make_unique<Internal::Curl_rest>());
 }
 
 Transfer_service::Transfer_service() = default;

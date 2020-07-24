@@ -18,6 +18,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 class Endpoint_impl : public Endpoint {
 public:
     Endpoint_impl(Endpoint_type type,
@@ -75,6 +77,8 @@ private:
      */
     const std::unordered_multimap<std::string, std::string> headers_;
 };
+
+} // namespace Internal
 
 } // namespace One_data_share
 

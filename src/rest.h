@@ -12,6 +12,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 /**
  * Class holding the response from a request made via the get or post functions. Fields of this object live only as
  * long as the object itself.
@@ -121,6 +123,8 @@ public:
 protected:
     Rest();
 };
+
+} // namespace Internal
 
 } // namespace One_data_share
 

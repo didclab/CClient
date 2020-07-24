@@ -18,6 +18,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 namespace {
 
 constexpr auto api_path_box_list {"api/box/ls"};
@@ -373,5 +375,7 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
                                          response.status()};
     }
 }
+
+} // namespace Internal
 
 } // namespace One_data_share

@@ -46,7 +46,7 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsConnectionErr)
     auto caller {std::make_unique<Rest_mock>()};
     EXPECT_CALL(*caller, post).Times(types.size() * types.size()).WillRepeatedly(Throw(Ods::Connection_error {""}));
 
-    Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
+    Ods::Internal::Transfer_service_impl transfer {"", "", std::move(caller)};
 
     for (auto src_type : types) {
         for (auto dest_type : types) {
@@ -65,9 +65,9 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsUnexpectedResponse)
     auto caller {std::make_unique<Rest_mock>()};
     EXPECT_CALL(*caller, post)
         .Times(types.size() * types.size())
-        .WillRepeatedly(Return(Ods::Response {Header_map {}, "", 500}));
+        .WillRepeatedly(Return(Ods::Internal::Response {Header_map {}, "", 500}));
 
-    Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
+    Ods::Internal::Transfer_service_impl transfer {"", "", std::move(caller)};
 
     for (auto src_type : types) {
         for (auto dest_type : types) {
@@ -88,9 +88,9 @@ TEST_F(Transfer_service_impl_tests, TransferReturnsJobId)
     auto caller {std::make_unique<Rest_mock>()};
     EXPECT_CALL(*caller, post)
         .Times(types.size() * types.size())
-        .WillRepeatedly(Return(Ods::Response {Header_map {}, job_id, 200}));
+        .WillRepeatedly(Return(Ods::Internal::Response {Header_map {}, job_id, 200}));
 
-    Ods::Transfer_service_impl transfer {"", "", std::move(caller)};
+    Ods::Internal::Transfer_service_impl transfer {"", "", std::move(caller)};
 
     for (auto src_type : types) {
         for (auto dest_type : types) {

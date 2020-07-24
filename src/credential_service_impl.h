@@ -18,6 +18,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 /**
  * Service that makes REST API calls to One Data Share related to registering credentials.
  */
@@ -75,6 +77,8 @@ private:
      */
     const std::unordered_multimap<std::string, std::string> headers_;
 };
+
+} // namespace Internal
 
 } // namespace One_data_share
 

@@ -19,6 +19,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 class Transfer_status_impl : public Transfer_status {
     Transfer_status_impl() = default;
     virtual ~Transfer_status_impl() = default;
@@ -44,6 +46,8 @@ private:
     const std::unique_ptr<Rest> rest_caller_;
     const std::unordered_multimap<std::string, std::string> headers_;
 };
+
+} // namespace Internal
 
 } // namespace One_data_share
 

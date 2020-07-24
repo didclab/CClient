@@ -14,6 +14,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 namespace {
 
 constexpr auto api_path_transfer_job {"/api/transfer-job"};
@@ -146,5 +148,7 @@ std::unique_ptr<Transfer_status> Transfer_service_impl::status(const std::string
     // TODO: impl
     return nullptr;
 }
+
+} // namespace Internal
 
 } // namespace One_data_share

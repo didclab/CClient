@@ -15,6 +15,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 class Resource_impl : public Resource {
 public:
     Resource_impl(std::shared_ptr<const std::string>&& id,
@@ -93,6 +95,8 @@ private:
      */
     const std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> contained_resources_;
 };
+
+} // namespace Internal
 
 } // namespace One_data_share
 
