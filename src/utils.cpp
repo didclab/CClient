@@ -13,6 +13,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 namespace {
 
 /**
@@ -134,5 +136,7 @@ bool load_url_from_config(std::string& url)
     file.close();
     return true;
 }
+
+} // namespace Internal
 
 } // namespace One_data_share

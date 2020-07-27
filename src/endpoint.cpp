@@ -6,8 +6,8 @@
 
 #include <onedatashare/endpoint.h>
 
-#include "endpoint_impl.h"
 #include "curl_rest.h"
+#include "endpoint_impl.h"
 #include "utils.h"
 
 namespace One_data_share {
@@ -25,13 +25,16 @@ std::unique_ptr<Endpoint> Endpoint::create(Endpoint_type type,
 
     std::string ods_url {};
     if (use_configured_ods_url) {
-        load_url_from_config(ods_url);
+        Internal::load_url_from_config(ods_url);
     } else {
-        ods_url = get_ods_production_url();
+        ods_url = Internal::get_ods_production_url();
     }
 
-    // TODO: implement
-    return std::make_unique<Endpoint_impl>(type, cred_id, ods_auth_token, ods_url, std::make_unique<Curl_rest>());
+    return std::make_unique<Internal::Endpoint_impl>(type,
+                                                     cred_id,
+                                                     ods_auth_token,
+                                                     ods_url,
+                                                     std::make_unique<Internal::Curl_rest>());
 }
 
 Endpoint::Endpoint() = default;

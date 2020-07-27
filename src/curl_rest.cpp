@@ -15,6 +15,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 namespace {
 
 /**
@@ -224,5 +226,7 @@ Response Curl_rest::post(const std::string& url,
 
     return Response {response_headers, response_body, (int) status};
 }
+
+} // namespace Internal
 
 } // namespace One_data_share

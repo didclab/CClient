@@ -14,6 +14,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 /**
  * Class using libcurl to perform REST requests.
  */
@@ -42,6 +44,8 @@ public:
                           const std::unordered_multimap<std::string, std::string>& headers,
                           const std::string& data) const override;
 };
+
+} // namespace Internal
 
 } // namespace One_data_share
 

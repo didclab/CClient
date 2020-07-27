@@ -17,6 +17,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 namespace {
 
 /**
@@ -182,5 +184,7 @@ std::vector<std::string> Credential_service_impl::credential_id_list(const Endpo
 
     return cred_list;
 }
+
+} // namespace Internal
 
 } // namespace One_data_share

@@ -53,7 +53,7 @@ TEST_F(Endpoint_impl_tests, ListThrowsConnectionErr)
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, get).WillOnce(Throw(Ods::Connection_error {""}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         EXPECT_THROW(endpoint.list(""), Ods::Connection_error);
     }
@@ -67,9 +67,9 @@ TEST_F(Endpoint_impl_tests, ListWithBadStatusCodeThrowsUnexpectedResponse)
     for (auto type : types) {
         // set up mock returning status 500 for every get
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, "", 500}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 500}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         EXPECT_THROW(endpoint.list(""), Ods::Unexpected_response_error);
     }
@@ -85,9 +85,9 @@ TEST_F(Endpoint_impl_tests, ListWithBadResponseBodyThrowsUnexpectedResponse)
     for (auto type : types) {
         // set up mock returning status 500 for every get
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         EXPECT_THROW(endpoint.list(""), Ods::Unexpected_response_error);
     }
@@ -118,9 +118,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
 
@@ -158,9 +158,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithID)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
         ASSERT_NE(resource, nullptr);
@@ -194,9 +194,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
 
@@ -231,9 +231,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
         ASSERT_NE(resource, nullptr);
@@ -267,9 +267,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutPermissions)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
 
@@ -305,9 +305,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
         ASSERT_NE(resource, nullptr);
@@ -340,9 +340,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutContainedResources)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
 
@@ -374,9 +374,9 @@ TEST_F(Endpoint_impl_tests, ListResourceWithContainedResources)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
         ASSERT_NE(resource, nullptr);
@@ -414,9 +414,9 @@ TEST_F(Endpoint_impl_tests, ListDirectoryWithoutContainedResourcesThrowsUnexpect
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         EXPECT_THROW(endpoint.list(""), Ods::Unexpected_response_error);
     }
@@ -450,9 +450,9 @@ TEST_F(Endpoint_impl_tests, ListReturnsValues)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
         ASSERT_NE(resource, nullptr);
@@ -491,9 +491,9 @@ TEST_F(Endpoint_impl_tests, ListParsesStat)
     for (auto type : types) {
         // set up mock returning stat
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Response {Header_map {}, stat, 200}));
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto r {endpoint.list("")};
         ASSERT_NE(r, nullptr);
@@ -525,7 +525,7 @@ TEST_F(Endpoint_impl_tests, RemoveThrowsConnectionErr)
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, post).WillOnce(Throw(Ods::Connection_error {""}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_THROW(endpoint.remove("", ""), Ods::Connection_error);
     }
@@ -539,9 +539,9 @@ TEST_F(Endpoint_impl_tests, RemoveThrowsUnexpectedResponse)
     for (auto type : types) {
         // set up mock returning response
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Response {Header_map {}, "", 500}));
+        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 500}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_THROW(endpoint.remove("", ""), Ods::Unexpected_response_error);
     }
@@ -555,9 +555,9 @@ TEST_F(Endpoint_impl_tests, RemoveReturns)
     for (auto type : types) {
         // set up mock returning response
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Response {Header_map {}, "", 200}));
+        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_NO_THROW(endpoint.remove("", ""));
     }
@@ -570,7 +570,7 @@ TEST_F(Endpoint_impl_tests, MkdirThrowsConnectionErr)
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, post).WillOnce(Throw(Ods::Connection_error {""}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_THROW(endpoint.mkdir("", ""), Ods::Connection_error);
     }
@@ -581,9 +581,9 @@ TEST_F(Endpoint_impl_tests, MkdirThrowsUnexpectedResponse)
     for (auto type : types) {
         // set up mock returning response
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Response {Header_map {}, "", 500}));
+        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 500}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_THROW(endpoint.mkdir("", ""), Ods::Unexpected_response_error);
     }
@@ -594,9 +594,9 @@ TEST_F(Endpoint_impl_tests, MkdirReturns)
     for (auto type : types) {
         // set up mock returning response
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Response {Header_map {}, "", 200}));
+        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_NO_THROW(endpoint.mkdir("", ""));
     }
@@ -609,7 +609,7 @@ TEST_F(Endpoint_impl_tests, DownloadThrowsConnectionErr)
         auto caller {std::make_unique<Rest_mock>()};
         EXPECT_CALL(*caller, post).WillOnce(Throw(Ods::Connection_error {""}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_THROW(endpoint.download("", ""), Ods::Connection_error);
     }
@@ -620,9 +620,9 @@ TEST_F(Endpoint_impl_tests, DownloadThrowsUnexpectedResponse)
     for (auto type : types) {
         // set up mock returning response
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Response {Header_map {}, "", 500}));
+        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 500}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_THROW(endpoint.download("", ""), Ods::Unexpected_response_error);
     }
@@ -633,9 +633,9 @@ TEST_F(Endpoint_impl_tests, DownloadReturns)
     for (auto type : types) {
         // set up mock returning response
         auto caller {std::make_unique<Rest_mock>()};
-        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Response {Header_map {}, "", 200}));
+        EXPECT_CALL(*caller, post).WillOnce(Return(Ods::Internal::Response {Header_map {}, "", 200}));
 
-        const Ods::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         ASSERT_NO_THROW(endpoint.download("", ""));
     }

@@ -14,6 +14,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 /**
  * Creates the required header map using the specified token.
  *
@@ -54,6 +56,8 @@ std::string get_ods_production_url();
  * @return true if and only if the config file was found and could be opened
  */
 bool load_url_from_config(std::string& url);
+
+} // namespace Internal
 
 } // namespace One_data_share
 

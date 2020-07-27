@@ -15,12 +15,12 @@ namespace One_data_share_mocks {
 
 namespace Ods = One_data_share;
 
-class Rest_mock : public Ods::Rest {
+class Rest_mock : public Ods::Internal::Rest {
     using Header_map = std::unordered_multimap<std::string, std::string>;
 
 public:
-    MOCK_METHOD(Ods::Response, get, (const std::string& url, const Header_map& headers), (const, override));
-    MOCK_METHOD(Ods::Response,
+    MOCK_METHOD(Ods::Internal::Response, get, (const std::string& url, const Header_map& headers), (const, override));
+    MOCK_METHOD(Ods::Internal::Response,
                 post,
                 (const std::string& url, const Header_map& headers, const std::string& data),
                 (const, override));

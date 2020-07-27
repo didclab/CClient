@@ -35,6 +35,9 @@ add_library(odscclient
     src/resource_impl.h
     src/rest.cpp
     src/rest.h
+    src/transfer_service.cpp
+    src/transfer_service_impl.cpp
+    src/transfer_service_impl.h
     src/utils.cpp
     src/utils.h
 )
@@ -62,6 +65,13 @@ target_include_directories(example_2 PRIVATE include/ src/)
 target_link_libraries(example_2 PRIVATE odscclient)
 
 install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})
+
+# add example 3 executable
+add_executable(example_3 examples/example_3.cpp)
+target_include_directories(example_3 PRIVATE include/ src/)
+target_link_libraries(example_3 PRIVATE odscclient)
+
+install(TARGETS example_3 DESTINATION  ${CMAKE_INSTALL_PREFIX})
 
 # download google test
 
@@ -112,6 +122,7 @@ add_executable(tests
     tests/credential_service_impl_tests.cpp
     tests/endpoint_impl_tests.cpp
     tests/mocks.h
+    tests/transfer_service_impl_tests.cpp
 )
 target_include_directories(tests PRIVATE src/ include/)
 target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)

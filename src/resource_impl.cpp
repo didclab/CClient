@@ -8,6 +8,8 @@
 
 namespace One_data_share {
 
+namespace Internal {
+
 Resource_impl::Resource_impl(std::shared_ptr<const std::string>&& id,
                              std::string&& name,
                              long size,
@@ -72,5 +74,7 @@ std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> Resource_imp
 {
     return contained_resources_;
 }
+
+} // namespace Internal
 
 } // namespace One_data_share
