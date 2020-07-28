@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 
-#include "../simdjson/simdjson.h"
+#include <simdjson/simdjson.h>
 
 #include <onedatashare/ods_error.h>
 

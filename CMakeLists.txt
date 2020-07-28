@@ -1,80 +1,73 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(odscclient VERSION 0.1.0 LANGUAGES CXX)
+project(onedatashare VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "C++ Client for One Data Share")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# find libcurl
 find_path(LCURL_DIR curl)
 find_library(LCURL_LIB curl)
 
-# add simdjson library
-add_library(simd
-    simdjson/simdjson.h
-    simdjson/simdjson.cpp
-)
-
-# add ods client library
-add_library(odscclient
-    include/onedatashare/credential_service.h
-    include/onedatashare/endpoint.h
-    include/onedatashare/endpoint_type.h
-    include/onedatashare/ods_error.h
-    include/onedatashare/transfer_service.h
+# add static library for onedatashare client
+add_library(${PROJECT_NAME} STATIC
+    external/simdjson/simdjson.cpp
     src/credential_service.cpp
     src/credential_service_impl.cpp
-    src/credential_service_impl.h
     src/curl_rest.cpp
-    src/curl_rest.h
     src/endpoint.cpp
     src/endpoint_impl.cpp
-    src/endpoint_impl.h
     src/ods_error.cpp
     src/resource_impl.cpp
-    src/resource_impl.h
     src/rest.cpp
-    src/rest.h
     src/transfer_service.cpp
     src/transfer_service_impl.cpp
-    src/transfer_service_impl.h
     src/utils.cpp
-    src/utils.h
 )
-target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
-target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
-
-# add main executable
-add_executable(main examples/main.cpp)
-target_include_directories(main PRIVATE src/ include/)
-target_link_libraries(main PRIVATE odscclient)
-
-install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
+target_include_directories(${PROJECT_NAME} PRIVATE
+    "${LCURL_DIR}"
+    external
+    include
+)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    "${LCURL_LIB}"
+)
 
 # add example 1 executable
-# uncomment to test that example_1 compiles
-add_executable(example_1 examples/example_1.cpp)
-target_include_directories(example_1 PRIVATE include/)
-target_link_libraries(example_1 PRIVATE odscclient)
-
-install(TARGETS example_1 DESTINATION  ${CMAKE_INSTALL_PREFIX})
+add_executable(example_1
+    examples/example_1.cpp
+)
+target_include_directories(example_1 PRIVATE
+    include
+)
+target_link_libraries(example_1 PRIVATE
+    onedatashare
+)
 
 # add example 2 executable
-add_executable(example_2 examples/example_2.cpp)
-target_include_directories(example_2 PRIVATE include/ src/)
-target_link_libraries(example_2 PRIVATE odscclient)
-
-install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})
+add_executable(example_2
+    examples/example_2.cpp
+)
+target_include_directories(example_2 PRIVATE
+    include
+)
+target_link_libraries(example_2 PRIVATE
+    onedatashare
+)
 
 # add example 3 executable
-add_executable(example_3 examples/example_3.cpp)
-target_include_directories(example_3 PRIVATE include/ src/)
-target_link_libraries(example_3 PRIVATE odscclient)
-
-install(TARGETS example_3 DESTINATION  ${CMAKE_INSTALL_PREFIX})
+add_executable(example_3
+    examples/example_3.cpp
+)
+target_include_directories(example_3 PRIVATE
+    include
+)
+target_link_libraries(example_3 PRIVATE
+    onedatashare
+)
 
 # download google test
-
 ####################################################################################
 # Start From https://github.com/google/googletest/blob/master/googletest/README.md #
 ####################################################################################
@@ -115,15 +108,21 @@ endif()
 # End From https://github.com/google/googletest/blob/master/googletest/README.md #
 ##################################################################################
 
-
-
 # add unit tests
 add_executable(tests
     tests/credential_service_impl_tests.cpp
     tests/endpoint_impl_tests.cpp
-    tests/mocks.h
     tests/transfer_service_impl_tests.cpp
 )
-target_include_directories(tests PRIVATE src/ include/)
-target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)
-install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})
+target_include_directories(tests PRIVATE
+    include
+    src
+)
+target_link_libraries(tests PRIVATE
+    gtest_main
+    gmock_main
+    onedatashare
+)
+
+# install all executables
+install(TARGETS example_1 example_2 example_3 tests DESTINATION "${CMAKE_INSTALL_PREFIX}")
