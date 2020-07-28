@@ -42,40 +42,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 target_compile_options(${PROJECT_NAME} PRIVATE -Werror)
 target_compile_featureS(${PROJECT_NAME} PRIVATE cxx_std_17)
 
-# add example 1 executable
-add_executable(example_1
-    examples/example_1.cpp
-)
-target_include_directories(example_1 PRIVATE
-    include
-)
-target_link_libraries(example_1 PRIVATE
-    onedatashare
-)
-
-# add example 2 executable
-add_executable(example_2
-    examples/example_2.cpp
-)
-target_include_directories(example_2 PRIVATE
-    include
-)
-target_link_libraries(example_2 PRIVATE
-    onedatashare
-)
-
-# add example 3 executable
-add_executable(example_3
-    examples/example_3.cpp
-)
-target_include_directories(example_3 PRIVATE
-    include
-)
-target_link_libraries(example_3 PRIVATE
-    onedatashare
-)
-
-# install all executables
-install(TARGETS example_1 example_2 example_3 DESTINATION "${CMAKE_INSTALL_PREFIX}")
-
+# add unit tests
 add_subdirectory(tests)
+
+# add examples
+add_subdirectory(examples)
