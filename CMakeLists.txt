@@ -89,8 +89,10 @@ install(FILES
     DESTINATION ${INSTALL_CONFIG_DIR}
 )
 
-# add unit tests
-add_subdirectory(tests)
+if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    # add unit tests
+    add_subdirectory(tests)
 
-# add examples
-add_subdirectory(examples)
+    # add examples
+    add_subdirectory(examples)
+endif()
