@@ -17,8 +17,6 @@ int main()
 {
     namespace Ods = One_data_share;
 
-    std::string token {};
-
     // read token from file
     std::ifstream token_file {"token.txt"};
     if (!token_file.is_open()) {
@@ -28,10 +26,28 @@ int main()
                   << std::endl;
         return -1;
     }
+
+    std::string token {};
     std::getline(token_file, token);
+
     token_file.close();
 
-    auto cred {Ods::Credential_service::create(token)};
+    // read url from file
+    std::ifstream url_file {"url.txt"};
+    if (!url_file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
+    }
+
+    std::string url {};
+    std::getline(url_file, url);
+
+    url_file.close();
+
+    auto cred {Ods::Credential_service::create(token, url)};
 
     try {
         std::cout << "Register Box Endpoint:" << std::endl

@@ -35,6 +35,7 @@ int main()
 
     token_file.close();
 
+    // read url from file
     std::ifstream url_file {"url.txt"};
     if (!url_file.is_open()) {
         // print error message and exit
