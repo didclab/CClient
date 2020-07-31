@@ -20,8 +20,6 @@ int main()
 {
     namespace Ods = One_data_share;
 
-    std::string token {};
-
     // read token from file
     std::ifstream token_file {"token.txt"};
     if (!token_file.is_open()) {
@@ -31,8 +29,26 @@ int main()
                   << std::endl;
         return -1;
     }
+
+    std::string token {};
     std::getline(token_file, token);
+
     token_file.close();
+
+    // read url from file
+    std::ifstream url_file {"url.txt"};
+    if (!url_file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
+    }
+
+    std::string url {};
+    std::getline(url_file, url);
+
+    url_file.close();
 
     const auto src_type {Ods::Endpoint_type::ftp};
     const auto src_credential {""};
@@ -43,7 +59,7 @@ int main()
     const auto dest_credential {""};
     const auto dest_directory {""};
 
-    const auto transfer {Ods::Transfer_service::create(token)};
+    const auto transfer {Ods::Transfer_service::create(token, url)};
 
     const auto src {Ods::Source::create(src_type, src_credential, src_directory, src_resources)};
     const auto dest {Ods::Destination::create(dest_type, dest_credential, dest_directory)};

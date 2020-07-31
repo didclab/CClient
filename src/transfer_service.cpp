@@ -88,18 +88,13 @@ Transfer_status::~Transfer_status() = default;
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
-    // TODO: make this false in production build
-    auto use_configured_ods_url = true;
+    return create(ods_auth_token, Internal::get_ods_production_url());
+}
 
-    std::string ods_url {};
-    if (use_configured_ods_url) {
-        Internal::load_url_from_config(ods_url);
-    } else {
-        ods_url = Internal::get_ods_production_url();
-    }
-
+std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token, const std::string& url)
+{
     return std::make_unique<Internal::Transfer_service_impl>(ods_auth_token,
-                                                             ods_url,
+                                                             url,
                                                              std::make_unique<Internal::Curl_rest>());
 }
 
