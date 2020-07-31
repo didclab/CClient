@@ -20,8 +20,6 @@ int main()
 {
     namespace Ods = One_data_share;
 
-    std::string token {};
-
     // read token from file
     std::ifstream token_file {"token.txt"};
     if (!token_file.is_open()) {
@@ -31,11 +29,28 @@ int main()
                   << std::endl;
         return -1;
     }
+
+    std::string token {};
     std::getline(token_file, token);
+
     token_file.close();
 
+    std::ifstream url_file {"url.txt"};
+    if (!url_file.is_open()) {
+        // print error message and exit
+        std::cout << "Unable to open file \"url.txt\". Be sure to create a \"url.txt\" file in the project root. "
+                     "See README.md for more information."
+                  << std::endl;
+        return -1;
+    }
+
+    std::string url {};
+    std::getline(url_file, url);
+
+    url_file.close();
+
     const auto my_cred_id {"my_endpoint"};
-    const auto cred_service {Ods::Credential_service::create(token)};
+    const auto cred_service {Ods::Credential_service::create(token, url)};
 
     try {
         // register new endpoint
@@ -53,10 +68,11 @@ int main()
 
         // print root of new endpoint
         const auto root_path {"/"};
-        const auto my_endpoint {Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token)};
+        const auto my_endpoint {Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token, url)};
         const auto root {my_endpoint->list(root_path)};
         if (root->is_directory()) {
-            for (auto r : *root->contained_resources()) {
+            auto resources {root->contained_resources()};
+            for (auto r : *resources) {
                 std::cout << r->name() << std::endl;
             }
         }

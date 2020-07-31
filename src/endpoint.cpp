@@ -20,20 +20,18 @@ std::unique_ptr<Endpoint> Endpoint::create(Endpoint_type type,
                                            const std::string& cred_id,
                                            const std::string& ods_auth_token)
 {
-    // TODO: make this false in production build
-    auto use_configured_ods_url = true;
+    return create(type, cred_id, ods_auth_token, Internal::get_ods_production_url());
+}
 
-    std::string ods_url {};
-    if (use_configured_ods_url) {
-        Internal::load_url_from_config(ods_url);
-    } else {
-        ods_url = Internal::get_ods_production_url();
-    }
-
+std::unique_ptr<Endpoint> Endpoint::create(Endpoint_type type,
+                                           const std::string& cred_id,
+                                           const std::string& ods_auth_token,
+                                           const std::string& url)
+{
     return std::make_unique<Internal::Endpoint_impl>(type,
                                                      cred_id,
                                                      ods_auth_token,
-                                                     ods_url,
+                                                     url,
                                                      std::make_unique<Internal::Curl_rest>());
 }
 
