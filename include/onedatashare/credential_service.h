@@ -42,6 +42,18 @@ public:
      */
     static std::unique_ptr<Credential_service> create(const std::string& ods_auth_token);
 
+    /**
+     * Creates a new Credential_service object with the specified authentication token communicating with One Data Share
+     * at the specified url, passing ownership of the Credential_service object to the caller. It is expected that the
+     * specified authentication token is valid and that One Data Share is running at the specified url.
+     *
+     * @param ods_auth_token borrowed reference to the valid One Data Share authentication token to use
+     * @param url borrowed reference to the url that One Data Share is running on
+     *
+     * @return a unique pointer to a new Credential_service object
+     */
+    static std::unique_ptr<Credential_service> create(const std::string& ods_auth_token, const std::string& url);
+
     virtual ~Credential_service() = 0;
 
     Credential_service(const Credential_service&) = delete;

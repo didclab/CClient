@@ -182,6 +182,18 @@ public:
      */
     static std::unique_ptr<Transfer_service> create(const std::string& ods_auth_token);
 
+    /**
+     * Creates a new Transfer_service object with the specified authentication token communicating with One Data Share
+     * at the specified url, passing ownership of the Transfer_service object to the caller. It is expected that the
+     * specified authentication token is valid and that One Data Share is running at the specified url.
+     *
+     * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
+     * @param url borrowed reference to the url that One Data Share is running on
+     *
+     * @return a unique pointer to a new Transfer_service object
+     */
+    static std::unique_ptr<Transfer_service> create(const std::string& ods_auth_token, const std::string& url);
+
     virtual ~Transfer_service() = 0;
 
     Transfer_service(const Transfer_service&) = delete;
