@@ -8,10 +8,7 @@
 #include <iostream>
 #include <vector>
 
-#include <onedatashare/endpoint_type.h>
-#include <onedatashare/transfer_service.h>
-
-#include <onedatashare/ods_error.h>
+#include <onedatashare/onedatashare.h>
 
 /**
  * Example of performing transfers.

@@ -7,8 +7,7 @@
 #include <fstream>
 #include <iostream>
 
-#include <onedatashare/credential_service.h>
-#include <onedatashare/ods_error.h>
+#include <onedatashare/onedatashare.h>
 
 /**
  * Example giving the user a link to use for registering an OAuth endpoint.

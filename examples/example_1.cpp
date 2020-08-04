@@ -8,10 +8,7 @@
 #include <iostream>
 #include <memory>
 
-#include <onedatashare/credential_service.h>
-#include <onedatashare/endpoint.h>
-#include <onedatashare/endpoint_type.h>
-#include <onedatashare/ods_error.h>
+#include <onedatashare/onedatashare.h>
 
 /**
  * Example registering a new FTP endpoint and listing the contents of the root directory of that endpoint.
