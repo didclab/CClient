@@ -28,15 +28,7 @@ Source::Source(Endpoint_type type,
       resource_identifiers(resource_identifiers)
 {}
 
-Transfer_options Transfer_options::create()
-{
-    return Transfer_options {};
-}
-
 Transfer_options::Transfer_options() = default;
-
-Transfer_status::Transfer_status() = default;
-Transfer_status::~Transfer_status() = default;
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {

@@ -87,15 +87,7 @@ class Transfer_options {
 public:
     /**
      * Creates a new Transfer_options object.
-     *
-     * @return the created Transfer_options object
      */
-    static Transfer_options create();
-
-    /// @private
-    ~Transfer_options() = default;
-
-private:
     Transfer_options();
 };
 

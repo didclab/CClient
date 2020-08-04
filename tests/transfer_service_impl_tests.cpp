@@ -50,9 +50,9 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsConnectionErr)
 
     for (auto src_type : types) {
         for (auto dest_type : types) {
-            auto src {Ods::Source(src_type, "", "", Str_vec {})};
-            auto dest {Ods::Destination(dest_type, "", "")};
-            auto opt {Ods::Transfer_options::create()};
+            Ods::Source src {src_type, "", "", Str_vec {}};
+            Ods::Destination dest {dest_type, "", ""};
+            Ods::Transfer_options opt {};
 
             ASSERT_THROW(transfer.transfer(src, dest, opt), Ods::Connection_error);
         }
@@ -71,9 +71,9 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsUnexpectedResponse)
 
     for (auto src_type : types) {
         for (auto dest_type : types) {
-            auto src {Ods::Source(src_type, "", "", Str_vec {})};
-            auto dest {Ods::Destination(dest_type, "", "")};
-            auto opt {Ods::Transfer_options::create()};
+            Ods::Source src {src_type, "", "", Str_vec {}};
+            Ods::Destination dest {dest_type, "", ""};
+            Ods::Transfer_options opt {};
 
             ASSERT_THROW(transfer.transfer(src, dest, opt), Ods::Unexpected_response_error);
         }
@@ -94,9 +94,9 @@ TEST_F(Transfer_service_impl_tests, TransferReturnsJobId)
 
     for (auto src_type : types) {
         for (auto dest_type : types) {
-            auto src {Ods::Source(src_type, "", "", Str_vec {})};
-            auto dest {Ods::Destination(dest_type, "", "")};
-            auto opt {Ods::Transfer_options::create()};
+            Ods::Source src {src_type, "", "", Str_vec {}};
+            Ods::Destination dest {dest_type, "", ""};
+            Ods::Transfer_options opt {};
 
             ASSERT_EQ(transfer.transfer(src, dest, opt), job_id);
         }
