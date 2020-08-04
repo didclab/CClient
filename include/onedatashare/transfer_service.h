@@ -142,10 +142,10 @@ public:
     Transfer_service& operator=(const Transfer_service&) = delete;
 
     /// @private
-    Transfer_service(Transfer_service&&) = default;
+    Transfer_service(Transfer_service&&) = delete;
 
     /// @private
-    Transfer_service& operator=(Transfer_service&&) = default;
+    Transfer_service& operator=(Transfer_service&&) = delete;
 
     /**
      * Starts a new transfer job from the specified source to the specified destination with the specified options.

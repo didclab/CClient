@@ -80,10 +80,10 @@ public:
     Credential_service& operator=(const Credential_service&) = delete;
 
     /// @private
-    Credential_service(Credential_service&&) = default;
+    Credential_service(Credential_service&&) = delete;
 
     /// @private
-    Credential_service& operator=(Credential_service&&) = default;
+    Credential_service& operator=(Credential_service&&) = delete;
 
     /**
      * Gets the url that can be used to register an endpoint of the specified endpoint type with One Data Share via

@@ -30,10 +30,10 @@ public:
     Resource& operator=(const Resource&) = delete;
 
     /// @private
-    Resource(Resource&&) = default;
+    Resource(Resource&&) = delete;
 
     /// @private
-    Resource& operator=(Resource&&) = default;
+    Resource& operator=(Resource&&) = delete;
 
     /**
      * Gets the id of the Resource if the Resource has an id. The Resource will have an id if and only if the
@@ -165,10 +165,10 @@ public:
     Endpoint& operator=(const Endpoint&) = delete;
 
     /// @private
-    Endpoint(Endpoint&&) = default;
+    Endpoint(Endpoint&&) = delete;
 
     /// @private
-    Endpoint& operator=(Endpoint&&) = default;
+    Endpoint& operator=(Endpoint&&) = delete;
 
     /**
      * Creates a Resource object corresponding to the resource found at the specified location. Ownership of the
