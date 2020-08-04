@@ -59,71 +59,24 @@ public:
      * @param resource_identifiers borrowed reference to the names or ids, depending on the endpoint type, that are
      * needed in order to locate the resources to transfer from within the specified directory
      *
-     * @return the created Source object
-     *
      * @see Endpoint_type
      */
-    static Source create(Endpoint_type type,
-                         const std::string& cred_id,
-                         const std::string& directory_identifier,
-                         const std::vector<std::string>& resource_identifiers);
-
-    /// @private
-    ~Source() = default;
-
-    /// @private
-    Source(const Source&) = default;
-
-    /// @private
-    Source& operator=(const Source&) = default;
-
-    /// @private
-    Source(Source&&) = default;
-
-    /// @private
-    Source& operator=(Source&&) = default;
-
-    /**
-     * Gets the type of the source endpoint.
-     *
-     * @return a copy of the type of the source endpoint
-     */
-    Endpoint_type type() const;
-
-    /**
-     * Gets a reference to the credential identifier of the source endpoint. This reference lives only as long as this
-     * object itself.
-     *
-     * @return a temporary reference to the credential identifier of the source endpoint.
-     */
-    const std::string& cred_id() const;
-
-    /**
-     * Gets a reference to the directory identifier of the source directory. This reference lives only as long as this
-     * object itself.
-     *
-     * @return a temporary reference to the directory identifier of the soruce directory.
-     */
-    const std::string& directory_identifier() const;
-
-    /**
-     * Gets a reference to the identifiers of resources to transfer from the source endpoint. This reference lives only
-     * as long as this object itself.
-     *
-     * @return a temporary reference to the identifiers of resources to transfer from the source endpoint.
-     */
-    const std::vector<std::string>& resource_identifiers() const;
-
-private:
     Source(Endpoint_type type,
            const std::string& cred_id,
            const std::string& directory_identifier,
            const std::vector<std::string>& resource_identifiers);
 
-    const Endpoint_type type_;
-    const std::string cred_id_;
-    const std::string directory_identifier_;
-    const std::vector<std::string> resource_identifiers_;
+    /** Type of the source endpoint. */
+    const Endpoint_type type;
+
+    /** Credential identifier of the source endpoint. */
+    const std::string cred_id;
+
+    /** Identifier of the source directory. */
+    const std::string directory_identifier;
+
+    /** Identifiers of resources to transfer from the source endpoint. */
+    const std::vector<std::string> resource_identifiers;
 };
 
 /**

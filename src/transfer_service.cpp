@@ -18,43 +18,15 @@ Destination::Destination(Endpoint_type type, const std::string& cred_id, const s
       directory_identifier(directory_identifier)
 {}
 
-Source Source::create(Endpoint_type type,
-                      const std::string& cred_id,
-                      const std::string& directory_identifier,
-                      const std::vector<std::string>& resource_identifiers)
-{
-    return Source(type, cred_id, directory_identifier, resource_identifiers);
-}
-
 Source::Source(Endpoint_type type,
                const std::string& cred_id,
                const std::string& directory_identifier,
                const std::vector<std::string>& resource_identifiers)
-    : type_(type),
-      cred_id_(cred_id),
-      directory_identifier_(directory_identifier),
-      resource_identifiers_(resource_identifiers)
+    : type(type),
+      cred_id(cred_id),
+      directory_identifier(directory_identifier),
+      resource_identifiers(resource_identifiers)
 {}
-
-Endpoint_type Source::type() const
-{
-    return type_;
-}
-
-const std::string& Source::cred_id() const
-{
-    return cred_id_;
-}
-
-const std::string& Source::directory_identifier() const
-{
-    return directory_identifier_;
-}
-
-const std::vector<std::string>& Source::resource_identifiers() const
-{
-    return resource_identifiers_;
-}
 
 Transfer_options Transfer_options::create()
 {

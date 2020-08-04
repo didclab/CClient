@@ -46,13 +46,13 @@ std::string create_entity_info(const std::string& id, const std::string& path)
 std::string create_source(const Source& source)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << endpoint_as_string(source.type()) << "\",\"credId\":\"" << escape_json(source.cred_id())
-           << "\",\"info\":" << create_entity_info(source.directory_identifier(), source.directory_identifier())
+    stream << "{\"type\":\"" << endpoint_as_string(source.type) << "\",\"credId\":\"" << escape_json(source.cred_id)
+           << "\",\"info\":" << create_entity_info(source.directory_identifier, source.directory_identifier)
            << ",\"infoList\":[";
 
     // create json array of EntityInfo json objects
     bool first = true;
-    for (const auto& id : source.resource_identifiers()) {
+    for (const auto& id : source.resource_identifiers) {
         // print comma prefix for each element other than the first
         if (!first) {
             stream << ",";

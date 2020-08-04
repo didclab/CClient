@@ -58,7 +58,7 @@ int main()
 
     const auto transfer {Ods::Transfer_service::create(token, url)};
 
-    const auto src {Ods::Source::create(src_type, src_credential, src_directory, src_resources)};
+    const auto src {Ods::Source(src_type, src_credential, src_directory, src_resources)};
     const auto dest {Ods::Destination(dest_type, dest_credential, dest_directory)};
     const auto opt {Ods::Transfer_options::create()};
 
