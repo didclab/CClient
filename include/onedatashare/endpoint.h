@@ -20,23 +20,30 @@ namespace One_data_share {
  */
 class Resource {
 public:
+    /// @private
     virtual ~Resource() = 0;
 
+    /// @private
     Resource(const Resource&) = delete;
 
+    /// @private
     Resource& operator=(const Resource&) = delete;
 
+    /// @private
     Resource(Resource&&) = default;
 
+    /// @private
     Resource& operator=(Resource&&) = default;
 
     /**
      * Gets the id of the Resource if the Resource has an id. The Resource will have an id if and only if the
-     * endpoint used supports ids. The caller is expected to check for a null pointer if they are not certain that
+     * endpoint type used supports ids. The caller is expected to check for a null pointer if they are not certain that
      * the Resource has an id. The returned pointer is reference counted, so the pointer is safe to use even after
      * the Resource is deallocated.
      *
      * @return a shared pointer to the id of the Resource or a null pointer if the Resource doesn't have an id
+     *
+     * @see Endpoint_type
      */
     virtual std::shared_ptr<const std::string> id() const = 0;
 
@@ -105,42 +112,13 @@ public:
     virtual std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> contained_resources() const = 0;
 
 protected:
+    /// @private
     Resource();
 };
 
 /**
- * Service providing access to an endpoint of a specific type and credential id.
- *
- * <p>
- * Different endpoint types may differ slightly in behavior and functionality. These differences are described
- * as follows.
- * </p>
- *
- * <dl>
- * <dt>Dropbox</dt>
- * <dd>Uses names and paths to identify resources.</dd>
- *
- * <dt>Google Drive</dt>
- * <dd>Uses ids to identify resources.</dd>
- *
- * <dt>SFTP</dt>
- * <dd>Uses names and paths to identify resources.</dd>
- *
- * <dt>FTP</dt>
- * <dd>Uses names and paths to identify resources.</dd>
- *
- * <dt>Box</dt>
- * <dd>Uses ids to identify resources.</dd>
- *
- * <dt>S3</dt>
- * <dd>Uses names and paths to identify resources.</dd>
- *
- * <dt>GFTP</dt>
- * <dd>Uses names and paths to identify resources.</dd>
- *
- * <dt>HTTP</dt>
- * <dd>Uses names and paths to identify resources.</dd>
- * </dl>
+ * Service providing access to an endpoint of a specific type and credential id. Different endpoint types may differ
+ * slightly in behavior and functionality as described in {@link Endpoint_type}.
  */
 class Endpoint {
 public:
@@ -177,14 +155,19 @@ public:
                                             const std::string& ods_auth_token,
                                             const std::string& url);
 
+    /// @private
     virtual ~Endpoint() = 0;
 
+    /// @private
     Endpoint(const Endpoint&) = delete;
 
+    /// @private
     Endpoint& operator=(const Endpoint&) = delete;
 
+    /// @private
     Endpoint(Endpoint&&) = default;
 
+    /// @private
     Endpoint& operator=(Endpoint&&) = default;
 
     /**
@@ -201,6 +184,8 @@ public:
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     *
+     * @see Endpoint_type
      */
     virtual std::unique_ptr<Resource> list(const std::string& identifier) const = 0;
 
@@ -218,6 +203,8 @@ public:
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     *
+     * @see Endpoint_type
      */
     virtual void remove(const std::string& identifier, const std::string& to_delete) const = 0;
 
@@ -235,6 +222,8 @@ public:
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     *
+     * @see Endpoint_type
      */
     virtual void mkdir(const std::string& identifier, const std::string& folder_to_create) const = 0;
 
@@ -252,10 +241,13 @@ public:
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     *
+     * @see Endpoint_type
      */
     virtual void download(const std::string& identifier, const std::string& file_to_download) const = 0;
 
 protected:
+    /// @private
     Endpoint();
 };
 

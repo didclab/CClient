@@ -16,16 +16,32 @@
 namespace One_data_share {
 
 /**
- * Contains the endpoint types that can be registered with One Data Share by providing One Data Share with the
- * credentials needed to log into the endpoint.
+ * Contains the endpoint types that are registered by providing the credentials needed to log into the endpoint.
  */
-enum class Credential_endpoint_type { sftp, ftp, s3, http };
+enum class Credential_endpoint_type {
+    /** Indicates an SFTP endpoint. */
+    sftp,
+    /** Indicates an FTP endpoint. */
+    ftp,
+    /** Indicates an S3 endpoint. */
+    s3,
+    /** Indicates an HTTP endpoint. */
+    http
+};
 
 /**
- * Contains the endpoint types that can be registered with One Data Share by using OAuth to give One Data Share
- * permission to use the endpoint.
+ * Contains the endpoint types that can be registered by using OAuth2.
  */
-enum class Oauth_endpoint_type { dropbox, google_drive, box, gftp };
+enum class Oauth_endpoint_type {
+    /** Indicates a Dropbox endpoint. */
+    dropbox,
+    /** Indicates a Google Drive endpoint. */
+    google_drive,
+    /** Indicates a Box endpoint. */
+    box,
+    /** Indicates a Grid FTP endpoint. */
+    gftp,
+};
 
 /**
  * Service providing all functionality related to registering credentials with One Data Share.
@@ -54,14 +70,19 @@ public:
      */
     static std::unique_ptr<Credential_service> create(const std::string& ods_auth_token, const std::string& url);
 
+    /// @private
     virtual ~Credential_service() = 0;
 
+    /// @private
     Credential_service(const Credential_service&) = delete;
 
+    /// @private
     Credential_service& operator=(const Credential_service&) = delete;
 
+    /// @private
     Credential_service(Credential_service&&) = default;
 
+    /// @private
     Credential_service& operator=(Credential_service&&) = default;
 
     /**
@@ -116,6 +137,7 @@ public:
     virtual std::vector<std::string> credential_id_list(Endpoint_type type) const = 0;
 
 protected:
+    /// @private
     Credential_service();
 };
 

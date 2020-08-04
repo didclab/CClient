@@ -16,7 +16,8 @@
 namespace One_data_share {
 
 /**
- * Indicates the destination endpoint of a transfer.
+ * Indicates the destination endpoint of a transfer. Different endpoint types may differ slightly in behavior and
+ * functionality as described in {@link Endpoint_type}.
  */
 class Destination {
 public:
@@ -29,17 +30,24 @@ public:
      * locate the directory in which the transfered resources should be placed
      *
      * @return the created Destination object
+     *
+     * @see Endpoint_type
      */
     static Destination create(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
 
+    /// @private
     ~Destination() = default;
 
+    /// @private
     Destination(const Destination&) = default;
 
+    /// @private
     Destination& operator=(const Destination&) = default;
 
+    /// @private
     Destination(Destination&&) = default;
 
+    /// @private
     Destination& operator=(Destination&&) = default;
 
     /**
@@ -74,7 +82,8 @@ private:
 };
 
 /**
- * Indicates the source endpoint of a transfer.
+ * Indicates the source endpoint of a transfer. Different endpoint types may differ slightly in behavior and
+ * functionality as described in {@link Endpoint_type}.
  */
 class Source {
 public:
@@ -89,20 +98,27 @@ public:
      * needed in order to locate the resources to transfer from within the specified directory
      *
      * @return the created Source object
+     *
+     * @see Endpoint_type
      */
     static Source create(Endpoint_type type,
                          const std::string& cred_id,
                          const std::string& directory_identifier,
                          const std::vector<std::string>& resource_identifiers);
 
+    /// @private
     ~Source() = default;
 
+    /// @private
     Source(const Source&) = default;
 
+    /// @private
     Source& operator=(const Source&) = default;
 
+    /// @private
     Source(Source&&) = default;
 
+    /// @private
     Source& operator=(Source&&) = default;
 
     /**
@@ -148,22 +164,37 @@ private:
     const std::vector<std::string> resource_identifiers_;
 };
 
-// TODO: define
+/**
+ * Options to use in a transfer request.
+ */
 class Transfer_options {
+    // TODO: define
 public:
+    /**
+     * Creates a new Transfer_options object.
+     *
+     * @return the created Transfer_options object
+     */
     static Transfer_options create();
+
+    /// @private
     ~Transfer_options() = default;
 
 private:
     Transfer_options();
 };
 
-// TODO: define
+/**
+ * Status of a submitted transfer job.
+ */
 class Transfer_status {
+    // TODO: define
 public:
+    /// @private
     virtual ~Transfer_status() = 0;
 
 protected:
+    /// @private
     Transfer_status();
 };
 
@@ -194,14 +225,19 @@ public:
      */
     static std::unique_ptr<Transfer_service> create(const std::string& ods_auth_token, const std::string& url);
 
+    /// @private
     virtual ~Transfer_service() = 0;
 
+    /// @private
     Transfer_service(const Transfer_service&) = delete;
 
+    /// @private
     Transfer_service& operator=(const Transfer_service&) = delete;
 
+    /// @private
     Transfer_service(Transfer_service&&) = default;
 
+    /// @private
     Transfer_service& operator=(Transfer_service&&) = default;
 
     /**
@@ -209,9 +245,9 @@ public:
      * It is expected that the authentication token used to create this Transfer_service object is valid, that a
      * connection can be made to One Data Share, that a connection can be made to the source endpoint, that a
      * connection can be made to the second endpoint, that the resources on the source endpoint can be found at the
-     * specified endpoint at the specified locatoin, that the directory on the destination endpoint can be found at
-     * the specified location, and that One Data Share is able to write under the specified destination directory.
-     * If these preconditions are not met, exceptions may be thrown.
+     * specified locations, that the directory on the destination endpoint can be found at the specified location, and
+     * that One Data Share is able to read and write as neceessary. If these preconditions are not met, exceptions may
+     * be thrown.
      *
      * @param source borrowed reference to the source of the transfer
      * @param destination borrowed reference to the destination of the transfer
@@ -242,6 +278,7 @@ public:
     virtual std::unique_ptr<Transfer_status> status(const std::string& id) const = 0;
 
 protected:
+    /// @private
     Transfer_service();
 };
 
