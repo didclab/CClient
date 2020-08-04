@@ -17,6 +17,12 @@ clean:
 	rm -rf bin
 	rm -rf build
 
+###############################
+# Just removes bin directory. #
+###############################
+clean-bin:
+	rm -rf bin
+
 ###########################################################################
 # Builds the project using CMake and generates example and test binaries. #
 ###########################################################################

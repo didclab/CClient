@@ -29,56 +29,18 @@ public:
      * @param directory_identifier  the path or id, depending on the endpoint type, that is needed in order to
      * locate the directory in which the transfered resources should be placed
      *
-     * @return the created Destination object
-     *
      * @see Endpoint_type
      */
-    static Destination create(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
-
-    /// @private
-    ~Destination() = default;
-
-    /// @private
-    Destination(const Destination&) = default;
-
-    /// @private
-    Destination& operator=(const Destination&) = default;
-
-    /// @private
-    Destination(Destination&&) = default;
-
-    /// @private
-    Destination& operator=(Destination&&) = default;
-
-    /**
-     * Gets the type of the destination endpoint.
-     *
-     * @return a copy of the type of the destination endpoint
-     */
-    Endpoint_type type() const;
-
-    /**
-     * Gets a reference to the credential id of the destination endpoint. This reference lives only as long as
-     * this object itself.
-     *
-     * @return a temporary reference to the credential id of the destination endpoint
-     */
-    const std::string& cred_id() const;
-
-    /**
-     * Gets a reference the identifier of the destination directory. This reference lives only as long as this
-     * object itself.
-     *
-     * @return a temporary reference to the identifier of the destination directory
-     */
-    const std::string& directory_identifier() const;
-
-private:
     Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
 
-    const Endpoint_type type_;
-    const std::string cred_id_;
-    const std::string directory_identifier_;
+    /** Type of the destinatin endpoint. */
+    const Endpoint_type type;
+
+    /** Credential identifier of the destination endpoint. */
+    const std::string cred_id;
+
+    /** Identifier of the destination directory. */
+    const std::string directory_identifier;
 };
 
 /**

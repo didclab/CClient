@@ -12,31 +12,11 @@
 
 namespace One_data_share {
 
-Destination Destination::create(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
-{
-    return Destination {type, cred_id, directory_identifier};
-}
-
 Destination::Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
-    : type_(type),
-      cred_id_(cred_id),
-      directory_identifier_(directory_identifier)
+    : type(type),
+      cred_id(cred_id),
+      directory_identifier(directory_identifier)
 {}
-
-Endpoint_type Destination::type() const
-{
-    return type_;
-}
-
-const std::string& Destination::cred_id() const
-{
-    return cred_id_;
-}
-
-const std::string& Destination::directory_identifier() const
-{
-    return directory_identifier_;
-}
 
 Source Source::create(Endpoint_type type,
                       const std::string& cred_id,

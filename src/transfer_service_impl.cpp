@@ -76,9 +76,10 @@ std::string create_source(const Source& source)
 std::string create_destination(const Destination& destination)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << endpoint_as_string(destination.type()) << "\",\"credId\":\""
-           << escape_json(destination.cred_id()) << "\",\"info\":"
-           << create_entity_info(destination.directory_identifier(), destination.directory_identifier()) << "}";
+    stream << "{\"type\":\"" << endpoint_as_string(destination.type) << "\",\"credId\":\""
+           << escape_json(destination.cred_id)
+           << "\",\"info\":" << create_entity_info(destination.directory_identifier, destination.directory_identifier)
+           << "}";
 
     return stream.str();
 }
