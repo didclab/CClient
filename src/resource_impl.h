@@ -29,15 +29,7 @@ public:
                   std::shared_ptr<const std::string>&& permissions,
                   std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>>&& contained_resources);
 
-    virtual ~Resource_impl() = default;
-
-    Resource_impl(const Resource_impl&) = delete;
-
-    Resource_impl& operator=(const Resource_impl&) = delete;
-
-    Resource_impl(Resource_impl&&) = default;
-
-    Resource_impl& operator=(Resource_impl&&) = default;
+    ~Resource_impl() override = default;
 
     std::shared_ptr<const std::string> id() const override;
 

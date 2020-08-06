@@ -23,7 +23,7 @@ namespace Internal {
 
 class Transfer_status_impl : public Transfer_status {
     Transfer_status_impl() = default;
-    virtual ~Transfer_status_impl() = default;
+    ~Transfer_status_impl() override = default;
 };
 
 class Transfer_service_impl : public Transfer_service {

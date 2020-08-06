@@ -38,14 +38,6 @@ public:
 
     ~Credential_service_impl() override = default;
 
-    Credential_service_impl(const Credential_service_impl&) = delete;
-
-    Credential_service_impl& operator=(const Credential_service_impl&) = delete;
-
-    Credential_service_impl(Credential_service_impl&&) = default;
-
-    Credential_service_impl& operator=(Credential_service_impl&&) = default;
-
     std::string oauth_url(Oauth_endpoint_type type) const override;
 
     void register_credential(Credential_endpoint_type type,
