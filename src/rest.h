@@ -50,9 +50,9 @@ public:
 
     Rest& operator=(const Rest&) = delete;
 
-    Rest(Rest&&) = default;
+    Rest(Rest&&) = delete;
 
-    Rest& operator=(Rest&&) = default;
+    Rest& operator=(Rest&&) = delete;
 
     /**
      * Performs a GET request to the specified url with the specified headers.

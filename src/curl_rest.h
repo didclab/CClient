@@ -27,14 +27,6 @@ public:
      */
     Curl_rest();
 
-    Curl_rest(const Curl_rest&) = delete;
-
-    Curl_rest& operator=(const Curl_rest&) = delete;
-
-    Curl_rest(Curl_rest&&) = default;
-
-    Curl_rest& operator=(Curl_rest&&) = default;
-
     virtual ~Curl_rest() override;
 
     virtual Response get(const std::string& url,
