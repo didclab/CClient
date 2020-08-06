@@ -136,12 +136,12 @@ std::string Transfer_service_impl::transfer(const Source& source,
                                       headers_,
                                       create_transfer_job_request(source, destination, options))};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // expected status 200
-        throw Unexpected_response_error {"Expected status 200 when making transfer request.", response.status()};
+        throw Unexpected_response_error {"Expected status 200 when making transfer request.", response.status};
     }
 
-    return response.body();
+    return response.body;
 }
 
 std::unique_ptr<Transfer_status> Transfer_service_impl::status(const std::string& id) const

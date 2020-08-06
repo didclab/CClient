@@ -29,50 +29,14 @@ public:
      */
     Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, int status);
 
-    Response(const Response&) = default;
+    /** Multi-map storing headers as (key, value) pairs. */
+    const std::unordered_multimap<std::string, std::string> headers;
 
-    Response& operator=(const Response&) = default;
+    /** Json string containing the response body. */
+    const std::string body;
 
-    Response(Response&&) = default;
-
-    Response& operator=(Response&&) = default;
-
-    /**
-     * Gets a reference to the response headers. The returned reference lives only as long as the object itself.
-     *
-     * @return a temporary reference to the response headers stored as (key, value) pairs in an unordered multi-map
-     */
-    const std::unordered_multimap<std::string, std::string>& headers() const;
-
-    /**
-     * Gets a reference to the response body. The returned reference lives only as long as the object itself.
-     *
-     * @return a temporary reference to the json string containing the response body
-     */
-    const std::string& body() const;
-
-    /**
-     * Gets a reference to the http response status. The returned reference lives only as long as the object itself.
-     *
-     * @return a temporary reference to the http response status
-     */
-    int status() const;
-
-private:
-    /**
-     * Multi-map storing headers as (key, value) pairs.
-     */
-    const std::unordered_multimap<std::string, std::string> headers_;
-
-    /**
-     * Json string containing the response body.
-     */
-    const std::string body_;
-
-    /**
-     * The http response status code.
-     */
-    const int status_;
+    /** The http response status code. */
+    const int status;
 };
 
 /**

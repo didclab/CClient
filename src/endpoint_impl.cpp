@@ -298,21 +298,21 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
                                          "&path=" + identifier + "&identifier=" + identifier,
                                      headers_)};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // unexpected response
         throw Unexpected_response_error {"Expected a 200 response code when listing resource \"" + identifier +
                                              "\" on endpoint \"" + cred_id_ + "\".",
-                                         response.status()};
+                                         response.status};
     }
 
     simdjson::dom::parser parser {};
-    auto [obj, err] {parser.parse(response.body()).get_object()};
+    auto [obj, err] {parser.parse(response.body).get_object()};
 
     if (err) {
         // bad response body
         throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
                                              "\" on endpoint \"" + cred_id_ + "\": " + simdjson::error_message(err),
-                                         response.status()};
+                                         response.status};
     }
 
     std::unique_ptr<Resource> resource {};
@@ -322,7 +322,7 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
         // bad response body
         throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
                                              "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
-                                         response.status()};
+                                         response.status};
     }
 
     if (resource->contained_resources() == nullptr && resource->is_directory()) {
@@ -330,7 +330,7 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
         throw Unexpected_response_error {
             "Parsed resource was a directory but didn't have contained resources when listing resource \"" +
                 identifier + "\" on endpoint \"" + cred_id_ + "\".",
-            response.status()};
+            response.status};
     }
 
     return resource;
@@ -343,9 +343,9 @@ void Endpoint_impl::remove(const std::string& identifier, const std::string& to_
                                       headers_,
                                       create_delete_operation(cred_id_, identifier, identifier, to_delete))};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response after removing resource.", response.status()};
+        throw Unexpected_response_error {"Expected a status 200 response after removing resource.", response.status};
     }
 }
 
@@ -356,9 +356,9 @@ void Endpoint_impl::mkdir(const std::string& identifier, const std::string& fold
                                       headers_,
                                       create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response after creating directory.", response.status()};
+        throw Unexpected_response_error {"Expected a status 200 response after creating directory.", response.status};
     }
 }
 
@@ -369,10 +369,10 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
                                       headers_,
                                       create_download_operation(cred_id_, identifier, identifier, file_to_download))};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // expected status 200
         throw Unexpected_response_error {"Expected a status 200 response after downloading resource.",
-                                         response.status()};
+                                         response.status};
     }
 }
 

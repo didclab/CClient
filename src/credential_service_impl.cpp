@@ -125,16 +125,16 @@ std::string Credential_service_impl::oauth_url(const Oauth_endpoint_type type) c
     const Response response {
         rest_caller_->get(ods_url_ + api_path_oauth + "?type=" + endpoint_as_string(type), headers_)};
 
-    if (response.status() != 303) {
+    if (response.status != 303) {
         // unexpected response
-        throw Unexpected_response_error {oauth_url_wrong_response_msg, response.status()};
+        throw Unexpected_response_error {oauth_url_wrong_response_msg, response.status};
     }
 
     // find url in a single location header, as there should only be one
-    const auto iter {response.headers().find("Location")};
-    if (iter == response.headers().end()) {
+    const auto iter {response.headers.find("Location")};
+    if (iter == response.headers.end()) {
         // did not contain Location header
-        throw Unexpected_response_error {oauth_url_missing_location_msg, response.status()};
+        throw Unexpected_response_error {oauth_url_missing_location_msg, response.status};
     }
 
     return iter->second;
@@ -151,9 +151,9 @@ void Credential_service_impl::register_credential(const Credential_endpoint_type
                                                 headers_,
                                                 create_account_endpoint_credential(cred_id, uri, username, secret))};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // expected status 200
-        throw Unexpected_response_error {register_cred_wrong_response_msg, response.status()};
+        throw Unexpected_response_error {register_cred_wrong_response_msg, response.status};
     }
 }
 
@@ -162,24 +162,24 @@ std::vector<std::string> Credential_service_impl::credential_id_list(const Endpo
     // if get throws an exception, propogate it up
     const auto response {rest_caller_->get(ods_url_ + api_path_cred + "/" + endpoint_as_string(type), headers_)};
 
-    if (response.status() != 200) {
+    if (response.status != 200) {
         // expected status 200
         throw Unexpected_response_error {"Expected a status 200 response when fetching the credential id list.",
-                                         response.status()};
+                                         response.status};
     }
 
     // parse string array in CredList from response body
     simdjson::dom::parser parser {};
     std::vector<std::string> cred_list {};
     try {
-        for (auto e : parser.parse(response.body()).get_object().value()["credentialList"].get_array()) {
+        for (auto e : parser.parse(response.body).get_object().value()["credentialList"].get_array()) {
             cred_list.push_back(e.get_c_str().take_value());
         }
     } catch (simdjson::simdjson_error e) {
         // bad response body
         throw Unexpected_response_error {
             std::string("Failed to parse response body when fetching the credential id list: ") + e.what(),
-            response.status()};
+            response.status};
     }
 
     return cred_list;
