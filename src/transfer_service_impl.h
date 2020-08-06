@@ -32,13 +32,13 @@ public:
                           const std::string& ods_url,
                           std::unique_ptr<Rest> rest_caller);
 
-    virtual ~Transfer_service_impl() = default;
+    ~Transfer_service_impl() override = default;
 
-    virtual std::string transfer(const Source& source,
+    std::string transfer(const Source& source,
                                  const Destination& destination,
                                  const Transfer_options& options) const override;
 
-    virtual std::unique_ptr<Transfer_status> status(const std::string& id) const override;
+    std::unique_ptr<Transfer_status> status(const std::string& id) const override;
 
 private:
     const std::string ods_auth_token_;

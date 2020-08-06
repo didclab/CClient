@@ -28,7 +28,7 @@ public:
                   const std::string& ods_url,
                   std::unique_ptr<Rest> rest_caller);
 
-    virtual ~Endpoint_impl() = default;
+    ~Endpoint_impl() override = default;
 
     Endpoint_impl(const Endpoint_impl&) = delete;
 
@@ -38,13 +38,13 @@ public:
 
     Endpoint_impl& operator=(Endpoint_impl&&) = default;
 
-    virtual std::unique_ptr<Resource> list(const std::string& identifier) const;
+    std::unique_ptr<Resource> list(const std::string& identifier) const override;
 
-    virtual void remove(const std::string& identifier, const std::string& to_delete) const;
+    void remove(const std::string& identifier, const std::string& to_delete) const override;
 
-    virtual void mkdir(const std::string& identifier, const std::string& folder_to_create) const;
+    void mkdir(const std::string& identifier, const std::string& folder_to_create) const override;
 
-    virtual void download(const std::string& identifier, const std::string& file_to_download) const;
+    void download(const std::string& identifier, const std::string& file_to_download) const override;
 
 private:
     /**

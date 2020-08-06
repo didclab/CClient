@@ -23,14 +23,14 @@ class Curl_rest : public Rest {
 public:
     Curl_rest() = default;
 
-    virtual ~Curl_rest() override = default;
+    ~Curl_rest() override = default;
 
-    virtual Response get(const std::string& url,
-                         const std::unordered_multimap<std::string, std::string>& headers) const override;
+    Response get(const std::string& url,
+                 const std::unordered_multimap<std::string, std::string>& headers) const override;
 
-    virtual Response post(const std::string& url,
-                          const std::unordered_multimap<std::string, std::string>& headers,
-                          const std::string& data) const override;
+    Response post(const std::string& url,
+                  const std::unordered_multimap<std::string, std::string>& headers,
+                  const std::string& data) const override;
 };
 
 } // namespace Internal

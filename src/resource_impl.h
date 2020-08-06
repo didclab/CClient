@@ -39,23 +39,23 @@ public:
 
     Resource_impl& operator=(Resource_impl&&) = default;
 
-    virtual std::shared_ptr<const std::string> id() const;
+    std::shared_ptr<const std::string> id() const override;
 
-    virtual std::string name() const;
+    std::string name() const override;
 
-    virtual long size() const;
+    long size() const override;
 
-    virtual long time() const;
+    long time() const override;
 
-    virtual bool is_directory() const;
+    bool is_directory() const override;
 
-    virtual bool is_file() const;
+    bool is_file() const override;
 
-    virtual std::shared_ptr<const std::string> link() const;
+    std::shared_ptr<const std::string> link() const override;
 
-    virtual std::shared_ptr<const std::string> permissions() const;
+    std::shared_ptr<const std::string> permissions() const override;
 
-    virtual std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> contained_resources() const;
+    std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> contained_resources() const override;
 
 private:
     /**
