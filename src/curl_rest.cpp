@@ -30,6 +30,33 @@ constexpr auto newline_chars {"\n\r"};
 constexpr auto header_delim {": "};
 
 /**
+ * Initializes libcurl when created and cleans up libcurl when destroyed.
+ */
+class Curl_init {
+public:
+    /**
+     * Initializes the global data needed for libcurl.
+     */
+    Curl_init()
+    {
+        curl_global_init(CURL_GLOBAL_ALL);
+    }
+
+    /**
+     * Cleans up the global data needed for libcurl.
+     */
+    ~Curl_init()
+    {
+        curl_global_cleanup();
+    }
+};
+/**
+ * Static object that initializes libcurl global data at the start of the program and frees libcurl global data once
+ * the program terminates.
+ */
+static Curl_init libcurl_global_data_handler {};
+
+/**
  * Converts the specified string into a (key, value) pair if the string contains the specified delimiter by
  * splitting it at the delimiter.
  *
@@ -98,22 +125,6 @@ size_t header_callback(void* buffer,
 }
 
 } // namespace
-
-/**
- * Initializes the global data needed for libcurl.
- */
-Curl_rest::Curl_rest()
-{
-    curl_global_init(CURL_GLOBAL_ALL);
-}
-
-/**
- * Cleans up the global data needed for libcurl.
- */
-Curl_rest::~Curl_rest()
-{
-    curl_global_cleanup();
-}
 
 /**
  * Uses libcurl to perform a GET request to the specified url with the specified headers.

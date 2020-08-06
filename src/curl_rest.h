@@ -21,13 +21,9 @@ namespace Internal {
  */
 class Curl_rest : public Rest {
 public:
-    /**
-     * Creates a new Curl_rest object capable of making REST requests
-     * via libcurl.
-     */
-    Curl_rest();
+    Curl_rest() = default;
 
-    virtual ~Curl_rest() override;
+    virtual ~Curl_rest() override = default;
 
     virtual Response get(const std::string& url,
                          const std::unordered_multimap<std::string, std::string>& headers) const override;
