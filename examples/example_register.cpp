@@ -1,5 +1,5 @@
 /*
- * example_1.cpp
+ * example_register.cpp
  * Andrew Mikalsen
  * 7/8/20
  */
