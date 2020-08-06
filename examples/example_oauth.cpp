@@ -1,5 +1,5 @@
 /*
- * example_2.cpp
+ * example_oauth.cpp
  * Andrew Mikalsen
  * 7/10/20
  */

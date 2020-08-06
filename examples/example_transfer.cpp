@@ -1,5 +1,5 @@
 /*
- * example_3.cpp
+ * example_transfer.cpp
  * Andrew Mikalsen
  * 7/27/20
  */

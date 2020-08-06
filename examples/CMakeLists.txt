@@ -1,35 +1,46 @@
-# add example 1 executable
-add_executable(example_1
-    example_1.cpp
+# add example register executable
+add_executable(example_register
+example_register.cpp
 )
-target_include_directories(example_1 PRIVATE
+target_include_directories(example_register PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
-target_link_libraries(example_1 PRIVATE
+target_link_libraries(example_register PRIVATE
     onedatashare
 )
 
-# add example 2 executable
-add_executable(example_2
-    example_2.cpp
+# add example oauth executable
+add_executable(example_oauth
+    example_oauth.cpp
 )
-target_include_directories(example_2 PRIVATE
+target_include_directories(example_oauth PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
-target_link_libraries(example_2 PRIVATE
+target_link_libraries(example_oauth PRIVATE
     onedatashare
 )
 
-# add example 3 executable
-add_executable(example_3
-    example_3.cpp
+# add example transfer executable
+add_executable(example_transfer
+    example_transfer.cpp
 )
-target_include_directories(example_3 PRIVATE
+target_include_directories(example_transfer PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
-target_link_libraries(example_3 PRIVATE
+target_link_libraries(example_transfer PRIVATE
+    onedatashare
+)
+
+# add example monitor executable
+add_executable(example_monitor
+    example_monitor.cpp
+)
+target_include_directories(example_monitor PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+)
+target_link_libraries(example_monitor PRIVATE
     onedatashare
 )
 
 # install all executables
-install(TARGETS example_1 example_2 example_3 DESTINATION "${CMAKE_INSTALL_PREFIX}")
+install(TARGETS example_register example_oauth example_transfer example_monitor DESTINATION "${CMAKE_INSTALL_PREFIX}")
