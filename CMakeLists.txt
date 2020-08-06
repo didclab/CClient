@@ -41,53 +41,57 @@ target_link_libraries(onedatashare
         ${CURL_LIBRARIES}
 )
 
-include(GNUInstallDirs)
-install(TARGETS onedatashare
-    EXPORT onedatashare-export
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
+if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
 
-set_target_properties(onedatashare PROPERTIES EXPORT_NAME OneDataShare)
+    include(GNUInstallDirs)
+    install(TARGETS onedatashare
+        EXPORT onedatashare-export
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
 
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    set_target_properties(onedatashare PROPERTIES EXPORT_NAME OneDataShare)
 
-set(INSTALL_CONFIG_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/OneDataShare)
+    install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-# create targets cmake file
-install(EXPORT onedatashare-export
-    FILE OneDataShareTargets.cmake
-    NAMESPACE OneDataShare::
-    DESTINATION ${INSTALL_CONFIG_DIR}
-)
+    set(INSTALL_CONFIG_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/OneDataShare)
 
-# create version cmake file
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion
-)
+    # create targets cmake file
+    install(EXPORT onedatashare-export
+        FILE OneDataShareTargets.cmake
+        NAMESPACE OneDataShare::
+        DESTINATION ${INSTALL_CONFIG_DIR}
+    )
 
-# create config cmake file
-configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/OneDataShareConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfig.cmake
-    INSTALL_DESTINATION  ${INSTALL_CONFIG_DIR}
-)
+    # create version cmake file
+    include(CMakePackageConfigHelpers)
+    write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+    )
 
-export(EXPORT onedatashare-export
-    FILE ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareTargets.cmake
-    NAMESPACE OneDataShare::
-)
+    # create config cmake file
+    configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/OneDataShareConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfig.cmake
+        INSTALL_DESTINATION  ${INSTALL_CONFIG_DIR}
+    )
 
-# add to package registry
-export(PACKAGE OneDataShare)
+    export(EXPORT onedatashare-export
+        FILE ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareTargets.cmake
+        NAMESPACE OneDataShare::
+    )
 
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfig.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfigVersion.cmake
-    DESTINATION ${INSTALL_CONFIG_DIR}
-)
+    # add to package registry
+    export(PACKAGE OneDataShare)
+
+    install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfigVersion.cmake
+        DESTINATION ${INSTALL_CONFIG_DIR}
+    )
+
+endif()
 
 if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
     # add unit tests
