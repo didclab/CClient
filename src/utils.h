@@ -16,6 +16,9 @@ namespace One_data_share {
 
 namespace Internal {
 
+/** Production url for One Data Share. */
+static constexpr auto ods_production_url {"https://onedatashare.org"};
+
 /**
  * Creates the required header map using the specified token.
  *
@@ -42,11 +45,6 @@ std::string endpoint_as_string(const Endpoint_type type);
  * @return a copy of the json string with its characters escaped
  */
 std::string escape_json(const std::string& json);
-
-/**
- * Gets the production url for One Data Share.
- */
-std::string get_ods_production_url();
 
 /**
  * Sets the url in the config file to the specified string.

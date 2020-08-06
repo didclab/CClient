@@ -17,35 +17,20 @@ namespace Internal {
 
 namespace {
 
-/**
- * Content type header.
- */
+/** Content type header. */
 constexpr auto header_content_type {"Content-Type"};
 
-/**
- * Value of content type header.
- */
+/** Value of content type header. */
 constexpr auto header_json {"application/json"};
 
-/**
- * Autorization header
- */
+/** Autorization header. */
 constexpr auto header_authorization {"Authorization"};
 
-/**
- * Part of the value of authorization header.
- */
+/** Part of the value of authorization header. */
 constexpr auto header_bearer {"Bearer "};
 
-/**
- * Path from project root to file containing configured ods url.
- */
+/** Path from project root to file containing configured ods url. */
 constexpr auto url_config_file_location {"url.txt"};
-
-/**
- * Production url for One Data Share.
- */
-constexpr auto ods_production_url {"https://onedatashare.org"};
 
 } // namespace
 
@@ -118,11 +103,6 @@ std::string escape_json(const std::string& json)
         }
     }
     return stream.str();
-}
-
-std::string get_ods_production_url()
-{
-    return ods_production_url;
 }
 
 bool load_url_from_config(std::string& url)

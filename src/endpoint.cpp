@@ -20,7 +20,7 @@ std::unique_ptr<Endpoint> Endpoint::create(Endpoint_type type,
                                            const std::string& cred_id,
                                            const std::string& ods_auth_token)
 {
-    return create(type, cred_id, ods_auth_token, Internal::get_ods_production_url());
+    return create(type, cred_id, ods_auth_token, Internal::ods_production_url);
 }
 
 std::unique_ptr<Endpoint> Endpoint::create(Endpoint_type type,

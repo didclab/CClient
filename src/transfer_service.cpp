@@ -32,7 +32,7 @@ Transfer_options::Transfer_options() = default;
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
-    return create(ods_auth_token, Internal::get_ods_production_url());
+    return create(ods_auth_token, Internal::ods_production_url);
 }
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token, const std::string& url)

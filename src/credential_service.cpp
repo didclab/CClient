@@ -14,7 +14,7 @@ namespace One_data_share {
 
 std::unique_ptr<Credential_service> Credential_service::create(const std::string& ods_auth_token)
 {
-    return create(ods_auth_token, Internal::get_ods_production_url());
+    return create(ods_auth_token, Internal::ods_production_url);
 }
 
 std::unique_ptr<Credential_service> Credential_service::create(const std::string& ods_auth_token,
