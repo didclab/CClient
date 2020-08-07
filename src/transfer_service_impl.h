@@ -22,7 +22,6 @@ namespace One_data_share {
 namespace Internal {
 
 class Transfer_status_impl : public Transfer_status {
-    Transfer_status_impl() = default;
 };
 
 class Transfer_service_impl : public Transfer_service {
