@@ -64,13 +64,13 @@ int main()
 
         std::cout << "Printing root of " << my_cred_id << " ...\n" << std::endl;
 
-        // print root of new endpoint
-        const auto root_path {"/"};
         const auto my_endpoint {Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token, url)};
+        const auto root_path {"/"};
+
+        // print root of new endpoint
         const auto root {my_endpoint->list(root_path)};
-        if (root.is_directory) {
-            auto resources {root.contained_resources};
-            for (auto r : *resources) {
+        if (root.is_directory && root.contained_resources) {
+            for (auto r : *root.contained_resources) {
                 std::cout << r.name << std::endl;
             }
         }
