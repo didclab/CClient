@@ -64,11 +64,11 @@ int main()
 
     try {
         while (true) {
-            const auto resources {src_endpoint->list(src_dir)->contained_resources()};
+            const auto resources {src_endpoint->list(src_dir).contained_resources};
 
             for (auto& r : *resources) {
-                if (r->name() == target_file_name) {
-                    const Ods::Source src {src_type, src_cred, src_dir, std::vector {r->name()}};
+                if (r.name == target_file_name) {
+                    const Ods::Source src {src_type, src_cred, src_dir, std::vector {r.name}};
                     std::cout << "Starting transfer with id:" << transfer->transfer(src, dest, Ods::Transfer_options {})
                               << std::endl;
                 }

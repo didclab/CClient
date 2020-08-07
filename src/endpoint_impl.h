@@ -30,7 +30,7 @@ public:
 
     ~Endpoint_impl() override = default;
 
-    std::unique_ptr<Resource> list(const std::string& identifier) const override;
+    Resource list(const std::string& identifier) const override;
 
     void remove(const std::string& identifier, const std::string& to_delete) const override;
 

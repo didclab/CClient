@@ -8,6 +8,7 @@
 #define ONEDATASHARE_ENDPOINT_H
 
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -16,104 +17,36 @@
 namespace One_data_share {
 
 /**
- * Represents a resource from an endpoint's file system containing a directory, file, or link.
+ * Represents a directory, file, or link from an endpoint's file system.
  */
-class Resource {
+struct Resource {
 public:
-    /// @private
-    virtual ~Resource() = 0;
+    /** Id of the resource if the resource has an id, no value otherwise. */
+    std::optional<std::string> id;
 
-    /// @private
-    Resource(const Resource&) = delete;
+    /** Name of the Resource. */
+    std::string name;
 
-    /// @private
-    Resource& operator=(const Resource&) = delete;
+    /** Size of the Resource. */
+    long size;
 
-    /// @private
-    Resource(Resource&&) = delete;
+    /** Time of the Resource. */
+    long time;
 
-    /// @private
-    Resource& operator=(Resource&&) = delete;
+    /** If the Resource is a directory. */
+    bool is_directory;
 
-    /**
-     * Gets the id of the Resource if the Resource has an id. The Resource will have an id if and only if the
-     * endpoint type used supports ids. The caller is expected to check for a null pointer if they are not certain that
-     * the Resource has an id. The returned pointer is reference counted, so the pointer is safe to use even after
-     * the Resource is deallocated.
-     *
-     * @return a shared pointer to the id of the Resource or a null pointer if the Resource doesn't have an id
-     *
-     * @see Endpoint_type
-     */
-    virtual std::shared_ptr<const std::string> id() const = 0;
+    /** If the Resource is a file. */
+    bool is_file;
 
-    /**
-     * Gets the name of the Resource.
-     *
-     * @return a copy of the name of the Resource
-     */
-    virtual std::string name() const = 0;
+    /** Link of the Resource if the Resource is a symbolic link, no value otherwise. */
+    std::optional<std::string> link;
 
-    /**
-     * Gets the size of the Resource. If size is called on a Resource without a size, 0 is returned.
-     *
-     * @return a copy of the size of the Resource
-     */
-    virtual long size() const = 0;
+    /** Permissions of the Resource if the Resource has permissions, no value otherwise. */
+    std::optional<std::string> permissions;
 
-    /**
-     * Gets the time of the Resource.
-     *
-     * @return a copy of the time of the Resource
-     */
-    virtual long time() const = 0;
-
-    /**
-     * Determines whether or not the Resource is a directory.
-     *
-     * @return true if and only if the Resource is a directory.
-     */
-    virtual bool is_directory() const = 0;
-
-    /**
-     * Determines whether or not the Resource is a file.
-     *
-     * @return true if and only if the Resource is a file.
-     */
-    virtual bool is_file() const = 0;
-
-    /**
-     * Gets the link of the Resource if and only if the Resource is a link. The caller is expected to check for a
-     * null pointer unless they are absolutely certain that the Resource is a link. The returned pointer is
-     * reference counted, so the pointer is safe to use even after the Resource is deallocated.
-     *
-     * @return a shared pointer to the link of the Resource or a null pointer if the Resource isn't a link
-     */
-    virtual std::shared_ptr<const std::string> link() const = 0;
-
-    /**
-     * Gets the permissions of the Resource if the resource has permissions. The caller is expected to check for a
-     * null pointer unless they are absolutely certain the Resource has permissions. The returned pointer is
-     * reference counted, so the pointer is safe to use even after the Resource is deallocated.
-     *
-     * @return a shared pointer to the permissions of the Resource or a null pointer if the Resource isn't a link
-     */
-    virtual std::shared_ptr<const std::string> permissions() const = 0;
-
-    /**
-     * Gets the Resource objects contained in this Resource if and only if this Resource is a directory and this
-     * resource was returned from the list method of an Endpoint object. The caller is expected to check for a null
-     * pointer unless they are absolutely certain the Resource has contained resources. The returned pointer is
-     * reference counted, so the pointer is safe to use even after the Resource is deallocated.
-     *
-     * @return a shared pointer to a vector holding the Resource objects contained in this Resource or null if the
-     * Resource isn't a directory
-     */
-    virtual std::shared_ptr<const std::vector<std::shared_ptr<const Resource>>> contained_resources() const = 0;
-
-protected:
-    /// @private
-    Resource();
+    /** Contained Resource objects if this Resource can contain other Resource objects, no value otherwise. */
+    std::optional<std::vector<Resource>> contained_resources;
 };
 
 /**
@@ -139,8 +72,8 @@ public:
 
     /**
      * Creates a new Endpoint object of the specified type with the specifed credential id and authentication token
-     * communicating with One Data Share at the specified url, passing ownership of the Endpoint object to the caller.
-     * It is expected that the specified authentication token is valid, that the specified credential id is
+     * communicating with One Data Share at the specified url, passing ownership of the Endpoint object to the
+     * caller. It is expected that the specified authentication token is valid, that the specified credential id is
      * registered with One Data Share, and that One Data Share is running on the specified url.
      *
      * @param type the type of endpoint to return
@@ -171,23 +104,25 @@ public:
     Endpoint& operator=(Endpoint&&) = delete;
 
     /**
-     * Creates a Resource object corresponding to the resource found at the specified location. Ownership of the
-     * returned Resource object is passed to the caller. It is expected that the authentication token used to create
-     * this Endpoint object is valid, that a connection can be made to One Data Share, that a connection can be made
-     * from One Data Share to the endpoint specified by the credential id, and that the specified resource exists at
-     * the specified location. If these preconditions are not met, exceptions may be thrown.
+     * Creates a Resource object corresponding to the resource found at the specified location. The Resource is
+     * guaranteed to have an id defined if and only if created by an endpoint that supports ids. If the Resource is a
+     * directory, then the Resource is guaranteed to have contained resources, though directories contained by the
+     * Resource will not have contained resources. It is expected that the authentication token used to create this
+     * Endpoint object is valid, that a connection can be made to One Data Share, that a connection can be made from One
+     * Data Share to the endpoint specified by the credential id, and that the specified resource exists at the
+     * specified location. If these preconditions are not met, exceptions may be thrown.
      *
      * @param identifier borrowed reference to the path or id, dependending on the endpoint type, that the endpoint
      * needs in order to locate the resource
      *
-     * @return a unique pointer to the created Resource
+     * @return the created Resource
      *
      * @exception Connection_error if unable to connect to One Data Share
      * @exception Unexpected_response_error if an unexpected response is received from One Data Share
      *
      * @see Endpoint_type
      */
-    virtual std::unique_ptr<Resource> list(const std::string& identifier) const = 0;
+    virtual Resource list(const std::string& identifier) const = 0;
 
     /**
      * Removes the specified resource from the endpoint. It is expected that the authentication token used to create

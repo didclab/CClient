@@ -4,6 +4,7 @@
  * 7/20/20
  */
 
+#include <optional>
 #include <sstream>
 #include <utility>
 #include <vector>
@@ -13,7 +14,6 @@
 #include <onedatashare/ods_error.h>
 
 #include "endpoint_impl.h"
-#include "resource_impl.h"
 #include "utils.h"
 
 namespace One_data_share {
@@ -185,8 +185,9 @@ std::string select_download_path(Endpoint_type type)
  *
  * @throw simdjson_error if simdjson encounters an error parsing the dom
  */
-std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
+Resource create_resource(const simdjson::dom::object& obj)
 {
+    // keep track of errors that can be handled, propogate errors that indicate a malformed response
     auto [id_elm, id_err] {obj[stat_id]};
     auto name {obj[stat_name]};
     auto size {obj[stat_size]};
@@ -198,7 +199,7 @@ std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
     auto [files_elm, files_err] {obj[stat_files]};
 
     // recursively add contained resoruces
-    std::vector<std::shared_ptr<const Resource>> contained {};
+    std::vector<Resource> contained {};
     if (!files_err) {
         for (const auto& r : files_elm) {
             // propogate up simdjson_error if thrown
@@ -207,28 +208,38 @@ std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
     }
 
     // propogate up simdjson_error exceptions if thrown
-    auto id_val {id_err ? nullptr : std::make_shared<const std::string>(id_elm.get_c_str().take_value())};
-    auto name_val {name.get_c_str().take_value()};
-    auto size_val {size.get_int64().take_value()};
-    auto time_val {time.get_int64().take_value()};
-    auto dir_val {dir.get_bool().take_value()};
-    auto file_val {file.get_bool().take_value()};
-    auto link_val {link_err ? nullptr : std::make_shared<const std::string>(link_elm.get_c_str().take_value())};
-    auto permissions_val {
-        permissions_err ? nullptr : std::make_shared<const std::string>(permissions_elm.get_c_str().take_value())};
-    auto files_val {files_err ?
-                        nullptr :
-                        std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(std::move(contained))};
+    // auto id_val {id_err ? nullptr : std::make_shared<const std::string>(id_elm.get_c_str().take_value())};
+    // auto name_val {name.get_c_str().take_value()};
+    // auto size_val {size.get_int64().take_value()};
+    // auto time_val {time.get_int64().take_value()};
+    // auto dir_val {dir.get_bool().take_value()};
+    // auto file_val {file.get_bool().take_value()};
+    // auto link_val {link_err ? nullptr : std::make_shared<const std::string>(link_elm.get_c_str().take_value())};
+    // auto permissions_val {
+    //     permissions_err ? nullptr : std::make_shared<const std::string>(permissions_elm.get_c_str().take_value())};
+    // auto files_val {files_err ?
+    //                     nullptr :
+    //                     std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(std::move(contained))};
 
-    return std::make_unique<Resource_impl>(std::move(id_val),
-                                           std::move(name_val),
-                                           size_val,
-                                           time_val,
-                                           dir_val,
-                                           file_val,
-                                           std::move(link_val),
-                                           std::move(permissions_val),
-                                           std::move(files_val));
+    return {id_err ? std::nullopt : std::optional {id_elm.get_c_str().take_value()},
+            name.get_c_str().take_value(),
+            size.get_int64().take_value(),
+            time.get_int64().take_value(),
+            dir.get_bool().take_value(),
+            file.get_bool().take_value(),
+            link_err ? std::nullopt : std::optional {link_elm.get_c_str().take_value()},
+            permissions_err ? std::nullopt : std::optional {permissions_elm.get_c_str().take_value()},
+            files_err ? std::nullopt : std::optional {contained}};
+
+    // return std::make_unique<Resource_impl>(std::move(id_val),
+    //                                        std::move(name_val),
+    //                                        size_val,
+    //                                        time_val,
+    //                                        dir_val,
+    //                                        file_val,
+    //                                        std::move(link_val),
+    //                                        std::move(permissions_val),
+    //                                        std::move(files_val));
 }
 
 /**
@@ -291,7 +302,7 @@ Endpoint_impl::Endpoint_impl(Endpoint_type type,
       headers_ {create_headers(ods_auth_token_)}
 {}
 
-std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) const
+Resource Endpoint_impl::list(const std::string& identifier) const
 {
     // if get throws an expcetion, propagate it up
     auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?credId=" + cred_id_ +
@@ -315,7 +326,7 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
                                          response.status};
     }
 
-    std::unique_ptr<Resource> resource {};
+    Resource resource {};
     try {
         resource = create_resource(obj);
     } catch (simdjson::simdjson_error e) {
@@ -325,7 +336,7 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
                                          response.status};
     }
 
-    if (resource->contained_resources() == nullptr && resource->is_directory()) {
+    if (!resource.contained_resources && resource.is_directory) {
         // bad response body
         throw Unexpected_response_error {
             "Parsed resource was a directory but didn't have contained resources when listing resource \"" +
@@ -371,8 +382,7 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
 
     if (response.status != 200) {
         // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response after downloading resource.",
-                                         response.status};
+        throw Unexpected_response_error {"Expected a status 200 response after downloading resource.", response.status};
     }
 }
 

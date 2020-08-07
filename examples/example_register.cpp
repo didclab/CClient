@@ -68,10 +68,10 @@ int main()
         const auto root_path {"/"};
         const auto my_endpoint {Ods::Endpoint::create(Ods::Endpoint_type::ftp, my_cred_id, token, url)};
         const auto root {my_endpoint->list(root_path)};
-        if (root->is_directory()) {
-            auto resources {root->contained_resources()};
+        if (root.is_directory) {
+            auto resources {root.contained_resources};
             for (auto r : *resources) {
-                std::cout << r->name() << std::endl;
+                std::cout << r.name << std::endl;
             }
         }
 

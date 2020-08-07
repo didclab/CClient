@@ -6,6 +6,7 @@
 
 #include <array>
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -94,7 +95,7 @@ TEST_F(Endpoint_impl_tests, ListWithBadResponseBodyThrowsUnexpectedResponse)
 }
 
 /**
- * Tests that the Resource returned from list returns null from id when the stat object recieved doesn't have an id.
+ * Tests that the Resource returned from list has no id when the stat object recieved doesn't have an id.
  */
 TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
 {
@@ -124,8 +125,7 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
 
         auto resource {endpoint.list("")};
 
-        ASSERT_NE(resource, nullptr);
-        EXPECT_EQ(resource->id(), nullptr);
+        EXPECT_FALSE(resource.id);
     }
 }
 
@@ -163,15 +163,15 @@ TEST_F(Endpoint_impl_tests, ListResourceWithID)
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
-        ASSERT_NE(resource, nullptr);
 
-        auto id {resource->id()};
-
-        ASSERT_NE(id, nullptr);
-        EXPECT_EQ(*id, id_value);
+        ASSERT_TRUE(resource.id);
+        EXPECT_EQ(resource.id.value(), id_value);
     }
 }
 
+/**
+ * Tests that the returned Resource has no link when the received Stat has no link.
+ */
 TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
 {
     std::string stat {R"({
@@ -200,11 +200,13 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutLink)
 
         auto resource {endpoint.list("")};
 
-        ASSERT_NE(resource, nullptr);
-        EXPECT_EQ(resource->link(), nullptr);
+        EXPECT_FALSE(resource.link);
     }
 }
 
+/**
+ * Tests that the returned Resource has a link when the received Stat has a link.
+ */
 TEST_F(Endpoint_impl_tests, ListResourceWithLink)
 {
     std::string link_value {"this is the link"};
@@ -236,15 +238,15 @@ TEST_F(Endpoint_impl_tests, ListResourceWithLink)
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
-        ASSERT_NE(resource, nullptr);
 
-        auto link {resource->link()};
-
-        ASSERT_NE(link, nullptr);
-        EXPECT_EQ(*link, link_value);
+        ASSERT_TRUE(resource.link);
+        EXPECT_EQ(resource.link.value(), link_value);
     }
 }
 
+/**
+ * Tests that the returned Resource has no permissions when the received Stat has no permissions.
+ */
 TEST_F(Endpoint_impl_tests, ListResourceWithoutPermissions)
 {
     std::string stat {R"({
@@ -273,11 +275,13 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutPermissions)
 
         auto resource {endpoint.list("")};
 
-        ASSERT_NE(resource, nullptr);
-        EXPECT_EQ(resource->permissions(), nullptr);
+        EXPECT_FALSE(resource.permissions);
     }
 }
 
+/**
+ * Tests that the returned Resource has permissions when the received Stat has permissions.
+ */
 TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
 {
     std::string permissions_value {"these are the permissions"};
@@ -310,15 +314,15 @@ TEST_F(Endpoint_impl_tests, ListResourceWithPermissions)
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
-        ASSERT_NE(resource, nullptr);
 
-        auto permissions {resource->permissions()};
-
-        ASSERT_NE(permissions, nullptr);
-        EXPECT_EQ(*permissions, permissions_value);
+        ASSERT_TRUE(resource.permissions);
+        EXPECT_EQ(resource.permissions.value(), permissions_value);
     }
 }
 
+/**
+ * Tests that the returned Resource has no contained resources when the received Stat has no contained resources.
+ */
 TEST_F(Endpoint_impl_tests, ListResourceWithoutContainedResources)
 {
     std::string stat {R"({
@@ -346,11 +350,13 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutContainedResources)
 
         auto resource {endpoint.list("")};
 
-        ASSERT_NE(resource, nullptr);
-        EXPECT_EQ(resource->contained_resources(), nullptr);
+        EXPECT_FALSE(resource.contained_resources);
     }
 }
 
+/**
+ * Tests that the returned Resource has contained resources when the received Stat has contained resources.
+ */
 TEST_F(Endpoint_impl_tests, ListResourceWithContainedResources)
 {
     std::string stat {R"({
@@ -379,11 +385,8 @@ TEST_F(Endpoint_impl_tests, ListResourceWithContainedResources)
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
-        ASSERT_NE(resource, nullptr);
 
-        auto files {resource->contained_resources()};
-
-        ASSERT_NE(files, nullptr);
+        ASSERT_TRUE(resource.contained_resources);
     }
 }
 
@@ -455,13 +458,12 @@ TEST_F(Endpoint_impl_tests, ListReturnsValues)
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto resource {endpoint.list("")};
-        ASSERT_NE(resource, nullptr);
 
-        EXPECT_EQ(resource->name(), name_val);
-        EXPECT_EQ(resource->size(), size_val);
-        EXPECT_EQ(resource->time(), time_val);
-        EXPECT_FALSE(resource->is_directory());
-        EXPECT_TRUE(resource->is_file());
+        EXPECT_EQ(resource.name, name_val);
+        EXPECT_EQ(resource.size, size_val);
+        EXPECT_EQ(resource.time, time_val);
+        EXPECT_FALSE(resource.is_directory);
+        EXPECT_TRUE(resource.is_file);
     }
 }
 
@@ -496,22 +498,21 @@ TEST_F(Endpoint_impl_tests, ListParsesStat)
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
         auto r {endpoint.list("")};
-        ASSERT_NE(r, nullptr);
 
-        auto id {r->id()};
-        auto name {r->name()};
-        auto size {r->size()};
-        auto time {r->time()};
-        auto dir {r->is_directory()};
-        auto file {r->is_file()};
-        auto link {r->link()};
-        auto perm {r->permissions()};
-        auto files {r->contained_resources()};
+        auto id {r.id};
+        auto name {r.name};
+        auto size {r.size};
+        auto time {r.time};
+        auto dir {r.is_directory};
+        auto file {r.is_file};
+        auto link {r.link};
+        auto perm {r.permissions};
+        auto files {r.contained_resources};
 
-        ASSERT_NE(id, nullptr);
-        ASSERT_NE(link, nullptr);
-        ASSERT_NE(perm, nullptr);
-        ASSERT_NE(files, nullptr);
+        ASSERT_TRUE(id);
+        ASSERT_TRUE(link);
+        ASSERT_TRUE(perm);
+        ASSERT_TRUE(files);
     }
 }
 
@@ -563,6 +564,9 @@ TEST_F(Endpoint_impl_tests, RemoveReturns)
     }
 }
 
+/**
+ * Tests that mkdir throws a Connection_err when it receives one.
+ */
 TEST_F(Endpoint_impl_tests, MkdirThrowsConnectionErr)
 {
     for (auto type : types) {
@@ -576,6 +580,9 @@ TEST_F(Endpoint_impl_tests, MkdirThrowsConnectionErr)
     }
 }
 
+/**
+ * Tests that mkdir throws an Unexpected_response_err when it receives a 500 response.
+ */
 TEST_F(Endpoint_impl_tests, MkdirThrowsUnexpectedResponse)
 {
     for (auto type : types) {
@@ -589,6 +596,9 @@ TEST_F(Endpoint_impl_tests, MkdirThrowsUnexpectedResponse)
     }
 }
 
+/**
+ * Tests that mkdir returns without throwing when it receives a 200 response.
+ */
 TEST_F(Endpoint_impl_tests, MkdirReturns)
 {
     for (auto type : types) {
@@ -602,6 +612,9 @@ TEST_F(Endpoint_impl_tests, MkdirReturns)
     }
 }
 
+/**
+ * Tests that donwload throws a Connection_err when it receives one.
+ */
 TEST_F(Endpoint_impl_tests, DownloadThrowsConnectionErr)
 {
     for (auto type : types) {
@@ -615,6 +628,9 @@ TEST_F(Endpoint_impl_tests, DownloadThrowsConnectionErr)
     }
 }
 
+/**
+ * Tests that Download throws an Unexpected_response_err when it receives a 500 status.
+ */
 TEST_F(Endpoint_impl_tests, DownloadThrowsUnexpectedResponse)
 {
     for (auto type : types) {
@@ -628,6 +644,9 @@ TEST_F(Endpoint_impl_tests, DownloadThrowsUnexpectedResponse)
     }
 }
 
+/**
+ * Tests that download returns without throwing when it receives a 200 status.
+ */
 TEST_F(Endpoint_impl_tests, DownloadReturns)
 {
     for (auto type : types) {

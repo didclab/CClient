@@ -19,7 +19,6 @@ add_library(onedatashare
     src/endpoint.cpp
     src/endpoint_impl.cpp
     src/ods_error.cpp
-    src/resource_impl.cpp
     src/rest.cpp
     src/transfer_service.cpp
     src/transfer_service_impl.cpp
