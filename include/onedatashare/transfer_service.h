@@ -34,13 +34,13 @@ public:
     Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
 
     /** Type of the destinatin endpoint. */
-    const Endpoint_type type;
+    Endpoint_type type;
 
     /** Credential identifier of the destination endpoint. */
-    const std::string cred_id;
+    std::string cred_id;
 
     /** Identifier of the destination directory. */
-    const std::string directory_identifier;
+    std::string directory_identifier;
 };
 
 /**
@@ -67,16 +67,16 @@ public:
            const std::vector<std::string>& resource_identifiers);
 
     /** Type of the source endpoint. */
-    const Endpoint_type type;
+    Endpoint_type type;
 
     /** Credential identifier of the source endpoint. */
-    const std::string cred_id;
+    std::string cred_id;
 
     /** Identifier of the source directory. */
-    const std::string directory_identifier;
+    std::string directory_identifier;
 
     /** Identifiers of resources to transfer from the source endpoint. */
-    const std::vector<std::string> resource_identifiers;
+    std::vector<std::string> resource_identifiers;
 };
 
 /**
