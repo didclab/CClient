@@ -23,7 +23,6 @@ namespace Internal {
 
 class Transfer_status_impl : public Transfer_status {
     Transfer_status_impl() = default;
-    ~Transfer_status_impl() override = default;
 };
 
 class Transfer_service_impl : public Transfer_service {
@@ -32,11 +31,9 @@ public:
                           const std::string& ods_url,
                           std::unique_ptr<Rest> rest_caller);
 
-    ~Transfer_service_impl() override = default;
-
     std::string transfer(const Source& source,
-                                 const Destination& destination,
-                                 const Transfer_options& options) const override;
+                         const Destination& destination,
+                         const Transfer_options& options) const override;
 
     std::unique_ptr<Transfer_status> status(const std::string& id) const override;
 

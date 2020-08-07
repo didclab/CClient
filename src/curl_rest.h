@@ -23,8 +23,6 @@ class Curl_rest : public Rest {
 public:
     Curl_rest() = default;
 
-    ~Curl_rest() override = default;
-
     Response get(const std::string& url,
                  const std::unordered_multimap<std::string, std::string>& headers) const override;
 

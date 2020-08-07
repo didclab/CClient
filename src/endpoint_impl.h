@@ -28,8 +28,6 @@ public:
                   const std::string& ods_url,
                   std::unique_ptr<Rest> rest_caller);
 
-    ~Endpoint_impl() override = default;
-
     Resource list(const std::string& identifier) const override;
 
     void remove(const std::string& identifier, const std::string& to_delete) const override;

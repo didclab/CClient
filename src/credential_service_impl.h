@@ -36,8 +36,6 @@ public:
                             const std::string& ods_url,
                             std::unique_ptr<Rest> rest_caller);
 
-    ~Credential_service_impl() override = default;
-
     std::string oauth_url(Oauth_endpoint_type type) const override;
 
     void register_credential(Credential_endpoint_type type,
