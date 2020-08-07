@@ -16,14 +16,7 @@ namespace One_data_share {
  */
 class Ods_error : public std::runtime_error {
 public:
-    /// @private
-    Ods_error(const std::string& what_arg);
-
-    /// @private
-    Ods_error(const char* what_arg);
-
-    /// @private
-    virtual ~Ods_error() = default;
+    using std::runtime_error::runtime_error;
 };
 
 /**
@@ -31,14 +24,7 @@ public:
  */
 class Connection_error : public Ods_error {
 public:
-    /// @private
-    Connection_error(const std::string& what_arg);
-
-    /// @private
-    Connection_error(const char* what_arg);
-
-    /// @private
-    virtual ~Connection_error() = default;
+    using Ods_error::Ods_error;
 };
 
 /**
@@ -46,14 +32,13 @@ public:
  */
 class Unexpected_response_error : public Ods_error {
 public:
-    /// @private
+    /**
+     * Creates a new Unexpeected_response_error with the specified message and status code.
+     *
+     * @param what_arg borrowed reference to the error message
+     * @param status status code from the unexpected response
+     */
     Unexpected_response_error(const std::string& what_arg, int status);
-
-    /// @private
-    Unexpected_response_error(const char* what_arg, int status);
-
-    /// @private
-    virtual ~Unexpected_response_error() = default;
 
     /**
      * The status code of the unexpected response.
