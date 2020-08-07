@@ -52,13 +52,8 @@ struct Source {
 /**
  * Options to use in a transfer request.
  */
-class Transfer_options {
+struct Transfer_options {
     // TODO: define
-public:
-    /**
-     * Creates a new Transfer_options object.
-     */
-    Transfer_options();
 };
 
 /**

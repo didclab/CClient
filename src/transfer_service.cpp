@@ -12,14 +12,6 @@
 
 namespace One_data_share {
 
-// Destination::Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
-//     : type(type),
-//       cred_id(cred_id),
-//       directory_identifier(directory_identifier)
-// {}
-
-Transfer_options::Transfer_options() = default;
-
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
     return create(ods_auth_token, Internal::ods_production_url);
