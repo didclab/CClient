@@ -20,8 +20,21 @@ namespace One_data_share {
 
 namespace Internal {
 
+/**
+ * Service that akes REST API calls to One Data Share related to an endpoint's file system.
+ */
 class Endpoint_impl : public Endpoint {
 public:
+    /**
+     * Creates a new Endpoint_impl object for the specified endpoint with the specified connection to One Data Share
+     * using the specified rest caller.
+     *
+     * @param type the type of endpoint to return
+     * @param cred_id borrowed reference to the credential id of the endpoint to use
+     * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
+     * @param ods_url borrowed reference to the url that One Data Share is running on
+     * @param rest_caller moved pointer to the object to use for making REST API calls
+     */
     Endpoint_impl(Endpoint_type type,
                   const std::string& cred_id,
                   const std::string& ods_oauth_token,
