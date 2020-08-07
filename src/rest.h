@@ -15,20 +15,10 @@ namespace One_data_share {
 namespace Internal {
 
 /**
- * Class holding the response from a request made via the get or post functions.
+ * Holds the response from a request made via the get or post functions.
  */
-class Response {
-public:
-    /**
-     * Creates a new Response object.
-     *
-     * @param headers borrowed reference to the multi-map containing the response headers
-     * @param body borrowed reference to the json string containing the response body
-     * @param status integer corresponding to the http response status
-     */
-    Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, int status);
-
-    /** Multi-map storing headers as (key, value) pairs. */
+struct Response {
+    /** Multi-map storing response headers as (key, value) pairs. */
     const std::unordered_multimap<std::string, std::string> headers;
 
     /** Json string containing the response body. */
