@@ -20,7 +20,6 @@ namespace One_data_share {
  * Represents a directory, file, or link from an endpoint's file system.
  */
 struct Resource {
-public:
     /** Id of the resource if the resource has an id, no value otherwise. */
     std::optional<std::string> id;
 

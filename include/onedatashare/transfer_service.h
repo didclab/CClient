@@ -20,7 +20,6 @@ namespace One_data_share {
  * functionality as described in {@link Endpoint_type}.
  */
 struct Destination {
-public:
     /** Endpoint type to transfer to. */
     Endpoint_type type;
 
@@ -36,7 +35,6 @@ public:
  * functionality as described in {@link Endpoint_type}.
  */
 struct Source {
-public:
     /** Endpoint type to transfer from. */
     Endpoint_type type;
 
