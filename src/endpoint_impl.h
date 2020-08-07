@@ -21,7 +21,7 @@ namespace One_data_share {
 namespace Internal {
 
 /**
- * Service that akes REST API calls to One Data Share related to an endpoint's file system.
+ * Service that makes REST API calls to One Data Share related to an endpoint's file system.
  */
 class Endpoint_impl : public Endpoint {
 public:
