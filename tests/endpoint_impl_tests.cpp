@@ -9,6 +9,7 @@
 #include <optional>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 
 #include <gtest/gtest.h>
@@ -40,6 +41,8 @@ constexpr std::array types {Ods::Endpoint_type::box,
                             Ods::Endpoint_type::http,
                             Ods::Endpoint_type::s3,
                             Ods::Endpoint_type::sftp};
+
+const std::unordered_set id_types {Ods::Endpoint_type::box, Ods::Endpoint_type::google_drive};
 
 class Endpoint_impl_tests : public ::testing::Test {
 };
@@ -123,9 +126,12 @@ TEST_F(Endpoint_impl_tests, ListResourceWithoutID)
 
         const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
 
-        auto resource {endpoint.list("")};
-
-        EXPECT_FALSE(resource.id);
+        if (id_types.count(type) > 0) {
+            EXPECT_THROW(endpoint.list(""), Ods::Unexpected_response_error);
+        } else {
+            auto resource {endpoint.list("")};
+            EXPECT_FALSE(resource.id);
+        }
     }
 }
 
@@ -435,6 +441,7 @@ TEST_F(Endpoint_impl_tests, ListReturnsValues)
     auto time_val = 24576;
 
     std::string stat {R"({
+        "id": "",
         "name": ")" + name_val +
                       R"(",
         "size": )" + std::to_string(size_val) +
@@ -513,6 +520,39 @@ TEST_F(Endpoint_impl_tests, ListParsesStat)
         ASSERT_TRUE(link);
         ASSERT_TRUE(perm);
         ASSERT_TRUE(files);
+    }
+}
+
+/**
+ * Tests that an exception is thrown when listing an id endpoint that returns a resource without an id.
+ */
+TEST_F(Endpoint_impl_tests, ListIdEndpointHasId)
+{
+    std::string stat {R"({
+        "name": "string",
+        "size": 0,
+        "time": 0,
+        "dir": true,
+        "file": true,
+        "link": "string",
+        "permissions": "string",
+        "files": [
+        ],
+        "filesList": [
+            null
+        ],
+        "total_size": 0,
+        "total_num": 0
+    })"};
+
+    for (auto type : std::array {Ods::Endpoint_type::box, Ods::Endpoint_type::google_drive}) {
+        // set up mock returning stat
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, get).WillOnce(Return(Ods::Internal::Response {Header_map {}, stat, 200}));
+
+        const Ods::Internal::Endpoint_impl endpoint {type, "", "", "", std::move(caller)};
+
+        EXPECT_THROW(endpoint.list(""), Ods::Unexpected_response_error);
     }
 }
 

@@ -100,6 +100,13 @@ std::string select_list_path(Endpoint_type type)
     }
 }
 
+/**
+ * Gets the remove api path for the sepcified type.
+ *
+ * @param type endpoint to get the api path for
+ *
+ * @return the api path
+ */
 std::string select_rm_path(Endpoint_type type)
 {
     switch (type) {
@@ -125,6 +132,13 @@ std::string select_rm_path(Endpoint_type type)
     }
 }
 
+/**
+ * Gets the mkdir api path for the specified type.
+ *
+ * @param type endpoint to get the api path for
+ *
+ * @return the api path
+ */
 std::string select_mkdir_path(Endpoint_type type)
 {
     switch (type) {
@@ -150,6 +164,13 @@ std::string select_mkdir_path(Endpoint_type type)
     }
 }
 
+/**
+ * Gets the download api path for the specified type.
+ *
+ * @param type endpoint to get the api path for
+ *
+ * @return the api path
+ */
 std::string select_download_path(Endpoint_type type)
 {
     switch (type) {
@@ -176,12 +197,12 @@ std::string select_download_path(Endpoint_type type)
 }
 
 /**
- * Creates a unique pointer to a Resource object containing the data stored in the specified Stat json object. It is
- * expected that the specified dom conforms to the Stat object specifications.
+ * Creates a Resource object containing the data stored in the specified Stat json object. It is expected that the
+ * specified dom conforms to the Stat object specifications.
  *
  * @param obj borrowed reference to the dom containing the Stat json object to parse
  *
- * @return unique pointer to Resource created from parsing the specified dom
+ * @return the Resource created from parsing the specified dom
  *
  * @throw simdjson_error if simdjson encounters an error parsing the dom
  */
@@ -207,20 +228,6 @@ Resource create_resource(const simdjson::dom::object& obj)
         }
     }
 
-    // propogate up simdjson_error exceptions if thrown
-    // auto id_val {id_err ? nullptr : std::make_shared<const std::string>(id_elm.get_c_str().take_value())};
-    // auto name_val {name.get_c_str().take_value()};
-    // auto size_val {size.get_int64().take_value()};
-    // auto time_val {time.get_int64().take_value()};
-    // auto dir_val {dir.get_bool().take_value()};
-    // auto file_val {file.get_bool().take_value()};
-    // auto link_val {link_err ? nullptr : std::make_shared<const std::string>(link_elm.get_c_str().take_value())};
-    // auto permissions_val {
-    //     permissions_err ? nullptr : std::make_shared<const std::string>(permissions_elm.get_c_str().take_value())};
-    // auto files_val {files_err ?
-    //                     nullptr :
-    //                     std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(std::move(contained))};
-
     return {id_err ? std::nullopt : std::optional {id_elm.get_c_str().take_value()},
             name.get_c_str().take_value(),
             size.get_int64().take_value(),
@@ -230,16 +237,6 @@ Resource create_resource(const simdjson::dom::object& obj)
             link_err ? std::nullopt : std::optional {link_elm.get_c_str().take_value()},
             permissions_err ? std::nullopt : std::optional {permissions_elm.get_c_str().take_value()},
             files_err ? std::nullopt : std::optional {contained}};
-
-    // return std::make_unique<Resource_impl>(std::move(id_val),
-    //                                        std::move(name_val),
-    //                                        size_val,
-    //                                        time_val,
-    //                                        dir_val,
-    //                                        file_val,
-    //                                        std::move(link_val),
-    //                                        std::move(permissions_val),
-    //                                        std::move(files_val));
 }
 
 /**
@@ -342,6 +339,11 @@ Resource Endpoint_impl::list(const std::string& identifier) const
             "Parsed resource was a directory but didn't have contained resources when listing resource \"" +
                 identifier + "\" on endpoint \"" + cred_id_ + "\".",
             response.status};
+    }
+
+    if (!resource.id && (type_ == Endpoint_type::box || type_ == Endpoint_type::google_drive)) {
+        // bad response body
+        throw Unexpected_response_error {"Expected parsed resource to have an id.", response.status};
     }
 
     return resource;
