@@ -19,27 +19,15 @@ namespace One_data_share {
  * Indicates the destination endpoint of a transfer. Different endpoint types may differ slightly in behavior and
  * functionality as described in {@link Endpoint_type}.
  */
-class Destination {
+struct Destination {
 public:
-    /**
-     * Creates a new Destination object with the specified endpoint and directory.
-     *
-     * @param type the endpoint type to transfer to
-     * @param cred_id the credential identifier of the endpoint to transfer to
-     * @param directory_identifier  the path or id, depending on the endpoint type, that is needed in order to
-     * locate the directory in which the transfered resources should be placed
-     *
-     * @see Endpoint_type
-     */
-    Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier);
-
-    /** Type of the destinatin endpoint. */
+    /** Endpoint type to transfer to. */
     Endpoint_type type;
 
-    /** Credential identifier of the destination endpoint. */
+    /** Credential identifier of the endpoint to transfer to. */
     std::string cred_id;
 
-    /** Identifier of the destination directory. */
+    /** Path or id, depending on the endpoint type, used to locate the directory to place transfered resources. */
     std::string directory_identifier;
 };
 
@@ -47,35 +35,19 @@ public:
  * Indicates the source endpoint of a transfer. Different endpoint types may differ slightly in behavior and
  * functionality as described in {@link Endpoint_type}.
  */
-class Source {
+struct Source {
 public:
-    /**
-     * Creates a new Source object with the specified endpoint and resources.
-     *
-     * @param type the endpoint type to transfer from
-     * @param cred_id borrowed reference to the credential identifier of the endpoint to transfer from
-     * @param directory_identifier borrowed reference to the path or id, depending on the endpoint type, that is
-     * needed in order to locate the directory containing the resources to transfer
-     * @param resource_identifiers borrowed reference to the names or ids, depending on the endpoint type, that are
-     * needed in order to locate the resources to transfer from within the specified directory
-     *
-     * @see Endpoint_type
-     */
-    Source(Endpoint_type type,
-           const std::string& cred_id,
-           const std::string& directory_identifier,
-           const std::vector<std::string>& resource_identifiers);
-
-    /** Type of the source endpoint. */
+    /** Endpoint type to transfer from. */
     Endpoint_type type;
 
-    /** Credential identifier of the source endpoint. */
+    /** Credential identifier of the endpoint to transfer from. */
     std::string cred_id;
 
-    /** Identifier of the source directory. */
+    /** Path or id, depending on the endpoint type, used to locate the directory to transfer from. */
     std::string directory_identifier;
 
-    /** Identifiers of resources to transfer from the source endpoint. */
+    /** Names or ids, depending on the endpoint type, used to locate the resources to transfer from within the source
+     * directory. */
     std::vector<std::string> resource_identifiers;
 };
 

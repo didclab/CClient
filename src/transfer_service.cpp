@@ -12,21 +12,11 @@
 
 namespace One_data_share {
 
-Destination::Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
-    : type(type),
-      cred_id(cred_id),
-      directory_identifier(directory_identifier)
-{}
-
-Source::Source(Endpoint_type type,
-               const std::string& cred_id,
-               const std::string& directory_identifier,
-               const std::vector<std::string>& resource_identifiers)
-    : type(type),
-      cred_id(cred_id),
-      directory_identifier(directory_identifier),
-      resource_identifiers(resource_identifiers)
-{}
+// Destination::Destination(Endpoint_type type, const std::string& cred_id, const std::string& directory_identifier)
+//     : type(type),
+//       cred_id(cred_id),
+//       directory_identifier(directory_identifier)
+// {}
 
 Transfer_options::Transfer_options() = default;
 
