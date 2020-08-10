@@ -43,6 +43,21 @@ constexpr auto s3_type {"s3"};
 /** Parameter value indicating an sftp endpoint. */
 constexpr auto sftp_type {"sftp"};
 
+/** Field of EndpointCrededential json object indicating credential id. */
+constexpr auto endpoint_credential_account_id {"accountId"};
+
+/** Field of EndpointCrededential json object indicating uri. */
+constexpr auto endpoint_credential_uri {"uri"};
+
+/** Field of EndpointCrededential json object indicating username. */
+constexpr auto endpoint_credential_username {"username"};
+
+/** Field of EndpointCrededential json object indicating password. */
+constexpr auto endpoint_credential_secret {"secret"};
+
+/** Field of CredList json object indicating array of credential ids. */
+constexpr auto cred_list_credential_list {"credentialList"};
+
 } // namespace Api
 } // namespace Internal
 } // namespace One_data_share

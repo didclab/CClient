@@ -86,12 +86,13 @@ std::string create_account_endpoint_credential(const std::string& account_id,
 {
     std::ostringstream stream {};
     stream << "{"
-           << "\"accountId\":\"" << Util::escape_json(account_id) << "\",\"uri\":\"" << Util::escape_json(uri);
+           << "\"" << Api::endpoint_credential_account_id << "\":\"" << Util::escape_json(account_id) << "\",\""
+           << Api::endpoint_credential_uri << "\":\"" << Util::escape_json(uri);
     if (username != nullptr) {
-        stream << "\",\"username\":\"" << Util::escape_json(*username);
+        stream << "\",\"" << Api::endpoint_credential_username << "\":\"" << Util::escape_json(*username);
     }
     if (secret != nullptr) {
-        stream << "\",\"secret\":\"" << Util::escape_json(*secret);
+        stream << "\",\"" << Api::endpoint_credential_secret << "\":\"" << Util::escape_json(*secret);
     }
     stream << "\"}";
 
@@ -159,7 +160,7 @@ std::vector<std::string> Credential_service_impl::credential_id_list(const Endpo
 
     try {
         // parse json string array in CredList json object from response body
-        for (auto e : parser.parse(response.body).get_object().value()["credentialList"].get_array()) {
+        for (auto e : parser.parse(response.body).get_object().value()[Api::cred_list_credential_list].get_array()) {
             cred_list.push_back(e.get_c_str().take_value());
         }
     } catch (simdjson::simdjson_error e) {
