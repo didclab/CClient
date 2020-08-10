@@ -1,7 +1,8 @@
-/*
- * endpoint.cpp
- * Andrew Mikalsen
- * 7/20/20
+/**
+ * @file endpoint.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/20/20
  */
 
 #include <onedatashare/endpoint.h>

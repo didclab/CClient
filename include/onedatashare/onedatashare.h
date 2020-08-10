@@ -1,11 +1,9 @@
-/*
- * onedatashare.h
- * Andrew Mikalsen
- * 8/4/20
- */
-
-/** \file onedatashare.h
+/**
+ * @file onedatashare.h
  * Includes all header files needed to use the One Data Share SDK.
+ *
+ * @author Andrew Mikalsen
+ * @date 8/4/20
  */
 
 #ifndef ONEDATASHARE_ONEDATASHARE_H

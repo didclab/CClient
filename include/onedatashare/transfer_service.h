@@ -1,7 +1,9 @@
-/*
- * transfer_service.h
- * Andrew Mikalsen
- * 7/7/20
+/** 
+ * @file transfer_service.h
+ * Defines structs and classes needed to perform and observe transfer operations.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/7/20
  */
 
 #ifndef ONEDATASHARE_TRANSFER_SERVICE_H

@@ -1,7 +1,9 @@
-/*
- * credential_service.h
- * Andrew Mikalsen
- * 7/7/20
+/**
+ * @file credential_service.h
+ * Defines enumerations and classes needed to register credentials with One Data Share.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/7/20
  */
 
 #ifndef ONEDATASHARE_CREDENTIAL_SERVICE_H

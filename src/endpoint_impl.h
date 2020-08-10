@@ -1,7 +1,9 @@
-/*
- * endpoint_impl.h
- * Andrew Mikalsen
- * 7/20/20
+/**
+ * @file endpoint_impl.h
+ * Defines the internal implementation of classes needed to interact with an endpoint's file sytem.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/20/20
  */
 
 #ifndef ONEDATASHARE_ENDPOINT_IMPL_H
@@ -17,7 +19,6 @@
 #include "rest.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 /**
@@ -70,7 +71,6 @@ private:
 };
 
 } // namespace Internal
-
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_ENDPOINT_IMPL_H

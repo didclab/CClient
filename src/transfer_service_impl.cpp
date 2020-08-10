@@ -1,7 +1,8 @@
-/*
- * transfer_service_impl.cpp
- * Andrew Mikalsen
- * 7/23/20
+/**
+ * @file transfer_service_impl.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/23/20
  */
 
 #include <sstream>
@@ -13,7 +14,6 @@
 #include "utils.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 namespace {
@@ -76,8 +76,7 @@ std::string create_source(const Source& source)
 std::string create_destination(const Destination& destination)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << as_string(destination.type) << "\",\"credId\":\""
-           << escape_json(destination.cred_id)
+    stream << "{\"type\":\"" << as_string(destination.type) << "\",\"credId\":\"" << escape_json(destination.cred_id)
            << "\",\"info\":" << create_entity_info(destination.directory_identifier, destination.directory_identifier)
            << "}";
 
@@ -151,5 +150,4 @@ std::unique_ptr<Transfer_status> Transfer_service_impl::status(const std::string
 }
 
 } // namespace Internal
-
 } // namespace One_data_share

@@ -1,7 +1,8 @@
-/*
- * ods_rest_api.cpp
- * Andrew Mikalsen
- * 8/10/20
+/**
+ * @file ods_rest_api.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 8/10/20
  */
 
 #include "ods_rest_api.h"

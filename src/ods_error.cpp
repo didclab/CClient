@@ -1,7 +1,8 @@
-/*
- * ods_error.cpp
- * Andrew Mikalsen
- * 7/16/20
+/**
+ * @file ods_error.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/16/20
  */
 
 #include <onedatashare/ods_error.h>

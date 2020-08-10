@@ -1,7 +1,9 @@
-/*
- * error_message.h
- * Andrew Mikalsen
- * 8/10/20
+/**
+ * @file error_message.h
+ * Defines namespace-global constants for error messages.
+ *
+ * @author Andrew Mikalsen
+ * @date 8/10/20
  */
 
 #ifndef ONEDATASHARE_ERROR_MESSAGE_H

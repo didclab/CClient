@@ -1,7 +1,8 @@
-/*
- * curl_rest.cpp
- * Andrew Mikalsen
- * 6/23/20
+/**
+ * @file curl_rest.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 6/23/20
  */
 
 #include <optional>
@@ -14,7 +15,6 @@
 #include "curl_rest.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 namespace {
@@ -239,5 +239,4 @@ Response Curl_rest::post(const std::string& url,
 }
 
 } // namespace Internal
-
 } // namespace One_data_share

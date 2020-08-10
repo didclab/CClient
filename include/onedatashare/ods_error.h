@@ -1,7 +1,9 @@
-/*
- * ods_error.h
- * Andrew Mikalsen
- * 7/16/20
+/** 
+ * @file ods_error.h
+ * Defines the exceptions that can be thrown by the One Data Share SDK.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/16/20
  */
 
 #ifndef ONEDATASHARE_ODS_ERROR_H

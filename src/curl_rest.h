@@ -1,7 +1,9 @@
-/*
- * curl_rest.h
- * Andrew Mikalsen
- * 6/23/20
+/**
+ * @file curl_rest.h
+ * Defines a class wrapping libcurl used to make REST API calls.
+ *
+ * @author Andrew Mikalsen
+ * @date 6/23/20
  */
 
 #ifndef ONEDATASHARE_CURL_REST_H
@@ -13,7 +15,6 @@
 #include "rest.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 /**
@@ -30,7 +31,6 @@ public:
 };
 
 } // namespace Internal
-
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_CURL_REST_H

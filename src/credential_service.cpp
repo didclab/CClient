@@ -1,7 +1,8 @@
-/*
- * credential_service.cpp
- * Andrew Mikalsen
- * 7/9/20
+/**
+ * @file credential_service.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/9/20
  */
 
 #include <onedatashare/credential_service.h>

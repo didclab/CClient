@@ -1,7 +1,9 @@
-/*
- * transfer_service_impl.h
- * Andrew Mikalsen
- * 7/23/20
+/**
+ * @file transfer_service_impl.h
+ * Defines the internal implementation for classes needed to make and observe transfer requests.
+ *
+ * @author Andrew Mikalsen
+ * @name 7/23/20
  */
 
 #ifndef ONEDATASHARE_TRANSFER_SERVICE_IMPL_H
@@ -18,7 +20,6 @@
 #include "rest.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 /**
@@ -64,7 +65,6 @@ private:
 };
 
 } // namespace Internal
-
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_TRANSFER_SERVICE_IMPL_H

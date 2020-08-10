@@ -1,7 +1,9 @@
-/*
- * rest.h
- * Andrew Mikalsen
- * 6/5/20
+/**
+ * @file rest.h
+ * Defines an interface for making REST API calls.
+ *
+ * @author Andrew Mikalsen
+ * @date 6/5/20
  */
 
 #ifndef ONEDATASHARE_REST_H
@@ -11,7 +13,6 @@
 #include <unordered_map>
 
 namespace One_data_share {
-
 namespace Internal {
 
 /**
@@ -78,7 +79,6 @@ protected:
 };
 
 } // namespace Internal
-
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_REST_H

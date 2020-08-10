@@ -1,7 +1,9 @@
-/*
- * utils.h
- * Andrew Mikalsen
- * 7/21/20
+/**
+ * @file utils.h
+ * Defines miscellaneous internal utility constants and functions.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/21/20
  */
 
 #ifndef ONEDATASHARE_UTILS_H
@@ -13,7 +15,6 @@
 #include <onedatashare/endpoint_type.h>
 
 namespace One_data_share {
-
 namespace Internal {
 
 /** Production url for One Data Share. */
@@ -56,7 +57,6 @@ std::string escape_json(const std::string& json);
 bool load_url_from_config(std::string& url);
 
 } // namespace Internal
-
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_UTILS_H

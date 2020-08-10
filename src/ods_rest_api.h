@@ -1,7 +1,9 @@
-/*
- * ods_rest_api.h
- * Andrew Mikalsen
- * 8/10/20
+/**
+ * @file ods_rest_api.h
+ * Defines namespace-global constants and functions related to the specification of the One Data Share REST API.
+ *
+ * @author Andrew Mikalsen
+ * @date 8/10/20
  */
 
 #ifndef ONEDATASHARE_ODS_REST_API_H

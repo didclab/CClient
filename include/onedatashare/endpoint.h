@@ -1,7 +1,9 @@
-/*
- * endpoint.h
- * Andrew Mikalsen
- * 6/29/20
+/**
+ * @file endpoint.h
+ * Defines structs and classes needed to interact with an endpoint's file system.
+ *
+ * @author Andrew Mikalsen
+ * @date 6/29/20
  */
 
 #ifndef ONEDATASHARE_ENDPOINT_H

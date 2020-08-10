@@ -1,7 +1,8 @@
-/*
- * transfer_service.cpp
- * Andrew Mikalsen
- * 7/23/20
+/**
+ * @file transfer_service.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/23/20
  */
 
 #include <onedatashare/transfer_service.h>

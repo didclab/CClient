@@ -1,7 +1,8 @@
-/*
- * credential_service_impl.cpp
- * Andrew Mikalsen
- * 7/10/20
+/**
+ * @file credential_service_impl.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/10/20
  */
 
 #include <iomanip>

@@ -1,7 +1,8 @@
-/*
- * endpoint_impl.cpp
- * Andrew Mikalsen
- * 7/20/20
+/**
+ * @file endpoint_impl.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/20/20
  */
 
 #include <optional>
@@ -17,7 +18,6 @@
 #include "utils.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 namespace {
@@ -389,5 +389,4 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
 }
 
 } // namespace Internal
-
 } // namespace One_data_share

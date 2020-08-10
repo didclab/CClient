@@ -1,7 +1,8 @@
-/*
- * utils.cpp
- * Andrew Mikalsen
- * 7/21/20
+/**
+ * @file utils.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/21/20
  */
 
 #include <fstream>
@@ -12,7 +13,6 @@
 #include "utils.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 namespace {
@@ -23,7 +23,7 @@ constexpr auto header_content_type {"Content-Type"};
 /** Value of content type header. */
 constexpr auto header_json {"application/json"};
 
-/** Autorization header. */
+/** Authorization header. */
 constexpr auto header_authorization {"Authorization"};
 
 /** Part of the value of authorization header. */
@@ -118,5 +118,4 @@ bool load_url_from_config(std::string& url)
 }
 
 } // namespace Internal
-
 } // namespace One_data_share

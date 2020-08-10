@@ -1,7 +1,9 @@
-/*
- * credential_service_impl.h
- * Andrew Mikalsen
- * 7/9/20
+/**
+ * @file credential_service_impl.h
+ * Defines the internal implementation of classes needed to regsiter credentials.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/9/20
  */
 
 #ifndef ONEDATASHARE_CREDENTIAL_SERVICE_IMPL_H
