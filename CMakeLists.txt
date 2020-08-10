@@ -18,7 +18,6 @@ add_library(onedatashare
     src/curl_rest.cpp
     src/endpoint.cpp
     src/endpoint_impl.cpp
-    src/error_message.cpp
     src/ods_error.cpp
     src/ods_rest_api.cpp
     src/rest.cpp
