@@ -18,17 +18,6 @@ namespace One_data_share {
 namespace Internal {
 
 namespace {
-
-/**
- * Sequence of newline characters.
- */
-constexpr auto newline_chars {"\n\r"};
-
-/**
- * String separating keys from values when parsing headers.
- */
-constexpr auto header_delim {": "};
-
 /**
  * Initializes libcurl when created and cleans up libcurl when destroyed.
  */
@@ -50,11 +39,20 @@ public:
         curl_global_cleanup();
     }
 };
-/**
- * Static object that initializes libcurl global data at the start of the program and frees libcurl global data once
- * the program terminates.
- */
+
+/** Static object that initializes libcurl global data at the start of the program and frees libcurl global data once
+ * the program terminates. */
 static Curl_init libcurl_global_data_handler {};
+
+/**
+ * Sequence of newline characters.
+ */
+constexpr auto newline_chars {"\n\r"};
+
+/**
+ * String separating keys from values when parsing headers.
+ */
+constexpr auto header_delim {": "};
 
 /**
  * Converts the specified string into a (key, value) pair if the string contains the specified delimiter by
@@ -84,7 +82,7 @@ const std::optional<std::pair<std::string, std::string>> parse_header(const std:
         return std::pair<std::string, std::string> {header.substr(0, del_start),
                                                     header.substr(del_start + del_len, h_end - del_start - del_len)};
     } else {
-        // if the header doesnt contain the delimiter return no value
+        // header doesnt contain the delimiter
         return {};
     }
 }
@@ -139,42 +137,38 @@ size_t header_callback(void* buffer,
  */
 Response Curl_rest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const
 {
-    // string that curl will write the response body to
-    std::string response_body {};
+    CURL* handle {curl_easy_init()};
+    curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(handle, CURLOPT_HTTPGET, 1L);
+    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback);
 
-    // multi-map that curl will write the request headers to
-    std::unordered_multimap<std::string, std::string> response_headers {};
-
-    // long that the http response status will be written to
-    long status;
-
-    // initialize headers_slist, a linked-list of strings, which is used to specify the headers for the request
+    // create owned pointer to curl_slist
     curl_slist* headers_slist {nullptr};
     for (auto h : headers) {
         headers_slist = curl_slist_append(headers_slist, (h.first + header_delim + h.second).c_str());
     }
-
-    // execute the request
-    CURL* handle {curl_easy_init()};
-    curl_easy_setopt(handle, CURLOPT_HTTPGET, 1L);
-    curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_slist);
 
-    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
-    curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body);
-    curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback);
+    std::unordered_multimap<std::string, std::string> response_headers {};
     curl_easy_setopt(handle, CURLOPT_HEADERDATA, &response_headers);
 
-    const CURLcode result {curl_easy_perform(handle)};
+    std::string response_body {};
+    curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body);
 
+    const auto result {curl_easy_perform(handle)};
+
+    long status {-1};
     curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status);
 
-    // free resources
     curl_easy_cleanup(handle);
+    
+    // free owned pointer to curl_slist
     curl_slist_free_all(headers_slist);
 
+    // check that the request was successful
     if (result != CURLE_OK) {
-        throw Connection_error {"Unable to connect to " + url + ": " + curl_easy_strerror(result)};
+        throw Connection_error {curl_easy_strerror(result)};
     }
 
     return Response {response_headers, response_body, (int) status};
@@ -196,39 +190,34 @@ Response Curl_rest::post(const std::string& url,
                          const std::unordered_multimap<std::string, std::string>& headers,
                          const std::string& data) const
 {
-    // string that curl will write the response body to
-    std::string response_body {};
+    // execute the request
+    CURL* handle {curl_easy_init()};
+    curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data.c_str());
+    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback);
 
-    // multi-map that curl will write the request headers to
-    std::unordered_multimap<std::string, std::string> response_headers {};
-
-    // long that the http response status will be written to
-    long status;
-
-    // initialize headers_slist, a linked-list of strings, which is used to specify the headers for the request
+    // create owned pointer to curl_slist
     curl_slist* headers_slist {nullptr};
     for (auto h : headers) {
         headers_slist = curl_slist_append(headers_slist, (h.first + header_delim + h.second).c_str());
     }
-
-    // execute the request
-    CURL* handle {curl_easy_init()};
-    curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers_slist);
 
-    curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data.c_str());
-
-    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
+    std::string response_body {};
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &response_body);
-    curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, header_callback);
+
+    std::unordered_multimap<std::string, std::string> response_headers {};
     curl_easy_setopt(handle, CURLOPT_HEADERDATA, &response_headers);
 
-    const CURLcode result {curl_easy_perform(handle)};
+    const auto result {curl_easy_perform(handle)};
 
+    long status {-1};
     curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status);
 
-    // free resources
     curl_easy_cleanup(handle);
+
+    // free owned pointer to curl_slist
     curl_slist_free_all(headers_slist);
 
     if (result != CURLE_OK) {
