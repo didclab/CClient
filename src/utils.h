@@ -35,7 +35,7 @@ std::unordered_multimap<std::string, std::string> create_headers(const std::stri
  *
  * @return endpoint type as a string understood by the REST API
  */
-std::string endpoint_as_string(const Endpoint_type type);
+std::string as_string(Endpoint_type type);
 
 /**
  * Escapes characters in the given json string.

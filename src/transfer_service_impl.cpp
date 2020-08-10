@@ -46,7 +46,7 @@ std::string create_entity_info(const std::string& id, const std::string& path)
 std::string create_source(const Source& source)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << endpoint_as_string(source.type) << "\",\"credId\":\"" << escape_json(source.cred_id)
+    stream << "{\"type\":\"" << as_string(source.type) << "\",\"credId\":\"" << escape_json(source.cred_id)
            << "\",\"info\":" << create_entity_info(source.directory_identifier, source.directory_identifier)
            << ",\"infoList\":[";
 
@@ -76,7 +76,7 @@ std::string create_source(const Source& source)
 std::string create_destination(const Destination& destination)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << endpoint_as_string(destination.type) << "\",\"credId\":\""
+    stream << "{\"type\":\"" << as_string(destination.type) << "\",\"credId\":\""
            << escape_json(destination.cred_id)
            << "\",\"info\":" << create_entity_info(destination.directory_identifier, destination.directory_identifier)
            << "}";

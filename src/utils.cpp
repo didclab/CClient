@@ -41,7 +41,7 @@ std::unordered_multimap<std::string, std::string> create_headers(const std::stri
         std::pair<std::string, std::string> {header_authorization, header_bearer + ods_auth_token}};
 }
 
-std::string endpoint_as_string(const Endpoint_type type)
+std::string as_string(Endpoint_type type)
 {
     switch (type) {
     case Endpoint_type::box:

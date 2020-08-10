@@ -51,7 +51,7 @@ constexpr auto bad_oauth_endpoint_msg {"Unknown Oauth_endpoint_type."};
  *
  * @return endpoint type as a string understood by the REST API
  */
-std::string endpoint_as_string(Credential_endpoint_type type)
+std::string as_string(Credential_endpoint_type type)
 {
     switch (type) {
     case Credential_endpoint_type::ftp:
@@ -75,7 +75,7 @@ std::string endpoint_as_string(Credential_endpoint_type type)
  *
  * @return endpoint type as a string understood by the REST API
  */
-std::string endpoint_as_string(Oauth_endpoint_type type)
+std::string as_string(Oauth_endpoint_type type)
 {
     switch (type) {
     case Oauth_endpoint_type::box:
@@ -95,7 +95,12 @@ std::string endpoint_as_string(Oauth_endpoint_type type)
 /**
  * Creates an AccountEndpointCredential json object with the specified fields.
  *
+ * @param account_id borrowed reference to the value of the corresponding json field
+ * @param uri borrowed reference to the value of the corresponding json field
+ * @param account_id borrowed pointer to the value of the corresponding json field or nullptr to exclude the json field
+ * @param secret borrowed pointer to the value of the corresponding json field or nullptr to exclude the json field
  *
+ * @return the created json string corresponding to the AccountEndpointCredential json object
  */
 std::string create_account_endpoint_credential(const std::string& account_id,
                                                const std::string& uri,
@@ -130,8 +135,7 @@ Credential_service_impl::Credential_service_impl(const std::string& ods_auth_tok
 std::string Credential_service_impl::oauth_url(const Oauth_endpoint_type type) const
 {
     // if get throws an exception, propagate it up
-    const Response response {
-        rest_caller_->get(ods_url_ + api_path_oauth + "?type=" + endpoint_as_string(type), headers_)};
+    const Response response {rest_caller_->get(ods_url_ + api_path_oauth + "?type=" + as_string(type), headers_)};
 
     if (response.status != 303) {
         // unexpected response
@@ -155,7 +159,7 @@ void Credential_service_impl::register_credential(const Credential_endpoint_type
                                                   const std::string* secret) const
 {
     // if post throws an exception, propogate it up
-    const Response response {rest_caller_->post(ods_url_ + api_path_cred + "/" + endpoint_as_string(type),
+    const Response response {rest_caller_->post(ods_url_ + api_path_cred + "/" + as_string(type),
                                                 headers_,
                                                 create_account_endpoint_credential(cred_id, uri, username, secret))};
 
@@ -168,7 +172,7 @@ void Credential_service_impl::register_credential(const Credential_endpoint_type
 std::vector<std::string> Credential_service_impl::credential_id_list(const Endpoint_type type) const
 {
     // if get throws an exception, propogate it up
-    const auto response {rest_caller_->get(ods_url_ + api_path_cred + "/" + endpoint_as_string(type), headers_)};
+    const auto response {rest_caller_->get(ods_url_ + api_path_cred + "/" + as_string(type), headers_)};
 
     if (response.status != 200) {
         // expected status 200
