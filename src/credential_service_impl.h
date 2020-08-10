@@ -17,7 +17,6 @@
 #include "rest.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 /**
@@ -58,7 +57,6 @@ private:
 };
 
 } // namespace Internal
-
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_CREDENTIAL_SERVICE_IMPL_H

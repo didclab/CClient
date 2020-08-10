@@ -14,10 +14,10 @@
 #include <onedatashare/ods_error.h>
 
 #include "credential_service_impl.h"
+#include "error_message.h"
 #include "utils.h"
 
 namespace One_data_share {
-
 namespace Internal {
 
 namespace {
@@ -27,21 +27,6 @@ constexpr auto api_path_oauth {"/api/oauth"};
 
 /** Path of the REST API call for credentials. */
 constexpr auto api_path_cred {"/api/cred"};
-
-/** Error message when a 303 response code is expected and not received. */
-constexpr auto expect_303_msg {"Expected a status 303 response code."};
-
-/** Error message when a Location header is expected and not received. */
-constexpr auto expect_location_msg {"Expected a \"Location\" header in the response headers."};
-
-/** Error message when a 200 status code is expected and not received. */
-constexpr auto expect_200_msg {"Expected a 200 response code when registering credentials."};
-
-/** Error message when using an undefined value of an enumeration. */
-constexpr auto unknown_enum_msg {"Unknown enumeration type."};
-
-/** Error message when unable to parse the expected JSON response. */
-constexpr auto invalid_json_body_msg {"Unable to parse expected JSON response body."};
 
 /**
  * Converts a credential endpoint type to the string needed for the REST API.
@@ -191,5 +176,4 @@ std::vector<std::string> Credential_service_impl::credential_id_list(const Endpo
 }
 
 } // namespace Internal
-
 } // namespace One_data_share
