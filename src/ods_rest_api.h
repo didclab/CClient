@@ -1,6 +1,6 @@
 /**
  * @file ods_rest_api.h
- * Defines namespace-global constants and functions related to the specification of the One Data Share REST API.
+ * Defines constants and functions related to the specification of the One Data Share REST API.
  *
  * @author Andrew Mikalsen
  * @date 8/10/20
@@ -18,6 +18,30 @@ constexpr auto oauth_path {"/api/oauth"};
 
 /** Path of the REST API call for credentials. */
 constexpr auto cred_path {"/api/cred"};
+
+/** Parameter value indicating a box endpoint. */
+constexpr auto box_type {"box"};
+
+/** Parameter value indicating a dropbox endpoint. */
+constexpr auto dropbox_type {"dropbox"};
+
+/** Parameter value indicating an ftp endpoint. */
+constexpr auto ftp_type {"ftp"};
+
+/** Parameter value indicating a gftp endpoint. */
+constexpr auto gftp_type {"gftp"};
+
+/** Parameter value indicating a google drive endpoint. */
+constexpr auto google_drive_type {"gdrive"};
+
+/** Parameter value indicating an http endpoint. */
+constexpr auto http_type {"http"};
+
+/** Parameter value indicating an s3 endpoint. */
+constexpr auto s3_type {"s3"};
+
+/** Parameter value indicating an sftp endpoint. */
+constexpr auto sftp_type {"sftp"};
 
 } // namespace Api
 } // namespace Internal

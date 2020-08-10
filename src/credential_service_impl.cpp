@@ -34,13 +34,13 @@ std::string as_string(Credential_endpoint_type type)
 {
     switch (type) {
     case Credential_endpoint_type::ftp:
-        return "ftp";
+        return Api::ftp_type;
     case Credential_endpoint_type::http:
-        return "http";
+        return Api::http_type;
     case Credential_endpoint_type::s3:
-        return "s3";
+        return Api::s3_type;
     case Credential_endpoint_type::sftp:
-        return "sftp";
+        return Api::sftp_type;
     }
 
     throw std::invalid_argument(Err::unknown_enum_msg);
@@ -57,13 +57,13 @@ std::string as_string(Oauth_endpoint_type type)
 {
     switch (type) {
     case Oauth_endpoint_type::box:
-        return "box";
+        return Api::box_type;
     case Oauth_endpoint_type::dropbox:
-        return "dropbox";
+        return Api::dropbox_type;
     case Oauth_endpoint_type::gftp:
-        return "gftp";
+        return Api::gftp_type;
     case Oauth_endpoint_type::google_drive:
-        return "gdrive";
+        return Api::google_drive_type;
     }
 
     throw std::invalid_argument(Err::unknown_enum_msg);

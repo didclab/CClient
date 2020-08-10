@@ -23,7 +23,7 @@ add_library(onedatashare
     src/rest.cpp
     src/transfer_service.cpp
     src/transfer_service_impl.cpp
-    src/utils.cpp
+    src/util.cpp
 )
 
 add_library(OneDataShare::onedatashare ALIAS onedatashare)
