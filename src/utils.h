@@ -17,7 +17,7 @@ namespace One_data_share {
 namespace Internal {
 
 /** Production url for One Data Share. */
-static constexpr auto ods_production_url {"https://onedatashare.org"};
+constexpr auto ods_production_url {"https://onedatashare.org"};
 
 /**
  * Creates the required header map using the specified token.
