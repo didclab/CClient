@@ -12,7 +12,13 @@
 namespace One_data_share {
 namespace Internal {
 
-}
+/** Path of the REST API call for oauth. */
+constexpr auto oauth_path {"/api/oauth"};
+
+/** Path of the REST API call for credentials. */
+constexpr auto cred_path {"/api/cred"};
+
+} // namespace Internal
 } // namespace One_data_share
 
 #endif // ONEDATASHARE_ODS_REST_API_H

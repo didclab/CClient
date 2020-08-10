@@ -16,19 +16,13 @@
 
 #include "credential_service_impl.h"
 #include "error_message.h"
+#include "ods_rest_api.h"
 #include "utils.h"
 
 namespace One_data_share {
 namespace Internal {
 
 namespace {
-
-/** Path of the REST API call for oauth. */
-constexpr auto api_path_oauth {"/api/oauth"};
-
-/** Path of the REST API call for credentials. */
-constexpr auto api_path_cred {"/api/cred"};
-
 /**
  * Converts a credential endpoint type to the string needed for the REST API.
  *
@@ -117,7 +111,7 @@ Credential_service_impl::Credential_service_impl(const std::string& ods_auth_tok
 std::string Credential_service_impl::oauth_url(Oauth_endpoint_type type) const
 {
     // if get throws an exception, propagate it up
-    const Response response {rest_caller_->get(ods_url_ + api_path_oauth + "?type=" + as_string(type), headers_)};
+    const Response response {rest_caller_->get(ods_url_ + oauth_path + "?type=" + as_string(type), headers_)};
 
     if (response.status != 303) {
         throw Unexpected_response_error {expect_303_msg, response.status};
@@ -142,7 +136,7 @@ void Credential_service_impl::register_credential(Credential_endpoint_type type,
                                                   const std::string* secret) const
 {
     // if post throws an exception, propogate it up
-    const Response response {rest_caller_->post(ods_url_ + api_path_cred + "/" + as_string(type),
+    const Response response {rest_caller_->post(ods_url_ + cred_path + "/" + as_string(type),
                                                 headers_,
                                                 create_account_endpoint_credential(cred_id, uri, username, secret))};
 
@@ -154,7 +148,7 @@ void Credential_service_impl::register_credential(Credential_endpoint_type type,
 std::vector<std::string> Credential_service_impl::credential_id_list(const Endpoint_type type) const
 {
     // if get throws an exception, propogate it up
-    const auto response {rest_caller_->get(ods_url_ + api_path_cred + "/" + as_string(type), headers_)};
+    const auto response {rest_caller_->get(ods_url_ + cred_path + "/" + as_string(type), headers_)};
 
     if (response.status != 200) {
         throw Unexpected_response_error {expect_200_msg, response.status};
