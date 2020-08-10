@@ -11,7 +11,7 @@
 #include <onedatashare/ods_error.h>
 
 #include "transfer_service_impl.h"
-#include "utils.h"
+#include "util.h"
 
 namespace One_data_share {
 namespace Internal {
@@ -31,7 +31,7 @@ constexpr auto api_path_transfer_job {"/api/transfer-job"};
 std::string create_entity_info(const std::string& id, const std::string& path)
 {
     std::ostringstream stream {};
-    stream << "{\"id\":\"" << escape_json(id) << "\",\"path\":\"" << escape_json(path) << "\"}";
+    stream << "{\"id\":\"" << Util::escape_json(id) << "\",\"path\":\"" << Util::escape_json(path) << "\"}";
 
     return stream.str();
 }
@@ -46,7 +46,7 @@ std::string create_entity_info(const std::string& id, const std::string& path)
 std::string create_source(const Source& source)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << as_string(source.type) << "\",\"credId\":\"" << escape_json(source.cred_id)
+    stream << "{\"type\":\"" << Util::as_string(source.type) << "\",\"credId\":\"" << Util::escape_json(source.cred_id)
            << "\",\"info\":" << create_entity_info(source.directory_identifier, source.directory_identifier)
            << ",\"infoList\":[";
 
@@ -76,7 +76,8 @@ std::string create_source(const Source& source)
 std::string create_destination(const Destination& destination)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << as_string(destination.type) << "\",\"credId\":\"" << escape_json(destination.cred_id)
+    stream << "{\"type\":\"" << Util::as_string(destination.type) << "\",\"credId\":\""
+           << Util::escape_json(destination.cred_id)
            << "\",\"info\":" << create_entity_info(destination.directory_identifier, destination.directory_identifier)
            << "}";
 
@@ -123,7 +124,7 @@ Transfer_service_impl::Transfer_service_impl(const std::string& ods_auth_token,
     : ods_auth_token_(ods_auth_token),
       ods_url_(ods_url),
       rest_caller_(std::move(rest_caller)),
-      headers_(create_headers(ods_auth_token_))
+      headers_(Util::create_headers(ods_auth_token_))
 {}
 
 std::string Transfer_service_impl::transfer(const Source& source,

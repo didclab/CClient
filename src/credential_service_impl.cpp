@@ -17,7 +17,7 @@
 #include "credential_service_impl.h"
 #include "error_message.h"
 #include "ods_rest_api.h"
-#include "utils.h"
+#include "util.h"
 
 namespace One_data_share {
 namespace Internal {
@@ -43,7 +43,7 @@ std::string as_string(Credential_endpoint_type type)
         return "sftp";
     }
 
-    throw std::invalid_argument(unknown_enum_msg);
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**
@@ -66,7 +66,7 @@ std::string as_string(Oauth_endpoint_type type)
         return "gdrive";
     }
 
-    throw std::invalid_argument(unknown_enum_msg);
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**
@@ -86,12 +86,12 @@ std::string create_account_endpoint_credential(const std::string& account_id,
 {
     std::ostringstream stream {};
     stream << "{"
-           << "\"accountId\":\"" << escape_json(account_id) << "\",\"uri\":\"" << escape_json(uri);
+           << "\"accountId\":\"" << Util::escape_json(account_id) << "\",\"uri\":\"" << Util::escape_json(uri);
     if (username != nullptr) {
-        stream << "\",\"username\":\"" << escape_json(*username);
+        stream << "\",\"username\":\"" << Util::escape_json(*username);
     }
     if (secret != nullptr) {
-        stream << "\",\"secret\":\"" << escape_json(*secret);
+        stream << "\",\"secret\":\"" << Util::escape_json(*secret);
     }
     stream << "\"}";
 
@@ -104,17 +104,17 @@ Credential_service_impl::Credential_service_impl(const std::string& ods_auth_tok
                                                  const std::string& ods_url,
                                                  std::unique_ptr<Rest> rest_caller)
     : ods_url_ {ods_url},
-      headers_ {create_headers(ods_auth_token)},
+      headers_ {Util::create_headers(ods_auth_token)},
       rest_caller_ {std::move(rest_caller)}
 {}
 
 std::string Credential_service_impl::oauth_url(Oauth_endpoint_type type) const
 {
     // if get throws an exception, propagate it up
-    const Response response {rest_caller_->get(ods_url_ + oauth_path + "?type=" + as_string(type), headers_)};
+    const Response response {rest_caller_->get(ods_url_ + Api::oauth_path + "?type=" + as_string(type), headers_)};
 
     if (response.status != 303) {
-        throw Unexpected_response_error {expect_303_msg, response.status};
+        throw Unexpected_response_error {Err::expect_303_msg, response.status};
     }
 
     // find url contained in a Location header (there should only be one Location header)
@@ -122,7 +122,7 @@ std::string Credential_service_impl::oauth_url(Oauth_endpoint_type type) const
 
     // check that there was a Location header
     if (iter == response.headers.end()) {
-        throw Unexpected_response_error {expect_location_msg, response.status};
+        throw Unexpected_response_error {Err::expect_location_msg, response.status};
     }
 
     // return the url
@@ -136,22 +136,22 @@ void Credential_service_impl::register_credential(Credential_endpoint_type type,
                                                   const std::string* secret) const
 {
     // if post throws an exception, propogate it up
-    const Response response {rest_caller_->post(ods_url_ + cred_path + "/" + as_string(type),
+    const Response response {rest_caller_->post(ods_url_ + Api::cred_path + "/" + as_string(type),
                                                 headers_,
                                                 create_account_endpoint_credential(cred_id, uri, username, secret))};
 
     if (response.status != 200) {
-        throw Unexpected_response_error {expect_200_msg, response.status};
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 }
 
 std::vector<std::string> Credential_service_impl::credential_id_list(const Endpoint_type type) const
 {
     // if get throws an exception, propogate it up
-    const auto response {rest_caller_->get(ods_url_ + cred_path + "/" + as_string(type), headers_)};
+    const auto response {rest_caller_->get(ods_url_ + Api::cred_path + "/" + Util::as_string(type), headers_)};
 
     if (response.status != 200) {
-        throw Unexpected_response_error {expect_200_msg, response.status};
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 
     simdjson::dom::parser parser {};
@@ -164,7 +164,7 @@ std::vector<std::string> Credential_service_impl::credential_id_list(const Endpo
         }
     } catch (simdjson::simdjson_error e) {
         // bad response body
-        throw Unexpected_response_error {invalid_json_body_msg, response.status};
+        throw Unexpected_response_error {Err::invalid_json_body_msg, response.status};
     }
 
     return cred_list;

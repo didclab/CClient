@@ -10,10 +10,11 @@
 #include <sstream>
 #include <utility>
 
-#include "utils.h"
+#include "util.h"
 
 namespace One_data_share {
 namespace Internal {
+namespace Util {
 
 namespace {
 
@@ -117,5 +118,6 @@ bool load_url_from_config(std::string& url)
     return true;
 }
 
+} // namespace Util
 } // namespace Internal
 } // namespace One_data_share

@@ -9,6 +9,8 @@
 
 namespace One_data_share {
 namespace Internal {
+namespace Api {
 
 }
+} // namespace Internal
 } // namespace One_data_share

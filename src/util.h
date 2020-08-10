@@ -16,6 +16,7 @@
 
 namespace One_data_share {
 namespace Internal {
+namespace Util {
 
 /** Production url for One Data Share. */
 constexpr auto ods_production_url {"https://onedatashare.org"};
@@ -56,6 +57,7 @@ std::string escape_json(const std::string& json);
  */
 bool load_url_from_config(std::string& url);
 
+} // namespace Util
 } // namespace Internal
 } // namespace One_data_share
 

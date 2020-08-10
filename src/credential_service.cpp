@@ -9,13 +9,13 @@
 
 #include "credential_service_impl.h"
 #include "curl_rest.h"
-#include "utils.h"
+#include "util.h"
 
 namespace One_data_share {
 
 std::unique_ptr<Credential_service> Credential_service::create(const std::string& ods_auth_token)
 {
-    return create(ods_auth_token, Internal::ods_production_url);
+    return create(ods_auth_token, Internal::Util::ods_production_url);
 }
 
 std::unique_ptr<Credential_service> Credential_service::create(const std::string& ods_auth_token,

@@ -15,7 +15,7 @@
 #include <onedatashare/ods_error.h>
 
 #include "endpoint_impl.h"
-#include "utils.h"
+#include "util.h"
 
 namespace One_data_share {
 namespace Internal {
@@ -248,8 +248,8 @@ std::string create_delete_operation(const std::string& cred_id,
                                     const std::string& to_delete)
 {
     std::ostringstream stream {};
-    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
-           << escape_json(id) << "\",\"toDelete\":\"" << escape_json(to_delete) << "\"}";
+    stream << "{\"credId\":\"" << Util::escape_json(cred_id) << "\",\"path\":\"" << Util::escape_json(path)
+           << "\",\"id\":\"" << Util::escape_json(id) << "\",\"toDelete\":\"" << Util::escape_json(to_delete) << "\"}";
 
     return stream.str();
 }
@@ -263,8 +263,9 @@ std::string create_mkdir_operation(const std::string& cred_id,
                                    const std::string& folder_to_create)
 {
     std::ostringstream stream {};
-    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
-           << escape_json(id) << "\",\"folderToCreate\":\"" << escape_json(folder_to_create) << "\"}";
+    stream << "{\"credId\":\"" << Util::escape_json(cred_id) << "\",\"path\":\"" << Util::escape_json(path)
+           << "\",\"id\":\"" << Util::escape_json(id) << "\",\"folderToCreate\":\""
+           << Util::escape_json(folder_to_create) << "\"}";
 
     return stream.str();
 }
@@ -278,8 +279,9 @@ std::string create_download_operation(const std::string& cred_id,
                                       const std::string& file_to_download)
 {
     std::ostringstream stream {};
-    stream << "{\"credId\":\"" << escape_json(cred_id) << "\",\"path\":\"" << escape_json(path) << "\",\"id\":\""
-           << escape_json(id) << "\",\"fileToDownload\":\"" << escape_json(file_to_download) << "\"}";
+    stream << "{\"credId\":\"" << Util::escape_json(cred_id) << "\",\"path\":\"" << Util::escape_json(path)
+           << "\",\"id\":\"" << Util::escape_json(id) << "\",\"fileToDownload\":\""
+           << Util::escape_json(file_to_download) << "\"}";
 
     return stream.str();
 }
@@ -296,7 +298,7 @@ Endpoint_impl::Endpoint_impl(Endpoint_type type,
       ods_auth_token_ {ods_oauth_token},
       ods_url_ {ods_url},
       rest_caller_ {std::move(rest_caller)},
-      headers_ {create_headers(ods_auth_token_)}
+      headers_ {Util::create_headers(ods_auth_token_)}
 {}
 
 Resource Endpoint_impl::list(const std::string& identifier) const

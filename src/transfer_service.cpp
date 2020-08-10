@@ -9,13 +9,13 @@
 
 #include "curl_rest.h"
 #include "transfer_service_impl.h"
-#include "utils.h"
+#include "util.h"
 
 namespace One_data_share {
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
-    return create(ods_auth_token, Internal::ods_production_url);
+    return create(ods_auth_token, Internal::Util::ods_production_url);
 }
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token, const std::string& url)
