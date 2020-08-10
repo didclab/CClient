@@ -21,22 +21,21 @@ namespace Internal {
 
 namespace {
 
-/**
- * Path of the REST API call for oauth.
- */
+/** Path of the REST API call for oauth. */
 constexpr auto api_path_oauth {"/api/oauth"};
 
-/**
- * Path of the REST API call for credentials.
- */
+/** Path of the REST API call for credentials. */
 constexpr auto api_path_cred {"/api/cred"};
 
-constexpr auto oauth_url_wrong_response_msg {"Expected a status 303 response code when requesting oauth url."};
+/** Error message when a status code other than 303 is received when requesting an oauth url. */
+constexpr auto oauth_no_303_msg {"Expected a status 303 response code when requesting oauth url."};
 
-constexpr auto oauth_url_missing_location_msg {
+/** Error message when there is no location in the response headers when requesting an oauth url. */
+constexpr auto oauth_no_location_msg {
     "Response headers missing the expected \"Location\" header when reqesting oauth url."};
 
-constexpr auto register_cred_wrong_response_msg {"Expected a 200 response code when registering credentials."};
+/** Error message when a status code other than 200 is received when registering credentials. */
+constexpr auto reg_cred_no_200_msg {"Expected a 200 response code when registering credentials."};
 
 /**
  * Converts a credential endpoint type to the string needed for the REST API.
@@ -45,7 +44,7 @@ constexpr auto register_cred_wrong_response_msg {"Expected a 200 response code w
  *
  * @return endpoint type as a string understood by the REST API
  */
-std::string endpoint_as_string(const Credential_endpoint_type type)
+std::string endpoint_as_string(Credential_endpoint_type type)
 {
     switch (type) {
     case Credential_endpoint_type::ftp:
@@ -88,8 +87,10 @@ std::string endpoint_as_string(const Oauth_endpoint_type type)
 
 /**
  * Creates an AccountEndpointCredential json object with the specified fields.
+ *
+ *
  */
-std::string create_account_endpoint_credential(const std::string account_id,
+std::string create_account_endpoint_credential(const std::string& account_id,
                                                const std::string& uri,
                                                const std::string* username,
                                                const std::string* secret)
@@ -127,14 +128,14 @@ std::string Credential_service_impl::oauth_url(const Oauth_endpoint_type type) c
 
     if (response.status != 303) {
         // unexpected response
-        throw Unexpected_response_error {oauth_url_wrong_response_msg, response.status};
+        throw Unexpected_response_error {oauth_no_303_msg, response.status};
     }
 
     // find url in a single location header, as there should only be one
     const auto iter {response.headers.find("Location")};
     if (iter == response.headers.end()) {
         // did not contain Location header
-        throw Unexpected_response_error {oauth_url_missing_location_msg, response.status};
+        throw Unexpected_response_error {oauth_no_location_msg, response.status};
     }
 
     return iter->second;
@@ -153,7 +154,7 @@ void Credential_service_impl::register_credential(const Credential_endpoint_type
 
     if (response.status != 200) {
         // expected status 200
-        throw Unexpected_response_error {register_cred_wrong_response_msg, response.status};
+        throw Unexpected_response_error {reg_cred_no_200_msg, response.status};
     }
 }
 
