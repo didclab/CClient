@@ -6,6 +6,7 @@
 
 #include <iomanip>
 #include <sstream>
+#include <stdexcept>
 #include <utility>
 
 #include <simdjson/simdjson.h>
@@ -37,6 +38,12 @@ constexpr auto oauth_no_location_msg {
 /** Error message when a status code other than 200 is received when registering credentials. */
 constexpr auto reg_cred_no_200_msg {"Expected a 200 response code when registering credentials."};
 
+/** Error message when converting an invalid Credential_endpoint_type to a string. */
+constexpr auto bad_cred_endpoint_msg {"Unknown Credential_endpoint_type."};
+
+/** Error message when converting an invalid Oauth_endpoint_type to a string. */
+constexpr auto bad_oauth_endpoint_msg {"Unknown Oauth_endpoint_type."};
+
 /**
  * Converts a credential endpoint type to the string needed for the REST API.
  *
@@ -56,8 +63,8 @@ std::string endpoint_as_string(Credential_endpoint_type type)
     case Credential_endpoint_type::sftp:
         return "sftp";
     default:
-        // TODO: throw exception
-        return "";
+        // invalid enum
+        throw std::invalid_argument(bad_cred_endpoint_msg);
     }
 }
 
@@ -68,7 +75,7 @@ std::string endpoint_as_string(Credential_endpoint_type type)
  *
  * @return endpoint type as a string understood by the REST API
  */
-std::string endpoint_as_string(const Oauth_endpoint_type type)
+std::string endpoint_as_string(Oauth_endpoint_type type)
 {
     switch (type) {
     case Oauth_endpoint_type::box:
@@ -80,8 +87,8 @@ std::string endpoint_as_string(const Oauth_endpoint_type type)
     case Oauth_endpoint_type::google_drive:
         return "gdrive";
     default:
-        // TODO: throw exception
-        return "";
+        // invalid enum
+        throw std::invalid_argument(bad_oauth_endpoint_msg);
     }
 }
 
