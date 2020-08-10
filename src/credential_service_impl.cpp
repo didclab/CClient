@@ -126,10 +126,9 @@ std::string create_account_endpoint_credential(const std::string& account_id,
 Credential_service_impl::Credential_service_impl(const std::string& ods_auth_token,
                                                  const std::string& ods_url,
                                                  std::unique_ptr<Rest> rest_caller)
-    : ods_auth_token_ {ods_auth_token},
-      ods_url_ {ods_url},
-      rest_caller_ {std::move(rest_caller)},
-      headers_ {create_headers(ods_auth_token_)}
+    : ods_url_ {ods_url},
+      headers_ {create_headers(ods_auth_token)},
+      rest_caller_ {std::move(rest_caller)}
 {}
 
 std::string Credential_service_impl::oauth_url(const Oauth_endpoint_type type) const
