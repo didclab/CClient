@@ -124,17 +124,6 @@ size_t header_callback(void* buffer,
 
 } // namespace
 
-/**
- * Uses libcurl to perform a GET request to the specified url with the specified headers.
- *
- * @param url borrowed refrence to the string set as the url
- * @param headers borrowed refrence to the multi-map used to construct a curl string linked-list to set request
- * headers
- *
- * @return the Response object created by the write_data and header_callback functions
- *
- * @exception Connection_error if unable to connect to the sepcified url
- */
 Response Curl_rest::get(const std::string& url, const std::unordered_multimap<std::string, std::string>& headers) const
 {
     CURL* handle {curl_easy_init()};
@@ -174,18 +163,6 @@ Response Curl_rest::get(const std::string& url, const std::unordered_multimap<st
     return Response {response_headers, response_body, (int) status};
 }
 
-/**
- * Uses libcurl to perform a POST request to the specified url with the specified headers and data.
- *
- * @param url borrowed reference to the string set as the url
- * @param headers borrowed reference to the multi-map used to construct a curl string linked-list to set request
- * headers
- * @param data borrowed reference to the json string passed in to libcurl to send as the POST data for the request
- *
- * @return the Response object created by the write_data and header_callback functions
- *
- * @exception Connection_error if unable to connect to the sepcified url
- */
 Response Curl_rest::post(const std::string& url,
                          const std::unordered_multimap<std::string, std::string>& headers,
                          const std::string& data) const
