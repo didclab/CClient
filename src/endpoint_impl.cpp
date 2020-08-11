@@ -168,35 +168,30 @@ std::string select_download_path(Endpoint_type type)
  */
 Resource create_resource(const simdjson::dom::object& obj)
 {
-    // keep track of errors that can be handled, propogate errors that indicate a malformed response
-    auto [id_elm, id_err] {obj[Api::stat_id]};
-    auto name {obj[Api::stat_name]};
-    auto size {obj[Api::stat_size]};
-    auto time {obj[Api::stat_time]};
-    auto dir {obj[Api::stat_dir]};
-    auto file {obj[Api::stat_file]};
-    auto [link_elm, link_err] {obj[Api::stat_link]};
-    auto [permissions_elm, permissions_err] {obj[Api::stat_permissions]};
-    auto [files_elm, files_err] {obj[Api::stat_files]};
-
     // recursively add contained resoruces
     std::vector<Resource> contained {};
-    if (!files_err) {
-        for (const auto& r : files_elm) {
+    auto files {obj[Api::stat_files]};
+    if (!files.error()) {
+        for (const auto& r : files.value()) {
             // propogate up simdjson_error if thrown
-            contained.push_back(create_resource(r.get_object().take_value()));
+            contained.push_back(create_resource(r.get_object().value()));
         }
     }
 
-    return {id_err ? std::nullopt : std::optional {id_elm.get_c_str().take_value()},
-            name.get_c_str().take_value(),
-            size.get_int64().take_value(),
-            time.get_int64().take_value(),
-            dir.get_bool().take_value(),
-            file.get_bool().take_value(),
-            link_err ? std::nullopt : std::optional {link_elm.get_c_str().take_value()},
-            permissions_err ? std::nullopt : std::optional {permissions_elm.get_c_str().take_value()},
-            files_err ? std::nullopt : std::optional {contained}};
+    auto id {obj[Api::stat_id]};
+    auto link {obj[Api::stat_link]};
+    auto permissions {obj[Api::stat_permissions]};
+
+    // if simdjson_error is thrown, the dom must not meet the specification, so propogate the exception
+    return {id.error() ? std::nullopt : std::optional {id.get_c_str().value()},
+            obj[Api::stat_name].get_c_str().value(),
+            obj[Api::stat_size].get_int64().value(),
+            obj[Api::stat_time].get_int64().value(),
+            obj[Api::stat_dir].get_bool().value(),
+            obj[Api::stat_file].get_bool().value(),
+            link.error() ? std::nullopt : std::optional {link.get_c_str().value()},
+            permissions.error() ? std::nullopt : std::optional {permissions.get_c_str().value()},
+            files.error() ? std::nullopt : std::optional {contained}};
 }
 
 /**
