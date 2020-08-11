@@ -220,6 +220,13 @@ std::string create_delete_operation(const std::string& cred_id,
 
 /**
  * Creates a MkdirOperation json object with the specified fields.
+ *
+ * @param cred_id borrowed reference to the value of the corresponding json field
+ * @param path borrowed reference to the value of the corresponding json field
+ * @param id borrowed reference to the value of the corresponding json field
+ * @param folder_to_create borrowed reference to the value of the corresponding json field
+ *
+ * @return the created json string corresponding to the MkdirOperation json object
  */
 std::string create_mkdir_operation(const std::string& cred_id,
                                    const std::string& path,
@@ -237,6 +244,13 @@ std::string create_mkdir_operation(const std::string& cred_id,
 
 /**
  * Creates a DownloadOperation json object with the specified fields.
+ *
+ * @param cred_id borrowed reference to the value of the corresponding json field
+ * @param path borrowed reference to the value of the corresponding json field
+ * @param id borrowed reference to the value of the corresponding json field
+ * @param file_to_download borrowed reference to the value of the corresponding json field
+ *
+ * @return the created json string corresponding to the DownloadOperation json object
  */
 std::string create_download_operation(const std::string& cred_id,
                                       const std::string& path,
@@ -244,9 +258,10 @@ std::string create_download_operation(const std::string& cred_id,
                                       const std::string& file_to_download)
 {
     std::ostringstream stream {};
-    stream << "{\"credId\":\"" << Util::escape_json(cred_id) << "\",\"path\":\"" << Util::escape_json(path)
-           << "\",\"id\":\"" << Util::escape_json(id) << "\",\"fileToDownload\":\""
-           << Util::escape_json(file_to_download) << "\"}";
+    stream << "{\"" << Api::download_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
+           << Api::download_operation_path << "\":\"" << Util::escape_json(path) << "\",\""
+           << Api::download_operation_file_to_download << "\":\"" << Util::escape_json(id) << "\",\""
+           << Api::download_operation_file_to_download << "\":\"" << Util::escape_json(file_to_download) << "\"}";
 
     return stream.str();
 }

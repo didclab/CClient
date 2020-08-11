@@ -205,6 +205,18 @@ constexpr auto mkdir_operation_id {"id"};
 /** Field of MkdirOperation json object indicating the new directory name. */
 constexpr auto mkdir_operation_folder_to_create {"folderToCreate"};
 
+/** Field of DownloadOperation json object indicating the credential id of the target endpoint. */
+constexpr auto download_operation_cred_id {"credId"};
+
+/** Field of DownloadOperation json object indicating the path to the target directory. */
+constexpr auto download_operation_path {"path"};
+
+/** Field of DownloadOperation json object indicating the id of the target directory. */
+constexpr auto download_operation_id {"id"};
+
+/** Field of DownloadOperation json object indicating the target file. */
+constexpr auto download_operation_file_to_download {"fileToDownload"};
+
 } // namespace Api
 } // namespace Internal
 } // namespace One_data_share
