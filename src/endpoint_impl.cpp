@@ -15,48 +15,13 @@
 #include <onedatashare/ods_error.h>
 
 #include "endpoint_impl.h"
+#include "ods_rest_api.h"
 #include "util.h"
 
 namespace One_data_share {
 namespace Internal {
 
 namespace {
-
-constexpr auto api_path_box_list {"api/box/ls"};
-constexpr auto api_path_dropbox_list {"/api/dropbox/ls"};
-constexpr auto api_path_ftp_list {"/api/ftp/ls"};
-constexpr auto api_path_google_drive_list {"/api/googledrive/ls"};
-constexpr auto api_path_gftp_list {"/api/gsiftp/ls"};
-constexpr auto api_path_http_list {"/api/http/ls"};
-constexpr auto api_path_s3_list {"/api/s3/ls"};
-constexpr auto api_path_sftp_list {"/api/sftp/ls"};
-
-constexpr auto api_path_box_rm {"api/box/rm"};
-constexpr auto api_path_dropbox_rm {"/api/dropbox/rm"};
-constexpr auto api_path_ftp_rm {"/api/ftp/rm"};
-constexpr auto api_path_google_drive_rm {"/api/googledrive/rm"};
-constexpr auto api_path_gftp_rm {"/api/gsiftp/rm"};
-constexpr auto api_path_http_rm {"/api/http/rm"};
-constexpr auto api_path_s3_rm {"/api/s3/rm"};
-constexpr auto api_path_sftp_rm {"/api/sftp/rm"};
-
-constexpr auto api_path_box_mkdir {"api/box/mkdir"};
-constexpr auto api_path_dropbox_mkdir {"/api/dropbox/mkdir"};
-constexpr auto api_path_ftp_mkdir {"/api/ftp/mkdir"};
-constexpr auto api_path_google_drive_mkdir {"/api/googledrive/mkdir"};
-constexpr auto api_path_gftp_mkdir {"/api/gsiftp/mkdir"};
-constexpr auto api_path_http_mkdir {"/api/http/mkdir"};
-constexpr auto api_path_s3_mkdir {"/api/s3/mkdir"};
-constexpr auto api_path_sftp_mkdir {"/api/sftp/mkdir"};
-
-constexpr auto api_path_box_download {"api/box/download"};
-constexpr auto api_path_dropbox_download {"/api/dropbox/download"};
-constexpr auto api_path_ftp_download {"/api/ftp/download"};
-constexpr auto api_path_google_drive_download {"/api/googledrive/download"};
-constexpr auto api_path_gftp_download {"/api/gsiftp/download"};
-constexpr auto api_path_http_download {"/api/http/download"};
-constexpr auto api_path_s3_download {"/api/s3/download"};
-constexpr auto api_path_sftp_download {"/api/sftp/download"};
 
 constexpr auto stat_id {"id"};
 constexpr auto stat_name {"name"};
@@ -79,21 +44,21 @@ std::string select_list_path(Endpoint_type type)
 {
     switch (type) {
     case Endpoint_type::dropbox:
-        return api_path_dropbox_list;
+        return Api::dropbox_ls_path;
     case Endpoint_type::google_drive:
-        return api_path_google_drive_list;
+        return Api::google_drive_ls_path;
     case Endpoint_type::sftp:
-        return api_path_sftp_list;
+        return Api::sftp_ls_path;
     case Endpoint_type::ftp:
-        return api_path_ftp_list;
+        return Api::ftp_ls_path;
     case Endpoint_type::box:
-        return api_path_box_list;
+        return Api::box_ls_path;
     case Endpoint_type::s3:
-        return api_path_s3_list;
+        return Api::s3_ls_path;
     case Endpoint_type::gftp:
-        return api_path_gftp_list;
+        return Api::gftp_ls_path;
     case Endpoint_type::http:
-        return api_path_http_list;
+        return Api::http_ls_path;
     default:
         // TODO: throw exception
         return "";
@@ -111,21 +76,21 @@ std::string select_rm_path(Endpoint_type type)
 {
     switch (type) {
     case Endpoint_type::dropbox:
-        return api_path_dropbox_rm;
+        return Api::dropbox_rm_path;
     case Endpoint_type::google_drive:
-        return api_path_google_drive_rm;
+        return Api::google_drive_rm_path;
     case Endpoint_type::sftp:
-        return api_path_sftp_rm;
+        return Api::sftp_rm_path;
     case Endpoint_type::ftp:
-        return api_path_ftp_rm;
+        return Api::ftp_rm_path;
     case Endpoint_type::box:
-        return api_path_box_rm;
+        return Api::box_rm_path;
     case Endpoint_type::s3:
-        return api_path_s3_rm;
+        return Api::s3_rm_path;
     case Endpoint_type::gftp:
-        return api_path_gftp_rm;
+        return Api::gftp_rm_path;
     case Endpoint_type::http:
-        return api_path_http_rm;
+        return Api::http_rm_path;
     default:
         // TODO: throw exception
         return "";
@@ -143,21 +108,21 @@ std::string select_mkdir_path(Endpoint_type type)
 {
     switch (type) {
     case Endpoint_type::dropbox:
-        return api_path_dropbox_mkdir;
+        return Api::dropbox_mkdir_path;
     case Endpoint_type::google_drive:
-        return api_path_google_drive_mkdir;
+        return Api::google_drive_mkdir_path;
     case Endpoint_type::sftp:
-        return api_path_sftp_mkdir;
+        return Api::sftp_mkdir_path;
     case Endpoint_type::ftp:
-        return api_path_ftp_mkdir;
+        return Api::ftp_mkdir_path;
     case Endpoint_type::box:
-        return api_path_box_mkdir;
+        return Api::box_mkdir_path;
     case Endpoint_type::s3:
-        return api_path_s3_mkdir;
+        return Api::s3_mkdir_path;
     case Endpoint_type::gftp:
-        return api_path_gftp_mkdir;
+        return Api::gftp_mkdir_path;
     case Endpoint_type::http:
-        return api_path_http_mkdir;
+        return Api::http_mkdir_path;
     default:
         // TODO: throw exception
         return "";
@@ -175,21 +140,21 @@ std::string select_download_path(Endpoint_type type)
 {
     switch (type) {
     case Endpoint_type::dropbox:
-        return api_path_dropbox_download;
+        return Api::dropbox_download_path;
     case Endpoint_type::google_drive:
-        return api_path_google_drive_download;
+        return Api::google_drive_download_path;
     case Endpoint_type::sftp:
-        return api_path_sftp_download;
+        return Api::sftp_download_path;
     case Endpoint_type::ftp:
-        return api_path_ftp_download;
+        return Api::ftp_download_path;
     case Endpoint_type::box:
-        return api_path_box_download;
+        return Api::box_download_path;
     case Endpoint_type::s3:
-        return api_path_s3_download;
+        return Api::s3_download_path;
     case Endpoint_type::gftp:
-        return api_path_gftp_download;
+        return Api::gftp_download_path;
     case Endpoint_type::http:
-        return api_path_http_download;
+        return Api::http_download_path;
     default:
         // TODO: throw exception
         return "";

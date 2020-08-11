@@ -151,7 +151,7 @@ Response Curl_rest::get(const std::string& url, const std::unordered_multimap<st
     curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &status);
 
     curl_easy_cleanup(handle);
-    
+
     // free owned pointer to curl_slist
     curl_slist_free_all(headers_slist);
 
@@ -198,7 +198,7 @@ Response Curl_rest::post(const std::string& url,
     curl_slist_free_all(headers_slist);
 
     if (result != CURLE_OK) {
-        throw Connection_error {"Unable to connect to " + url + ": " + curl_easy_strerror(result)};
+        throw Connection_error {curl_easy_strerror(result)};
     }
 
     return Response {response_headers, response_body, (int) status};
