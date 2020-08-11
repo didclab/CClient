@@ -12,10 +12,12 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <simdjson/simdjson.h>
 
 #include <onedatashare/ods_error.h>
 
 #include <credential_service_impl.h>
+#include <ods_rest_api.h>
 
 #include "mocks.h"
 
@@ -25,6 +27,7 @@ namespace Ods = One_data_share;
 
 using One_data_share_mocks::Rest_mock;
 
+using ::testing::_;
 using ::testing::Return;
 using ::testing::Throw;
 
@@ -173,6 +176,33 @@ TEST_F(Credential_service_impl_test, RegisterCredentialSucceeds)
  */
 TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentials)
 {
+    const std::string cred {""};
+    const std::string uri {""};
+    const std::string user {""};
+    const std::string pass {""};
+
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post(_, _, _))
+        .Times(cred_types.size())
+        .WillRepeatedly([cred, uri, user, pass](const std::string& url,
+                                                const std::unordered_multimap<std::string, std::string>& headers,
+                                                const std::string& data) {
+            simdjson::dom::parser parser {};
+            auto json {parser.parse(data)};
+
+            auto [cred_val, cred_err] {json[Ods::Internal::Api::endpoint_credential_account_id].get_c_str()};
+            auto [uri_val, uri_err] {json[Ods::Internal::Api::endpoint_credential_uri].get_c_str()};
+            auto [user_val, user_err] {json[Ods::Internal::Api::endpoint_credential_username].get_c_str()};
+            auto [pass_val, pass_err] {json[Ods::Internal::Api::endpoint_credential_secret].get_c_str()};
+
+            if (!cred_err && !uri_err && !user_err && !pass_err && cred_val == cred && uri_val == uri &&
+                user_val == user && pass_val == pass) {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 200};
+            } else {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 500};
+            }
+        });
+
     FAIL();
 }
 
