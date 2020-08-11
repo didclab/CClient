@@ -23,16 +23,6 @@ namespace Internal {
 
 namespace {
 
-constexpr auto stat_id {"id"};
-constexpr auto stat_name {"name"};
-constexpr auto stat_size {"size"};
-constexpr auto stat_time {"time"};
-constexpr auto stat_dir {"dir"};
-constexpr auto stat_file {"file"};
-constexpr auto stat_link {"link"};
-constexpr auto stat_permissions {"permissions"};
-constexpr auto stat_files {"files"};
-
 /**
  * Returns the path for the list API call based on the specified endpoint type.
  *
@@ -174,15 +164,15 @@ std::string select_download_path(Endpoint_type type)
 Resource create_resource(const simdjson::dom::object& obj)
 {
     // keep track of errors that can be handled, propogate errors that indicate a malformed response
-    auto [id_elm, id_err] {obj[stat_id]};
-    auto name {obj[stat_name]};
-    auto size {obj[stat_size]};
-    auto time {obj[stat_time]};
-    auto dir {obj[stat_dir]};
-    auto file {obj[stat_file]};
-    auto [link_elm, link_err] {obj[stat_link]};
-    auto [permissions_elm, permissions_err] {obj[stat_permissions]};
-    auto [files_elm, files_err] {obj[stat_files]};
+    auto [id_elm, id_err] {obj[Api::stat_id]};
+    auto name {obj[Api::stat_name]};
+    auto size {obj[Api::stat_size]};
+    auto time {obj[Api::stat_time]};
+    auto dir {obj[Api::stat_dir]};
+    auto file {obj[Api::stat_file]};
+    auto [link_elm, link_err] {obj[Api::stat_link]};
+    auto [permissions_elm, permissions_err] {obj[Api::stat_permissions]};
+    auto [files_elm, files_err] {obj[Api::stat_files]};
 
     // recursively add contained resoruces
     std::vector<Resource> contained {};

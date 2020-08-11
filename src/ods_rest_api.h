@@ -115,28 +115,28 @@ constexpr auto s3_download_path {"/api/s3/download"};
 /** Path of the REST API call for downloading a file from an SFTP endpoint. */
 constexpr auto sftp_download_path {"/api/sftp/download"};
 
-/** Parameter value indicating a box endpoint. */
+/** Parameter or JSON object field value indicating a box endpoint. */
 constexpr auto box_type {"box"};
 
-/** Parameter value indicating a dropbox endpoint. */
+/** Parameter or JSON object field value indicating a dropbox endpoint. */
 constexpr auto dropbox_type {"dropbox"};
 
-/** Parameter value indicating an ftp endpoint. */
+/** Parameter or JSON object field value indicating an ftp endpoint. */
 constexpr auto ftp_type {"ftp"};
 
-/** Parameter value indicating a gftp endpoint. */
+/** Parameter or JSON object field value indicating a gftp endpoint. */
 constexpr auto gftp_type {"gftp"};
 
-/** Parameter value indicating a google drive endpoint. */
+/** Parameter or JSON object field value indicating a google drive endpoint. */
 constexpr auto google_drive_type {"gdrive"};
 
-/** Parameter value indicating an http endpoint. */
+/** Parameter or JSON object field value indicating an http endpoint. */
 constexpr auto http_type {"http"};
 
-/** Parameter value indicating an s3 endpoint. */
+/** Parameter or JSON object field value indicating an s3 endpoint. */
 constexpr auto s3_type {"s3"};
 
-/** Parameter value indicating an sftp endpoint. */
+/** Parameter or JSON object field value indicating an sftp endpoint. */
 constexpr auto sftp_type {"sftp"};
 
 /** Field of EndpointCrededential json object indicating credential id. */
@@ -153,6 +153,33 @@ constexpr auto endpoint_credential_secret {"secret"};
 
 /** Field of CredList json object indicating array of credential ids. */
 constexpr auto cred_list_credential_list {"credentialList"};
+
+/** Field of Stat json object indicating the id. */
+constexpr auto stat_id {"id"};
+
+/** Field of Stat json object indicating the name. */
+constexpr auto stat_name {"name"};
+
+/** Field of Stat json object indicating the size. */
+constexpr auto stat_size {"size"};
+
+/** Field of Stat json object indicating time created. */
+constexpr auto stat_time {"time"};
+
+/** Field of Stat json object indicating if the Stat is a directory. */
+constexpr auto stat_dir {"dir"};
+
+/** Field of Stat json object indicating if the stat is a file. */
+constexpr auto stat_file {"file"};
+
+/** Field of Stat json object indicating the symbolic link. */
+constexpr auto stat_link {"link"};
+
+/** Field of Stat json object indicating the permissions. */
+constexpr auto stat_permissions {"permissions"};
+
+/** Field of Stat json object indicating an array of nested Stat objects. */
+constexpr auto stat_files {"files"};
 
 } // namespace Api
 } // namespace Internal
