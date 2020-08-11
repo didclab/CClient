@@ -42,12 +42,55 @@ public:
                   const std::string& ods_url,
                   std::unique_ptr<Rest> rest_caller);
 
+    /**
+     * Makes a REST API call to create the Resource object corresponding to the specified resource.
+     *
+     * @param identifier borrowed reference to the path or id, dependending on the endpoint type, that the endpoint
+     * needs in order to locate the resource
+     *
+     * @return the created Resource
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     */
     Resource list(const std::string& identifier) const override;
 
+    /**
+     * Makes a REST API call to remove the specified resource.
+     *
+     * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
+     * needs in order to locate the directory containing the resource to remove
+     * @param to_delete borrowed reference to the name or id, depending on the endpoint type, that the endpoint
+     * needs in order to locate the resource to remove from within the specified directory
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     */
     void remove(const std::string& identifier, const std::string& to_delete) const override;
 
+    /**
+     * Makes a REST API call to create a directory with the specified name.
+     *
+     * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
+     * needs in order to locate the directory to create the new directory under
+     * @param folder_to_create borrowed reference to the name of the directory to create
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     */
     void mkdir(const std::string& identifier, const std::string& folder_to_create) const override;
 
+    /**
+     * Makes a REST API call to download the specified file.
+     *
+     * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
+     * needs in order to locate the directory containing the resource to download
+     * @param file_to_download borrowed reference to the name or id depending on the endpoint type, that the
+     * endpoint needs in order to locate the file to download from within the specified directory
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     */
     void download(const std::string& identifier, const std::string& file_to_download) const override;
 
 private:
