@@ -215,7 +215,38 @@ TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentials)
  */
 TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoUsername)
 {
-    FAIL();
+    const std::string cred {"first value"};
+    const std::string uri {"second value"};
+    const std::string pass {"fourth value"};
+
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post(_, _, _))
+        .Times(cred_types.size())
+        .WillRepeatedly([cred, uri, pass](const std::string& url,
+                                          const std::unordered_multimap<std::string, std::string>& headers,
+                                          const std::string& data) {
+            simdjson::dom::parser parser {};
+            auto json {parser.parse(data)};
+
+            auto [cred_val, cred_err] {json[Ods::Internal::Api::endpoint_credential_account_id].get_c_str()};
+            auto [uri_val, uri_err] {json[Ods::Internal::Api::endpoint_credential_uri].get_c_str()};
+            auto [user_val, user_err] {json[Ods::Internal::Api::endpoint_credential_username].get_c_str()};
+            auto [pass_val, pass_err] {json[Ods::Internal::Api::endpoint_credential_secret].get_c_str()};
+
+            // should not have username
+            if (!cred_err && !uri_err && user_err && !pass_err && cred_val == cred && uri_val == uri &&
+                pass_val == pass) {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 200};
+            } else {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 500};
+            }
+        });
+
+    const Ods::Internal::Credential_service_impl cred_service {"", "", std::move(caller)};
+
+    for (auto type : cred_types) {
+        EXPECT_NO_THROW(cred_service.register_credential(type, cred, uri, nullptr, &pass));
+    }
 }
 
 /**
@@ -223,7 +254,38 @@ TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoUsernam
  */
 TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoPassword)
 {
-    FAIL();
+    const std::string cred {"first value"};
+    const std::string uri {"second value"};
+    const std::string user {"third value"};
+
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post(_, _, _))
+        .Times(cred_types.size())
+        .WillRepeatedly([cred, uri, user](const std::string& url,
+                                          const std::unordered_multimap<std::string, std::string>& headers,
+                                          const std::string& data) {
+            simdjson::dom::parser parser {};
+            auto json {parser.parse(data)};
+
+            auto [cred_val, cred_err] {json[Ods::Internal::Api::endpoint_credential_account_id].get_c_str()};
+            auto [uri_val, uri_err] {json[Ods::Internal::Api::endpoint_credential_uri].get_c_str()};
+            auto [user_val, user_err] {json[Ods::Internal::Api::endpoint_credential_username].get_c_str()};
+            auto [pass_val, pass_err] {json[Ods::Internal::Api::endpoint_credential_secret].get_c_str()};
+
+            // should not have secret
+            if (!cred_err && !uri_err && !user_err && pass_err && cred_val == cred && uri_val == uri &&
+                user_val == user) {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 200};
+            } else {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 500};
+            }
+        });
+
+    const Ods::Internal::Credential_service_impl cred_service {"", "", std::move(caller)};
+
+    for (auto type : cred_types) {
+        EXPECT_NO_THROW(cred_service.register_credential(type, cred, uri, &user, nullptr));
+    }
 }
 
 /**
@@ -231,7 +293,36 @@ TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoPasswor
  */
 TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoUsernamePassword)
 {
-    FAIL();
+    const std::string cred {"first value"};
+    const std::string uri {"second value"};
+
+    auto caller {std::make_unique<Rest_mock>()};
+    EXPECT_CALL(*caller, post(_, _, _))
+        .Times(cred_types.size())
+        .WillRepeatedly([cred, uri](const std::string& url,
+                                    const std::unordered_multimap<std::string, std::string>& headers,
+                                    const std::string& data) {
+            simdjson::dom::parser parser {};
+            auto json {parser.parse(data)};
+
+            auto [cred_val, cred_err] {json[Ods::Internal::Api::endpoint_credential_account_id].get_c_str()};
+            auto [uri_val, uri_err] {json[Ods::Internal::Api::endpoint_credential_uri].get_c_str()};
+            auto [user_val, user_err] {json[Ods::Internal::Api::endpoint_credential_username].get_c_str()};
+            auto [pass_val, pass_err] {json[Ods::Internal::Api::endpoint_credential_secret].get_c_str()};
+
+            // should have neither username nor secret
+            if (!cred_err && !uri_err && user_err && pass_err && cred_val == cred && uri_val == uri) {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 200};
+            } else {
+                return Ods::Internal::Response {std::unordered_multimap<std::string, std::string> {}, "", 500};
+            }
+        });
+
+    const Ods::Internal::Credential_service_impl cred_service {"", "", std::move(caller)};
+
+    for (auto type : cred_types) {
+        EXPECT_NO_THROW(cred_service.register_credential(type, cred, uri, nullptr, nullptr));
+    }
 }
 
 /**
