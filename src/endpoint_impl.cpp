@@ -284,8 +284,9 @@ Endpoint_impl::Endpoint_impl(Endpoint_type type,
 Resource Endpoint_impl::list(const std::string& identifier) const
 {
     // if get throws an expcetion, propagate it up
-    const auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?credId=" + cred_id_ +
-                                               "&path=" + identifier + "&identifier=" + identifier,
+    const auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?" + Api::get_ls_cred_id_param + "=" +
+                                               cred_id_ + "&" + Api::get_ls_path_param + "=" + identifier + "&" +
+                                               Api::get_ls_identifier_param + "=" + identifier,
                                            headers_)};
 
     if (response.status != 200) {

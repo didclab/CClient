@@ -115,6 +115,15 @@ constexpr auto s3_download_path {"/api/s3/download"};
 /** Path of the REST API call for downloading a file from an SFTP endpoint. */
 constexpr auto sftp_download_path {"/api/sftp/download"};
 
+/** Parameter of the GET ls api call indicating the credential id. */
+constexpr auto get_ls_cred_id_param {"credId"};
+
+/** Parameter of the GET ls api call indicating the path to the target resource. */
+constexpr auto get_ls_path_param {"path"};
+
+/** Parameter of the GET ls api call indicating the id of the target resource. */
+constexpr auto get_ls_identifier_param {"identifier"};
+
 /** Parameter or JSON object field value indicating a box endpoint. */
 constexpr auto box_type {"box"};
 
