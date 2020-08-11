@@ -181,6 +181,18 @@ constexpr auto stat_permissions {"permissions"};
 /** Field of Stat json object indicating an array of nested Stat objects. */
 constexpr auto stat_files {"files"};
 
+/** Field of DeleteOperation json object indicating the credential id of the target endpoint. */
+constexpr auto delete_operation_cred_id {"credId"};
+
+/** Field of DeleteOperation json object indicating the path to the target directory. */
+constexpr auto delete_operation_path {"path"};
+
+/** Field of DeleteOperation json object indicating the id of the target directory. */
+constexpr auto delete_operation_id {"id"};
+
+/** Field of DeleteOperation json object indicating the identifier of the target resource. */
+constexpr auto delete_operation_to_delete {"toDelete"};
+
 } // namespace Api
 } // namespace Internal
 } // namespace One_data_share

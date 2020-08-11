@@ -196,6 +196,13 @@ Resource create_resource(const simdjson::dom::object& obj)
 
 /**
  * Creates a DeleteOperation json object with the specified fields.
+ *
+ * @param cred_id borrowed reference to the value of the corresponding json field
+ * @param path borrowed reference to the value of the corresponding json field
+ * @param id borrowed reference to the value of the corresponding json field
+ * @param to_delete borrowed reference to the value of the corresponding json field
+ *
+ * @return the created json string corresponding to the DeleteOperation json object
  */
 std::string create_delete_operation(const std::string& cred_id,
                                     const std::string& path,
@@ -203,8 +210,10 @@ std::string create_delete_operation(const std::string& cred_id,
                                     const std::string& to_delete)
 {
     std::ostringstream stream {};
-    stream << "{\"credId\":\"" << Util::escape_json(cred_id) << "\",\"path\":\"" << Util::escape_json(path)
-           << "\",\"id\":\"" << Util::escape_json(id) << "\",\"toDelete\":\"" << Util::escape_json(to_delete) << "\"}";
+    stream << "{\"" << Api::delete_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
+           << Api::delete_operation_path << "\":\"" << Util::escape_json(path) << "\",\"" << Api::delete_operation_id
+           << "\":\"" << Util::escape_json(id) << "\",\"" << Api::delete_operation_to_delete << "\":\""
+           << Util::escape_json(to_delete) << "\"}";
 
     return stream.str();
 }
