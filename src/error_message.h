@@ -28,6 +28,12 @@ constexpr auto unknown_enum_msg {"Unknown enumeration type"};
 /** Error message when unable to parse the expected JSON response. */
 constexpr auto invalid_json_body_msg {"Unable to parse expected JSON response body"};
 
+/** Error message when a parsed resource is a directory but defines no field for contained resources. */
+constexpr auto expect_resources_msg {"Expected parsed directory to define contained resources"};
+
+/** Error message when a parsed resource from an id-endpoint defines no field for id. */
+constexpr auto expect_id_msg {"Expected parsed resource to define an id"};
+
 } // namespace Err
 } // namespace Internal
 } // namespace One_data_share

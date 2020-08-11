@@ -284,48 +284,34 @@ Endpoint_impl::Endpoint_impl(Endpoint_type type,
 Resource Endpoint_impl::list(const std::string& identifier) const
 {
     // if get throws an expcetion, propagate it up
-    auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?credId=" + cred_id_ +
-                                         "&path=" + identifier + "&identifier=" + identifier,
-                                     headers_)};
+    const auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?credId=" + cred_id_ +
+                                               "&path=" + identifier + "&identifier=" + identifier,
+                                           headers_)};
 
     if (response.status != 200) {
-        // unexpected response
-        throw Unexpected_response_error {"Expected a 200 response code when listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\".",
-                                         response.status};
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 
     simdjson::dom::parser parser {};
     auto [obj, err] {parser.parse(response.body).get_object()};
 
     if (err) {
-        // bad response body
-        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\": " + simdjson::error_message(err),
-                                         response.status};
+        throw Unexpected_response_error {Err::invalid_json_body_msg, response.status};
     }
 
     Resource resource {};
     try {
         resource = create_resource(obj);
     } catch (simdjson::simdjson_error e) {
-        // bad response body
-        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
-                                         response.status};
+        throw Unexpected_response_error {Err::invalid_json_body_msg, response.status};
     }
 
     if (!resource.contained_resources && resource.is_directory) {
-        // bad response body
-        throw Unexpected_response_error {
-            "Parsed resource was a directory but didn't have contained resources when listing resource \"" +
-                identifier + "\" on endpoint \"" + cred_id_ + "\".",
-            response.status};
+        throw Unexpected_response_error {Err::expect_resources_msg, response.status};
     }
 
     if (!resource.id && (type_ == Endpoint_type::box || type_ == Endpoint_type::google_drive)) {
-        // bad response body
-        throw Unexpected_response_error {"Expected parsed resource to have an id.", response.status};
+        throw Unexpected_response_error {Err::expect_id_msg, response.status};
     }
 
     return resource;
@@ -339,8 +325,7 @@ void Endpoint_impl::remove(const std::string& identifier, const std::string& to_
                                       create_delete_operation(cred_id_, identifier, identifier, to_delete))};
 
     if (response.status != 200) {
-        // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response after removing resource.", response.status};
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 }
 
@@ -352,8 +337,7 @@ void Endpoint_impl::mkdir(const std::string& identifier, const std::string& fold
                                       create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
 
     if (response.status != 200) {
-        // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response after creating directory.", response.status};
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 }
 
@@ -365,8 +349,7 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
                                       create_download_operation(cred_id_, identifier, identifier, file_to_download))};
 
     if (response.status != 200) {
-        // expected status 200
-        throw Unexpected_response_error {"Expected a status 200 response after downloading resource.", response.status};
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 }
 
