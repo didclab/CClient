@@ -103,4 +103,12 @@ TEST_F(Transfer_service_impl_tests, TransferReturnsJobId)
     }
 }
 
+/**
+ * Tests that transfer sends the correct data to the server.
+ */
+TEST_F(Transfer_service_impl_tests, TransferSendsData)
+{
+    FAIL();
+}
+
 } // namespace

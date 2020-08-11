@@ -93,8 +93,8 @@ TEST_F(Credential_service_impl_test, OauthUrlThrowsUnexpectedResponse)
  */
 TEST_F(Credential_service_impl_test, OauthUrlGetsUrl)
 {
-    std::string mock_oauth_url {"This is an oauth url"};
-    std::unordered_multimap headers {std::pair {std::string {"Location"}, mock_oauth_url}};
+    const std::string mock_oauth_url {"This is an oauth url"};
+    const std::unordered_multimap headers {std::pair {std::string {"Location"}, mock_oauth_url}};
 
     // set up mock returning response redirecting to oauth url
     auto caller {std::make_unique<Rest_mock>()};
@@ -168,6 +168,41 @@ TEST_F(Credential_service_impl_test, RegisterCredentialSucceeds)
     }
 }
 
+/**
+ * Tests that regsiter_credential sends the correct information to the server.
+ */
+TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentials)
+{
+    FAIL();
+}
+
+/**
+ * Tests that regsiter_credential sends the correct information to the server when not giving a username.
+ */
+TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoUsername)
+{
+    FAIL();
+}
+
+/**
+ * Tests that regsiter_credential sends the correct information to the server when not giving a password.
+ */
+TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoPassword)
+{
+    FAIL();
+}
+
+/**
+ * Tests that regsiter_credential sends the correct information to the server when not giving a username nor password.
+ */
+TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentialsNoUsernamePassword)
+{
+    FAIL();
+}
+
+/**
+ * Tests that list credential_id_list throws a connection error when it receives one.
+ */
 TEST_F(Credential_service_impl_test, CredentialIdListThrowsConnectionErr)
 {
     // set up mock throwing exception
@@ -181,6 +216,9 @@ TEST_F(Credential_service_impl_test, CredentialIdListThrowsConnectionErr)
     }
 }
 
+/**
+ * Tests that credential_id_list throws an exception when it receives a status 500.
+ */
 TEST_F(Credential_service_impl_test, CredentialIdListBadResponseCodeThrowsUnexpectedResponse)
 {
     // set up mock returning response
@@ -197,6 +235,9 @@ TEST_F(Credential_service_impl_test, CredentialIdListBadResponseCodeThrowsUnexpe
     }
 }
 
+/**
+ * Tests that credential_id_list throws an exception when it receives an invalid response body.
+ */
 TEST_F(Credential_service_impl_test, CredentialIdListBadResponseBodyThrowsUnexpectedResponse)
 {
     // set up mock returning response
@@ -213,6 +254,9 @@ TEST_F(Credential_service_impl_test, CredentialIdListBadResponseBodyThrowsUnexpe
     }
 }
 
+/**
+ * Tests that credential_id_list returns the correct credential identifiers.
+ */
 TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
 {
     const std::string cred1 {"my first credential"};
@@ -239,6 +283,9 @@ TEST_F(Credential_service_impl_test, CredentialIdListReturnsListOfCredentialIds)
     }
 }
 
+/**
+ * Tests that credential_id_list returns an empty vector.
+ */
 TEST_F(Credential_service_impl_test, CredentialIdListReturnsEmptyList)
 {
     const std::string json {"{\"credentialList\":[]}"};

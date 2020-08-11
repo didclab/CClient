@@ -605,6 +605,14 @@ TEST_F(Endpoint_impl_tests, RemoveReturns)
 }
 
 /**
+ * Tests that remove sends the correct data to the server.
+ */
+TEST_F(Endpoint_impl_tests, RemoveGivesData)
+{
+    FAIL();
+}
+
+/**
  * Tests that mkdir throws a Connection_err when it receives one.
  */
 TEST_F(Endpoint_impl_tests, MkdirThrowsConnectionErr)
@@ -653,6 +661,14 @@ TEST_F(Endpoint_impl_tests, MkdirReturns)
 }
 
 /**
+ * Tests that mkdir sends the correct data to the server.
+ */
+TEST_F(Endpoint_impl_tests, MkdirSendsData)
+{
+    FAIL();
+}
+
+/**
  * Tests that donwload throws a Connection_err when it receives one.
  */
 TEST_F(Endpoint_impl_tests, DownloadThrowsConnectionErr)
@@ -698,6 +714,14 @@ TEST_F(Endpoint_impl_tests, DownloadReturns)
 
         ASSERT_NO_THROW(endpoint.download("", ""));
     }
+}
+
+/**
+ * Tests that download sends the correct data to the server.
+ */
+TEST_F(Endpoint_impl_tests, DownloadSendsData)
+{
+    FAIL();
 }
 
 } // namespace

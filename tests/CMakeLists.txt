@@ -45,6 +45,7 @@ add_executable(tests
     transfer_service_impl_tests.cpp
 )
 target_include_directories(tests PRIVATE
+    ${CMAKE_SOURCE_DIR}/external
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src
 )
