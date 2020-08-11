@@ -176,10 +176,10 @@ TEST_F(Credential_service_impl_test, RegisterCredentialSucceeds)
  */
 TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentials)
 {
-    const std::string cred {""};
-    const std::string uri {""};
-    const std::string user {""};
-    const std::string pass {""};
+    const std::string cred {"first value"};
+    const std::string uri {"second value"};
+    const std::string user {"third value"};
+    const std::string pass {"fourth value"};
 
     auto caller {std::make_unique<Rest_mock>()};
     EXPECT_CALL(*caller, post(_, _, _))
@@ -203,7 +203,11 @@ TEST_F(Credential_service_impl_test, RegisterCredentialGivesCredentials)
             }
         });
 
-    FAIL();
+    const Ods::Internal::Credential_service_impl cred_service {"", "", std::move(caller)};
+
+    for (auto type : cred_types) {
+        EXPECT_NO_THROW(cred_service.register_credential(type, cred, uri, &user, &pass));
+    }
 }
 
 /**
