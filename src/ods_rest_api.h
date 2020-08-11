@@ -229,19 +229,37 @@ constexpr auto download_operation_id {"id"};
 /** Field of DownloadOperation json object indicating the target file. */
 constexpr auto download_operation_file_to_download {"fileToDownload"};
 
+/** Field of EntityInfo json object indicating resource id. */
 constexpr auto entity_info_id {"id"};
+
+/** Field of EntityInfo json object indicating resource path. */
 constexpr auto entity_info_path {"path"};
 
+/** Field of Source json object indicating endpoint type. */
 constexpr auto source_type {"type"};
+
+/** Field of Source json object indicating credential id. */
 constexpr auto source_cred_id {"credId"};
+
+/** Field of Source json object indicating target directory. */
 constexpr auto source_info {"info"};
+
+/** Field of Source json object indicating target resources. */
 constexpr auto source_info_list {"infoList"};
 
+/** Field of Destination json object indicating endpoint type. */
 constexpr auto destination_type {"type"};
+
+/** Field of Destination json object indicating credential id. */
 constexpr auto destination_cred_id {"credId"};
+
+/** Field of Destination json object indicating target directory. */
 constexpr auto destination_info {"info"};
 
+/** Field of TransferJob json object indicating source of transfer. */
 constexpr auto transfer_job_request_source {"source"};
+
+/** Field of TransferJob json object indicating destination of transfer. */
 constexpr auto transfer_job_request_destination {"destination"};
 
 } // namespace Api
