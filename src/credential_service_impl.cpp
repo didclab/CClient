@@ -116,7 +116,7 @@ Credential_service_impl::Credential_service_impl(const std::string& ods_auth_tok
 std::string Credential_service_impl::oauth_url(Oauth_endpoint_type type) const
 {
     // if get throws an exception, propagate it up
-    const Response response {rest_caller_->get(ods_url_ + Api::oauth_path + "?type=" + as_string(type), headers_)};
+    const auto response {rest_caller_->get(ods_url_ + Api::oauth_path + "?type=" + as_string(type), headers_)};
 
     if (response.status != 303) {
         throw Unexpected_response_error {Err::expect_303_msg, response.status};
@@ -141,9 +141,9 @@ void Credential_service_impl::register_credential(Credential_endpoint_type type,
                                                   const std::string* secret) const
 {
     // if post throws an exception, propogate it up
-    const Response response {rest_caller_->post(ods_url_ + Api::cred_path + "/" + as_string(type),
-                                                headers_,
-                                                create_account_endpoint_credential(cred_id, uri, username, secret))};
+    const auto response {rest_caller_->post(ods_url_ + Api::cred_path + "/" + as_string(type),
+                                            headers_,
+                                            create_account_endpoint_credential(cred_id, uri, username, secret))};
 
     if (response.status != 200) {
         throw Unexpected_response_error {Err::expect_200_msg, response.status};

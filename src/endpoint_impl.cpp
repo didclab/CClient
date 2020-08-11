@@ -320,9 +320,9 @@ Resource Endpoint_impl::list(const std::string& identifier) const
 void Endpoint_impl::remove(const std::string& identifier, const std::string& to_delete) const
 {
     // if post throws an expcetion, propagate it up
-    auto response {rest_caller_->post(ods_url_ + select_rm_path(type_),
-                                      headers_,
-                                      create_delete_operation(cred_id_, identifier, identifier, to_delete))};
+    const auto response {rest_caller_->post(ods_url_ + select_rm_path(type_),
+                                            headers_,
+                                            create_delete_operation(cred_id_, identifier, identifier, to_delete))};
 
     if (response.status != 200) {
         throw Unexpected_response_error {Err::expect_200_msg, response.status};
@@ -332,9 +332,10 @@ void Endpoint_impl::remove(const std::string& identifier, const std::string& to_
 void Endpoint_impl::mkdir(const std::string& identifier, const std::string& folder_to_create) const
 {
     // if post throws an expcetion, propagate it up
-    auto response {rest_caller_->post(ods_url_ + select_mkdir_path(type_),
-                                      headers_,
-                                      create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
+    const auto response {
+        rest_caller_->post(ods_url_ + select_mkdir_path(type_),
+                           headers_,
+                           create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
 
     if (response.status != 200) {
         throw Unexpected_response_error {Err::expect_200_msg, response.status};
@@ -344,9 +345,10 @@ void Endpoint_impl::mkdir(const std::string& identifier, const std::string& fold
 void Endpoint_impl::download(const std::string& identifier, const std::string& file_to_download) const
 {
     // if post throws an expcetion, propagate it up
-    auto response {rest_caller_->post(ods_url_ + select_download_path(type_),
-                                      headers_,
-                                      create_download_operation(cred_id_, identifier, identifier, file_to_download))};
+    const auto response {
+        rest_caller_->post(ods_url_ + select_download_path(type_),
+                           headers_,
+                           create_download_operation(cred_id_, identifier, identifier, file_to_download))};
 
     if (response.status != 200) {
         throw Unexpected_response_error {Err::expect_200_msg, response.status};

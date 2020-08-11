@@ -53,7 +53,7 @@ std::string create_source(const Source& source)
            << Api::source_info_list << "\":[";
 
     // create json array of EntityInfo json objects
-    bool first = true;
+    auto first {true};
     for (const auto& id : source.resource_identifiers) {
         // print comma prefix for each element other than the first
         if (!first) {
@@ -134,9 +134,9 @@ std::string Transfer_service_impl::transfer(const Source& source,
                                             const Transfer_options& options) const
 {
     // if post throws an exception, propogate it up
-    auto response {rest_caller_->post(ods_url_ + Api::transfer_job_path,
-                                      headers_,
-                                      create_transfer_job_request(source, destination, options))};
+    const auto response {rest_caller_->post(ods_url_ + Api::transfer_job_path,
+                                            headers_,
+                                            create_transfer_job_request(source, destination, options))};
 
     if (response.status != 200) {
         // expected status 200
