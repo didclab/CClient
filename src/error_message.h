@@ -20,7 +20,7 @@ constexpr auto expect_303_msg {"Expected a status 303 response code"};
 constexpr auto expect_location_msg {"Expected a \"Location\" header in the response headers"};
 
 /** Error message when a 200 status code is expected and not received. */
-constexpr auto expect_200_msg {"Expected a 200 response code when registering credentials"};
+constexpr auto expect_200_msg {"Expected a 200 response code"};
 
 /** Error message when using an undefined value of an enumeration. */
 constexpr auto unknown_enum_msg {"Unknown enumeration type"};
