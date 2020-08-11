@@ -10,6 +10,8 @@
 
 #include <onedatashare/ods_error.h>
 
+#include "error_message.h"
+#include "ods_rest_api.h"
 #include "transfer_service_impl.h"
 #include "util.h"
 
@@ -17,8 +19,6 @@ namespace One_data_share {
 namespace Internal {
 
 namespace {
-
-constexpr auto api_path_transfer_job {"/api/transfer-job"};
 
 /**
  * Creates an EntityInfo json object with the specified fields
@@ -31,7 +31,8 @@ constexpr auto api_path_transfer_job {"/api/transfer-job"};
 std::string create_entity_info(const std::string& id, const std::string& path)
 {
     std::ostringstream stream {};
-    stream << "{\"id\":\"" << Util::escape_json(id) << "\",\"path\":\"" << Util::escape_json(path) << "\"}";
+    stream << "{\"" << Api::entity_info_id << "\":\"" << Util::escape_json(id) << "\",\"" << Api::entity_info_path
+           << "\":\"" << Util::escape_json(path) << "\"}";
 
     return stream.str();
 }
@@ -46,9 +47,10 @@ std::string create_entity_info(const std::string& id, const std::string& path)
 std::string create_source(const Source& source)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << Util::as_string(source.type) << "\",\"credId\":\"" << Util::escape_json(source.cred_id)
-           << "\",\"info\":" << create_entity_info(source.directory_identifier, source.directory_identifier)
-           << ",\"infoList\":[";
+    stream << "{\"" << Api::source_type << "\":\"" << Util::as_string(source.type) << "\",\"" << Api::source_cred_id
+           << "\":\"" << Util::escape_json(source.cred_id) << "\",\"" << Api::source_info
+           << "\":" << create_entity_info(source.directory_identifier, source.directory_identifier) << ",\""
+           << Api::source_info_list << "\":[";
 
     // create json array of EntityInfo json objects
     bool first = true;
@@ -76,10 +78,10 @@ std::string create_source(const Source& source)
 std::string create_destination(const Destination& destination)
 {
     std::ostringstream stream {};
-    stream << "{\"type\":\"" << Util::as_string(destination.type) << "\",\"credId\":\""
-           << Util::escape_json(destination.cred_id)
-           << "\",\"info\":" << create_entity_info(destination.directory_identifier, destination.directory_identifier)
-           << "}";
+    stream << "{\"" << Api::destination_type << "\":\"" << Util::as_string(destination.type) << "\",\""
+           << Api::destination_cred_id << "\":\"" << Util::escape_json(destination.cred_id) << "\",\""
+           << Api::destination_info
+           << "\":" << create_entity_info(destination.directory_identifier, destination.directory_identifier) << "}";
 
     return stream.str();
 }
@@ -111,7 +113,8 @@ std::string create_transfer_job_request(const Source& source,
                                         const Transfer_options& options)
 {
     std::ostringstream stream;
-    stream << "{\"source\":" << create_source(source) << ", \"destination\":" << create_destination(destination) << "}";
+    stream << "{\"" << Api::transfer_job_request_source << "\":" << create_source(source) << ", \""
+           << Api::transfer_job_request_destination << "\":" << create_destination(destination) << "}";
 
     return stream.str();
 }
@@ -132,7 +135,7 @@ std::string Transfer_service_impl::transfer(const Source& source,
                                             const Transfer_options& options) const
 {
     // if post throws an exception, propogate it up
-    auto response {rest_caller_->post(ods_url_ + api_path_transfer_job,
+    auto response {rest_caller_->post(ods_url_ + Api::transfer_job_path,
                                       headers_,
                                       create_transfer_job_request(source, destination, options))};
 

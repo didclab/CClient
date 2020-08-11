@@ -115,6 +115,9 @@ constexpr auto s3_download_path {"/api/s3/download"};
 /** Path of the REST API call for downloading a file from an SFTP endpoint. */
 constexpr auto sftp_download_path {"/api/sftp/download"};
 
+/** Path of the REST API call for making transfers. */
+constexpr auto transfer_job_path {"/api/transfer-job"};
+
 /** Parameter of the GET ls api call indicating the credential id. */
 constexpr auto get_ls_cred_id_param {"credId"};
 
@@ -225,6 +228,21 @@ constexpr auto download_operation_id {"id"};
 
 /** Field of DownloadOperation json object indicating the target file. */
 constexpr auto download_operation_file_to_download {"fileToDownload"};
+
+constexpr auto entity_info_id {"id"};
+constexpr auto entity_info_path {"path"};
+
+constexpr auto source_type {"type"};
+constexpr auto source_cred_id {"credId"};
+constexpr auto source_info {"info"};
+constexpr auto source_info_list {"infoList"};
+
+constexpr auto destination_type {"type"};
+constexpr auto destination_cred_id {"credId"};
+constexpr auto destination_info {"info"};
+
+constexpr auto transfer_job_request_source {"source"};
+constexpr auto transfer_job_request_destination {"destination"};
 
 } // namespace Api
 } // namespace Internal
