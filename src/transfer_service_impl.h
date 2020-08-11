@@ -44,10 +44,23 @@ public:
                           const std::string& ods_url,
                           std::unique_ptr<Rest> rest_caller);
 
+    /**
+     * Makes a REST API call to transfer the specified resources to the specified location.
+     *
+     * @param source borrowed reference to the source of the transfer
+     * @param destination borrowed reference to the destination of the transfer
+     * @param options borrowed reference to the the options to use for this transfer request
+     *
+     * @return the id of the new transfer job
+     *
+     * @exception Connection_error if unable to connect to One Data Share
+     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     */
     std::string transfer(const Source& source,
                          const Destination& destination,
                          const Transfer_options& options) const override;
 
+    // TODO: implement
     std::unique_ptr<Transfer_status> status(const std::string& id) const override;
 
 private:
