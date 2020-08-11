@@ -51,9 +51,6 @@ public:
     std::unique_ptr<Transfer_status> status(const std::string& id) const override;
 
 private:
-    /** One Data Share authentication token used in REST API calls. */
-    const std::string ods_auth_token_;
-
     /** Url to the One Data Share server to make REST API calls to. */
     const std::string ods_url_;
 

@@ -124,10 +124,9 @@ std::string create_transfer_job_request(const Source& source,
 Transfer_service_impl::Transfer_service_impl(const std::string& ods_auth_token,
                                              const std::string& ods_url,
                                              std::unique_ptr<Rest> rest_caller)
-    : ods_auth_token_(ods_auth_token),
-      ods_url_(ods_url),
+    : ods_url_(ods_url),
       rest_caller_(std::move(rest_caller)),
-      headers_(Util::create_headers(ods_auth_token_))
+      headers_(Util::create_headers(ods_auth_token))
 {}
 
 std::string Transfer_service_impl::transfer(const Source& source,
