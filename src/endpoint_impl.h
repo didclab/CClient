@@ -38,7 +38,7 @@ public:
      */
     Endpoint_impl(Endpoint_type type,
                   const std::string& cred_id,
-                  const std::string& ods_oauth_token,
+                  const std::string& ods_auth_token,
                   const std::string& ods_url,
                   std::unique_ptr<Rest> rest_caller);
 
@@ -56,9 +56,6 @@ private:
 
     /** Credential id of the endpoint used in REST API calls. */
     const std::string cred_id_;
-
-    /** One Data Share authentication token used in REST API calls. */
-    const std::string ods_auth_token_;
 
     /** Url to the One Data Share server to make REST API calls to. */
     const std::string ods_url_;

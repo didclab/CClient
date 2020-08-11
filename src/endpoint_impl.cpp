@@ -270,15 +270,14 @@ std::string create_download_operation(const std::string& cred_id,
 
 Endpoint_impl::Endpoint_impl(Endpoint_type type,
                              const std::string& cred_id,
-                             const std::string& ods_oauth_token,
+                             const std::string& ods_auth_token,
                              const std::string& ods_url,
                              std::unique_ptr<Rest> rest_caller)
     : type_ {type},
       cred_id_ {cred_id},
-      ods_auth_token_ {ods_oauth_token},
       ods_url_ {ods_url},
       rest_caller_ {std::move(rest_caller)},
-      headers_ {Util::create_headers(ods_auth_token_)}
+      headers_ {Util::create_headers(ods_auth_token)}
 {}
 
 Resource Endpoint_impl::list(const std::string& identifier) const
