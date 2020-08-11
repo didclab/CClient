@@ -227,8 +227,9 @@ std::string create_mkdir_operation(const std::string& cred_id,
                                    const std::string& folder_to_create)
 {
     std::ostringstream stream {};
-    stream << "{\"credId\":\"" << Util::escape_json(cred_id) << "\",\"path\":\"" << Util::escape_json(path)
-           << "\",\"id\":\"" << Util::escape_json(id) << "\",\"folderToCreate\":\""
+    stream << "{\"" << Api::mkdir_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
+           << Api::mkdir_operation_path << "\":\"" << Util::escape_json(path) << "\",\"" << Api::mkdir_operation_id
+           << "\":\"" << Util::escape_json(id) << "\",\"" << Api::mkdir_operation_folder_to_create << "\":\""
            << Util::escape_json(folder_to_create) << "\"}";
 
     return stream.str();

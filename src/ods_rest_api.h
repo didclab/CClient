@@ -193,6 +193,18 @@ constexpr auto delete_operation_id {"id"};
 /** Field of DeleteOperation json object indicating the identifier of the target resource. */
 constexpr auto delete_operation_to_delete {"toDelete"};
 
+/** Field of MkdirOperation json object indicating the credential id of the target endpoint. */
+constexpr auto mkdir_operation_cred_id {"credId"};
+
+/** Field of MkdirOperation json object indicating the path to the target directory. */
+constexpr auto mkdir_operation_path {"path"};
+
+/** Field of MkdirOperation json object indicating the id of the target directory. */
+constexpr auto mkdir_operation_id {"id"};
+
+/** Field of MkdirOperation json object indicating the new directory name. */
+constexpr auto mkdir_operation_folder_to_create {"folderToCreate"};
+
 } // namespace Api
 } // namespace Internal
 } // namespace One_data_share
