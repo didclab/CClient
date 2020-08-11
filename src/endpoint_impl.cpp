@@ -15,6 +15,7 @@
 #include <onedatashare/ods_error.h>
 
 #include "endpoint_impl.h"
+#include "error_message.h"
 #include "ods_rest_api.h"
 #include "util.h"
 
@@ -24,11 +25,13 @@ namespace Internal {
 namespace {
 
 /**
- * Returns the path for the list API call based on the specified endpoint type.
+ * Gets the list api path for the sepcified type.
  *
- * @param type endpoint type to get the list API path for
+ * @param type endpoint to get the api path for
  *
- * @return the list API path
+ * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
  */
 std::string select_list_path(Endpoint_type type)
 {
@@ -49,10 +52,9 @@ std::string select_list_path(Endpoint_type type)
         return Api::gftp_ls_path;
     case Endpoint_type::http:
         return Api::http_ls_path;
-    default:
-        // TODO: throw exception
-        return "";
     }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**
@@ -61,6 +63,8 @@ std::string select_list_path(Endpoint_type type)
  * @param type endpoint to get the api path for
  *
  * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
  */
 std::string select_rm_path(Endpoint_type type)
 {
@@ -81,10 +85,9 @@ std::string select_rm_path(Endpoint_type type)
         return Api::gftp_rm_path;
     case Endpoint_type::http:
         return Api::http_rm_path;
-    default:
-        // TODO: throw exception
-        return "";
     }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**
@@ -93,6 +96,8 @@ std::string select_rm_path(Endpoint_type type)
  * @param type endpoint to get the api path for
  *
  * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
  */
 std::string select_mkdir_path(Endpoint_type type)
 {
@@ -113,10 +118,9 @@ std::string select_mkdir_path(Endpoint_type type)
         return Api::gftp_mkdir_path;
     case Endpoint_type::http:
         return Api::http_mkdir_path;
-    default:
-        // TODO: throw exception
-        return "";
     }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**
@@ -125,6 +129,8 @@ std::string select_mkdir_path(Endpoint_type type)
  * @param type endpoint to get the api path for
  *
  * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
  */
 std::string select_download_path(Endpoint_type type)
 {
@@ -145,10 +151,9 @@ std::string select_download_path(Endpoint_type type)
         return Api::gftp_download_path;
     case Endpoint_type::http:
         return Api::http_download_path;
-    default:
-        // TODO: throw exception
-        return "";
     }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**

@@ -29,6 +29,8 @@ namespace {
  * @param type endpoint type to convert
  *
  * @return endpoint type as a string understood by the REST API
+ *
+ * @exception invalid_argument if passed an invalid Credential_endpoint_type value
  */
 std::string as_string(Credential_endpoint_type type)
 {
@@ -52,6 +54,8 @@ std::string as_string(Credential_endpoint_type type)
  * @param type endpoint type to convert
  *
  * @return endpoint type as a string understood by the REST API
+ *
+ * @exception invalid_argument if passed an invalid Oauth_endpoint_type value
  */
 std::string as_string(Oauth_endpoint_type type)
 {
