@@ -697,7 +697,37 @@ TEST_F(Endpoint_impl_tests, MkdirReturns)
  */
 TEST_F(Endpoint_impl_tests, MkdirSendsData)
 {
-    FAIL();
+    const std::string cred_id {"cred_id string"};
+    const std::string identifier {"identifier string"};
+    const std::string folder_to_create {"folder_to_create string"};
+
+    auto execute_post {[cred_id, identifier, folder_to_create](const std::string& url,
+                                                               const Header_map headers,
+                                                               const std::string& data) {
+        simdjson::dom::parser parser {};
+        auto json {parser.parse(data)};
+
+        auto [cred_val, cred_err] {json[Ods::Internal::Api::mkdir_operation_cred_id].get_c_str()};
+        auto [path_val, path_err] {json[Ods::Internal::Api::mkdir_operation_path].get_c_str()};
+        auto [id_val, id_err] {json[Ods::Internal::Api::mkdir_operation_id].get_c_str()};
+        auto [folder_val, folder_err] {json[Ods::Internal::Api::mkdir_operation_folder_to_create].get_c_str()};
+
+        if (!cred_err && !path_err && !id_err && !folder_err && cred_val == cred_id && path_val == identifier &&
+            id_val == identifier && folder_val == folder_to_create) {
+            return Ods::Internal::Response {Header_map {}, "", 200};
+        } else {
+            return Ods::Internal::Response {Header_map {}, "", 500};
+        }
+    }};
+
+    for (auto type : types) {
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, post(_, _, _)).WillOnce(execute_post);
+
+        const Ods::Internal::Endpoint_impl endpoint {type, cred_id, "", "", std::move(caller)};
+
+        ASSERT_NO_THROW(endpoint.mkdir(identifier, folder_to_create));
+    }
 }
 
 /**
