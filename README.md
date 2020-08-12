@@ -9,30 +9,9 @@ Dependencies:
 - **cmake 3.10.0** - find at https://cmake.org/files/v3.10/
 - **libcurl 7.47.0** - install with `sudo apt-get install libcurl4-openssl-dev`
 
-Build:
-------
-This project is built and tested using `make`. See `Makefile` for more information on targets.
-
-Examples:
----------
-To run the examples, a `token.txt` and `url.txt` file must be created in the project root containing the One Data Share
-authentication token and One Data Share url to use respectively as shown below.
-
-`token.txt`:
-```
-YOURAUTHENTICATIONTOKENGOESHERE
-```
-
-`url.txt`:
-```
-http://localhost:8080
-```
-
-Do **not** check these files into version control.
-
 Install:
 --------
-To install the One Data Share C++ SDK, follow the instructions below. Note that this will require CMake `3.10.0` or greater and libcurl `7.47.0` or greater.
+To install the One Data Share C++ SDK, follow the instructions below. Note that this will require a **C++ 17** compiler, **CMake** `3.10.0` or greater, and **Libcurl** `7.47.0` or greater.
 
 1. Clone the github repository at https://github.com/didclab/CClient and switch to the created directory with the following commands:
     ```
@@ -87,3 +66,46 @@ target_link_libraries(myproject
     OneDataShare::OneDataShare
 )
 ```
+
+Build:
+------
+This project is built and tested using `make`. See `Makefile` for more information on targets.
+
+Examples:
+---------
+To run the examples, a `token.txt` and `url.txt` file must be created in the project root containing the One Data Share
+authentication token and One Data Share url to use respectively as shown below.
+
+`token.txt`:
+```
+YOURAUTHENTICATIONTOKENGOESHERE
+```
+
+`url.txt`:
+```
+http://localhost:8080
+```
+
+Do **not** check these files into version control.
+
+Project Structure:
+------------------
+`bin/` - Local-only directory containing generated binaries. This directory is **not** to be checked into version control.
+
+`build/` - Contains project build tree. This directory is **not** to be checked into version control.
+
+`cmake/` - Contains templates for generated CMake scripts.
+
+`docs/` - Contains files for generating documentation.
+
+`examples/` - Contains sample files demonstrating how to use the One Data Share SDK. These files are not part of the main project.
+
+`include/` - Contains public header files to be exported with the library.
+
+`src/` - Contains the library's source files.
+
+`tests/` - Contains unit tests for the library.
+
+Coding Style:
+-------------
+This project follows the [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md), including the [recommended naming and layout rules](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#nl-naming-and-layout-rules).
