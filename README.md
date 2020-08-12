@@ -1,16 +1,28 @@
 CClient
 =======
 
-C++ 17 SDK for One Data Share.
+The One Data Share SDK for C++ 17. To begin working with the SDK, see the [installation instructions](#install), the [documentation](), and the [getting started](getting-started.md) tutorial.
+
+Table of Contents
+-----------------
+- [Dependencies](#dependencies)
+- [Install](#install)
+- [CMake Support](#cmake-support)
+- [Build](#build)
+- [Examples](#examples)
+- [Project Structure](#project-structure)
+- [Coding Style](#coding-style)
 
 Dependencies:
 -------------
+The following are required to build and test this project.
 - **g++ 9.3.0** - find at https://gcc.gnu.org/gcc-9/
 - **cmake 3.10.0** - find at https://cmake.org/files/v3.10/
 - **libcurl 7.47.0** - install with `sudo apt-get install libcurl4-openssl-dev`
 
 Install:
 --------
+
 To install the One Data Share C++ SDK, follow the instructions below. Note that this will require a **C++ 17** compiler, **CMake** `3.10.0` or greater, and **Libcurl** `7.47.0` or greater.
 
 1. Clone the github repository at https://github.com/didclab/CClient and switch to the created directory with the following commands:
@@ -69,7 +81,7 @@ target_link_libraries(myproject
 
 Build:
 ------
-This project is built and tested using `make`. See `Makefile` for more information on targets.
+This project is built and tested using `make`. See [Makefile]() for more information on targets.
 
 Examples:
 ---------
@@ -92,7 +104,7 @@ Project Structure:
 ------------------
 `bin/` - Local-only directory containing generated binaries. This directory is **not** to be checked into version control.
 
-`build/` - Contains project build tree. This directory is **not** to be checked into version control.
+`build/` - Local-only directory containing project build tree. This directory is **not** to be checked into version control.
 
 `cmake/` - Contains templates for generated CMake scripts.
 
