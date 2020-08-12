@@ -1,7 +1,7 @@
 CClient
 =======
 
-A C++ 17 SDK for One Data Share.
+C++ 17 SDK for One Data Share.
 
 Dependencies:
 -------------
