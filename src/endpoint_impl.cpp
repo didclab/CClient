@@ -260,7 +260,7 @@ std::string create_download_operation(const std::string& cred_id,
     std::ostringstream stream {};
     stream << "{\"" << Api::download_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
            << Api::download_operation_path << "\":\"" << Util::escape_json(path) << "\",\""
-           << Api::download_operation_file_to_download << "\":\"" << Util::escape_json(id) << "\",\""
+           << Api::download_operation_id << "\":\"" << Util::escape_json(id) << "\",\""
            << Api::download_operation_file_to_download << "\":\"" << Util::escape_json(file_to_download) << "\"}";
 
     return stream.str();
