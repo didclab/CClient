@@ -13,12 +13,14 @@
 #include <utility>
 
 #include <gtest/gtest.h>
+#include <simdjson/simdjson.h>
 
 #include <onedatashare/endpoint.h>
 #include <onedatashare/endpoint_type.h>
 #include <onedatashare/ods_error.h>
 
 #include <endpoint_impl.h>
+#include <ods_rest_api.h>
 
 #include "mocks.h"
 
@@ -28,6 +30,7 @@ namespace Ods = One_data_share;
 
 using One_data_share_mocks::Rest_mock;
 
+using ::testing::_;
 using ::testing::Return;
 using ::testing::Throw;
 
@@ -609,7 +612,36 @@ TEST_F(Endpoint_impl_tests, RemoveReturns)
  */
 TEST_F(Endpoint_impl_tests, RemoveGivesData)
 {
-    FAIL();
+    const std::string cred_id {"cred_id string"};
+    const std::string identifier {"identifier string"};
+    const std::string to_remove {"to_remove string"};
+
+    auto execute_post {
+        [cred_id, identifier, to_remove](const std::string& url, const Header_map headers, const std::string& data) {
+            simdjson::dom::parser parser {};
+            auto json {parser.parse(data)};
+
+            auto [cred_val, cred_err] {json[Ods::Internal::Api::delete_operation_cred_id].get_c_str()};
+            auto [path_val, path_err] {json[Ods::Internal::Api::delete_operation_path].get_c_str()};
+            auto [id_val, id_err] {json[Ods::Internal::Api::delete_operation_id].get_c_str()};
+            auto [del_val, del_err] {json[Ods::Internal::Api::delete_operation_to_delete].get_c_str()};
+
+            if (!cred_err && !path_err && !id_err && !del_err && cred_val == cred_id && path_val == identifier &&
+                id_val == identifier && del_val == to_remove) {
+                return Ods::Internal::Response {Header_map {}, "", 200};
+            } else {
+                return Ods::Internal::Response {Header_map {}, "", 500};
+            }
+        }};
+
+    for (auto type : types) {
+        auto caller {std::make_unique<Rest_mock>()};
+        EXPECT_CALL(*caller, post(_, _, _)).WillOnce(execute_post);
+
+        const Ods::Internal::Endpoint_impl endpoint {type, cred_id, "", "", std::move(caller)};
+
+        ASSERT_NO_THROW(endpoint.remove(identifier, to_remove));
+    }
 }
 
 /**
