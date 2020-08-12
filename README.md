@@ -1,7 +1,7 @@
 CClient
 =======
 
-The One Data Share SDK for C++ 17. To begin working with the SDK, see the [installation instructions](#install), the [documentation](), and the [getting started](getting-started.md) tutorial.
+The One Data Share SDK for C++ 17. To begin working with the SDK, see the [installation instructions](#install), the [documentation](https://didclab.github.io/CClient/index.html), and the [getting started](getting-started.md) tutorial.
 
 Table of Contents
 -----------------
