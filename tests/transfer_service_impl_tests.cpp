@@ -43,6 +43,9 @@ constexpr std::array types {Ods::Endpoint_type::box,
 class Transfer_service_impl_tests : public ::testing::Test {
 };
 
+/**
+ * Tests that transfer throws a Connection_error when it receives one.
+ */
 TEST_F(Transfer_service_impl_tests, TransferThrowsConnectionErr)
 {
     // set up mock
@@ -62,6 +65,9 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsConnectionErr)
     }
 }
 
+/**
+ * Tests that transfer throws an exception when it receives a 500 status.
+ */
 TEST_F(Transfer_service_impl_tests, TransferThrowsUnexpectedResponse)
 {
     // set up mock
@@ -83,6 +89,9 @@ TEST_F(Transfer_service_impl_tests, TransferThrowsUnexpectedResponse)
     }
 }
 
+/**
+ * Tests that transfer returns the correct job id.
+ */
 TEST_F(Transfer_service_impl_tests, TransferReturnsJobId)
 {
     std::string job_id {"this is the job id"};
