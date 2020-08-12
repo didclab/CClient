@@ -1,4 +1,4 @@
-/** 
+/**
  * @file transfer_service.h
  * Defines structs and classes needed to perform and observe transfer operations.
  *
@@ -22,7 +22,7 @@ namespace One_data_share {
  * functionality as described in {@link Endpoint_type}.
  */
 struct Destination {
-    /** Endpoint type to transfer to. */
+    /** Type of the endpoint to transfer to. */
     Endpoint_type type;
 
     /** Credential identifier of the endpoint to transfer to. */
@@ -37,7 +37,7 @@ struct Destination {
  * functionality as described in {@link Endpoint_type}.
  */
 struct Source {
-    /** Endpoint type to transfer from. */
+    /** Type of the endpoint to transfer from. */
     Endpoint_type type;
 
     /** Credential identifier of the endpoint to transfer from. */

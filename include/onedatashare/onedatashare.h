@@ -15,4 +15,10 @@
 #include "ods_error.h"
 #include "transfer_service.h"
 
+/**
+ * Contains all types defined by the One Data Share SDK.
+ */
+namespace One_data_share {
+}
+
 #endif // ONEDATASHARE_ONEDATASHARE_H

@@ -19,34 +19,36 @@
 namespace One_data_share {
 
 /**
- * Represents a directory, file, or link from an endpoint's file system.
+ * Represents a directory, file, or link, otherwise refered to as a resource, from an endpoint's file system.
  */
 struct Resource {
     /** Id of the resource if the resource has an id, no value otherwise. */
     std::optional<std::string> id;
 
-    /** Name of the Resource. */
+    /** Name of the resource. */
     std::string name;
 
-    /** Size of the Resource. */
+    /** Size of the resource in bytes. */
     long size;
 
-    /** Time of the Resource. */
+    /** Time the resource was created. */
     long time;
 
-    /** If the Resource is a directory. */
+    /** If the resource is a directory. */
     bool is_directory;
 
-    /** If the Resource is a file. */
+    /** If the resource is a file. */
     bool is_file;
 
-    /** Link of the Resource if the Resource is a symbolic link, no value otherwise. */
+    /** Symbolic link of the resource if the resource is a symbolic link, no value otherwise. */
     std::optional<std::string> link;
 
-    /** Permissions of the Resource if the Resource has permissions, no value otherwise. */
+    /** Permissions of the resource if the resource has permissions, no value otherwise. */
     std::optional<std::string> permissions;
 
-    /** Contained Resource objects if this Resource can contain other Resource objects, no value otherwise. */
+    /** List of the resources contained by this resource if this resource can contain other resources, no value
+     * otherwise. A resource that containes no resources will have an empty list which distinguishes it from a resource
+     * that cannot contain resources. */
     std::optional<std::vector<Resource>> contained_resources;
 };
 
