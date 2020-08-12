@@ -108,13 +108,13 @@ Project Structure:
 
 `cmake/` - Contains templates for generated CMake scripts.
 
-`docs/` - Contains files for generating documentation.
+`docs` - Contains generated documentation for hosting on GitHub pages.
+
+`doxygen/` - Contains files for generating documentation.
 
 `examples/` - Contains sample files demonstrating how to use the One Data Share SDK. These files are not part of the main project.
 
 `include/` - Contains public header files to be exported with the library.
-
-`pages/` - Contains generated documentation for hosting on GitHub pages.
 
 `src/` - Contains the library's source files.
 
