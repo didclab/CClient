@@ -114,6 +114,8 @@ Project Structure:
 
 `include/` - Contains public header files to be exported with the library.
 
+`pages/` - Contains generated documentation for hosting on GitHub pages.
+
 `src/` - Contains the library's source files.
 
 `tests/` - Contains unit tests for the library.
