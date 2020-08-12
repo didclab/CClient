@@ -120,4 +120,4 @@ Project Structure:
 
 Coding Style:
 -------------
-This project follows the [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md), including the [recommended naming and layout rules](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#nl-naming-and-layout-rules). Note that this project does **not** use the [Guidelines Support Library](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#nl-naming-and-layout-rules).
+This project follows the [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md), including the [recommended naming and layout rules](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#nl-naming-and-layout-rules). Note that this project does **not** use the [Guidelines Support Library](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gsl-guidelines-support-library).
