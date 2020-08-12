@@ -81,7 +81,7 @@ target_link_libraries(myproject
 
 Build:
 ------
-This project is built and tested using `make`. See [Makefile](Makefile) for more information on targets.
+This project is built and tested using `make`. See [`Makefile`](Makefile) for more information on targets.
 
 Examples:
 ---------
