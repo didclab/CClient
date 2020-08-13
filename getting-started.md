@@ -185,7 +185,7 @@ Making a transfer request requires three other objects: the `Source`, the `Desti
 
 A
 [`Source`](https://didclab.github.io/CClient/structOne__data__share_1_1Source.html)
-object indicates the what endpoint to transfer from and what resources to transfer. This is done by providing
+object indicates the endpoint to transfer from and what resources to transfer. This is done by providing
 the endpoint type and **Credential Identifier** information as well as the directory to transfer from and a list of the names of
 files to transfer. All transfered resources must be located in the same directory.
 ```
