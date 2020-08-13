@@ -125,9 +125,9 @@ public:
                                      const std::string* secret) const = 0;
 
     /**
-     * Lists the credential identifiers of the specified endpoint type that are registered with OneDataShare. It is
-     * expected that the authenitcation token used to create this Credential_service object is valid and that a
-     * connection can be made to OneDataShare. If these preconditions are not met, exceptions may be thrown.
+     * Creates a list of the credential identifiers of the specified endpoint type that are registered with
+     * OneDataShare. It is expected that the authenitcation token used to create this Credential_service object is valid
+     * and that a connection can be made to OneDataShare. If these preconditions are not met, exceptions may be thrown.
      *
      * @param type the endpoint type to list the registered credential identifiers of
      *
