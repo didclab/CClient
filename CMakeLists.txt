@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(libonedatashare VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "C++ Client for One Data Share")
+project(libonedatashare VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "C++ Client for OneDataShare")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

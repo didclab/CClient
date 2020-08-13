@@ -1,7 +1,7 @@
-One Data Share C++ SDK Documentation
+OneDataShare C++ SDK Documentation
 ====================================
 
-Welcome to the One Data Share C++ SDK documentation.
+Welcome to the OneDataShare C++ SDK documentation.
 
 All types are documented in the `One_data_share` namespace.
 

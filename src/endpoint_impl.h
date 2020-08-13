@@ -22,18 +22,18 @@ namespace Onedatashare {
 namespace Internal {
 
 /**
- * Service that makes REST API calls to One Data Share related to an endpoint's file system.
+ * Service that makes REST API calls to OneDataShare related to an endpoint's file system.
  */
 class Endpoint_impl : public Endpoint {
 public:
     /**
-     * Creates a new Endpoint_impl object for the specified endpoint with the specified connection to One Data Share
+     * Creates a new Endpoint_impl object for the specified endpoint with the specified connection to OneDataShare
      * using the specified rest caller.
      *
      * @param type the type of endpoint to return
      * @param cred_id borrowed reference to the credential id of the endpoint to use
-     * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
-     * @param ods_url borrowed reference to the url that One Data Share is running on
+     * @param ods_auth_token borrowed reference to the OneDataShare authentication token to use
+     * @param ods_url borrowed reference to the url that OneDataShare is running on
      * @param rest_caller moved pointer to the object to use for making REST API calls
      */
     Endpoint_impl(Endpoint_type type,
@@ -50,8 +50,8 @@ public:
      *
      * @return the created Resource
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     Resource list(const std::string& identifier) const override;
 
@@ -63,8 +63,8 @@ public:
      * @param to_delete borrowed reference to the name or id, depending on the endpoint type, that the endpoint
      * needs in order to locate the resource to remove from within the specified directory
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     void remove(const std::string& identifier, const std::string& to_delete) const override;
 
@@ -75,8 +75,8 @@ public:
      * needs in order to locate the directory to create the new directory under
      * @param folder_to_create borrowed reference to the name of the directory to create
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     void mkdir(const std::string& identifier, const std::string& folder_to_create) const override;
 
@@ -88,8 +88,8 @@ public:
      * @param file_to_download borrowed reference to the name or id depending on the endpoint type, that the
      * endpoint needs in order to locate the file to download from within the specified directory
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     void download(const std::string& identifier, const std::string& file_to_download) const override;
 
@@ -100,7 +100,7 @@ private:
     /** Credential id of the endpoint used in REST API calls. */
     const std::string cred_id_;
 
-    /** Url to the One Data Share server to make REST API calls to. */
+    /** Url to the OneDataShare server to make REST API calls to. */
     const std::string ods_url_;
 
     /** Pointer to the object used to make REST API calls. */

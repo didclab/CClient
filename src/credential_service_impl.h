@@ -22,7 +22,7 @@ namespace Onedatashare {
 namespace Internal {
 
 /**
- * Service that makes REST API calls to One Data Share related to registering credentials.
+ * Service that makes REST API calls to OneDataShare related to registering credentials.
  */
 class Credential_service_impl : public Credential_service {
 public:
@@ -44,8 +44,8 @@ public:
      *
      * @return a string containing the OAuth url
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     std::string oauth_url(Oauth_endpoint_type type) const override;
 
@@ -60,8 +60,8 @@ public:
      * @param secret borrowed pointer to the password needed to log in to the endpoint or nullptr to register an
      * endpoint without a password
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     void register_credential(Credential_endpoint_type type,
                              const std::string& cred_id,
@@ -76,13 +76,13 @@ public:
      *
      * @return a vector of the registered credential identifiers for the sepcified endpoint
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     std::vector<std::string> credential_id_list(Endpoint_type type) const override;
 
 private:
-    /** Url to the One Data Share server to make REST API calls to. */
+    /** Url to the OneDataShare server to make REST API calls to. */
     const std::string ods_url_;
 
     /** Pointer to the object used to make REST API calls. */

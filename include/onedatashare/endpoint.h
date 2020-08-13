@@ -61,11 +61,11 @@ public:
     /**
      * Creates a new Endpoint object of the specified type with the specifed credential id and authentication token,
      * passing ownership of the Endpoint object to the caller. It is expected that the specified authentication
-     * token is valid and that the specified credential id is registered with One Data Share.
+     * token is valid and that the specified credential id is registered with OneDataShare.
      *
      * @param type the type of endpoint to return
      * @param cred_id borrowed reference to the credential id of the endpoint to use
-     * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
+     * @param ods_auth_token borrowed reference to the OneDataShare authentication token to use
      *
      * @return a unique pointer to a new Endpoint object
      */
@@ -75,14 +75,14 @@ public:
 
     /**
      * Creates a new Endpoint object of the specified type with the specifed credential id and authentication token
-     * communicating with One Data Share at the specified url, passing ownership of the Endpoint object to the
+     * communicating with OneDataShare at the specified url, passing ownership of the Endpoint object to the
      * caller. It is expected that the specified authentication token is valid, that the specified credential id is
-     * registered with One Data Share, and that One Data Share is running on the specified url.
+     * registered with OneDataShare, and that OneDataShare is running on the specified url.
      *
      * @param type the type of endpoint to return
      * @param cred_id borrowed reference to the credential id of the endpoint to use
-     * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
-     * @param url borrowed reference to the url that One Data Share is running on
+     * @param ods_auth_token borrowed reference to the OneDataShare authentication token to use
+     * @param url borrowed reference to the url that OneDataShare is running on
      *
      * @return a unique pointer to a new Endpoint object
      */
@@ -111,7 +111,7 @@ public:
      * guaranteed to have an id defined if and only if created by an endpoint that supports ids. If the Resource is a
      * directory, then the Resource is guaranteed to have contained resources, though directories contained by the
      * Resource will not have contained resources. It is expected that the authentication token used to create this
-     * Endpoint object is valid, that a connection can be made to One Data Share, that a connection can be made from One
+     * Endpoint object is valid, that a connection can be made to OneDataShare, that a connection can be made from One
      * Data Share to the endpoint specified by the credential id, and that the specified resource exists at the
      * specified location. If these preconditions are not met, exceptions may be thrown.
      *
@@ -120,8 +120,8 @@ public:
      *
      * @return the created Resource
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      *
      * @see Endpoint_type
      */
@@ -129,9 +129,9 @@ public:
 
     /**
      * Removes the specified resource from the endpoint. It is expected that the authentication token used to create
-     * this Endpoint object is valid, that a connection can be made to One Data Share, that a connection can be made
-     * from One Data Share to the endpoint specified by the credential id, that the specified resource exists at
-     * the specified location, and that One Data Share is able to remove the specified resource. If these
+     * this Endpoint object is valid, that a connection can be made to OneDataShare, that a connection can be made
+     * from OneDataShare to the endpoint specified by the credential id, that the specified resource exists at
+     * the specified location, and that OneDataShare is able to remove the specified resource. If these
      * preconditions are not met, exceptions may be thrown.
      *
      * @param identifier borrowed reference to the path or id, depending on the endpoint type, that the endpoint
@@ -139,8 +139,8 @@ public:
      * @param to_delete borrowed reference to the name or id, depending on the endpoint type, that the endpoint
      * needs in order to locate the resource to remove from within the specified directory
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      *
      * @see Endpoint_type
      */
@@ -149,8 +149,8 @@ public:
     /**
      * Creates a new directory with the specified name under the specified directory. It is expected that the
      * authentication token used to create this Endpoint object is valid, that a conenction can be made to One Data
-     * Share, that a connection can be made from One Data Share to the endpoint specified by the credential id,
-     * that the specified resource both is a directory and exists at the specified location, and that One Data Share
+     * Share, that a connection can be made from OneDataShare to the endpoint specified by the credential id,
+     * that the specified resource both is a directory and exists at the specified location, and that OneDataShare
      * is able to create a directory under the specified directory. If these preconditions are not met, exceptions
      * may be thrown.
      *
@@ -158,8 +158,8 @@ public:
      * needs in order to locate the directory to create the new directory under
      * @param folder_to_create borrowed reference to the name of the directory to create
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      *
      * @see Endpoint_type
      */
@@ -167,7 +167,7 @@ public:
 
     /**
      * Downloads the specified file. It is expected that the authentication token used to create this Endpoint
-     * object is valid, that a conenction can be made to One Data Share, that a connection can be made from One Data
+     * object is valid, that a conenction can be made to OneDataShare, that a connection can be made from One Data
      * Share to the endpoint specified by the credential id, that the specified resource exists at the specified
      * location, and that the specified resource is a file. If these preconditions are not met, exceptions may be
      * thrown.
@@ -177,8 +177,8 @@ public:
      * @param file_to_download borrowed reference to the name or id depending on the endpoint type, that the
      * endpoint needs in order to locate the file to download from within the specified directory
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      *
      * @see Endpoint_type
      */

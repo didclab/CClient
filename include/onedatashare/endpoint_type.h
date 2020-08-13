@@ -1,6 +1,6 @@
 /**
  * @file endpoint_type.h
- * Defines the different types of endpoints One Data Share supports.
+ * Defines the different types of endpoints OneDataShare supports.
  *
  * @author Andrew Mikalsen
  * @date 6/23/20

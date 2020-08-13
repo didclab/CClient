@@ -73,9 +73,9 @@ int main()
             }
         }
     } catch (Ods::Unexpected_response_error e) {
-        std::cout << "\nUnexpected response received from One Data Share.\n\nwhat(): " << e.what()
+        std::cout << "\nUnexpected response received from OneDataShare.\n\nwhat(): " << e.what()
                   << "\n\nstatus: " << e.status << std::endl;
     } catch (Ods::Connection_error e) {
-        std::cout << "\nError connecting to One Data Share.\n\nwhat(): " << e.what() << std::endl;
+        std::cout << "\nError connecting to OneDataShare.\n\nwhat(): " << e.what() << std::endl;
     }
 }

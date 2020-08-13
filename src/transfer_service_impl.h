@@ -29,15 +29,15 @@ class Transfer_status_impl : public Transfer_status {
 };
 
 /**
- * Service that makes REST API calls to One Data Share related to transfers.
+ * Service that makes REST API calls to OneDataShare related to transfers.
  */
 class Transfer_service_impl : public Transfer_service {
 public:
     /**
-     * Creates a new Transfer_service object with the specified connection to One Data Share and rest caller.
+     * Creates a new Transfer_service object with the specified connection to OneDataShare and rest caller.
      *
-     * @param ods_auth_token borrowed reference to the One Data Share authentication token to use
-     * @param ods_url borrowed reference to the url that One Data Share is running on
+     * @param ods_auth_token borrowed reference to the OneDataShare authentication token to use
+     * @param ods_url borrowed reference to the url that OneDataShare is running on
      * @param rest_caller moved pointer to the object to use for making REST API calls
      */
     Transfer_service_impl(const std::string& ods_auth_token,
@@ -53,8 +53,8 @@ public:
      *
      * @return the id of the new transfer job
      *
-     * @exception Connection_error if unable to connect to One Data Share
-     * @exception Unexpected_response_error if an unexpected response is received from One Data Share
+     * @exception Connection_error if unable to connect to OneDataShare
+     * @exception Unexpected_response_error if an unexpected response is received from OneDataShare
      */
     std::string transfer(const Source& source,
                          const Destination& destination,
@@ -64,7 +64,7 @@ public:
     std::unique_ptr<Transfer_status> status(const std::string& id) const override;
 
 private:
-    /** Url to the One Data Share server to make REST API calls to. */
+    /** Url to the OneDataShare server to make REST API calls to. */
     const std::string ods_url_;
 
     /** Pointer to the object used to make REST API calls. */

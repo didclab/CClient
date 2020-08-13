@@ -1,6 +1,6 @@
 /**
  * @file ods_error.h
- * Defines the exceptions that can be thrown by the One Data Share SDK.
+ * Defines the exceptions that can be thrown by the OneDataShare SDK.
  *
  * @author Andrew Mikalsen
  * @date 7/16/20
@@ -14,7 +14,7 @@
 namespace Onedatashare {
 
 /**
- * General exception thrown due to an error related to communicating with One Data Share.
+ * General exception thrown due to an error related to communicating with OneDataShare.
  */
 class Ods_error : public std::runtime_error {
 public:
@@ -30,7 +30,7 @@ public:
 };
 
 /**
- * Exception thrown when an unexpected response is received from One Data Share.
+ * Exception thrown when an unexpected response is received from OneDataShare.
  */
 class Unexpected_response_error : public Ods_error {
 public:

@@ -1,6 +1,6 @@
 /**
  * @file onedatashare.h
- * Includes all header files needed to use the One Data Share SDK.
+ * Includes all header files needed to use the OneDataShare SDK.
  *
  * @author Andrew Mikalsen
  * @date 8/4/20
@@ -16,7 +16,7 @@
 #include "transfer_service.h"
 
 /**
- * Contains all types defined by the One Data Share SDK.
+ * Contains all types defined by the OneDataShare SDK.
  */
 namespace Onedatashare {
 }

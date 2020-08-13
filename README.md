@@ -1,7 +1,7 @@
 CClient
 =======
 
-The One Data Share SDK for C++ 17. To begin working with the SDK, see the
+The OneDataShare SDK for C++ 17. To begin working with the SDK, see the
 [installation instructions](#install),
 the
 [documentation](https://didclab.github.io/CClient),
@@ -29,7 +29,7 @@ The following are required to build and test this project.
 Install:
 --------
 
-To install the One Data Share C++ SDK, follow the instructions below. Note that this will require a **C++ 17** compiler,
+To install the OneDataShare C++ SDK, follow the instructions below. Note that this will require a **C++ 17** compiler,
 **CMake** `3.10.0` or greater, and **Libcurl** `7.47.0` or greater.
 
 1. Clone the github repository at https://github.com/didclab/CClient and switch to the created directory with the
@@ -45,7 +45,7 @@ following commands:
     cd build
     ```
 
-3. Next you must initialize the build tree and specify where you want to install the One Data Share SDK. There are two
+3. Next you must initialize the build tree and specify where you want to install the OneDataShare SDK. There are two
 ways to do this. To use the default GNU install directory (`/usr/local`), use
     ```
     cmake ../ -DCMAKE_BUILD_TYPE=Release
@@ -55,7 +55,7 @@ ways to do this. To use the default GNU install directory (`/usr/local`), use
     cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=<path>
     ```
 
-4. Finally, to install the One Data Share SDK, use
+4. Finally, to install the OneDataShare SDK, use
     ```
     make install
     ```
@@ -63,7 +63,7 @@ ways to do this. To use the default GNU install directory (`/usr/local`), use
 CMake Support
 -------------
 
-The One Data Share SDK fully supports CMake. Once installed, `OneDataShare` can be included in any CMake project by
+The OneDataShare SDK fully supports CMake. Once installed, `OneDataShare` can be included in any CMake project by
 using `find_package(OneDataShare)`. Without any other user interaction, `find_package` defines the following:
  - `OneDataShare_FOUND` - defined if and only if CMake successfully found the `OneDataShare` package.
  - `OneDataShare_VERSION` - the version of the `OneDataShare` installation found by CMake.
@@ -97,8 +97,8 @@ for more information on targets.
 
 Examples:
 ---------
-To run the examples, a `token.txt` and `url.txt` file must be created in the project root containing the One Data Share
-authentication token and One Data Share url to use respectively as shown below.
+To run the examples, a `token.txt` and `url.txt` file must be created in the project root containing the OneDataShare
+authentication token and OneDataShare url to use respectively as shown below.
 
 `token.txt`:
 ```
@@ -126,7 +126,7 @@ control.
 
 `doxygen/` - Contains files for generating documentation.
 
-`examples/` - Contains sample files demonstrating how to use the One Data Share SDK. These files are not part of the
+`examples/` - Contains sample files demonstrating how to use the OneDataShare SDK. These files are not part of the
 main project.
 
 `include/` - Contains public header files to be exported with the library.

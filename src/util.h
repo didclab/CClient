@@ -18,7 +18,7 @@ namespace Onedatashare {
 namespace Internal {
 namespace Util {
 
-/** Production url for One Data Share. */
+/** Production url for OneDataShare. */
 constexpr auto ods_production_url {"https://onedatashare.org"};
 
 /**

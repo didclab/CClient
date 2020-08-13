@@ -1,6 +1,6 @@
 /**
  * @file ods_rest_api.h
- * Defines constants related to the specification of the One Data Share REST API.
+ * Defines constants related to the specification of the OneDataShare REST API.
  *
  * @author Andrew Mikalsen
  * @date 8/10/20
