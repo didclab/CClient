@@ -140,21 +140,21 @@ The returned
 object will have different fields defined depending on what type of resource was listed and what type of endpoint the resource is from. Be sure to check the documentation of `list` for the complete description of guarantees regarding the fields defined in the `Resource`. To be completely safe, always check `optional` values before using them.
 
 To create a directory, you can use the
-[`mkdir`]()
+[`mkdir`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#ad792147f4a9752e2d3f61f76a7a8e04e)
 method. You must specify where to create the new directory and the name of the new directory.
 ```
 sftp_server.mkdir("/", "mynewfolder");
 ```
 
 To remove a resource, you can use the
-[`remove`]()
+[`remove`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#ade00b441a33f868ade0af128730bbdf7)
 method. You must specify the directory containing the target resource and the name of the target resource.
 ```
 sftp_server.remove("/", "mynewfolder");
 ```
 
 To download a file, you can use the
-[`download`]()
+[`download`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a882ad3a0ed06826595f7b46c3b360064)
 method. You must specify the directory contianing the target file and the name of the target file.
 ```
 sftp_server.download("/", "myfile.txt");
