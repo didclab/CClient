@@ -71,7 +71,7 @@ To register an **OAuth Endpoint**, first use the
 [`oauth_url`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a83e81a11a3f1731958a5d11cd48163ca)
 method.
 ```
-const auto url {credential_service.oauth_url(Onedatashare::Oauth_endpoint_type::box)};
+const auto url {credential_service->oauth_url(Onedatashare::Oauth_endpoint_type::box)};
 ```
 This method returns the URL you must visit to register an endpoint of the specified type.
 
@@ -84,7 +84,7 @@ const auto uri {"sftp://127.0.0.1:22"}; // the uri of your endpoint
 const std::string username {"foo"}; // your username for the endpoint
 const std::string secret {"bar"}; // your password for the endpoint
 
-credential_service.register_credential(Onedatashare::Credential_endpoint_type::sftp, cred_id, uri, &username, &secret);
+credential_service->register_credential(Onedatashare::Credential_endpoint_type::sftp, cred_id, uri, &username, &secret);
 ```
 
 To register a **Credential Endpoint** that doesn't use a username or a password (such as an anonymous FTP server), you can pass
@@ -93,7 +93,7 @@ To register a **Credential Endpoint** that doesn't use a username or a password 
 const auto cred_id {"my new ftp endpoint"}; // the credential id you want to use for your new endpoint
 const auto uri {"ftp://127.0.0.1:21"}; // the uri of your endpoint
 
-credential_service.register_credential(Onedatashare::Credential_endpoint_type::ftp, cred_id, uri, nullptr, nullptr);
+credential_service->register_credential(Onedatashare::Credential_endpoint_type::ftp, cred_id, uri, nullptr, nullptr);
 ```
 
 Sometimes you may want to see which endpoints you have registered. This can be done with the
@@ -102,7 +102,7 @@ method. You can use `credential_id_list` to list all of your registered **Creden
 [`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
 enumeration.
 ```
-const auto list {credential_service.credential_id_list(Onedatashare::Endpoint_type::sftp)};
+const auto list {credential_service->credential_id_list(Onedatashare::Endpoint_type::sftp)};
 
 for (const auto& id : list) {
     std::cout << id << std::endl;
@@ -137,7 +137,7 @@ To get more information about a resource on an endpoint, you can list the resour
 [`list`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a16129b9e1b9d5c98df2fdc19c7dace90)
 method with the path to the resource you want to list. This works for any type of resource.
 ```
-const auto myfile {sftp_server.list("/myfile.txt")};
+const auto myfile {sftp_server->list("/myfile.txt")};
 
 std::cout << myfile.size << std::endl;
 ```
@@ -151,21 +151,21 @@ To create a directory, you can use the
 [`mkdir`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#ad792147f4a9752e2d3f61f76a7a8e04e)
 method. You must specify where to create the new directory and the name of the new directory.
 ```
-sftp_server.mkdir("/", "mynewfolder");
+sftp_server->mkdir("/", "mynewfolder");
 ```
 
 To remove a resource, you can use the
 [`remove`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#ade00b441a33f868ade0af128730bbdf7)
 method. You must specify the directory containing the target resource and the name of the target resource.
 ```
-sftp_server.remove("/", "mynewfolder");
+sftp_server->remove("/", "mynewfolder");
 ```
 
 To download a file, you can use the
 [`download`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a882ad3a0ed06826595f7b46c3b360064)
 method. You must specify the directory contianing the target file and the name of the target file.
 ```
-sftp_server.download("/", "myfile.txt");
+sftp_server->download("/", "myfile.txt");
 ```
 
 Making Transfers
@@ -211,7 +211,7 @@ To make the transfer request, call the
 [`transfer`](https://didclab.github.io/CClient/classOne__data__share_1_1Transfer__service.html#a559fa8dd7fc18577aea4d553218cf066)
 method.
 ```
-const auto job_id {transfer_service::transfer(ftp_source, sftp_destination, options)};
+const auto job_id {transfer_service->transfer(ftp_source, sftp_destination, options)};
 ```
 
 To view the status of a transfer, you can pass the job id returned from the `transfer` method into the
