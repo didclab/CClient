@@ -32,7 +32,7 @@ Each class has a static `create` method that returns a new instance of the class
 method requires a OneDataShare authentication token which must be obtained from the
 [OneDataShare website](https://www.onedatashare.org/).
 
-All classes and structs defined by the SDK are located in the `One_data_share` namespace.
+All classes and structs defined by the SDK are located in the `Onedatashare` namespace.
 
 For installation and CMake integration instructions, see the
 [GitHub repository](https://github.com/didclab/CClient).
@@ -51,7 +51,7 @@ class. A `Credential_service` object can be instantiated by calling its
 [`create`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a35d157e76a51329e44cea9df8c06c355)
 method like so:
 ```
-auto credential_service {One_data_share::Credential_service::create("YOURONEDATASHARETOKEN")};
+auto credential_service {Onedatashare::Credential_service::create("YOURONEDATASHARETOKEN")};
 ```
 
 `Credential_service::create`'s sole argument is the OneDataShare authentication token obtained from the OneDataShare website.
@@ -73,7 +73,7 @@ To register an **OAuth Endpoint**, first use the
 [`oauth_url`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a83e81a11a3f1731958a5d11cd48163ca)
 method.
 ```
-auto url {credential_service.oauth_url(One_data_share::Oauth_endpoint_type::box)};
+auto url {credential_service.oauth_url(Onedatashare::Oauth_endpoint_type::box)};
 ```
 This method returns the URL you must visit to register an endpoint of the specified type.
 
