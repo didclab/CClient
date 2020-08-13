@@ -125,17 +125,40 @@ const auto sftp_server {Onedatashare::Endpoint::create(Onedatashare::Endpoint_ty
 
 All methods for filesystem operations have the idea of a **Resource Identifier**. A **Resource Identifier** is simply a string that OneDataShare uses to find a resource on an endpoint. In most cases, this string is either the name of or the path to a resource. However, some endpoints use ids instead of paths and names. In these cases, the **Resource Identifier** is the id of the resource. A list of how different endpoint types specify **Resource Identifiers** can be found in the documentation of the
 [`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
-enumeration.
+enumeration. For the remainder of this document, it is assumed that you are using endpoints that use paths and names for **Credential Identifiers**. If you are instead using a endpoint that uses ids, the only difference is that you must use the resource's id instead of a path or name.
 
-To get more information about resource on an endpoint, you can list it with the
+To get more information about a resource on an endpoint, you can list the resource using the
 [`list`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a16129b9e1b9d5c98df2fdc19c7dace90)
-method. This works for any type of resource.
+method with the path to the resource you want to list. This works for any type of resource.
 ```
-const auto myfile {sftp_server.list("myfile.txt")};
+const auto myfile {sftp_server.list("/myfile.txt")};
+
+std::cout << myfile.size << std::endl;
 ```
 The returned
 [`Resource`](https://didclab.github.io/CClient/structOne__data__share_1_1Resource.html)
 object will have different fields defined depending on what type of resource was listed and what type of endpoint the resource is from. Be sure to check the documentation of `list` for the complete description of guarantees regarding the fields defined in the `Resource`. To be completely safe, always check `optional` values before using them.
+
+To create a directory, you can use the
+[`mkdir`]()
+method. You must specify where to create the new directory and the name of the new directory.
+```
+sftp_server.mkdir("/", "mynewfolder");
+```
+
+To remove a resource, you can use the
+[`remove`]()
+method. You must specify the directory containing the target resource and the name of the target resource.
+```
+sftp_server.remove("/", "mynewfolder");
+```
+
+To download a file, you can use the
+[`download`]()
+method. You must specify the directory contianing the target file and the name of the target file.
+```
+sftp_server.download("/", "myfile.txt");
+```
 
 Making Transfers
 ----------------
