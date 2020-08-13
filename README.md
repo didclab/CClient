@@ -57,7 +57,7 @@ ways to do this. To use the default GNU install directory (`/usr/local`), use
 
 4. Finally, to install the OneDataShare SDK, use
     ```
-    make install
+    sudo make install
     ```
 
 CMake Support
@@ -73,12 +73,14 @@ using `find_package(OneDataShare)`. Without any other user interaction, `find_pa
 Once found, `OneDataShare::OneDataShare` can be linked with the project.
 
 ### Example ###
+Here's a working `CMakeLists.txt` file.
 ```
 cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 17)
 
 project(myproject LANGUAGES CXX)
 
-find_package(OneDataShare REQUIRED)
+find_package(OneDataShare 0.1.0 REQUIRED)
 
 add_executable(myproject
     src/main.cpp
@@ -86,6 +88,10 @@ add_executable(myproject
 
 target_link_libraries(myproject
     OneDataShare::OneDataShare
+)
+
+install(TARGETS myproject
+        DESTINATION .
 )
 ```
 
