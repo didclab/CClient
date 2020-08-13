@@ -178,7 +178,7 @@ classes discussed so far, a `Transfer_service` object is instantiated with its
 [`create`](https://didclab.github.io/CClient/classOne__data__share_1_1Transfer__service.html#a85f9b956392cca3a6e5437fdb0d176bf)
 method.
 ```
-const auto transfer_service {Onedatashare::Transfer_service::create("MYONEDATASHARETOKEN)};
+const auto transfer_service {Onedatashare::Transfer_service::create("MYONEDATASHARETOKEN")};
 ```
 
 Making a transfer request requires three other objects: the `Source`, the `Destination`, and the `Transfer_options`.
