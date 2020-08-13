@@ -189,7 +189,7 @@ object indicates the endpoint to transfer from and what resources to transfer. T
 the endpoint type and **Credential Identifier** information as well as the directory to transfer from and a list of the names of
 files to transfer. All transfered resources must be located in the same directory.
 ```
-const Onedatashare::Source ftp_source {Onedatashare::Endpoint_type::ftp, "my new ftp endpoint", "/", std::vector {"file1.txt", "file2.txt"}};
+const Onedatashare::Source ftp_source {Onedatashare::Endpoint_type::ftp, "my new ftp endpoint", "/", std::vector<std::string> {"file1.txt", "file2.txt"}};
 ```
 
 A
@@ -218,7 +218,7 @@ To view the status of a transfer, you can pass the job id returned from the `tra
 [`status`](https://didclab.github.io/CClient/classOne__data__share_1_1Transfer__service.html#aed7b9855a48fa65b196436cdf2bf6f0a)
 method.
 ```
-const auto transfer_status {transfer_service.status(job_id)};
+const auto transfer_status {transfer_service->status(job_id)};
 ```
 
 Error Handling
