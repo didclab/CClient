@@ -74,7 +74,7 @@ To register an **OAuth Endpoint**, first use the
 [`oauth_url`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a83e81a11a3f1731958a5d11cd48163ca)
 method.
 ```
-auto url {credential_service.oauth_url(Onedatashare::Oauth_endpoint_type::box)};
+const auto url {credential_service.oauth_url(Onedatashare::Oauth_endpoint_type::box)};
 ```
 This method returns the URL you must visit to register an endpoint of the specified type.
 
@@ -87,7 +87,7 @@ const auto uri {"sftp://127.0.0.1:22"}; // the uri of your endpoint
 const std::string username {"foo"}; // your username for the endpoint
 const std::string secret {"bar"}; // your password for the endpoint
 
-credential_service.register_credential(Onedatashare::Credential_endpoint::SFTP, cred_id, uri, &username, &secret);
+credential_service.register_credential(Onedatashare::Credential_endpoint_type::sftp, cred_id, uri, &username, &secret);
 ```
 
 To register a **Credential Endpoint** that doesn't use a username or a password (such as an anonymous FTP server), you can pass
@@ -96,7 +96,20 @@ To register a **Credential Endpoint** that doesn't use a username or a password 
 const auto cred_id {"my new ftp endpoint"}; // the credential id you want to use for your new endpoint
 const auto uri {"ftp://127.0.0.1:21"}; // the uri of your endpoint
 
-credential_service.register_credential(Onedatashare::Credential_endpoint::SFTP, cred_id, uri, nullptr, nullptr);
+credential_service.register_credential(Onedatashare::Credential_endpoint_type::ftp, cred_id, uri, nullptr, nullptr);
+```
+
+Sometimes you may want to see which endpoints you have registered. This can be done with the
+[`credential_id_list`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a585932819bfece00eb685eec5f75d1ed)
+method. You can use `credential_id_list` to list all of the registered **Credential Identifiers** of any endpoint type. The types you can use are members of the
+[`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
+enumeration.
+```
+const auto list {credential_service.credential_id_list(Onedatashare::Endpoint_type::sftp)};
+
+for (const auto& id : list) {
+    std::cout << id << std::endl;
+}
 ```
 
 Accessing Endpoints
