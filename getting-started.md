@@ -51,7 +51,7 @@ class. A `Credential_service` object can be instantiated by calling its
 [`create`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a35d157e76a51329e44cea9df8c06c355)
 method like so:
 ```
-auto credential_service {Onedatashare::Credential_service::create("YOURONEDATASHARETOKEN")};
+const auto credential_service {Onedatashare::Credential_service::create("YOURONEDATASHARETOKEN")};
 ```
 
 `Credential_service::create`'s sole argument is the OneDataShare authentication token obtained from the OneDataShare website.
@@ -68,6 +68,7 @@ registered by giving the endpoint's credentials to OneDataShare directly. One ot
 **Credential Identifiers**. These are strings associated with a specific endpoint registered on your account.
 For **Oauth Endpoints**, the **Credential Identifier** is set automatically as the email of the account used to log into the endpoint. For
 **Credential Endpoints**, the **Credential Identifer** is specified as part of uploading credentials to OneDataShare.
+The **Credential Identifier** of an endpoint is used to refer to that endpoint when interacting with it through OneDataShare.
 
 To register an **OAuth Endpoint**, first use the
 [`oauth_url`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a83e81a11a3f1731958a5d11cd48163ca)
@@ -76,6 +77,27 @@ method.
 auto url {credential_service.oauth_url(Onedatashare::Oauth_endpoint_type::box)};
 ```
 This method returns the URL you must visit to register an endpoint of the specified type.
+
+To register a **Credential Endpoint**, you can use the
+[`register_credential`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#ae33eda8a7474eb664c74ca7cb3abd39b)
+method.
+```
+const auto cred_id {"my new sftp endpoint"}; // the credential id you want to use for your new endpoint
+const auto uri {"sftp://127.0.0.1:22"}; // the uri of your endpoint
+const std::string username {"foo"}; // your username for the endpoint
+const std::string secret {"bar"}; // your password for the endpoint
+
+credential_service.register_credential(Onedatashare::Credential_endpoint::SFTP, cred_id, uri, &username, &secret);
+```
+
+To register a **Credential Endpoint** that doesn't have a username or a password (such as an FTP server), you can pass
+`nullptr` for `username` and `secret`.
+```
+const auto cred_id {"my new ftp endpoint"}; // the credential id you want to use for your new endpoint
+const auto uri {"ftp://127.0.0.1:21"}; // the uri of your endpoint
+
+credential_service.register_credential(Onedatashare::Credential_endpoint::SFTP, cred_id, uri, nullptr, nullptr);
+```
 
 Accessing Endpoints
 -------------------
