@@ -1,7 +1,13 @@
 CClient
 =======
 
-The One Data Share SDK for C++ 17. To begin working with the SDK, see the [installation instructions](#install), the [documentation](https://didclab.github.io/CClient/index.html), and the [getting started](getting-started.md) tutorial.
+The One Data Share SDK for C++ 17. To begin working with the SDK, see the
+[installation instructions](#install),
+the
+[documentation](https://didclab.github.io/CClient),
+and the
+[getting started](getting-started.md)
+tutorial.
 
 Table of Contents
 -----------------
@@ -23,9 +29,11 @@ The following are required to build and test this project.
 Install:
 --------
 
-To install the One Data Share C++ SDK, follow the instructions below. Note that this will require a **C++ 17** compiler, **CMake** `3.10.0` or greater, and **Libcurl** `7.47.0` or greater.
+To install the One Data Share C++ SDK, follow the instructions below. Note that this will require a **C++ 17** compiler,
+**CMake** `3.10.0` or greater, and **Libcurl** `7.47.0` or greater.
 
-1. Clone the github repository at https://github.com/didclab/CClient and switch to the created directory with the following commands:
+1. Clone the github repository at https://github.com/didclab/CClient and switch to the created directory with the
+following commands:
     ```
     git clone https://github.com/didclab/CClient.git;
     cd CClient
@@ -37,7 +45,8 @@ To install the One Data Share C++ SDK, follow the instructions below. Note that 
     cd build
     ```
 
-3. Next you must initialize the build tree and specify where you want to install the One Data Share SDK. There are two ways to do this. To use the default GNU install directory (`/usr/local`), use
+3. Next you must initialize the build tree and specify where you want to install the One Data Share SDK. There are two
+ways to do this. To use the default GNU install directory (`/usr/local`), use
     ```
     cmake ../ -DCMAKE_BUILD_TYPE=Release
     ```
@@ -54,7 +63,8 @@ To install the One Data Share C++ SDK, follow the instructions below. Note that 
 CMake Support
 -------------
 
-The One Data Share SDK fully supports CMake. Once installed, `OneDataShare` can be included in any CMake project by using `find_package(OneDataShare)`. Without any other user interaction, `find_package` defines the following:
+The One Data Share SDK fully supports CMake. Once installed, `OneDataShare` can be included in any CMake project by
+using `find_package(OneDataShare)`. Without any other user interaction, `find_package` defines the following:
  - `OneDataShare_FOUND` - defined if and only if CMake successfully found the `OneDataShare` package.
  - `OneDataShare_VERSION` - the version of the `OneDataShare` installation found by CMake.
  - `OneDataShare::OneDataShare` - the imported `OneDataShare` target
@@ -81,7 +91,9 @@ target_link_libraries(myproject
 
 Build:
 ------
-This project is built and tested using `make`. See [`Makefile`](Makefile) for more information on targets.
+This project is built and tested using `make`. See
+[`Makefile`](Makefile)
+for more information on targets.
 
 Examples:
 ---------
@@ -102,9 +114,11 @@ Do **not** check these files into version control.
 
 Project Structure:
 ------------------
-`bin/` - Local-only directory containing generated binaries. This directory is **not** to be checked into version control.
+`bin/` - Local-only directory containing generated binaries. This directory is **not** to be checked into version
+control.
 
-`build/` - Local-only directory containing project build tree. This directory is **not** to be checked into version control.
+`build/` - Local-only directory containing project build tree. This directory is **not** to be checked into version
+control.
 
 `cmake/` - Contains templates for generated CMake scripts.
 
@@ -112,7 +126,8 @@ Project Structure:
 
 `doxygen/` - Contains files for generating documentation.
 
-`examples/` - Contains sample files demonstrating how to use the One Data Share SDK. These files are not part of the main project.
+`examples/` - Contains sample files demonstrating how to use the One Data Share SDK. These files are not part of the
+main project.
 
 `include/` - Contains public header files to be exported with the library.
 
@@ -122,4 +137,8 @@ Project Structure:
 
 Coding Style:
 -------------
-This project follows the [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md), including the [recommended naming and layout rules](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#nl-naming-and-layout-rules). Note that this project does **not** use the [Guidelines Support Library](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gsl-guidelines-support-library).
+This project follows the
+[C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md),
+including the [recommended naming and layout rules](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#nl-naming-and-layout-rules).
+Note that this project does **not** use the
+[Guidelines Support Library](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gsl-guidelines-support-library).
