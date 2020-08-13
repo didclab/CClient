@@ -90,7 +90,7 @@ const std::string secret {"bar"}; // your password for the endpoint
 credential_service.register_credential(Onedatashare::Credential_endpoint::SFTP, cred_id, uri, &username, &secret);
 ```
 
-To register a **Credential Endpoint** that doesn't have a username or a password (such as an FTP server), you can pass
+To register a **Credential Endpoint** that doesn't use a username or a password (such as an anonymous FTP server), you can pass
 `nullptr` for `username` and `secret`.
 ```
 const auto cred_id {"my new ftp endpoint"}; // the credential id you want to use for your new endpoint
