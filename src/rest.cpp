@@ -7,7 +7,7 @@
 
 #include "rest.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 Rest::Rest() = default;
@@ -15,4 +15,4 @@ Rest::Rest() = default;
 Rest::~Rest() = default;
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare

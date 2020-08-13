@@ -13,7 +13,7 @@
 
 namespace One_data_share_mocks {
 
-namespace Ods = One_data_share;
+namespace Ods = Onedatashare;
 
 class Rest_mock : public Ods::Internal::Rest {
     using Header_map = std::unordered_multimap<std::string, std::string>;

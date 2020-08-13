@@ -14,7 +14,7 @@
 
 #include "rest.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 /**
@@ -53,6 +53,6 @@ public:
 };
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_CURL_REST_H

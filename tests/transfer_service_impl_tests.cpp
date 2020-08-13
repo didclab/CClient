@@ -22,7 +22,7 @@
 
 namespace {
 
-namespace Ods = One_data_share;
+namespace Ods = Onedatashare;
 
 using ::testing::Return;
 using ::testing::Throw;

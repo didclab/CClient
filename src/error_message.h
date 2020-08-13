@@ -9,7 +9,7 @@
 #ifndef ONEDATASHARE_ERROR_MESSAGE_H
 #define ONEDATASHARE_ERROR_MESSAGE_H
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 namespace Err {
 
@@ -36,6 +36,6 @@ constexpr auto expect_id_msg {"Expected parsed resource to define an id"};
 
 } // namespace Err
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_ERROR_MESSAGE_H

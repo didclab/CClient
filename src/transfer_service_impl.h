@@ -19,7 +19,7 @@
 
 #include "rest.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 /**
@@ -75,6 +75,6 @@ private:
 };
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_TRANSFER_SERVICE_IMPL_H

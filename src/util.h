@@ -14,7 +14,7 @@
 
 #include <onedatashare/endpoint_type.h>
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 namespace Util {
 
@@ -59,6 +59,6 @@ bool load_url_from_config(std::string& url);
 
 } // namespace Util
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_UTILS_H

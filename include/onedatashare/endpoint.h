@@ -16,7 +16,7 @@
 
 #include "endpoint_type.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 
 /**
  * Represents a directory, file, or link, otherwise refered to as a resource, from an endpoint's file system.
@@ -189,6 +189,6 @@ protected:
     Endpoint();
 };
 
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_ENDPOINT_H

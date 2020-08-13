@@ -19,7 +19,7 @@
 #include "ods_rest_api.h"
 #include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 namespace {
@@ -356,4 +356,4 @@ void Endpoint_impl::download(const std::string& identifier, const std::string& f
 }
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare

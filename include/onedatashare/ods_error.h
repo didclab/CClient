@@ -1,4 +1,4 @@
-/** 
+/**
  * @file ods_error.h
  * Defines the exceptions that can be thrown by the One Data Share SDK.
  *
@@ -11,7 +11,7 @@
 
 #include <stdexcept>
 
-namespace One_data_share {
+namespace Onedatashare {
 
 /**
  * General exception thrown due to an error related to communicating with One Data Share.
@@ -48,6 +48,6 @@ public:
     const int status;
 };
 
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_ODS_ERROR_H

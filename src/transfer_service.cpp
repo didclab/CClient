@@ -11,7 +11,7 @@
 #include "transfer_service_impl.h"
 #include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 
 std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& ods_auth_token)
 {
@@ -28,4 +28,4 @@ std::unique_ptr<Transfer_service> Transfer_service::create(const std::string& od
 Transfer_service::Transfer_service() = default;
 Transfer_service::~Transfer_service() = default;
 
-} // namespace One_data_share
+} // namespace Onedatashare

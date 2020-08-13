@@ -9,7 +9,7 @@
 #ifndef ONEDATASHARE_ENDPOINT_TYPE_H
 #define ONEDATASHARE_ENDPOINT_TYPE_H
 
-namespace One_data_share {
+namespace Onedatashare {
 
 /**
  * Contains the possible endpoint types that can be used for making transfers and interacting with an endpoint's file
@@ -35,6 +35,6 @@ enum class Endpoint_type {
     http
 };
 
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_ENDPOINT_TYPE_H

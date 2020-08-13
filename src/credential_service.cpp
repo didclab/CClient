@@ -11,7 +11,7 @@
 #include "curl_rest.h"
 #include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 
 std::unique_ptr<Credential_service> Credential_service::create(const std::string& ods_auth_token)
 {
@@ -30,4 +30,4 @@ Credential_service::Credential_service() = default;
 
 Credential_service::~Credential_service() = default;
 
-} // namespace One_data_share
+} // namespace Onedatashare

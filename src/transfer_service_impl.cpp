@@ -15,7 +15,7 @@
 #include "transfer_service_impl.h"
 #include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 namespace {
@@ -153,4 +153,4 @@ std::unique_ptr<Transfer_status> Transfer_service_impl::status(const std::string
 }
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare

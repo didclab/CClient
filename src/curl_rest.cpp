@@ -14,7 +14,7 @@
 
 #include "curl_rest.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 namespace {
@@ -205,4 +205,4 @@ Response Curl_rest::post(const std::string& url,
 }
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare

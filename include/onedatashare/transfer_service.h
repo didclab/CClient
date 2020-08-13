@@ -15,7 +15,7 @@
 
 #include "endpoint_type.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 
 /**
  * Indicates the destination endpoint of a transfer. Different endpoint types may differ slightly in behavior and
@@ -156,6 +156,6 @@ protected:
     Transfer_service();
 };
 
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_TRANSFER_SERVICE_H

@@ -15,7 +15,7 @@
 
 #include "endpoint_type.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 
 /**
  * Contains the endpoint types that are registered by providing the credentials needed to log into the endpoint.
@@ -143,6 +143,6 @@ protected:
     Credential_service();
 };
 
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_CREDENTIAL_SERVICE_H

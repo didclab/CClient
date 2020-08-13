@@ -19,7 +19,7 @@
 #include "ods_rest_api.h"
 #include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 namespace {
@@ -176,4 +176,4 @@ std::vector<std::string> Credential_service_impl::credential_id_list(const Endpo
 }
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare

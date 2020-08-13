@@ -11,7 +11,7 @@
 #include "endpoint_impl.h"
 #include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
 
 std::unique_ptr<Endpoint> Endpoint::create(Endpoint_type type,
                                            const std::string& cred_id,
@@ -36,4 +36,4 @@ Endpoint::Endpoint() = default;
 
 Endpoint::~Endpoint() = default;
 
-} // namespace One_data_share
+} // namespace Onedatashare

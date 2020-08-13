@@ -12,7 +12,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 
 /**
@@ -79,6 +79,6 @@ protected:
 };
 
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_REST_H

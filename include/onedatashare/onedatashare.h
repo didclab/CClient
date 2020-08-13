@@ -18,7 +18,7 @@
 /**
  * Contains all types defined by the One Data Share SDK.
  */
-namespace One_data_share {
+namespace Onedatashare {
 }
 
 #endif // ONEDATASHARE_ONEDATASHARE_H

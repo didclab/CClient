@@ -15,7 +15,7 @@
  */
 int main()
 {
-    namespace Ods = One_data_share;
+    namespace Ods = Onedatashare;
 
     // read token from file
     std::ifstream token_file {"token.txt"};

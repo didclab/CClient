@@ -9,7 +9,7 @@
 #ifndef ONEDATASHARE_ODS_REST_API_H
 #define ONEDATASHARE_ODS_REST_API_H
 
-namespace One_data_share {
+namespace Onedatashare {
 namespace Internal {
 namespace Api {
 
@@ -264,6 +264,6 @@ constexpr auto transfer_job_request_destination {"destination"};
 
 } // namespace Api
 } // namespace Internal
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_ODS_REST_API_H
