@@ -11,7 +11,7 @@
 
 #include <rest.h>
 
-namespace One_data_share_mocks {
+namespace Onedatashare_mocks {
 
 namespace Ods = Onedatashare;
 
@@ -26,6 +26,6 @@ public:
                 (const, override));
 };
 
-} // namespace One_data_share_mocks
+} // namespace Onedatashare_mocks
 
 #endif // ONEDATASHARE_MOCKS_H

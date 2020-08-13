@@ -28,7 +28,7 @@ namespace {
 
 namespace Ods = Onedatashare;
 
-using One_data_share_mocks::Rest_mock;
+using Onedatashare_mocks::Rest_mock;
 
 using ::testing::_;
 using ::testing::Return;

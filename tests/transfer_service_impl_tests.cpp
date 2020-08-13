@@ -27,7 +27,7 @@ namespace Ods = Onedatashare;
 using ::testing::Return;
 using ::testing::Throw;
 
-using One_data_share_mocks::Rest_mock;
+using Onedatashare_mocks::Rest_mock;
 using Header_map = std::unordered_multimap<std::string, std::string>;
 using Str_vec = std::vector<std::string>;
 
