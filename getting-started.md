@@ -3,7 +3,6 @@ Getting Started
 
 Table of Contents
 -----------------
-
 - [Overview](#overview)
 - [Registering Credentials](#registering-credentials)
 - [Accessing Endpoints](#accessing-endpoints)
@@ -12,7 +11,6 @@ Table of Contents
 
 Overview
 --------
-
 OneDataShare provides a uniform interface for accessing and transfering files between different endpoints. The SDK
 allows users to:
 - Register endpoints with OneDataShare.
@@ -42,7 +40,6 @@ as you go through this tutorial.
 
 Registering Credentials
 -----------------------
-
 OneDataShare's primary goal is to provide a uniform interface for making efficient and reliable transfers between
 different endpoints. To take advantage of this functionality, it is first necessary to have endpoints registered with
 OneDataShare. The SDK provides this functionality through the
@@ -51,7 +48,7 @@ class. A `Credential_service` object can be instantiated by calling its
 [`create`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a35d157e76a51329e44cea9df8c06c355)
 method like so:
 ```
-const auto credential_service {Onedatashare::Credential_service::create("YOURONEDATASHARETOKEN")};
+const auto credential_service {Onedatashare::Credential_service::create("MYONEDATASHARETOKEN")};
 ```
 
 `Credential_service::create`'s sole argument is the OneDataShare authentication token obtained from the OneDataShare website.
@@ -101,7 +98,7 @@ credential_service.register_credential(Onedatashare::Credential_endpoint_type::f
 
 Sometimes you may want to see which endpoints you have registered. This can be done with the
 [`credential_id_list`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a585932819bfece00eb685eec5f75d1ed)
-method. You can use `credential_id_list` to list all of the registered **Credential Identifiers** of any endpoint type. The types you can use are members of the
+method. You can use `credential_id_list` to list all of your registered **Credential Identifiers** of any endpoint type. The types you can use are members of the
 [`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
 enumeration.
 ```
@@ -114,7 +111,21 @@ for (const auto& id : list) {
 
 Accessing Endpoints
 -------------------
+Now that you have an endpoint registered with OneDataShare, you can use OneDataShare to interact with the endpoint's contents. If you are not interested in how to list, create, remove, or download resources on an endpoint, feel free to skip to
+[Making Transfers](#making-transfers).
 
+Filesystem operations are done through the
+[`Endpoint`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html)
+class. An `Endpoint` can be instantiated with its
+[`create`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a38f1dfd77411d4235341de8393c76e38)
+method.
+```
+const auto sftp_server {Onedatashare::Endpoint::create(Onedatashare::Endpoint_type::sftp, "my new sftp endpoint", "MYONEDATASHARETOKEN")}
+```
+
+All methods for filesystem operations have the idea of a **Resource Identifier**. A **Resource Identifier** is simply a string that OneDataShare uses to find a resource on an endpoint. In most cases, this string is either the name of or the path to a resource. However, some endpoints use ids instead of paths and names. In these cases, the **Resource Identifier** is the id of the resource. A list of how different endpoint types specify **Resource Identifiers** can be found in the documentation of the
+[`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
+enumeration.
 
 
 Making Transfers
