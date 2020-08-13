@@ -13,16 +13,16 @@ Table of Contents
 Overview
 --------
 
-One Data Share provides a uniform interface for accessing and transfering files between different otherwise incompatible
-endpoints. The SDK allows users to:
+One Data Share provides a uniform interface for accessing and transfering files between different endpoints. The SDK
+allows users to:
 - Register endpoints with One Data Share.
-- View registered endpoints.
+- See which endpoints are registered.
 - View contents of endpoints.
 - Create directories on endpoints.
 - Remove files and directories from endpoints.
 - Directly download files from endpoints.
 - Efficiently transfer files between endpoints.
-- View status of ongoing transfers.
+- Monitor status of ongoing transfers.
 
 Including the header file `onedatashare.h` will import all other headers required to use the SDK. This is the
 recommended approach, although including each header file individually is also supported.
@@ -32,7 +32,11 @@ Each class has a static `create` method that returns a new instance of the class
 method requires a One Data Share authentication token which must be obtained from the
 [One Data Share website](https://www.onedatashare.org/).
 
-All classes and structs defined by the SDK are located in the `One_data_share` namespace. Be sure to reference the
+All classes and structs defined by the SDK are located in the `One_data_share` namespace.
+
+For installation and CMake integration instructions, see the
+[GitHub repository](https://github.com/didclab/CClient).
+Be sure to reference the
 [documentation](https://didclab.github.io/CClient)
 as you go through this tutorial.
 
