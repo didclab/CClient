@@ -189,7 +189,7 @@ object indicates the endpoint to transfer from and what resources to transfer. T
 the endpoint type and **Credential Identifier** information as well as the directory to transfer from and a list of the names of
 files to transfer. All transfered resources must be located in the same directory.
 ```
-const Onedatashare::Source ftp_source {Onedatashare::Endpoint_type::ftp, "my new ftp endpoint", "/", std::vector {"file1.txt", "file2.txt}};
+const Onedatashare::Source ftp_source {Onedatashare::Endpoint_type::ftp, "my new ftp endpoint", "/", std::vector {"file1.txt", "file2.txt"}};
 ```
 
 A
