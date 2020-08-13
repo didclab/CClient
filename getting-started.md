@@ -30,7 +30,7 @@ Each class has a static `create` method that returns a new instance of the class
 method requires a OneDataShare authentication token which must be obtained from the
 [OneDataShare website](https://www.onedatashare.org/).
 
-All classes and structs defined by the SDK are located in the `Onedatashare` namespace.
+All types defined by the SDK are located in the `Onedatashare` namespace.
 
 For installation and CMake integration instructions, see the
 [GitHub repository](https://github.com/didclab/CClient).
@@ -98,7 +98,7 @@ credential_service.register_credential(Onedatashare::Credential_endpoint_type::f
 
 Sometimes you may want to see which endpoints you have registered. This can be done with the
 [`credential_id_list`](https://didclab.github.io/CClient/classOne__data__share_1_1Credential__service.html#a585932819bfece00eb685eec5f75d1ed)
-method. You can use `credential_id_list` to list all of your registered **Credential Identifiers** of any endpoint type. The types you can use are members of the
+method. You can use `credential_id_list` to list all of your registered **Credential Identifiers** of any endpoint type. The types that can be can use are members of the
 [`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
 enumeration.
 ```
@@ -120,13 +120,22 @@ class. An `Endpoint` can be instantiated with its
 [`create`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a38f1dfd77411d4235341de8393c76e38)
 method.
 ```
-const auto sftp_server {Onedatashare::Endpoint::create(Onedatashare::Endpoint_type::sftp, "my new sftp endpoint", "MYONEDATASHARETOKEN")}
+const auto sftp_server {Onedatashare::Endpoint::create(Onedatashare::Endpoint_type::sftp, "my new sftp endpoint", "MYONEDATASHARETOKEN")};
 ```
 
 All methods for filesystem operations have the idea of a **Resource Identifier**. A **Resource Identifier** is simply a string that OneDataShare uses to find a resource on an endpoint. In most cases, this string is either the name of or the path to a resource. However, some endpoints use ids instead of paths and names. In these cases, the **Resource Identifier** is the id of the resource. A list of how different endpoint types specify **Resource Identifiers** can be found in the documentation of the
 [`Endpoint_type`](https://didclab.github.io/CClient/namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d)
 enumeration.
 
+To get more information about resource on an endpoint, you can list it with the
+[`list`](https://didclab.github.io/CClient/classOne__data__share_1_1Endpoint.html#a16129b9e1b9d5c98df2fdc19c7dace90)
+method. This works for any type of resource.
+```
+const auto myfile {sftp_server.list("myfile.txt")};
+```
+The returned
+[`Resource`](https://didclab.github.io/CClient/structOne__data__share_1_1Resource.html)
+object will have different fields defined depending on what type of resource was listed and what type of endpoint the resource is from. Be sure to check the documentation of `list` for the complete description of guarantees regarding the fields defined in the `Resource`. To be completely safe, always check `optional` values before using them.
 
 Making Transfers
 ----------------
