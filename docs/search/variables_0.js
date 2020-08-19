@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['contained_5fresources_84',['contained_resources',['../structOne__data__share_1_1Resource.html#a7059533ea33b7f9f4d7c9310819fa601',1,'One_data_share::Resource']]],
-  ['cred_5fid_85',['cred_id',['../structOne__data__share_1_1Destination.html#a252aecf87d32f23a0f7eca072b75c7d2',1,'One_data_share::Destination::cred_id()'],['../structOne__data__share_1_1Source.html#ad9227b31a94a35ccd3e2b44cb983b5f3',1,'One_data_share::Source::cred_id()']]]
+  ['contained_5fresources_70',['contained_resources',['../structOnedatashare_1_1Resource.html#ac30520b83030a1967fbbeac02f3a9002',1,'Onedatashare::Resource']]],
+  ['cred_5fid_71',['cred_id',['../structOnedatashare_1_1Destination.html#a9ddee956374bfada88d4a3f627bc00ae',1,'Onedatashare::Destination::cred_id()'],['../structOnedatashare_1_1Source.html#a356524f849af717caedfa218568e61e8',1,'Onedatashare::Source::cred_id()']]]
 ];

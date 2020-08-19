@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['id_87',['id',['../structOne__data__share_1_1Resource.html#a396231bdec5c984b2d8bc4d01981393f',1,'One_data_share::Resource']]],
-  ['is_5fdirectory_88',['is_directory',['../structOne__data__share_1_1Resource.html#a0a8b88a66789cc7b8f90794877cc0034',1,'One_data_share::Resource']]],
-  ['is_5ffile_89',['is_file',['../structOne__data__share_1_1Resource.html#a06307833edebc5e6104224388557aff2',1,'One_data_share::Resource']]]
+  ['id_73',['id',['../structOnedatashare_1_1Resource.html#ac7c4f1bad562c2656c71069c878f01d3',1,'Onedatashare::Resource']]],
+  ['is_5fdirectory_74',['is_directory',['../structOnedatashare_1_1Resource.html#a0ad3dda4284327b57b1c4571c73f7b22',1,'Onedatashare::Resource']]],
+  ['is_5ffile_75',['is_file',['../structOnedatashare_1_1Resource.html#a2318c17a1d44a2d6fcba47e5dc19a0c2',1,'Onedatashare::Resource']]]
 ];

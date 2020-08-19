@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['link_90',['link',['../structOne__data__share_1_1Resource.html#a91df398cefedcedb2520ae658ab62826',1,'One_data_share::Resource']]]
+  ['link_76',['link',['../structOnedatashare_1_1Resource.html#a1facd9fd287727f96c44a13e61419907',1,'Onedatashare::Resource']]]
 ];

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['endpoint_13',['Endpoint',['../classOne__data__share_1_1Endpoint.html',1,'One_data_share']]],
-  ['endpoint_2eh_14',['endpoint.h',['../endpoint_8h.html',1,'']]],
-  ['endpoint_5ftype_15',['Endpoint_type',['../namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d',1,'One_data_share']]],
-  ['endpoint_5ftype_2eh_16',['endpoint_type.h',['../endpoint__type_8h.html',1,'']]]
+  ['endpoint_12',['Endpoint',['../classOnedatashare_1_1Endpoint.html',1,'Onedatashare']]],
+  ['endpoint_5ftype_13',['Endpoint_type',['../namespaceOnedatashare.html#adce80c4a8195c10b8a7332f356ddc7be',1,'Onedatashare']]]
 ];

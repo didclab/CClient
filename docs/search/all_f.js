@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['time_46',['time',['../structOne__data__share_1_1Resource.html#aba542c4ec4c0d96b9ed6d3ff71077565',1,'One_data_share::Resource']]],
-  ['transfer_47',['transfer',['../classOne__data__share_1_1Transfer__service.html#a559fa8dd7fc18577aea4d553218cf066',1,'One_data_share::Transfer_service']]],
-  ['transfer_5foptions_48',['Transfer_options',['../structOne__data__share_1_1Transfer__options.html',1,'One_data_share']]],
-  ['transfer_5fservice_49',['Transfer_service',['../classOne__data__share_1_1Transfer__service.html',1,'One_data_share']]],
-  ['transfer_5fservice_2eh_50',['transfer_service.h',['../transfer__service_8h.html',1,'']]],
-  ['transfer_5fstatus_51',['Transfer_status',['../classOne__data__share_1_1Transfer__status.html',1,'One_data_share']]],
-  ['type_52',['type',['../structOne__data__share_1_1Destination.html#ace0b7af6308af34a27e4f809bd76bf9c',1,'One_data_share::Destination::type()'],['../structOne__data__share_1_1Source.html#a1e32074af150ce01bde0088f6f7a5d65',1,'One_data_share::Source::type()']]]
+  ['time_40',['time',['../structOnedatashare_1_1Resource.html#ab25936e077e5b14d9454892177e0da54',1,'Onedatashare::Resource']]],
+  ['transfer_41',['transfer',['../classOnedatashare_1_1Transfer__service.html#a27b7348e62bb82855d9089c28c7f80af',1,'Onedatashare::Transfer_service']]],
+  ['transfer_5foptions_42',['Transfer_options',['../structOnedatashare_1_1Transfer__options.html',1,'Onedatashare']]],
+  ['transfer_5fservice_43',['Transfer_service',['../classOnedatashare_1_1Transfer__service.html',1,'Onedatashare']]],
+  ['transfer_5fstatus_44',['Transfer_status',['../classOnedatashare_1_1Transfer__status.html',1,'Onedatashare']]],
+  ['type_45',['type',['../structOnedatashare_1_1Destination.html#a5a0ef5387822d3b8c362d40360a9b0bd',1,'Onedatashare::Destination::type()'],['../structOnedatashare_1_1Source.html#aea49ad405318e06f393084f1f3143c4b',1,'Onedatashare::Source::type()']]]
 ];

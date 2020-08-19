@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['endpoint_5ftype_99',['Endpoint_type',['../namespaceOne__data__share.html#afd0bef6eb16235b5251e388dfe40d59d',1,'One_data_share']]]
+  ['endpoint_5ftype_85',['Endpoint_type',['../namespaceOnedatashare.html#adce80c4a8195c10b8a7332f356ddc7be',1,'Onedatashare']]]
 ];

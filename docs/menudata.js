@@ -48,6 +48,4 @@ var menudata={children:[
 {text:"t",url:"functions.html#index_t"},
 {text:"u",url:"functions.html#index_u"}]},
 {text:"Functions",url:"functions_func.html"},
-{text:"Variables",url:"functions_vars.html"}]}]},
-{text:"Files",url:"files.html",children:[
-{text:"File List",url:"files.html"}]}]}
+{text:"Variables",url:"functions_vars.html"}]}]}]}

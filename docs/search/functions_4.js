@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['oauth_5furl_78',['oauth_url',['../classOne__data__share_1_1Credential__service.html#a83e81a11a3f1731958a5d11cd48163ca',1,'One_data_share::Credential_service']]]
+  ['oauth_5furl_64',['oauth_url',['../classOnedatashare_1_1Credential__service.html#a17340c2c9831e123c1e3f5ae35461552',1,'Onedatashare::Credential_service']]]
 ];
