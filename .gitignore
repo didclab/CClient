@@ -45,5 +45,6 @@ token.txt
 url.txt
 
 # Documentation
-docs/html/
-docs/latex/
+doxygen/html/
+doxygen/latex/
+html/

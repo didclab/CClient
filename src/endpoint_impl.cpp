@@ -1,200 +1,317 @@
-/*
- * endpoint_impl.cpp
- * Andrew Mikalsen
- * 7/20/20
+/**
+ * @file endpoint_impl.cpp
+ *
+ * @author Andrew Mikalsen
+ * @date 7/20/20
  */
 
+#include <optional>
+#include <sstream>
 #include <utility>
 #include <vector>
 
+#include <simdjson/simdjson.h>
+
 #include <onedatashare/ods_error.h>
 
-#include "../simdjson/simdjson.h"
 #include "endpoint_impl.h"
-#include "resource_impl.h"
-#include "utils.h"
+#include "error_message.h"
+#include "ods_rest_api.h"
+#include "util.h"
 
-namespace One_data_share {
+namespace Onedatashare {
+namespace Internal {
 
 namespace {
 
-constexpr auto api_path_box_list {"api/box/ls"};
-
-constexpr auto api_path_dropbox_list {"/api/dropbox/ls"};
-
-constexpr auto api_path_ftp_list {"/api/ftp/ls"};
-
-constexpr auto api_path_google_drive_list {"/api/googledrive/list"};
-
-constexpr auto api_path_gftp_list {"/api/gsiftp/ls"};
-
-constexpr auto api_path_http_list {"/api/http/ls"};
-
-constexpr auto api_path_s3_list {"/api/s3/ls"};
-
-constexpr auto api_path_sftp_list {"/api/sftp/ls"};
-
-constexpr auto stat_id {"id"};
-
-constexpr auto stat_name {"name"};
-
-constexpr auto stat_size {"size"};
-
-constexpr auto stat_time {"time"};
-
-constexpr auto stat_dir {"dir"};
-
-constexpr auto stat_file {"file"};
-
-constexpr auto stat_link {"link"};
-
-constexpr auto stat_permissions {"permissions"};
-
-constexpr auto stat_files {"files"};
-
 /**
- * Returns the path for the list API call based on the specified endpoint type.
+ * Gets the list api path for the sepcified type.
  *
- * @param type endpoint type to get the list API path for
+ * @param type endpoint to get the api path for
  *
- * @return the list API path
+ * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
  */
 std::string select_list_path(Endpoint_type type)
 {
     switch (type) {
     case Endpoint_type::dropbox:
-        return api_path_dropbox_list;
+        return Api::dropbox_ls_path;
     case Endpoint_type::google_drive:
-        return api_path_google_drive_list;
+        return Api::google_drive_ls_path;
     case Endpoint_type::sftp:
-        return api_path_sftp_list;
+        return Api::sftp_ls_path;
     case Endpoint_type::ftp:
-        return api_path_ftp_list;
+        return Api::ftp_ls_path;
     case Endpoint_type::box:
-        return api_path_box_list;
+        return Api::box_ls_path;
     case Endpoint_type::s3:
-        return api_path_s3_list;
+        return Api::s3_ls_path;
     case Endpoint_type::gftp:
-        return api_path_gftp_list;
+        return Api::gftp_ls_path;
     case Endpoint_type::http:
-        return api_path_http_list;
-    default:
-        // TODO: throw exception
-        return "";
+        return Api::http_ls_path;
     }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
 }
 
 /**
- * Creates a unique pointer to a Resource object containing the data stored in the specified Stat json object. It is
- * expected that the specified dom conforms to the Stat object specifications.
+ * Gets the remove api path for the sepcified type.
+ *
+ * @param type endpoint to get the api path for
+ *
+ * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
+ */
+std::string select_rm_path(Endpoint_type type)
+{
+    switch (type) {
+    case Endpoint_type::dropbox:
+        return Api::dropbox_rm_path;
+    case Endpoint_type::google_drive:
+        return Api::google_drive_rm_path;
+    case Endpoint_type::sftp:
+        return Api::sftp_rm_path;
+    case Endpoint_type::ftp:
+        return Api::ftp_rm_path;
+    case Endpoint_type::box:
+        return Api::box_rm_path;
+    case Endpoint_type::s3:
+        return Api::s3_rm_path;
+    case Endpoint_type::gftp:
+        return Api::gftp_rm_path;
+    case Endpoint_type::http:
+        return Api::http_rm_path;
+    }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
+}
+
+/**
+ * Gets the mkdir api path for the specified type.
+ *
+ * @param type endpoint to get the api path for
+ *
+ * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
+ */
+std::string select_mkdir_path(Endpoint_type type)
+{
+    switch (type) {
+    case Endpoint_type::dropbox:
+        return Api::dropbox_mkdir_path;
+    case Endpoint_type::google_drive:
+        return Api::google_drive_mkdir_path;
+    case Endpoint_type::sftp:
+        return Api::sftp_mkdir_path;
+    case Endpoint_type::ftp:
+        return Api::ftp_mkdir_path;
+    case Endpoint_type::box:
+        return Api::box_mkdir_path;
+    case Endpoint_type::s3:
+        return Api::s3_mkdir_path;
+    case Endpoint_type::gftp:
+        return Api::gftp_mkdir_path;
+    case Endpoint_type::http:
+        return Api::http_mkdir_path;
+    }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
+}
+
+/**
+ * Gets the download api path for the specified type.
+ *
+ * @param type endpoint to get the api path for
+ *
+ * @return the api path
+ *
+ * @exception invalid_argument if passed an invalid Endpoint_type value
+ */
+std::string select_download_path(Endpoint_type type)
+{
+    switch (type) {
+    case Endpoint_type::dropbox:
+        return Api::dropbox_download_path;
+    case Endpoint_type::google_drive:
+        return Api::google_drive_download_path;
+    case Endpoint_type::sftp:
+        return Api::sftp_download_path;
+    case Endpoint_type::ftp:
+        return Api::ftp_download_path;
+    case Endpoint_type::box:
+        return Api::box_download_path;
+    case Endpoint_type::s3:
+        return Api::s3_download_path;
+    case Endpoint_type::gftp:
+        return Api::gftp_download_path;
+    case Endpoint_type::http:
+        return Api::http_download_path;
+    }
+
+    throw std::invalid_argument(Err::unknown_enum_msg);
+}
+
+/**
+ * Creates a Resource object containing the data stored in the specified Stat json object. It is expected that the
+ * specified dom conforms to the Stat object specifications.
  *
  * @param obj borrowed reference to the dom containing the Stat json object to parse
  *
- * @return unique pointer to Resource created from parsing the specified dom
+ * @return the Resource created from parsing the specified dom
  *
  * @throw simdjson_error if simdjson encounters an error parsing the dom
  */
-std::unique_ptr<Resource> create_resource(const simdjson::dom::object& obj)
+Resource create_resource(const simdjson::dom::object& obj)
 {
-    auto [id_elm, id_err] {obj[stat_id]};
-    auto name {obj[stat_name]};
-    auto size {obj[stat_size]};
-    auto time {obj[stat_time]};
-    auto dir {obj[stat_dir]};
-    auto file {obj[stat_file]};
-    auto [link_elm, link_err] {obj[stat_link]};
-    auto [permissions_elm, permissions_err] {obj[stat_permissions]};
-    auto [files_elm, files_err] {obj[stat_files]};
-
     // recursively add contained resoruces
-    std::vector<std::shared_ptr<const Resource>> contained {};
-    if (!files_err) {
-        for (const auto& r : files_elm) {
+    std::vector<Resource> contained {};
+    auto files {obj[Api::stat_files]};
+    if (!files.error()) {
+        for (const auto& r : files.value()) {
             // propogate up simdjson_error if thrown
-            contained.push_back(create_resource(r.get_object().take_value()));
+            contained.push_back(create_resource(r.get_object().value()));
         }
     }
 
-    // propogate up simdjson_error exceptions if thrown
-    auto id_val {id_err ? nullptr : std::make_shared<const std::string>(id_elm.get_c_str().take_value())};
-    auto name_val {name.get_c_str().take_value()};
-    auto size_val {size.get_int64().take_value()};
-    auto time_val {time.get_int64().take_value()};
-    auto dir_val {dir.get_bool().take_value()};
-    auto file_val {file.get_bool().take_value()};
-    auto link_val {link_err ? nullptr : std::make_shared<const std::string>(link_elm.get_c_str().take_value())};
-    auto permissions_val {
-        permissions_err ? nullptr : std::make_shared<const std::string>(permissions_elm.get_c_str().take_value())};
-    auto files_val {files_err ?
-                        nullptr :
-                        std::make_shared<const std::vector<std::shared_ptr<const Resource>>>(std::move(contained))};
+    auto id {obj[Api::stat_id]};
+    auto link {obj[Api::stat_link]};
+    auto permissions {obj[Api::stat_permissions]};
 
-    return std::make_unique<Resource_impl>(std::move(id_val),
-                                           std::move(name_val),
-                                           size_val,
-                                           time_val,
-                                           dir_val,
-                                           file_val,
-                                           std::move(link_val),
-                                           std::move(permissions_val),
-                                           std::move(files_val));
+    // if simdjson_error is thrown, the dom must not meet the specification, so propogate the exception
+    return {id.error() ? std::nullopt : std::optional {id.get_c_str().value()},
+            obj[Api::stat_name].get_c_str().value(),
+            obj[Api::stat_size].get_int64().value(),
+            obj[Api::stat_time].get_int64().value(),
+            obj[Api::stat_dir].get_bool().value(),
+            obj[Api::stat_file].get_bool().value(),
+            link.error() ? std::nullopt : std::optional {link.get_c_str().value()},
+            permissions.error() ? std::nullopt : std::optional {permissions.get_c_str().value()},
+            files.error() ? std::nullopt : std::optional {contained}};
+}
+
+/**
+ * Creates a DeleteOperation json object with the specified fields.
+ *
+ * @param cred_id borrowed reference to the value of the corresponding json field
+ * @param path borrowed reference to the value of the corresponding json field
+ * @param id borrowed reference to the value of the corresponding json field
+ * @param to_delete borrowed reference to the value of the corresponding json field
+ *
+ * @return the created json string corresponding to the DeleteOperation json object
+ */
+std::string create_delete_operation(const std::string& cred_id,
+                                    const std::string& path,
+                                    const std::string& id,
+                                    const std::string& to_delete)
+{
+    std::ostringstream stream {};
+    stream << "{\"" << Api::delete_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
+           << Api::delete_operation_path << "\":\"" << Util::escape_json(path) << "\",\"" << Api::delete_operation_id
+           << "\":\"" << Util::escape_json(id) << "\",\"" << Api::delete_operation_to_delete << "\":\""
+           << Util::escape_json(to_delete) << "\"}";
+
+    return stream.str();
+}
+
+/**
+ * Creates a MkdirOperation json object with the specified fields.
+ *
+ * @param cred_id borrowed reference to the value of the corresponding json field
+ * @param path borrowed reference to the value of the corresponding json field
+ * @param id borrowed reference to the value of the corresponding json field
+ * @param folder_to_create borrowed reference to the value of the corresponding json field
+ *
+ * @return the created json string corresponding to the MkdirOperation json object
+ */
+std::string create_mkdir_operation(const std::string& cred_id,
+                                   const std::string& path,
+                                   const std::string& id,
+                                   const std::string& folder_to_create)
+{
+    std::ostringstream stream {};
+    stream << "{\"" << Api::mkdir_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
+           << Api::mkdir_operation_path << "\":\"" << Util::escape_json(path) << "\",\"" << Api::mkdir_operation_id
+           << "\":\"" << Util::escape_json(id) << "\",\"" << Api::mkdir_operation_folder_to_create << "\":\""
+           << Util::escape_json(folder_to_create) << "\"}";
+
+    return stream.str();
+}
+
+/**
+ * Creates a DownloadOperation json object with the specified fields.
+ *
+ * @param cred_id borrowed reference to the value of the corresponding json field
+ * @param path borrowed reference to the value of the corresponding json field
+ * @param id borrowed reference to the value of the corresponding json field
+ * @param file_to_download borrowed reference to the value of the corresponding json field
+ *
+ * @return the created json string corresponding to the DownloadOperation json object
+ */
+std::string create_download_operation(const std::string& cred_id,
+                                      const std::string& path,
+                                      const std::string& id,
+                                      const std::string& file_to_download)
+{
+    std::ostringstream stream {};
+    stream << "{\"" << Api::download_operation_cred_id << "\":\"" << Util::escape_json(cred_id) << "\",\""
+           << Api::download_operation_path << "\":\"" << Util::escape_json(path) << "\",\""
+           << Api::download_operation_id << "\":\"" << Util::escape_json(id) << "\",\""
+           << Api::download_operation_file_to_download << "\":\"" << Util::escape_json(file_to_download) << "\"}";
+
+    return stream.str();
 }
 
 } // namespace
 
 Endpoint_impl::Endpoint_impl(Endpoint_type type,
                              const std::string& cred_id,
-                             const std::string& ods_oauth_token,
+                             const std::string& ods_auth_token,
                              const std::string& ods_url,
                              std::unique_ptr<Rest> rest_caller)
     : type_ {type},
       cred_id_ {cred_id},
-      ods_auth_token_ {ods_oauth_token},
       ods_url_ {ods_url},
       rest_caller_ {std::move(rest_caller)},
-      headers_ {create_headers(ods_auth_token_)}
+      headers_ {Util::create_headers(ods_auth_token)}
 {}
 
-std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) const
+Resource Endpoint_impl::list(const std::string& identifier) const
 {
     // if get throws an expcetion, propagate it up
-    auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?credId=" + cred_id_ +
-                                         "&path=" + identifier + "&identifier=" + identifier,
-                                     headers_)};
+    const auto response {rest_caller_->get(ods_url_ + select_list_path(type_) + "?" + Api::get_ls_cred_id_param + "=" +
+                                               cred_id_ + "&" + Api::get_ls_path_param + "=" + identifier + "&" +
+                                               Api::get_ls_identifier_param + "=" + identifier,
+                                           headers_)};
 
-    if (response.status() != 200) {
-        // unexpected response
-        throw Unexpected_response_error {"Expected a 200 response code when listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\".",
-                                         response.status()};
+    if (response.status != 200) {
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
     }
 
     simdjson::dom::parser parser {};
-    auto [obj, err] {parser.parse(response.body()).get_object()};
+    auto [obj, err] {parser.parse(response.body).get_object()};
 
     if (err) {
-        // bad response body
-        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\": " + simdjson::error_message(err),
-                                         response.status()};
+        throw Unexpected_response_error {Err::invalid_json_body_msg, response.status};
     }
 
-    std::unique_ptr<Resource> resource {};
+    Resource resource {};
     try {
         resource = create_resource(obj);
     } catch (simdjson::simdjson_error e) {
-        // bad response body
-        throw Unexpected_response_error {"Error parsing json recieved after listing resource \"" + identifier +
-                                             "\" on endpoint \"" + cred_id_ + "\": " + e.what(),
-                                         response.status()};
+        throw Unexpected_response_error {Err::invalid_json_body_msg, response.status};
     }
 
-    if (resource->contained_resources() == nullptr && resource->is_directory()) {
-        // bad response body
-        throw Unexpected_response_error {
-            "Parsed resource was a directory but didn't have contained resources when listing resource \"" +
-                identifier + "\" on endpoint \"" + cred_id_ + "\".",
-            response.status()};
+    if (!resource.contained_resources && resource.is_directory) {
+        throw Unexpected_response_error {Err::expect_resources_msg, response.status};
+    }
+
+    if (!resource.id && (type_ == Endpoint_type::box || type_ == Endpoint_type::google_drive)) {
+        throw Unexpected_response_error {Err::expect_id_msg, response.status};
     }
 
     return resource;
@@ -202,17 +319,41 @@ std::unique_ptr<Resource> Endpoint_impl::list(const std::string& identifier) con
 
 void Endpoint_impl::remove(const std::string& identifier, const std::string& to_delete) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    const auto response {rest_caller_->post(ods_url_ + select_rm_path(type_),
+                                            headers_,
+                                            create_delete_operation(cred_id_, identifier, identifier, to_delete))};
+
+    if (response.status != 200) {
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
+    }
 }
 
 void Endpoint_impl::mkdir(const std::string& identifier, const std::string& folder_to_create) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    const auto response {
+        rest_caller_->post(ods_url_ + select_mkdir_path(type_),
+                           headers_,
+                           create_mkdir_operation(cred_id_, identifier, identifier, folder_to_create))};
+
+    if (response.status != 200) {
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
+    }
 }
 
 void Endpoint_impl::download(const std::string& identifier, const std::string& file_to_download) const
 {
-    // TODO: implement
+    // if post throws an expcetion, propagate it up
+    const auto response {
+        rest_caller_->post(ods_url_ + select_download_path(type_),
+                           headers_,
+                           create_download_operation(cred_id_, identifier, identifier, file_to_download))};
+
+    if (response.status != 200) {
+        throw Unexpected_response_error {Err::expect_200_msg, response.status};
+    }
 }
 
-} // namespace One_data_share
+} // namespace Internal
+} // namespace Onedatashare
