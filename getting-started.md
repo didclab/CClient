@@ -54,7 +54,7 @@ const auto credential_service {Onedatashare::Credential_service::create("MYONEDA
 
 Before using the new `Credential_service` object, there are a few points to be aware of. The endpoint types supported by
 OneDataShare can be divided into two categories: **OAuth Endpoints** and **Credential Endpoints**. In the SDK, these
-two sets of endpoint types are indicated by the `Oauth_endpoint_type` and Credential_endpoint_type`
+two sets of endpoint types are indicated by the `Oauth_endpoint_type` and `Credential_endpoint_type`
 enumerations respectively (see the
 [Onedatashare namespace](https://didclab.github.io/CClient/namespaceOnedatashare.html)
 for reference.) **OAuth Endpoints** are registered by visiting a URL provided by the endpoint type in which
@@ -92,7 +92,7 @@ credential_service->register_credential(Onedatashare::Credential_endpoint_type::
 
 Sometimes you may want to see which endpoints you have registered. This can be done with the `credential_id_list`
 method. You can use `credential_id_list` to list all of your registered **Credential Identifiers** of any endpoint type.
-The types that can be can use are members of the `Endpoint_type` enumeration (See the
+The types that can be used are members of the `Endpoint_type` enumeration (see the
 [Onedatashare namespace](https://didclab.github.io/CClient/namespaceOnedatashare.html)
 for reference.)
 ```
@@ -121,7 +121,7 @@ path to a resource. However, some endpoints use ids instead of paths and names. 
 **Resource Identifier** is the id of the resource. A list of how different endpoint types specify
 **Resource Identifiers** can be found in the documentation of the `Endpoint_type`
 enumeration. For the remainder of this document, it is assumed that you are using endpoints that use paths and names for
-**Credential Identifiers**. If you are instead using a endpoint that uses ids, the only difference is that you must use
+**Resource Identifiers**. If you are instead using a endpoint that uses ids, the only difference is that you must use
 the resource's id instead of a path or name.
 
 To get more information about a resource on an endpoint, you can list the resource using the `list`
@@ -207,7 +207,7 @@ Error Handling
 The SDK makes some assumptions whenever you make requests to OneDataShare. It is assumed that a connection can be made to OneDataShare, that the authentication token is valid, and that OneDataShare can perform the requested operation. If these assumptions are wrong, then exceptions will be thrown. There are two types of exceptions to look out for:
 [`Connection_error`](https://didclab.github.io/CClient/classOnedatashare_1_1Connection__error.html)
 and
-[`Unexpected_response_error`.](https://didclab.github.io/CClient/classOnedatashare_1_1Unexpected__response__error.html).
+[`Unexpected_response_error`](https://didclab.github.io/CClient/classOnedatashare_1_1Unexpected__response__error.html).
 
 These expections can be handled the same as all other C++ exceptions.
 ```
