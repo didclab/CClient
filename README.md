@@ -64,16 +64,16 @@ CMake Support
 -------------
 
 The OneDataShare SDK fully supports CMake. Once installed, `OneDataShare` can be included in any CMake project by
-using `find_package(OneDataShare)`. Without any other user interaction, `find_package` defines the following:
+calling `find_package(OneDataShare)` which will define the following:
  - `OneDataShare_FOUND` - defined if and only if CMake successfully found the `OneDataShare` package.
  - `OneDataShare_VERSION` - the version of the `OneDataShare` installation found by CMake.
  - `OneDataShare::OneDataShare` - the imported `OneDataShare` target
  - `ONEDATASHARE_LIBRARIES` - an alias for `OneDataShare::OneDataShare`
 
-Once found, `OneDataShare::OneDataShare` can be linked with the project.
+Once found, `OneDataShare::OneDataShare` can be linked with the project as shown below.
 
 ### Example ###
-Here's a working `CMakeLists.txt` file.
+Here's a minimal working `CMakeLists.txt` file that finds the OneDataShare package and links the package with the project.
 ```
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 17)
@@ -104,7 +104,7 @@ for more information on targets.
 Examples:
 ---------
 To run the examples, a `token.txt` and `url.txt` file must be created in the project root containing the OneDataShare
-authentication token and OneDataShare url to use respectively as shown below.
+authentication token and OneDataShare url respectively as shown below.
 
 `token.txt`:
 ```
