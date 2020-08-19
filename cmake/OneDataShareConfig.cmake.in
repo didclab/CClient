@@ -1,0 +1,10 @@
+get_filename_component(ONEDATASHARE_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(CMakeFindDependencyMacro)
+
+list(APPEND CMAKE_MODULE_PATH ${ONEDATASHARE_CMAKE_DIR})
+
+if(NOT TARGET OneDataShare::OneDataShare)
+    include("${ONEDATASHARE_CMAKE_DIR}/OneDataShareTargets.cmake")
+endif()
+
+set(ONEDATASHARE_LIBRARIES OneDataShare::OneDataShare)

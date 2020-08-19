@@ -1,129 +1,101 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(odscclient VERSION 0.1.0 LANGUAGES CXX)
+project(libonedatashare VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "C++ Client for OneDataShare")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_path(LCURL_DIR curl)
-find_library(LCURL_LIB curl)
+# find libcurl dependency
+set(MIN_CURL_VERSION 7.47.0)
+find_package(CURL ${MIN_CURL_VERSION} REQUIRED)
 
-# add simdjson library
-add_library(simd
-    simdjson/simdjson.h
-    simdjson/simdjson.cpp
-)
-
-# add ods client library
-add_library(odscclient
-    include/onedatashare/credential_service.h
-    include/onedatashare/endpoint.h
-    include/onedatashare/endpoint_type.h
-    include/onedatashare/ods_error.h
-    include/onedatashare/transfer_service.h
+# add static library for onedatashare client
+add_library(onedatashare
+    external/simdjson/simdjson.cpp
     src/credential_service.cpp
     src/credential_service_impl.cpp
-    src/credential_service_impl.h
     src/curl_rest.cpp
-    src/curl_rest.h
     src/endpoint.cpp
     src/endpoint_impl.cpp
-    src/endpoint_impl.h
     src/ods_error.cpp
-    src/resource_impl.cpp
-    src/resource_impl.h
     src/rest.cpp
-    src/rest.h
     src/transfer_service.cpp
     src/transfer_service_impl.cpp
-    src/transfer_service_impl.h
-    src/utils.cpp
-    src/utils.h
+    src/util.cpp
 )
-target_include_directories(odscclient PRIVATE "${LCURL_DIR}" ../simdjson/ include/ src/)
-target_link_libraries(odscclient PRIVATE "${LCURL_LIB}" simd)
 
-# add main executable
-add_executable(main examples/main.cpp)
-target_include_directories(main PRIVATE src/ include/)
-target_link_libraries(main PRIVATE odscclient)
+add_library(OneDataShare::onedatashare ALIAS onedatashare)
 
-install(TARGETS main DESTINATION  ${CMAKE_INSTALL_PREFIX})
-
-# add example 1 executable
-# uncomment to test that example_1 compiles
-add_executable(example_1 examples/example_1.cpp)
-target_include_directories(example_1 PRIVATE include/)
-target_link_libraries(example_1 PRIVATE odscclient)
-
-install(TARGETS example_1 DESTINATION  ${CMAKE_INSTALL_PREFIX})
-
-# add example 2 executable
-add_executable(example_2 examples/example_2.cpp)
-target_include_directories(example_2 PRIVATE include/ src/)
-target_link_libraries(example_2 PRIVATE odscclient)
-
-install(TARGETS example_2 DESTINATION  ${CMAKE_INSTALL_PREFIX})
-
-# add example 3 executable
-add_executable(example_3 examples/example_3.cpp)
-target_include_directories(example_3 PRIVATE include/ src/)
-target_link_libraries(example_3 PRIVATE odscclient)
-
-install(TARGETS example_3 DESTINATION  ${CMAKE_INSTALL_PREFIX})
-
-# download google test
-
-####################################################################################
-# Start From https://github.com/google/googletest/blob/master/googletest/README.md #
-####################################################################################
-
-# Download and unpack googletest at configure time
-configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-  RESULT_VARIABLE result
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-if(result)
-  message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-endif()
-execute_process(COMMAND ${CMAKE_COMMAND} --build .
-  RESULT_VARIABLE result
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-if(result)
-  message(FATAL_ERROR "Build step for googletest failed: ${result}")
-endif()
-
-# Prevent overriding the parent project's compiler/linker
-# settings on Windows
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-# Add googletest directly to our build. This defines
-# the gtest and gtest_main targets.
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-                 ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-                 EXCLUDE_FROM_ALL)
-
-# The gtest/gtest_main targets carry header search path
-# dependencies automatically when using CMake 2.8.11 or
-# later. Otherwise we have to add them here ourselves.
-if (CMAKE_VERSION VERSION_LESS 2.8.11)
-  include_directories("${gtest_SOURCE_DIR}/include")
-endif()
-
-##################################################################################
-# End From https://github.com/google/googletest/blob/master/googletest/README.md #
-##################################################################################
-
-
-
-# add unit tests
-add_executable(tests
-    tests/credential_service_impl_tests.cpp
-    tests/endpoint_impl_tests.cpp
-    tests/mocks.h
-    tests/transfer_service_impl_tests.cpp
+target_include_directories(onedatashare
+    PUBLIC
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
-target_include_directories(tests PRIVATE src/ include/)
-target_link_libraries(tests PRIVATE gtest_main gmock_main odscclient)
-install(TARGETS tests DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+target_link_libraries(onedatashare
+    PRIVATE
+        ${CURL_LIBRARIES}
+)
+
+if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
+
+    include(GNUInstallDirs)
+    install(TARGETS onedatashare
+        EXPORT onedatashare-export
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+
+    set_target_properties(onedatashare PROPERTIES EXPORT_NAME OneDataShare)
+
+    install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+    set(INSTALL_CONFIG_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/OneDataShare)
+
+    # create targets cmake file
+    install(EXPORT onedatashare-export
+        FILE OneDataShareTargets.cmake
+        NAMESPACE OneDataShare::
+        DESTINATION ${INSTALL_CONFIG_DIR}
+    )
+
+    # create version cmake file
+    include(CMakePackageConfigHelpers)
+    write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+    )
+
+    # create config cmake file
+    configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/OneDataShareConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfig.cmake
+        INSTALL_DESTINATION  ${INSTALL_CONFIG_DIR}
+    )
+
+    export(EXPORT onedatashare-export
+        FILE ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareTargets.cmake
+        NAMESPACE OneDataShare::
+    )
+
+    # add to package registry
+    export(PACKAGE OneDataShare)
+
+    install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/OneDataShareConfigVersion.cmake
+        DESTINATION ${INSTALL_CONFIG_DIR}
+    )
+
+endif()
+
+if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    # add unit tests
+    add_subdirectory(tests)
+
+    # add examples
+    add_subdirectory(examples)
+endif()

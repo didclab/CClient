@@ -1,7 +1,9 @@
-/*
- * curl_rest.h
- * Andrew Mikalsen
- * 6/23/20
+/**
+ * @file curl_rest.h
+ * Defines a class wrapping libcurl used to make REST API calls.
+ *
+ * @author Andrew Mikalsen
+ * @date 6/23/20
  */
 
 #ifndef ONEDATASHARE_CURL_REST_H
@@ -12,8 +14,7 @@
 
 #include "rest.h"
 
-namespace One_data_share {
-
+namespace Onedatashare {
 namespace Internal {
 
 /**
@@ -22,31 +23,36 @@ namespace Internal {
 class Curl_rest : public Rest {
 public:
     /**
-     * Creates a new Curl_rest object capable of making REST requests
-     * via libcurl.
+     * Uses libcurl to perform a GET request to the specified url with the specified headers.
+     *
+     * @param url borrowed refrence to the string set as the url
+     * @param headers borrowed refrence to the multi-map used to construct the request headers
+     *
+     * @return the Response object created from the values set by libcurl
+     *
+     * @exception Connection_error if unable to connect to the sepcified url
      */
-    Curl_rest();
+    Response get(const std::string& url,
+                 const std::unordered_multimap<std::string, std::string>& headers) const override;
 
-    Curl_rest(const Curl_rest&) = delete;
+    /**
+     * Uses libcurl to perform a POST request to the specified url with the specified headers and data.
+     *
+     * @param url borrowed reference to the string set as the url
+     * @param headers borrowed refrence to the multi-map used to construct the request headers
 
-    Curl_rest& operator=(const Curl_rest&) = delete;
-
-    Curl_rest(Curl_rest&&) = default;
-
-    Curl_rest& operator=(Curl_rest&&) = default;
-
-    virtual ~Curl_rest() override;
-
-    virtual Response get(const std::string& url,
-                         const std::unordered_multimap<std::string, std::string>& headers) const override;
-
-    virtual Response post(const std::string& url,
-                          const std::unordered_multimap<std::string, std::string>& headers,
-                          const std::string& data) const override;
+     * @param data borrowed reference to the json string passed in to libcurl to send as the POST data for the request
+     *
+     * @return the Response object created from the values set by libcurl
+     *
+     * @exception Connection_error if unable to connect to the sepcified url
+     */
+    Response post(const std::string& url,
+                  const std::unordered_multimap<std::string, std::string>& headers,
+                  const std::string& data) const override;
 };
 
 } // namespace Internal
-
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_CURL_REST_H

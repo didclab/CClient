@@ -1,7 +1,9 @@
-/*
- * ods_error.h
- * Andrew Mikalsen
- * 7/16/20
+/**
+ * @file ods_error.h
+ * Defines the exceptions that can be thrown by the OneDataShare SDK.
+ *
+ * @author Andrew Mikalsen
+ * @date 7/16/20
  */
 
 #ifndef ONEDATASHARE_ODS_ERROR_H
@@ -9,42 +11,36 @@
 
 #include <stdexcept>
 
-namespace One_data_share {
+namespace Onedatashare {
 
 /**
- * General exception thrown by One Data Share.
+ * General exception thrown due to an error related to communicating with OneDataShare.
  */
 class Ods_error : public std::runtime_error {
 public:
-    Ods_error(const std::string& what_arg);
-
-    Ods_error(const char* what_arg);
-
-    virtual ~Ods_error() = default;
+    using std::runtime_error::runtime_error;
 };
 
 /**
- * Exception thrown when unable to connection-related error occurs.
+ * Exception thrown when a connection-related error occurs.
  */
 class Connection_error : public Ods_error {
 public:
-    Connection_error(const std::string& what_arg);
-
-    Connection_error(const char* what_arg);
-
-    virtual ~Connection_error() = default;
+    using Ods_error::Ods_error;
 };
 
 /**
- * Exception thrown when an unexpected response is received.
+ * Exception thrown when an unexpected response is received from OneDataShare.
  */
 class Unexpected_response_error : public Ods_error {
 public:
+    /**
+     * Creates a new Unexpeected_response_error with the specified message and status code.
+     *
+     * @param what_arg borrowed reference to the error message
+     * @param status status code from the unexpected response
+     */
     Unexpected_response_error(const std::string& what_arg, int status);
-
-    Unexpected_response_error(const char* what_arg, int status);
-
-    virtual ~Unexpected_response_error() = default;
 
     /**
      * The status code of the unexpected response.
@@ -52,6 +48,6 @@ public:
     const int status;
 };
 
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_ODS_ERROR_H

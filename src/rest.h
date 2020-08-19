@@ -1,7 +1,9 @@
-/*
- * rest.h
- * Andrew Mikalsen
- * 6/5/20
+/**
+ * @file rest.h
+ * Defines an interface for making REST API calls.
+ *
+ * @author Andrew Mikalsen
+ * @date 6/5/20
  */
 
 #ifndef ONEDATASHARE_REST_H
@@ -10,69 +12,21 @@
 #include <string>
 #include <unordered_map>
 
-namespace One_data_share {
-
+namespace Onedatashare {
 namespace Internal {
 
 /**
- * Class holding the response from a request made via the get or post functions. Fields of this object live only as
- * long as the object itself.
+ * Holds the response from a request made via the get or post functions.
  */
-class Response {
-public:
-    /**
-     * Creates a new Response object.
-     *
-     * @param headers borrowed reference to the multi-map containing the response headers
-     * @param body borrowed reference to the json string containing the response body
-     * @param status integer corresponding to the http response status
-     */
-    Response(const std::unordered_multimap<std::string, std::string>& headers, const std::string& body, int status);
+struct Response {
+    /** Multi-map storing response headers as (key, value) pairs. */
+    const std::unordered_multimap<std::string, std::string> headers;
 
-    Response(const Response&) = default;
+    /** Json string containing the response body. */
+    const std::string body;
 
-    Response& operator=(const Response&) = default;
-
-    Response(Response&&) = default;
-
-    Response& operator=(Response&&) = default;
-
-    /**
-     * Gets a reference to the response headers. The returned reference lives only as long as the object itself.
-     *
-     * @return a temporary reference to the response headers stored as (key, value) pairs in an unordered multi-map
-     */
-    const std::unordered_multimap<std::string, std::string>& headers() const;
-
-    /**
-     * Gets a reference to the response body. The returned reference lives only as long as the object itself.
-     *
-     * @return a temporary reference to the json string containing the response body
-     */
-    const std::string& body() const;
-
-    /**
-     * Gets a reference to the http response status. The returned reference lives only as long as the object itself.
-     *
-     * @return a temporary reference to the http response status
-     */
-    int status() const;
-
-private:
-    /**
-     * Multi-map storing headers as (key, value) pairs.
-     */
-    const std::unordered_multimap<std::string, std::string> headers_;
-
-    /**
-     * Json string containing the response body.
-     */
-    const std::string body_;
-
-    /**
-     * The http response status code.
-     */
-    const int status_;
+    /** The http response status code. */
+    const int status;
 };
 
 /**
@@ -86,9 +40,9 @@ public:
 
     Rest& operator=(const Rest&) = delete;
 
-    Rest(Rest&&) = default;
+    Rest(Rest&&) = delete;
 
-    Rest& operator=(Rest&&) = default;
+    Rest& operator=(Rest&&) = delete;
 
     /**
      * Performs a GET request to the specified url with the specified headers.
@@ -125,7 +79,6 @@ protected:
 };
 
 } // namespace Internal
-
-} // namespace One_data_share
+} // namespace Onedatashare
 
 #endif // ONEDATASHARE_REST_H
